@@ -3,572 +3,746 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Video Tutorial Generator - Demo Showcase</title>
+    <title>Automation Tutorial Showcase</title>
     <style>
+    
+        :root {
+            --bg: #f5efe4;
+            --bg-deep: #efe6d7;
+            --panel: rgba(255, 255, 255, 0.78);
+            --panel-strong: rgba(255, 255, 255, 0.9);
+            --ink: #1b2430;
+            --muted: #5f6b7a;
+            --line: rgba(27, 36, 48, 0.12);
+            --accent: #0f766e;
+            --accent-deep: #115e59;
+            --accent-soft: rgba(15, 118, 110, 0.12);
+            --warm: #e76f51;
+            --warm-soft: rgba(231, 111, 81, 0.12);
+            --warning: #9a3412;
+            --warning-soft: rgba(154, 52, 18, 0.1);
+            --shadow: 0 18px 48px rgba(27, 36, 48, 0.1);
+        }
+
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0a0a1a;
-            color: #e0e0e0;
-            line-height: 1.6;
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 30%),
+                radial-gradient(circle at top right, rgba(231, 111, 81, 0.16), transparent 24%),
+                linear-gradient(180deg, #fcf8f1 0%, var(--bg) 45%, var(--bg-deep) 100%);
+            font-family: "Trebuchet MS", "Aptos", "Segoe UI", sans-serif;
         }
 
-        .hero {
-            text-align: center;
-            padding: 60px 20px 40px;
-            background: linear-gradient(135deg, #0a0a2e 0%, #1a1a3e 50%, #0a0a2e 100%);
-            border-bottom: 1px solid rgba(100, 120, 255, 0.2);
+        h1, h2, h3 {
+            margin: 0;
+            font-family: "Cambria", "Palatino Linotype", "Book Antiqua", serif;
+            letter-spacing: -0.02em;
         }
 
-        .hero h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #6b8aff, #a78bfa, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
+        p {
+            margin: 0;
         }
 
-        .hero p {
-            font-size: 1.1rem;
-            color: #8888aa;
-            max-width: 700px;
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        code, pre {
+            font-family: "Consolas", "Courier New", monospace;
+        }
+
+        .page-shell {
+            max-width: 1220px;
             margin: 0 auto;
+            padding: 32px 24px 72px;
         }
 
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 30px;
-            flex-wrap: wrap;
+        .hero-card,
+        .surface,
+        .demo-card,
+        .shot-card,
+        .beat-card,
+        .meta-card {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            backdrop-filter: blur(16px);
+            box-shadow: var(--shadow);
         }
 
-        .stat {
-            text-align: center;
+        .hero-card {
+            border-radius: 30px;
+            padding: 30px;
+            animation: riseIn 0.6s ease both;
         }
 
-        .stat-number {
-            font-size: 2rem;
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: var(--accent-deep);
+            font-size: 0.8rem;
             font-weight: 700;
-            color: #6b8aff;
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: #6666aa;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        .hero-title {
+            margin-top: 16px;
+            font-size: clamp(2.2rem, 5vw, 4.2rem);
+            line-height: 0.96;
+            max-width: 10ch;
+        }
+
+        .hero-description {
+            margin-top: 18px;
+            max-width: 760px;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-top: 26px;
+        }
+
+        .meta-card {
+            border-radius: 22px;
+            padding: 18px 18px 16px;
+        }
+
+        .meta-label {
+            color: var(--muted);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .meta-value {
+            margin-top: 8px;
+            font-size: 1.45rem;
+            font-weight: 700;
+        }
+
+        .section {
+            margin-top: 28px;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+        }
+
+        .section-subtext {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 999px;
+            padding: 8px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .status-validated {
+            background: var(--accent-soft);
+            color: var(--accent-deep);
+        }
+
+        .status-needs-refresh {
+            background: var(--warning-soft);
+            color: var(--warning);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
         }
 
         .demo-card {
-            background: #12122a;
-            border: 1px solid rgba(100, 120, 255, 0.15);
-            border-radius: 16px;
-            padding: 32px;
-            margin-bottom: 32px;
-            transition: border-color 0.3s;
-        }
-
-        .demo-card:hover {
-            border-color: rgba(100, 120, 255, 0.4);
-        }
-
-        .card-header {
             display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 16px;
+            flex-direction: column;
+            border-radius: 28px;
+            overflow: hidden;
+            animation: riseIn 0.7s ease both;
         }
 
-        .card-icon {
-            font-size: 2.5rem;
+        .card-cover,
+        .card-placeholder {
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.16), rgba(231, 111, 81, 0.12));
+            object-fit: cover;
         }
 
-        .card-category {
-            font-size: 0.75rem;
-            color: #6b8aff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
+        .card-placeholder {
+            display: grid;
+            place-items: center;
+            color: var(--accent-deep);
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+        }
+
+        .card-body {
+            padding: 20px 20px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .card-topline {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
         }
 
         .card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin-top: 4px;
+            font-size: 1.6rem;
+            line-height: 1.1;
         }
 
         .card-description {
-            color: #9999bb;
-            margin-bottom: 20px;
-            font-size: 1rem;
+            color: var(--muted);
+            line-height: 1.65;
         }
 
-        .prompt-box {
-            background: rgba(100, 120, 255, 0.08);
-            border: 1px solid rgba(100, 120, 255, 0.2);
-            border-radius: 10px;
-            padding: 16px 20px;
-            margin-bottom: 24px;
+        .tag-row,
+        .chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .prompt-label {
-            font-size: 0.7rem;
-            color: #6b8aff;
+        .tag,
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 8px 11px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--muted);
+            font-size: 0.86rem;
+        }
+
+        .prompt-box,
+        .code-box,
+        .warning-box,
+        .video-panel,
+        .detail-panel {
+            border-radius: 24px;
+            padding: 22px;
+            border: 1px solid var(--line);
+            background: var(--panel-strong);
+            box-shadow: var(--shadow);
+        }
+
+        .prompt-box code {
+            display: block;
+            white-space: pre-wrap;
+            color: var(--ink);
+            line-height: 1.7;
+            font-size: 0.92rem;
+        }
+
+        .card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .button,
+        .button-ghost {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 0 16px;
+            border-radius: 999px;
             font-weight: 700;
-            letter-spacing: 2px;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
         }
 
-        .prompt-text {
-            color: #ccccee;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            margin-top: 8px;
-            line-height: 1.5;
+        .button {
+            background: var(--accent);
+            color: #ffffff;
         }
 
-        .video-container {
-            border-radius: 10px;
+        .button-ghost {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.62);
+            color: var(--ink);
+        }
+
+        .button:hover,
+        .button-ghost:hover {
+            transform: translateY(-2px);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .video-frame {
+            margin-top: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            background: #000;
-            margin-bottom: 20px;
+            background: #111827;
+            border: 1px solid rgba(17, 24, 39, 0.18);
         }
 
-        .video-container video {
+        video {
             width: 100%;
             display: block;
         }
 
-        .transcript-section {
-            border-top: 1px solid rgba(100, 120, 255, 0.1);
-            padding-top: 16px;
+        .detail-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
-        .transcript-title {
-            font-size: 1rem;
-            color: #8888bb;
-            cursor: pointer;
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+            color: var(--accent-deep);
+            font-weight: 700;
+        }
+
+        .shot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+        }
+
+        .shot-card {
+            border-radius: 22px;
+            overflow: hidden;
+        }
+
+        .shot-card img,
+        .shot-card .shot-placeholder {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            display: block;
+            object-fit: cover;
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.14), rgba(231, 111, 81, 0.12));
+        }
+
+        .shot-placeholder {
+            display: grid;
+            place-items: center;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .shot-body {
+            padding: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .shot-step {
+            font-size: 0.8rem;
+            color: var(--accent-deep);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+        }
+
+        .shot-description,
+        .beat-text {
+            line-height: 1.65;
+        }
+
+        .shot-url {
+            font-size: 0.82rem;
+            color: var(--muted);
+            word-break: break-word;
+        }
+
+        .beat-grid {
+            display: grid;
+            gap: 14px;
+        }
+
+        .beat-card {
+            border-radius: 20px;
+            padding: 18px;
+        }
+
+        .beat-head {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
+            gap: 12px;
+            margin-bottom: 10px;
         }
 
-        .transcript-title:hover {
-            color: #aaaadd;
+        .beat-step {
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-deep);
+            font-weight: 700;
         }
 
-        .expand-icon {
-            transition: transform 0.3s;
-            font-size: 0.8rem;
+        .pause-pill {
+            border-radius: 999px;
+            padding: 6px 10px;
+            background: rgba(15, 118, 110, 0.08);
+            color: var(--accent-deep);
+            font-size: 0.78rem;
+            font-weight: 700;
         }
 
-        .transcript-section.expanded .expand-icon {
-            transform: rotate(180deg);
+        .warning-box {
+            border-color: rgba(154, 52, 18, 0.22);
+            background: rgba(255, 251, 245, 0.9);
         }
 
-        .transcript-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
+        .warning-list {
+            margin: 12px 0 0;
+            padding-left: 18px;
+            color: var(--warning);
+            line-height: 1.75;
         }
 
-        .transcript-section.expanded .transcript-content {
-            max-height: 2000px;
+        .code-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+            color: var(--ink);
+            line-height: 1.65;
         }
 
-        .step-item {
-            padding: 10px 16px;
-            margin: 6px 0;
-            background: rgba(100, 120, 255, 0.05);
-            border-left: 3px solid #6b8aff;
-            border-radius: 0 8px 8px 0;
-            font-size: 0.9rem;
-            color: #bbbbdd;
+        .artifact-list {
+            margin: 12px 0 0;
+            padding-left: 18px;
+            line-height: 1.9;
+            color: var(--muted);
         }
 
-        .no-transcript {
-            color: #555577;
-            font-style: italic;
-            padding: 12px;
+        .artifact-list code {
+            color: var(--ink);
         }
 
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            color: #444466;
-            font-size: 0.85rem;
-            border-top: 1px solid rgba(100, 120, 255, 0.1);
+        .footer-note {
+            margin-top: 28px;
+            color: var(--muted);
+            font-size: 0.92rem;
         }
 
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 1.8rem; }
-            .demo-card { padding: 20px; }
-            .stats-bar { gap: 20px; }
+        @keyframes riseIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
+        @media (max-width: 920px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page-shell {
+                padding: 22px 16px 56px;
+            }
+
+            .hero-card,
+            .prompt-box,
+            .code-box,
+            .warning-box,
+            .video-panel,
+            .detail-panel {
+                border-radius: 22px;
+                padding: 18px;
+            }
+
+            .card-grid,
+            .shot-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-topline,
+            .beat-head,
+            .section-heading {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    
     </style>
 </head>
 <body>
-    <div class="hero">
-        <h1>AI Video Tutorial Generator</h1>
-        <p>
-            Automated website tutorials created by an AI coding agent.
-            Point it to any website, give it one prompt, and it generates
-            a video walkthrough with captions, keyboard overlays, and narration.
+    <main class="page-shell">
+        <section class="hero-card">
+            <span class="eyebrow">Automation Portfolio Refresh</span>
+            <h1 class="hero-title">Reusable tutorial demos, not just one-off videos.</h1>
+            <p class="hero-description">
+                Each card opens its own detail page with the final video, screenshot storyboard,
+                exact prompt, rerun commands, and validation checks. The goal is a showcase that
+                looks closer to a product surface than a pile of exported clips.
+            </p>
+            <div class="stats-grid">
+                <div class="meta-card">
+                    <div class="meta-label">Tutorials</div>
+                    <div class="meta-value">7</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">Captured Steps</div>
+                    <div class="meta-value">76</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">Validated Demos</div>
+                    <div class="meta-value">7/7</div>
+                </div>
+                <div class="meta-card">
+                    <div class="meta-label">Detail Pages</div>
+                    <div class="meta-value">7</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <h2>Demo Cards</h2>
+                <p class="section-subtext">Separate pages, screenshots, and reproducible commands for every workflow.</p>
+            </div>
+            <div class="card-grid">
+                
+        <article class="demo-card">
+            <img class="card-cover" src="output/screenshots/screener/step_01.png?v=1774354170" alt="Stock Research on Screener.in screenshot preview" loading="lazy">
+            <div class="card-body">
+                <div class="card-topline">
+                    <span class="eyebrow">Financial Literacy</span>
+                    <span class="status-pill status-validated">Validated</span>
+                </div>
+                <h2 class="card-title">Stock Research on Screener.in</h2>
+                <p class="card-description">Search a company, analyze quarterly financials, and use the stock screener to filter companies by PE ratio, ROE, and market cap.</p>
+                <div class="tag-row">
+                    <span class="tag">11 steps</span>
+                    <span class="tag">screener.in</span>
+                    <span class="tag">demo_screener.py</span>
+                    
+                </div>
+                <div class="prompt-box">
+                    <span class="meta-label">Input Prompt</span>
+                    <code>Go to screener.in, search for Reliance Industries, view quarterly results, then use the stock screener to find companies with PE &lt; 25 and ROE &gt; 15%</code>
+                </div>
+                <div class="card-actions">
+                    <a class="button" href="tutorials/screener.html">Open Tutorial Page</a>
+                    <a class="button-ghost" href="output/screener_final.webm?v=1774353834">Open Video</a>
+                </div>
+            </div>
+        </article>
+    
+
+        <article class="demo-card">
+            <img class="card-cover" src="output/screenshots/zoho_invoice/step_01.png?v=1774354170" alt="Create a GST Invoice on Zoho screenshot preview" loading="lazy">
+            <div class="card-body">
+                <div class="card-topline">
+                    <span class="eyebrow">Business Operations</span>
+                    <span class="status-pill status-validated">Validated</span>
+                </div>
+                <h2 class="card-title">Create a GST Invoice on Zoho</h2>
+                <p class="card-description">Create a professional invoice with multiple line items, GST calculation, client details, and download as PDF.</p>
+                <div class="tag-row">
+                    <span class="tag">12 steps</span>
+                    <span class="tag">zoho.com</span>
+                    <span class="tag">demo_zoho_invoice.py</span>
+                    
+                </div>
+                <div class="prompt-box">
+                    <span class="meta-label">Input Prompt</span>
+                    <code>Go to Zoho Invoice, create a new invoice for &#x27;Acme Corp&#x27; with 3 line items including GST, preview and download as PDF</code>
+                </div>
+                <div class="card-actions">
+                    <a class="button" href="tutorials/zoho_invoice.html">Open Tutorial Page</a>
+                    <a class="button-ghost" href="output/zoho_invoice_final.webm?v=1774353898">Open Video</a>
+                </div>
+            </div>
+        </article>
+    
+
+        <article class="demo-card">
+            <img class="card-cover" src="output/screenshots/tinkercad/step_01.png?v=1774354170" alt="3D Design in TinkerCAD screenshot preview" loading="lazy">
+            <div class="card-body">
+                <div class="card-topline">
+                    <span class="eyebrow">Engineering &amp; Design</span>
+                    <span class="status-pill status-validated">Validated</span>
+                </div>
+                <h2 class="card-title">3D Design in TinkerCAD</h2>
+                <p class="card-description">Design a 3D object by dragging shapes, resizing, combining, and exporting as STL for 3D printing.</p>
+                <div class="tag-row">
+                    <span class="tag">10 steps</span>
+                    <span class="tag">tinkercad.com</span>
+                    <span class="tag">demo_tinkercad.py</span>
+                    
+                </div>
+                <div class="prompt-box">
+                    <span class="meta-label">Input Prompt</span>
+                    <code>Go to TinkerCAD, start a new design, create a simple phone stand using basic shapes, group them, and export as STL</code>
+                </div>
+                <div class="card-actions">
+                    <a class="button" href="tutorials/tinkercad.html">Open Tutorial Page</a>
+                    <a class="button-ghost" href="output/tinkercad_final.webm?v=1774353951">Open Video</a>
+                </div>
+            </div>
+        </article>
+    
+
+        <article class="demo-card">
+            <img class="card-cover" src="output/screenshots/overpass_turbo/step_01.png?v=1774354170" alt="Query Geographic Data with Overpass Turbo screenshot preview" loading="lazy">
+            <div class="card-body">
+                <div class="card-topline">
+                    <span class="eyebrow">Data &amp; Research</span>
+                    <span class="status-pill status-validated">Validated</span>
+                </div>
+                <h2 class="card-title">Query Geographic Data with Overpass Turbo</h2>
+                <p class="card-description">Find hospitals, EV charging stations, and schools in any city using plain English queries, then export as GeoJSON.</p>
+                <div class="tag-row">
+                    <span class="tag">16 steps</span>
+                    <span class="tag">overpass-turbo.eu</span>
+                    <span class="tag">demo_overpass.py</span>
+                    
+                </div>
+                <div class="prompt-box">
+                    <span class="meta-label">Input Prompt</span>
+                    <code>Go to overpass-turbo.eu, find all hospitals in Hyderabad, view on map, query EV charging stations, export as GeoJSON</code>
+                </div>
+                <div class="card-actions">
+                    <a class="button" href="tutorials/overpass_turbo.html">Open Tutorial Page</a>
+                    <a class="button-ghost" href="output/overpass_turbo_final.webm?v=1774354049">Open Video</a>
+                </div>
+            </div>
+        </article>
+    
+
+        <article class="demo-card">
+            <img class="card-cover" src="output/screenshots/mondula_form/step_01.png?v=1774354170" alt="Complete a Multi-Page Form on Mondula screenshot preview" loading="lazy">
+            <div class="card-body">
+                <div class="card-topline">
+                    <span class="eyebrow">Workflow Automation</span>
+                    <span class="status-pill status-validated">Validated</span>
+                </div>
+                <h2 class="card-title">Complete a Multi-Page Form on Mondula</h2>
+                <p class="card-description">Fill a real multi-step form with text fields, date inputs, radios, checkboxes, dropdowns, and final contact details.</p>
+                <div class="tag-row">
+                    <span class="tag">12 steps</span>
+                    <span class="tag">mondula.com</span>
+                    <span class="tag">demo_mondula_form.py</span>
+                    
+                </div>
+                <div class="prompt-box">
+                    <span class="meta-label">Input Prompt</span>
+                    <code>Go to mondula.com/msf-demo, complete each page, fill at least 6 input fields, and reach the submit-ready final step.</code>
+                </div>
+                <div class="card-actions">
+                    <a class="button" href="tutorials/mondula_form.html">Open Tutorial Page</a>
+                    <a class="button-ghost" href="output/mondula_form_final.webm?v=1774354105">Open Video</a>
+                </div>
+            </div>
+        </article>
+    
+
+        <article class="demo-card">
+            <img class="card-cover" src="output/screenshots/indian_visa/step_01.png?v=1774354170" alt="Indian eVisa Form Walkthrough screenshot preview" loading="lazy">
+            <div class="card-body">
+                <div class="card-topline">
+                    <span class="eyebrow">Public Services</span>
+                    <span class="status-pill status-validated">Validated</span>
+                </div>
+                <h2 class="card-title">Indian eVisa Form Walkthrough</h2>
+                <p class="card-description">Fill the Indian eVisa application start form with safe dummy data and stop before captcha submission.</p>
+                <div class="tag-row">
+                    <span class="tag">7 steps</span>
+                    <span class="tag">indianvisaonline.gov.in</span>
+                    <span class="tag">demo_indian_visa.py</span>
+                    
+                </div>
+                <div class="prompt-box">
+                    <span class="meta-label">Input Prompt</span>
+                    <code>Open indianvisaonline.gov.in eVisa form, enter fake applicant details, and stop safely at captcha.</code>
+                </div>
+                <div class="card-actions">
+                    <a class="button" href="tutorials/indian_visa.html">Open Tutorial Page</a>
+                    <a class="button-ghost" href="output/indian_visa_final.webm?v=1774354140">Open Video</a>
+                </div>
+            </div>
+        </article>
+    
+
+        <article class="demo-card">
+            <img class="card-cover" src="output/screenshots/ebay_advanced/step_01.png?v=1774354170" alt="eBay Advanced Search Automation screenshot preview" loading="lazy">
+            <div class="card-body">
+                <div class="card-topline">
+                    <span class="eyebrow">E-commerce</span>
+                    <span class="status-pill status-validated">Validated</span>
+                </div>
+                <h2 class="card-title">eBay Advanced Search Automation</h2>
+                <p class="card-description">Complete a real multi-input search form with keywords, price range, checkboxes, and submit.</p>
+                <div class="tag-row">
+                    <span class="tag">8 steps</span>
+                    <span class="tag">ebay.com</span>
+                    <span class="tag">demo_ebay.py</span>
+                    
+                </div>
+                <div class="prompt-box">
+                    <span class="meta-label">Input Prompt</span>
+                    <code>Go to eBay advanced search, fill multiple fields, set filters, and run the search.</code>
+                </div>
+                <div class="card-actions">
+                    <a class="button" href="tutorials/ebay_advanced.html">Open Tutorial Page</a>
+                    <a class="button-ghost" href="output/ebay_advanced_final.webm?v=1774354170">Open Video</a>
+                </div>
+            </div>
+        </article>
+    
+            </div>
+        </section>
+
+        <p class="footer-note">
+            Built from one shared pipeline: Playwright for capture, structured step metadata, Gemini-backed narration,
+            FFmpeg post-processing, and generated HTML pages.
         </p>
-        <div class="stats-bar">
-            <div class="stat">
-                <div class="stat-number">7</div>
-                <div class="stat-label">Tutorials</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">1</div>
-                <div class="stat-label">Prompt Each</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">&lt;2min</div>
-                <div class="stat-label">Per Video</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">0</div>
-                <div class="stat-label">Manual Editing</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        
-        <div class="demo-card" id="demo-0">
-            <div class="card-header">
-                <span class="card-icon">STK</span>
-                <div>
-                    <span class="card-category">Financial Literacy</span>
-                    <h2 class="card-title">Stock Research on Screener.in</h2>
-                </div>
-            </div>
-
-            <p class="card-description">Search a company, analyze quarterly financials, and use the stock screener to filter companies by PE ratio, ROE, and market cap.</p>
-
-            <div class="prompt-box">
-                <span class="prompt-label">INPUT PROMPT:</span>
-                <p class="prompt-text">Go to screener.in, search for Reliance Industries, view quarterly results, then use the stock screener to find companies with PE < 25 and ROE > 15%</p>
-            </div>
-
-            <div class="video-container">
-                <video controls preload="metadata" poster="">
-                    <source src="output/screener_final.webm?v=1774332934" type="video/webm">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-
-            <div class="transcript-section">
-                <h3 class="transcript-title" onclick="this.parentElement.classList.toggle('expanded')">
-                    Step-by-Step Instructions
-                    <span class="expand-icon">v</span>
-                </h3>
-                <div class="transcript-content">
-                    <div class="step-item">Step 1: Open Screener.in - India's popular stock research platform</div>
-<div class="step-item">Step 2: Navigate directly to Reliance Industries company page</div>
-<div class="step-item">Step 3: View key metrics - market cap, PE ratio, ROCE, and valuation snapshot</div>
-<div class="step-item">Step 4: Review quarterly financial trends to understand recent performance</div>
-<div class="step-item">Step 5: Inspect Profit and Loss details - revenue, expenses, and margins</div>
-<div class="step-item">Step 6: Check balance sheet strength - assets, liabilities, and equity</div>
-<div class="step-item">Step 7: Open the Public Screens page to explore ready-made stock filters</div>
-<div class="step-item">Step 8: Open a public screen to view companies matching prebuilt criteria</div>
-<div class="step-item">Step 9: Browse filtered companies and compare PE, ROE, and market cap</div>
-<div class="step-item">Step 10: Open Bank of India from the screen for deeper analysis</div>
-<div class="step-item">Step 11: Tutorial complete - you can now research and compare stocks on Screener.in</div>
-
-                </div>
-            </div>
-        </div>
-        
-        <div class="demo-card" id="demo-1">
-            <div class="card-header">
-                <span class="card-icon">INV</span>
-                <div>
-                    <span class="card-category">Business Operations</span>
-                    <h2 class="card-title">Create a GST Invoice on Zoho</h2>
-                </div>
-            </div>
-
-            <p class="card-description">Create a professional invoice with multiple line items, GST calculation, client details, and download as PDF.</p>
-
-            <div class="prompt-box">
-                <span class="prompt-label">INPUT PROMPT:</span>
-                <p class="prompt-text">Go to Zoho Invoice, create a new invoice for 'Acme Corp' with 3 line items including GST, preview and download as PDF</p>
-            </div>
-
-            <div class="video-container">
-                <video controls preload="metadata" poster="">
-                    <source src="output/zoho_invoice_final.webm?v=1774331429" type="video/webm">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-
-            <div class="transcript-section">
-                <h3 class="transcript-title" onclick="this.parentElement.classList.toggle('expanded')">
-                    Step-by-Step Instructions
-                    <span class="expand-icon">v</span>
-                </h3>
-                <div class="transcript-content">
-                    <div class="step-item">Step 1: Open Zoho Invoice - free online invoicing tool for businesses</div>
-<div class="step-item">Step 2: Open the free invoice generator page - no login required</div>
-<div class="step-item">Step 3: Enter business details: company name, contact, and address</div>
-<div class="step-item">Step 4: Enter Bill To details for Acme Corp International</div>
-<div class="step-item">Step 5: Set invoice number to INV-2026-001</div>
-<div class="step-item">Step 6: Add line item 1 with quantity, rate, and GST</div>
-<div class="step-item">Step 7: Add line item 2: UI/UX Design services</div>
-<div class="step-item">Step 8: Add line item 3: annual server hosting</div>
-<div class="step-item">Step 9: Add payment notes and terms for the client</div>
-<div class="step-item">Step 10: Review subtotal, GST breakdown, and grand total</div>
-<div class="step-item">Step 11: Use Download/Print to export the invoice as PDF</div>
-<div class="step-item">Step 12: Tutorial complete - create professional GST invoices in minutes</div>
-
-                </div>
-            </div>
-        </div>
-        
-        <div class="demo-card" id="demo-2">
-            <div class="card-header">
-                <span class="card-icon">3D</span>
-                <div>
-                    <span class="card-category">Engineering & Design</span>
-                    <h2 class="card-title">3D Design in TinkerCAD</h2>
-                </div>
-            </div>
-
-            <p class="card-description">Design a 3D object by dragging shapes, resizing, combining, and exporting as STL for 3D printing.</p>
-
-            <div class="prompt-box">
-                <span class="prompt-label">INPUT PROMPT:</span>
-                <p class="prompt-text">Go to TinkerCAD, start a new design, create a simple phone stand using basic shapes, group them, and export as STL</p>
-            </div>
-
-            <div class="video-container">
-                <video controls preload="metadata" poster="">
-                    <source src="output/tinkercad_final.webm?v=1774331446" type="video/webm">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-
-            <div class="transcript-section">
-                <h3 class="transcript-title" onclick="this.parentElement.classList.toggle('expanded')">
-                    Step-by-Step Instructions
-                    <span class="expand-icon">v</span>
-                </h3>
-                <div class="transcript-content">
-                    <div class="step-item">Step 1: Open TinkerCAD - Autodesk's free platform for 3D learning and design</div>
-<div class="step-item">Step 2: Open the Learning Center where beginner tutorials are available without login</div>
-<div class="step-item">Step 3: Search for beginner 3D design tutorials using the search bar</div>
-<div class="step-item">Step 4: Return to 3D Design tutorials for CAD-focused practice</div>
-<div class="step-item">Step 5: Open a tutorial card to view guided learning content</div>
-<div class="step-item">Step 6: Scroll through the tutorial page to view lesson details and visuals</div>
-<div class="step-item">Step 7: Open the TinkerCAD gallery to explore community designs</div>
-<div class="step-item">Step 8: Browse featured gallery designs for project inspiration</div>
-<div class="step-item">Step 9: Open a gallery design page to review details and references</div>
-<div class="step-item">Step 10: Tutorial complete - start learning TinkerCAD with no-login resources</div>
-
-                </div>
-            </div>
-        </div>
-        
-        <div class="demo-card" id="demo-3">
-            <div class="card-header">
-                <span class="card-icon">MAP</span>
-                <div>
-                    <span class="card-category">Data & Research</span>
-                    <h2 class="card-title">Query Geographic Data with Overpass Turbo</h2>
-                </div>
-            </div>
-
-            <p class="card-description">Find hospitals, EV charging stations, and schools in any city using plain English queries, then export as GeoJSON.</p>
-
-            <div class="prompt-box">
-                <span class="prompt-label">INPUT PROMPT:</span>
-                <p class="prompt-text">Go to overpass-turbo.eu, find all hospitals in Hyderabad, view on map, query EV charging stations, export as GeoJSON</p>
-            </div>
-
-            <div class="video-container">
-                <video controls preload="metadata" poster="">
-                    <source src="output/overpass_turbo_final.webm?v=1774331491" type="video/webm">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-
-            <div class="transcript-section">
-                <h3 class="transcript-title" onclick="this.parentElement.classList.toggle('expanded')">
-                    Step-by-Step Instructions
-                    <span class="expand-icon">v</span>
-                </h3>
-                <div class="transcript-content">
-                    <div class="step-item">Step 1: Open Overpass Turbo and load the map + query editor workspace</div>
-<div class="step-item">Step 2: Split view: query editor on left, map + controls on right</div>
-<div class="step-item">Step 3: Write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box</div>
-<div class="step-item">Step 4: Run query to load all mapped hospitals as explorable markers</div>
-<div class="step-item">Step 5: Use 'zoom to data' to jump map viewport directly onto Hyderabad results</div>
-<div class="step-item">Step 6: Click map markers to inspect feature tags like name, address, and amenity type</div>
-<div class="step-item">Step 7: Open Data tab to inspect raw tabular output and OSM attributes</div>
-<div class="step-item">Step 8: Switch back to Map view to visually compare coverage across neighborhoods</div>
-<div class="step-item">Step 9: Replace with EV charging station query to analyze clean-mobility readiness</div>
-<div class="step-item">Step 10: EV charging points rendered; now compare spread versus healthcare locations</div>
-<div class="step-item">Step 11: Run school query to map education infrastructure in the same city boundary</div>
-<div class="step-item">Step 12: Add pharmacy query as a fourth dataset to build a richer city-services comparison</div>
-<div class="step-item">Step 13: Single editor workflow lets you iterate quickly across multiple urban datasets</div>
-<div class="step-item">Step 14: Open Export options for downstream GIS and analytics workflows</div>
-<div class="step-item">Step 15: Export supports GeoJSON, KML, GPX, and raw OSM for different tools</div>
-<div class="step-item">Step 16: Tutorial complete: from iterative query editing to exportable, reproducible geo-data</div>
-
-                </div>
-            </div>
-        </div>
-        
-        <div class="demo-card" id="demo-4">
-            <div class="card-header">
-                <span class="card-icon">FORM</span>
-                <div>
-                    <span class="card-category">Workflow Automation</span>
-                    <h2 class="card-title">Complete a Multi-Page Form on Mondula</h2>
-                </div>
-            </div>
-
-            <p class="card-description">Fill a real multi-step form with text fields, date inputs, radios, checkboxes, dropdowns, and final contact details.</p>
-
-            <div class="prompt-box">
-                <span class="prompt-label">INPUT PROMPT:</span>
-                <p class="prompt-text">Go to mondula.com/msf-demo, complete each page, fill at least 6 input fields, and reach the submit-ready final step.</p>
-            </div>
-
-            <div class="video-container">
-                <video controls preload="metadata" poster="">
-                    <source src="output/mondula_form_final.webm?v=1774331516" type="video/webm">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-
-            <div class="transcript-section">
-                <h3 class="transcript-title" onclick="this.parentElement.classList.toggle('expanded')">
-                    Step-by-Step Instructions
-                    <span class="expand-icon">v</span>
-                </h3>
-                <div class="transcript-content">
-                    <div class="step-item">Step 1: Open the Mondula multi-step form demo page</div>
-<div class="step-item">Step 2: Move from the intro page to the first form step</div>
-<div class="step-item">Step 3: Fill first page text and textarea fields</div>
-<div class="step-item">Step 4: Go to the next page with additional input fields</div>
-<div class="step-item">Step 5: Fill text, custom textarea, and date fields on page two</div>
-<div class="step-item">Step 6: Proceed to radio, checkbox, and dropdown inputs</div>
-<div class="step-item">Step 7: Select a radio option, multiple checkboxes, and a dropdown value</div>
-<div class="step-item">Step 8: Open the conditional input section</div>
-<div class="step-item">Step 9: Fill conditional fields based on the selected dish</div>
-<div class="step-item">Step 10: Move to the final contact-details page</div>
-<div class="step-item">Step 11: Fill final contact page with six required input fields</div>
-<div class="step-item">Step 12: Review summary and reach submit-ready final state</div>
-
-                </div>
-            </div>
-        </div>
-        
-        <div class="demo-card" id="demo-5">
-            <div class="card-header">
-                <span class="card-icon">VISA</span>
-                <div>
-                    <span class="card-category">Public Services</span>
-                    <h2 class="card-title">Indian eVisa Form Walkthrough</h2>
-                </div>
-            </div>
-
-            <p class="card-description">Fill the Indian eVisa application start form with safe dummy data and stop before captcha submission.</p>
-
-            <div class="prompt-box">
-                <span class="prompt-label">INPUT PROMPT:</span>
-                <p class="prompt-text">Open indianvisaonline.gov.in eVisa form, enter fake applicant details, and stop safely at captcha.</p>
-            </div>
-
-            <div class="video-container">
-                <video controls preload="metadata" poster="">
-                    <source src="output/indian_visa_final.webm?v=1774331535" type="video/webm">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-
-            <div class="transcript-section">
-                <h3 class="transcript-title" onclick="this.parentElement.classList.toggle('expanded')">
-                    Step-by-Step Instructions
-                    <span class="expand-icon">v</span>
-                </h3>
-                <div class="transcript-content">
-                    <div class="step-item">Step 1: Open the Indian eVisa portal home page</div>
-<div class="step-item">Step 2: Open the eVisa application form start page</div>
-<div class="step-item">Step 3: Select nationality, passport type, and port of arrival</div>
-<div class="step-item">Step 4: Fill date of birth and email confirmation</div>
-<div class="step-item">Step 5: Choose visa service: eTourist Visa (30 Days)</div>
-<div class="step-item">Step 6: Set expected date of arrival and acknowledge instructions</div>
-<div class="step-item">Step 7: Stop at captcha step for safe, non-submitting demo</div>
-
-                </div>
-            </div>
-        </div>
-        
-        <div class="demo-card" id="demo-6">
-            <div class="card-header">
-                <span class="card-icon">SHOP</span>
-                <div>
-                    <span class="card-category">E-commerce</span>
-                    <h2 class="card-title">eBay Advanced Search Automation</h2>
-                </div>
-            </div>
-
-            <p class="card-description">Complete a real multi-input search form with keywords, price range, checkboxes, and submit.</p>
-
-            <div class="prompt-box">
-                <span class="prompt-label">INPUT PROMPT:</span>
-                <p class="prompt-text">Go to eBay advanced search, fill multiple fields, set filters, and run the search.</p>
-            </div>
-
-            <div class="video-container">
-                <video controls preload="metadata" poster="">
-                    <source src="output/ebay_advanced_final.webm?v=1774331544" type="video/webm">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-
-            <div class="transcript-section">
-                <h3 class="transcript-title" onclick="this.parentElement.classList.toggle('expanded')">
-                    Step-by-Step Instructions
-                    <span class="expand-icon">v</span>
-                </h3>
-                <div class="transcript-content">
-                    <div class="step-item">Step 1: Open eBay Advanced Search</div>
-<div class="step-item">Step 2: Enter main search keywords</div>
-<div class="step-item">Step 3: Change the keyword match dropdown to exact order</div>
-<div class="step-item">Step 4: Enter words to exclude from results</div>
-<div class="step-item">Step 5: Include title and description in the search scope</div>
-<div class="step-item">Step 6: Set minimum and maximum price filters</div>
-<div class="step-item">Step 7: Filter for new-condition items</div>
-<div class="step-item">Step 8: Run the search and open the filtered results page</div>
-
-                </div>
-            </div>
-        </div>
-        
-    </div>
-
-    <div class="footer">
-        Built with Playwright + FFmpeg + Gemini Audio | AI Video Tutorial Generator
-    </div>
+    </main>
 </body>
 </html>

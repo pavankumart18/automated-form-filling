@@ -1,0 +1,58 @@
+[
+  {
+    "step": 1,
+    "caption": "Step 1: Open the Indian eVisa portal home page",
+    "description": "Open the Indian eVisa portal home page",
+    "narration": "Let's start by opening the Indian eVisa portal home page. It gives the walkthrough a clean starting point before the real automation work begins.",
+    "pause_ms": 450,
+    "url": "https://indianvisaonline.gov.in/evisa/tvoa.html"
+  },
+  {
+    "step": 2,
+    "caption": "Step 2: Open the eVisa application form start page",
+    "description": "Open the eVisa application form start page",
+    "narration": "Next, we open the eVisa application form start page. It gives the walkthrough a clean starting point before the real automation work begins.",
+    "pause_ms": 450,
+    "url": "https://indianvisaonline.gov.in/evisa/Registration"
+  },
+  {
+    "step": 3,
+    "caption": "Step 3: Select nationality, passport type, and port of arrival",
+    "description": "Select nationality, passport type, and port of arrival",
+    "narration": "From there, we select nationality, passport type, and port of arrival. This keeps the flow deterministic instead of relying on page defaults.",
+    "pause_ms": 550,
+    "url": "https://indianvisaonline.gov.in/evisa/Registration"
+  },
+  {
+    "step": 4,
+    "caption": "Step 4: Fill date of birth and email confirmation",
+    "description": "Fill date of birth and email confirmation",
+    "narration": "Now we fill date of birth and email confirmation. This is exactly the repetitive work automation should steal from us.",
+    "pause_ms": 550,
+    "url": "https://indianvisaonline.gov.in/evisa/Registration"
+  },
+  {
+    "step": 5,
+    "caption": "Step 5: Choose visa service: eTourist Visa (30 Days)",
+    "description": "Choose visa service: eTourist Visa (30 Days)",
+    "narration": "After that, we choose visa service: eTourist Visa (30 Days). Making the choice visible keeps the demo reproducible.",
+    "pause_ms": 550,
+    "url": "https://indianvisaonline.gov.in/evisa/Registration"
+  },
+  {
+    "step": 6,
+    "caption": "Step 6: Set expected date of arrival and acknowledge instructions",
+    "description": "Set expected date of arrival and acknowledge instructions",
+    "narration": "Next, we set expected date of arrival and acknowledge instructions. Being explicit here keeps reruns consistent.",
+    "pause_ms": 550,
+    "url": "https://indianvisaonline.gov.in/evisa/Registration"
+  },
+  {
+    "step": 7,
+    "caption": "Step 7: Stop at captcha step for safe, non-submitting demo",
+    "description": "Stop at captcha step for safe, non-submitting demo",
+    "narration": "We intentionally stop at the captcha step here. That way the walkthrough stays safe while still showing the exact handoff point.",
+    "pause_ms": 900,
+    "url": "https://indianvisaonline.gov.in/evisa/Registration"
+  }
+]

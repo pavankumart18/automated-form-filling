@@ -1,0 +1,153 @@
+{
+  "name": "tinkercad",
+  "module": "demo_tinkercad",
+  "title": "3D Design in TinkerCAD",
+  "description": "Design a 3D object by dragging shapes, resizing, combining, and exporting as STL for 3D printing.",
+  "prompt": "Go to TinkerCAD, start a new design, create a simple phone stand using basic shapes, group them, and export as STL",
+  "category": "Engineering & Design",
+  "icon": "3D",
+  "site": "tinkercad.com",
+  "detail_page": "tutorials/tinkercad.html",
+  "video": "output/tinkercad_final.webm",
+  "poster": "output/screenshots/tinkercad/step_01.png",
+  "transcript": "output/tinkercad_transcript.md",
+  "steps_json": "screenshots/tinkercad_steps.json",
+  "narration_beats": "output/tinkercad_narration_beats.json",
+  "manifest": "output/tinkercad_manifest.json",
+  "toolchain": [
+    "Playwright browser automation",
+    "StepLogger captions and screenshots",
+    "Gemini TTS with gTTS fallback",
+    "FFmpeg compression and caption burn"
+  ],
+  "commands": {
+    "record": "python run_all.py --demo tinkercad --record",
+    "narrate": "python run_all.py --demo tinkercad --narrate",
+    "process": "python run_all.py --demo tinkercad --process",
+    "full_pipeline": "python run_all.py --demo tinkercad --record --narrate --process",
+    "page_only": "python run_all.py --page-only"
+  },
+  "validation": {
+    "status": "validated",
+    "status_label": "Validated",
+    "warnings": [],
+    "counts": {
+      "steps": 10,
+      "transcript_steps": 10,
+      "source_screenshots": 10,
+      "narration_beats": 10
+    }
+  },
+  "steps": [
+    {
+      "step": 1,
+      "caption": "Step 1: Open TinkerCAD - Autodesk's free platform for 3D learning and design",
+      "description": "Open TinkerCAD - Autodesk's free platform for 3D learning and design",
+      "url": "https://www.tinkercad.com/",
+      "timestamp": "2026-03-24T10:47:35.675052",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_01.png",
+      "published_screenshot": "output/screenshots/tinkercad/step_01.png",
+      "narration": "Let's start by opening TinkerCAD - Autodesk's free platform for 3D learning and design. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "pause_ms": 450
+    },
+    {
+      "step": 2,
+      "caption": "Step 2: Open the Learning Center where beginner tutorials are available without login",
+      "description": "Open the Learning Center where beginner tutorials are available without login",
+      "url": "https://www.tinkercad.com/learn/designs",
+      "timestamp": "2026-03-24T10:47:40.735844",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_02.png",
+      "published_screenshot": "output/screenshots/tinkercad/step_02.png",
+      "narration": "Next, we open the Learning Center where beginner tutorials are available without login. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "pause_ms": 550
+    },
+    {
+      "step": 3,
+      "caption": "Step 3: Search for beginner 3D design tutorials using the search bar",
+      "description": "Search for beginner 3D design tutorials using the search bar",
+      "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
+      "timestamp": "2026-03-24T10:47:45.805868",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_03.png",
+      "published_screenshot": "output/screenshots/tinkercad/step_03.png",
+      "narration": "From there, we search for beginner 3D design tutorials using the search bar. This is usually where people lose time, so automation earns its keep immediately.",
+      "pause_ms": 450
+    },
+    {
+      "step": 4,
+      "caption": "Step 4: Return to 3D Design tutorials for CAD-focused practice",
+      "description": "Return to 3D Design tutorials for CAD-focused practice",
+      "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
+      "timestamp": "2026-03-24T10:47:47.390810",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_04.png",
+      "published_screenshot": "output/screenshots/tinkercad/step_04.png",
+      "narration": "Now we return to 3D Design tutorials for CAD-focused practice. It keeps the flow easy to follow without sounding like a checklist.",
+      "pause_ms": 450
+    },
+    {
+      "step": 5,
+      "caption": "Step 5: Open a tutorial card to view guided learning content",
+      "description": "Open a tutorial card to view guided learning content",
+      "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
+      "timestamp": "2026-03-24T10:47:50.567511",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_05.png",
+      "published_screenshot": "output/screenshots/tinkercad/step_05.png",
+      "narration": "After that, we open a tutorial card to view guided learning content. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "pause_ms": 700
+    },
+    {
+      "step": 6,
+      "caption": "Step 6: Scroll through the tutorial page to view lesson details and visuals",
+      "description": "Scroll through the tutorial page to view lesson details and visuals",
+      "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
+      "timestamp": "2026-03-24T10:47:54.232315",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_06.png",
+      "published_screenshot": "output/screenshots/tinkercad/step_06.png",
+      "narration": "Next, we scroll through the tutorial page to view lesson details and visuals. It keeps the flow easy to follow without sounding like a checklist.",
+      "pause_ms": 700
+    },
+    {
+      "step": 7,
+      "caption": "Step 7: Open the TinkerCAD gallery to explore community designs",
+      "description": "Open the TinkerCAD gallery to explore community designs",
+      "url": "https://www.tinkercad.com/things",
+      "timestamp": "2026-03-24T10:48:04.489937",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_07.png",
+      "published_screenshot": "output/screenshots/tinkercad/step_07.png",
+      "narration": "From there, we open the TinkerCAD gallery to explore community designs. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "pause_ms": 450
+    },
+    {
+      "step": 8,
+      "caption": "Step 8: Browse featured gallery designs for project inspiration",
+      "description": "Browse featured gallery designs for project inspiration",
+      "url": "https://www.tinkercad.com/things",
+      "timestamp": "2026-03-24T10:48:11.101714",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_08.png",
+      "published_screenshot": "output/screenshots/tinkercad/step_08.png",
+      "narration": "Now we browse featured gallery designs for project inspiration. This keeps comparison easy without opening every result by hand.",
+      "pause_ms": 700
+    },
+    {
+      "step": 9,
+      "caption": "Step 9: Open a gallery design page to review details and references",
+      "description": "Open a gallery design page to review details and references",
+      "url": "https://www.tinkercad.com/things/1IXJmC1WnYn-mushroom",
+      "timestamp": "2026-03-24T10:48:14.033731",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_09.png",
+      "published_screenshot": "output/screenshots/tinkercad/step_09.png",
+      "narration": "After that, we open a gallery design page to review details and references. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "pause_ms": 700
+    },
+    {
+      "step": 10,
+      "caption": "Step 10: Tutorial complete - start learning TinkerCAD with no-login resources",
+      "description": "Tutorial complete - start learning TinkerCAD with no-login resources",
+      "url": "https://www.tinkercad.com/things/1IXJmC1WnYn-mushroom",
+      "timestamp": "2026-03-24T10:48:16.731058",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_10.png",
+      "published_screenshot": "output/screenshots/tinkercad/step_10.png",
+      "narration": "And that is the finish line. The flow is now captured end to end and ready to replay or adapt.",
+      "pause_ms": 900
+    }
+  ]
+}

@@ -41,29 +41,63 @@ CLICK_INDICATOR_JS = """
     const style = document.createElement('style');
     style.textContent = `
       @keyframes clickRipple {
-        0% { transform: scale(0.5); opacity: 1; }
-        100% { transform: scale(2.5); opacity: 0; }
+        0% {
+          transform: translate(-50%, -50%) scale(0.28);
+          opacity: 0.95;
+        }
+        70% {
+          transform: translate(-50%, -50%) scale(1.9);
+          opacity: 0.38;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(2.75);
+          opacity: 0;
+        }
+      }
+      @keyframes clickPulse {
+        0%, 100% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 0.92;
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.16);
+          opacity: 1;
+        }
       }
       .click-indicator {
         position: fixed;
-        width: 30px;
-        height: 30px;
+        width: 56px;
+        height: 56px;
         border-radius: 50%;
-        background: rgba(255, 50, 50, 0.5);
-        border: 3px solid rgba(255, 50, 50, 0.8);
+        background: radial-gradient(circle, rgba(255, 64, 64, 0.42) 0%, rgba(255, 64, 64, 0.22) 52%, rgba(255, 64, 64, 0) 72%);
+        border: 4px solid rgba(255, 64, 64, 0.8);
+        box-shadow: 0 0 0 10px rgba(255, 64, 64, 0.16), 0 12px 28px rgba(120, 0, 0, 0.24);
         pointer-events: none;
         z-index: 999999;
-        animation: clickRipple 0.6s ease-out forwards;
+        transform: translate(-50%, -50%) scale(0.28);
+        animation: clickRipple 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      .click-indicator::after {
+        content: '';
+        position: absolute;
+        inset: 14px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.82);
+        opacity: 0.7;
       }
       .click-dot {
         position: fixed;
-        width: 10px;
-        height: 10px;
+        width: 18px;
+        height: 18px;
         border-radius: 50%;
-        background: rgba(255, 50, 50, 0.9);
+        background: rgba(255, 64, 64, 0.96);
+        border: 4px solid rgba(255, 255, 255, 0.72);
+        box-shadow: 0 0 0 8px rgba(255, 64, 64, 0.18), 0 8px 18px rgba(120, 0, 0, 0.26);
         pointer-events: none;
         z-index: 999999;
-        transition: opacity 0.3s;
+        transition: opacity 0.3s ease-out;
+        transform: translate(-50%, -50%);
+        animation: clickPulse 1.3s ease-in-out infinite;
       }
     `;
     document.head.appendChild(style);
@@ -78,17 +112,17 @@ CLICK_INDICATOR_JS = """
 
     document.addEventListener('mousemove', (e) => {
       cursorDot.style.display = 'block';
-      cursorDot.style.left = (e.clientX - 5) + 'px';
-      cursorDot.style.top = (e.clientY - 5) + 'px';
+      cursorDot.style.left = e.clientX + 'px';
+      cursorDot.style.top = e.clientY + 'px';
     });
 
     document.addEventListener('click', (e) => {
       const ripple = document.createElement('div');
       ripple.className = 'click-indicator';
-      ripple.style.left = (e.clientX - 15) + 'px';
-      ripple.style.top = (e.clientY - 15) + 'px';
+      ripple.style.left = e.clientX + 'px';
+      ripple.style.top = e.clientY + 'px';
       root.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 700);
+      setTimeout(() => ripple.remove(), 1100);
     });
   };
 
@@ -278,16 +312,18 @@ class StepLogger:
         time.sleep(wait_sec)
 
         step_num = len(self.steps) + 1
+        step_label = f"Step {step_num}: {description}"
         screenshot_path = os.path.join(self.screenshot_dir, f"step_{step_num:02d}.png")
 
-        self.show_caption(page, f"{step_num}. {description}")
-        time.sleep(0.5)
+        self.show_caption(page, step_label)
+        time.sleep(0.65)
 
         page.screenshot(path=screenshot_path)
 
         self.steps.append(
             {
                 "step": step_num,
+                "caption": step_label,
                 "description": description,
                 "url": page.url,
                 "timestamp": datetime.now().isoformat(),

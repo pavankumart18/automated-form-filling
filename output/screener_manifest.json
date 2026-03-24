@@ -1,0 +1,164 @@
+{
+  "name": "screener",
+  "module": "demo_screener",
+  "title": "Stock Research on Screener.in",
+  "description": "Search a company, analyze quarterly financials, and use the stock screener to filter companies by PE ratio, ROE, and market cap.",
+  "prompt": "Go to screener.in, search for Reliance Industries, view quarterly results, then use the stock screener to find companies with PE < 25 and ROE > 15%",
+  "category": "Financial Literacy",
+  "icon": "STK",
+  "site": "screener.in",
+  "detail_page": "tutorials/screener.html",
+  "video": "output/screener_final.webm",
+  "poster": "output/screenshots/screener/step_01.png",
+  "transcript": "output/screener_transcript.md",
+  "steps_json": "screenshots/screener_steps.json",
+  "narration_beats": "output/screener_narration_beats.json",
+  "manifest": "output/screener_manifest.json",
+  "toolchain": [
+    "Playwright browser automation",
+    "StepLogger captions and screenshots",
+    "Gemini TTS with gTTS fallback",
+    "FFmpeg compression and caption burn"
+  ],
+  "commands": {
+    "record": "python run_all.py --demo screener --record",
+    "narrate": "python run_all.py --demo screener --narrate",
+    "process": "python run_all.py --demo screener --process",
+    "full_pipeline": "python run_all.py --demo screener --record --narrate --process",
+    "page_only": "python run_all.py --page-only"
+  },
+  "validation": {
+    "status": "validated",
+    "status_label": "Validated",
+    "warnings": [],
+    "counts": {
+      "steps": 11,
+      "transcript_steps": 11,
+      "source_screenshots": 11,
+      "narration_beats": 11
+    }
+  },
+  "steps": [
+    {
+      "step": 1,
+      "caption": "Step 1: Open Screener.in - India's popular stock research platform",
+      "description": "Open Screener.in - India's popular stock research platform",
+      "url": "https://www.screener.in/",
+      "timestamp": "2026-03-24T10:45:39.925169",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\screener\\step_01.png",
+      "published_screenshot": "output/screenshots/screener/step_01.png",
+      "narration": "Let's start by opening Screener.in - India's popular stock research platform. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "pause_ms": 450
+    },
+    {
+      "step": 2,
+      "caption": "Step 2: Navigate directly to Reliance Industries company page",
+      "description": "Navigate directly to Reliance Industries company page",
+      "url": "https://www.screener.in/company/RELIANCE/",
+      "timestamp": "2026-03-24T10:45:43.402351",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\screener\\step_02.png",
+      "published_screenshot": "output/screenshots/screener/step_02.png",
+      "narration": "Next, we navigate directly to Reliance Industries company page. That skips the wandering and gets the important screen in front of us fast.",
+      "pause_ms": 450
+    },
+    {
+      "step": 3,
+      "caption": "Step 3: View key metrics - market cap, PE ratio, ROCE, and valuation snapshot",
+      "description": "View key metrics - market cap, PE ratio, ROCE, and valuation snapshot",
+      "url": "https://www.screener.in/company/RELIANCE/",
+      "timestamp": "2026-03-24T10:45:44.970918",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\screener\\step_03.png",
+      "published_screenshot": "output/screenshots/screener/step_03.png",
+      "narration": "From there, we view key metrics - market cap, PE ratio, ROCE, and valuation snapshot. It gives us the quick snapshot before we go deeper.",
+      "pause_ms": 700
+    },
+    {
+      "step": 4,
+      "caption": "Step 4: Review quarterly financial trends to understand recent performance",
+      "description": "Review quarterly financial trends to understand recent performance",
+      "url": "https://www.screener.in/company/RELIANCE/#quarters",
+      "timestamp": "2026-03-24T10:45:48.112569",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\screener\\step_04.png",
+      "published_screenshot": "output/screenshots/screener/step_04.png",
+      "narration": "Now we review quarterly financial trends to understand recent performance. This is where the screen starts telling a story instead of just showing raw numbers.",
+      "pause_ms": 700
+    },
+    {
+      "step": 5,
+      "caption": "Step 5: Inspect Profit and Loss details - revenue, expenses, and margins",
+      "description": "Inspect Profit and Loss details - revenue, expenses, and margins",
+      "url": "https://www.screener.in/company/RELIANCE/#profit-loss",
+      "timestamp": "2026-03-24T10:45:51.255015",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\screener\\step_05.png",
+      "published_screenshot": "output/screenshots/screener/step_05.png",
+      "narration": "After that, we inspect Profit and Loss details - revenue, expenses, and margins. A close look here makes the important signal easier to spot.",
+      "pause_ms": 700
+    },
+    {
+      "step": 6,
+      "caption": "Step 6: Check balance sheet strength - assets, liabilities, and equity",
+      "description": "Check balance sheet strength - assets, liabilities, and equity",
+      "url": "https://www.screener.in/company/RELIANCE/#balance-sheet",
+      "timestamp": "2026-03-24T10:45:54.408833",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\screener\\step_06.png",
+      "published_screenshot": "output/screenshots/screener/step_06.png",
+      "narration": "Next, we check balance sheet strength - assets, liabilities, and equity. One quick check here tells us whether things look solid or stretched.",
+      "pause_ms": 700
+    },
+    {
+      "step": 7,
+      "caption": "Step 7: Open the Public Screens page to explore ready-made stock filters",
+      "description": "Open the Public Screens page to explore ready-made stock filters",
+      "url": "https://www.screener.in/screens/",
+      "timestamp": "2026-03-24T10:45:58.197582",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\screener\\step_07.png",
+      "published_screenshot": "output/screenshots/screener/step_07.png",
+      "narration": "From there, we open the Public Screens page to explore ready-made stock filters. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "pause_ms": 450
+    },
+    {
+      "step": 8,
+      "caption": "Step 8: Open a public screen to view companies matching prebuilt criteria",
+      "description": "Open a public screen to view companies matching prebuilt criteria",
+      "url": "https://www.screener.in/screens/343087/fii-buying/",
+      "timestamp": "2026-03-24T10:46:01.952438",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\screener\\step_08.png",
+      "published_screenshot": "output/screenshots/screener/step_08.png",
+      "narration": "Now we open a public screen to view companies matching prebuilt criteria. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "pause_ms": 700
+    },
+    {
+      "step": 9,
+      "caption": "Step 9: Browse filtered companies and compare PE, ROE, and market cap",
+      "description": "Browse filtered companies and compare PE, ROE, and market cap",
+      "url": "https://www.screener.in/screens/343087/fii-buying/",
+      "timestamp": "2026-03-24T10:46:04.474429",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\screener\\step_09.png",
+      "published_screenshot": "output/screenshots/screener/step_09.png",
+      "narration": "After that, we browse filtered companies and compare PE, ROE, and market cap. This keeps comparison easy without opening every result by hand.",
+      "pause_ms": 700
+    },
+    {
+      "step": 10,
+      "caption": "Step 10: Open Bank of India from the screen for deeper analysis",
+      "description": "Open Bank of India from the screen for deeper analysis",
+      "url": "https://www.screener.in/screens/343087/fii-buying/",
+      "timestamp": "2026-03-24T10:46:07.670846",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\screener\\step_10.png",
+      "published_screenshot": "output/screenshots/screener/step_10.png",
+      "narration": "Next, we open Bank of India from the screen for deeper analysis. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "pause_ms": 450
+    },
+    {
+      "step": 11,
+      "caption": "Step 11: Tutorial complete - you can now research and compare stocks on Screener.in",
+      "description": "Tutorial complete - you can now research and compare stocks on Screener.in",
+      "url": "https://www.screener.in/screens/343087/fii-buying/",
+      "timestamp": "2026-03-24T10:46:10.268011",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\screener\\step_11.png",
+      "published_screenshot": "output/screenshots/screener/step_11.png",
+      "narration": "And that is the finish line. The flow is now captured end to end and ready to replay or adapt.",
+      "pause_ms": 900
+    }
+  ]
+}

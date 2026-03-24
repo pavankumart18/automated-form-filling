@@ -1,0 +1,120 @@
+{
+  "name": "indian_visa",
+  "module": "demo_indian_visa",
+  "title": "Indian eVisa Form Walkthrough",
+  "description": "Fill the Indian eVisa application start form with safe dummy data and stop before captcha submission.",
+  "prompt": "Open indianvisaonline.gov.in eVisa form, enter fake applicant details, and stop safely at captcha.",
+  "category": "Public Services",
+  "icon": "VISA",
+  "site": "indianvisaonline.gov.in",
+  "detail_page": "tutorials/indian_visa.html",
+  "video": "output/indian_visa_final.webm",
+  "poster": "output/screenshots/indian_visa/step_01.png",
+  "transcript": "output/indian_visa_transcript.md",
+  "steps_json": "screenshots/indian_visa_steps.json",
+  "narration_beats": "output/indian_visa_narration_beats.json",
+  "manifest": "output/indian_visa_manifest.json",
+  "toolchain": [
+    "Playwright browser automation",
+    "StepLogger captions and screenshots",
+    "Gemini TTS with gTTS fallback",
+    "FFmpeg compression and caption burn"
+  ],
+  "commands": {
+    "record": "python run_all.py --demo indian_visa --record",
+    "narrate": "python run_all.py --demo indian_visa --narrate",
+    "process": "python run_all.py --demo indian_visa --process",
+    "full_pipeline": "python run_all.py --demo indian_visa --record --narrate --process",
+    "page_only": "python run_all.py --page-only"
+  },
+  "validation": {
+    "status": "validated",
+    "status_label": "Validated",
+    "warnings": [],
+    "counts": {
+      "steps": 7,
+      "transcript_steps": 7,
+      "source_screenshots": 7,
+      "narration_beats": 7
+    }
+  },
+  "steps": [
+    {
+      "step": 1,
+      "caption": "Step 1: Open the Indian eVisa portal home page",
+      "description": "Open the Indian eVisa portal home page",
+      "url": "https://indianvisaonline.gov.in/evisa/tvoa.html",
+      "timestamp": "2026-03-24T10:51:00.745471",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_01.png",
+      "published_screenshot": "output/screenshots/indian_visa/step_01.png",
+      "narration": "Let's start by opening the Indian eVisa portal home page. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "pause_ms": 450
+    },
+    {
+      "step": 2,
+      "caption": "Step 2: Open the eVisa application form start page",
+      "description": "Open the eVisa application form start page",
+      "url": "https://indianvisaonline.gov.in/evisa/Registration",
+      "timestamp": "2026-03-24T10:51:04.185206",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_02.png",
+      "published_screenshot": "output/screenshots/indian_visa/step_02.png",
+      "narration": "Next, we open the eVisa application form start page. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "pause_ms": 450
+    },
+    {
+      "step": 3,
+      "caption": "Step 3: Select nationality, passport type, and port of arrival",
+      "description": "Select nationality, passport type, and port of arrival",
+      "url": "https://indianvisaonline.gov.in/evisa/Registration",
+      "timestamp": "2026-03-24T10:51:37.348364",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_03.png",
+      "published_screenshot": "output/screenshots/indian_visa/step_03.png",
+      "narration": "From there, we select nationality, passport type, and port of arrival. This keeps the flow deterministic instead of relying on page defaults.",
+      "pause_ms": 550
+    },
+    {
+      "step": 4,
+      "caption": "Step 4: Fill date of birth and email confirmation",
+      "description": "Fill date of birth and email confirmation",
+      "url": "https://indianvisaonline.gov.in/evisa/Registration",
+      "timestamp": "2026-03-24T10:51:39.638282",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_04.png",
+      "published_screenshot": "output/screenshots/indian_visa/step_04.png",
+      "narration": "Now we fill date of birth and email confirmation. This is exactly the repetitive work automation should steal from us.",
+      "pause_ms": 550
+    },
+    {
+      "step": 5,
+      "caption": "Step 5: Choose visa service: eTourist Visa (30 Days)",
+      "description": "Choose visa service: eTourist Visa (30 Days)",
+      "url": "https://indianvisaonline.gov.in/evisa/Registration",
+      "timestamp": "2026-03-24T10:51:41.461529",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_05.png",
+      "published_screenshot": "output/screenshots/indian_visa/step_05.png",
+      "narration": "After that, we choose visa service: eTourist Visa (30 Days). Making the choice visible keeps the demo reproducible.",
+      "pause_ms": 550
+    },
+    {
+      "step": 6,
+      "caption": "Step 6: Set expected date of arrival and acknowledge instructions",
+      "description": "Set expected date of arrival and acknowledge instructions",
+      "url": "https://indianvisaonline.gov.in/evisa/Registration",
+      "timestamp": "2026-03-24T10:51:43.270702",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_06.png",
+      "published_screenshot": "output/screenshots/indian_visa/step_06.png",
+      "narration": "Next, we set expected date of arrival and acknowledge instructions. Being explicit here keeps reruns consistent.",
+      "pause_ms": 550
+    },
+    {
+      "step": 7,
+      "caption": "Step 7: Stop at captcha step for safe, non-submitting demo",
+      "description": "Stop at captcha step for safe, non-submitting demo",
+      "url": "https://indianvisaonline.gov.in/evisa/Registration",
+      "timestamp": "2026-03-24T10:51:44.663652",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_07.png",
+      "published_screenshot": "output/screenshots/indian_visa/step_07.png",
+      "narration": "We intentionally stop at the captcha step here. That way the walkthrough stays safe while still showing the exact handoff point.",
+      "pause_ms": 900
+    }
+  ]
+}

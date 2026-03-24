@@ -10,6 +10,7 @@ import argparse
 import shutil
 
 sys.path.insert(0, os.path.dirname(__file__))
+from showcase_builder import build_showcase
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
@@ -17,6 +18,7 @@ ROOT_INDEX_PATH = os.path.join(BASE_DIR, "index.html")
 VIDEO_DIR = os.path.join(BASE_DIR, "videos")
 SCREENSHOT_DIR = os.path.join(BASE_DIR, "screenshots")
 LEGACY_OUTPUT_VIDEO_DIR = os.path.join(BASE_DIR, "output_videos")
+TUTORIAL_PAGE_DIR = os.path.join(BASE_DIR, "tutorials")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # All demos
@@ -87,6 +89,14 @@ DEMOS = [
 ]
 
 
+def selected_demos(selected_names: list[str] | None = None) -> list[dict]:
+    """Return all demos or a user-selected subset by name."""
+    if not selected_names:
+        return DEMOS
+    selected = set(selected_names)
+    return [demo for demo in DEMOS if demo["name"] in selected]
+
+
 def get_demo_runner(module):
     """Return the module's recording entry point."""
     for attr in ("run", "run_demo", "run_ebay_demo"):
@@ -98,9 +108,9 @@ def get_demo_runner(module):
     )
 
 
-def run_recordings():
+def run_recordings(selected_names: list[str] | None = None):
     """Record all demos."""
-    for demo in DEMOS:
+    for demo in selected_demos(selected_names):
         print(f"\n{'#'*60}")
         print(f"  Recording: {demo['title']}")
         print(f"{'#'*60}")
@@ -110,19 +120,19 @@ def run_recordings():
         runner()
 
 
-def process_videos():
+def process_videos(selected_names: list[str] | None = None):
     """Post-process all recorded videos."""
     from video_processor import process_demo
 
-    for demo in DEMOS:
+    for demo in selected_demos(selected_names):
         process_demo(demo["name"])
 
 
-def generate_narrations():
+def generate_narrations(selected_names: list[str] | None = None):
     """Generate audio narration for all demos."""
     from narration_generator import generate_narration
 
-    for demo in DEMOS:
+    for demo in selected_demos(selected_names):
         generate_narration(demo["name"])
 
 
@@ -132,7 +142,7 @@ def clean_generated_artifacts():
     print("  Cleaning Generated Artifacts")
     print(f"{'='*60}\n")
 
-    for directory in [VIDEO_DIR, SCREENSHOT_DIR, OUTPUT_DIR, LEGACY_OUTPUT_VIDEO_DIR]:
+    for directory in [VIDEO_DIR, SCREENSHOT_DIR, OUTPUT_DIR, LEGACY_OUTPUT_VIDEO_DIR, TUTORIAL_PAGE_DIR]:
         if not os.path.isdir(directory):
             os.makedirs(directory, exist_ok=True)
             continue
@@ -149,9 +159,7 @@ def clean_generated_artifacts():
 
 def build_demo_page():
     """Generate the final HTML demo showcase page."""
-    print(f"\n{'='*60}")
-    print("  Building Demo Showcase Page")
-    print(f"{'='*60}\n")
+    return build_showcase(DEMOS)
 
     # Build demo cards HTML
     cards_html = ""
@@ -495,8 +503,21 @@ if __name__ == "__main__":
     parser.add_argument("--page-only", action="store_true", help="Only build the demo page")
     parser.add_argument("--clean", action="store_true", help="Delete generated demo artifacts before continuing")
     parser.add_argument("--all", action="store_true", help="Run everything")
+    parser.add_argument(
+        "--demo",
+        action="append",
+        choices=[demo["name"] for demo in DEMOS],
+        help="Run only the named demo. Repeat the flag to select multiple demos.",
+    )
+    parser.add_argument("--list-demos", action="store_true", help="Print all available demo names and exit")
 
     args = parser.parse_args()
+
+    if args.list_demos:
+        print("Available demos:")
+        for demo in DEMOS:
+            print(f"- {demo['name']}: {demo['title']}")
+        sys.exit(0)
 
     if args.clean:
         clean_generated_artifacts()
@@ -504,17 +525,17 @@ if __name__ == "__main__":
     if args.page_only:
         build_demo_page()
     elif args.all:
-        run_recordings()
-        generate_narrations()
-        process_videos()
+        run_recordings(args.demo)
+        generate_narrations(args.demo)
+        process_videos(args.demo)
         build_demo_page()
     else:
         if args.record:
-            run_recordings()
+            run_recordings(args.demo)
         if args.narrate:
-            generate_narrations()
+            generate_narrations(args.demo)
         if args.process:
-            process_videos()
+            process_videos(args.demo)
 
         # Always build the page
         build_demo_page()

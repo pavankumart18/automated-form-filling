@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query Geographic Data with Overpass Turbo | Automation Tutorial</title>
+    <style>
+    
+        :root {
+            --bg: #f5efe4;
+            --bg-deep: #efe6d7;
+            --panel: rgba(255, 255, 255, 0.78);
+            --panel-strong: rgba(255, 255, 255, 0.9);
+            --ink: #1b2430;
+            --muted: #5f6b7a;
+            --line: rgba(27, 36, 48, 0.12);
+            --accent: #0f766e;
+            --accent-deep: #115e59;
+            --accent-soft: rgba(15, 118, 110, 0.12);
+            --warm: #e76f51;
+            --warm-soft: rgba(231, 111, 81, 0.12);
+            --warning: #9a3412;
+            --warning-soft: rgba(154, 52, 18, 0.1);
+            --shadow: 0 18px 48px rgba(27, 36, 48, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 30%),
+                radial-gradient(circle at top right, rgba(231, 111, 81, 0.16), transparent 24%),
+                linear-gradient(180deg, #fcf8f1 0%, var(--bg) 45%, var(--bg-deep) 100%);
+            font-family: "Trebuchet MS", "Aptos", "Segoe UI", sans-serif;
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+            font-family: "Cambria", "Palatino Linotype", "Book Antiqua", serif;
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        code, pre {
+            font-family: "Consolas", "Courier New", monospace;
+        }
+
+        .page-shell {
+            max-width: 1220px;
+            margin: 0 auto;
+            padding: 32px 24px 72px;
+        }
+
+        .hero-card,
+        .surface,
+        .demo-card,
+        .shot-card,
+        .beat-card,
+        .meta-card {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            backdrop-filter: blur(16px);
+            box-shadow: var(--shadow);
+        }
+
+        .hero-card {
+            border-radius: 30px;
+            padding: 30px;
+            animation: riseIn 0.6s ease both;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: var(--accent-deep);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .hero-title {
+            margin-top: 16px;
+            font-size: clamp(2.2rem, 5vw, 4.2rem);
+            line-height: 0.96;
+            max-width: 10ch;
+        }
+
+        .hero-description {
+            margin-top: 18px;
+            max-width: 760px;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-top: 26px;
+        }
+
+        .meta-card {
+            border-radius: 22px;
+            padding: 18px 18px 16px;
+        }
+
+        .meta-label {
+            color: var(--muted);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .meta-value {
+            margin-top: 8px;
+            font-size: 1.45rem;
+            font-weight: 700;
+        }
+
+        .section {
+            margin-top: 28px;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+        }
+
+        .section-subtext {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 999px;
+            padding: 8px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .status-validated {
+            background: var(--accent-soft);
+            color: var(--accent-deep);
+        }
+
+        .status-needs-refresh {
+            background: var(--warning-soft);
+            color: var(--warning);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .demo-card {
+            display: flex;
+            flex-direction: column;
+            border-radius: 28px;
+            overflow: hidden;
+            animation: riseIn 0.7s ease both;
+        }
+
+        .card-cover,
+        .card-placeholder {
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.16), rgba(231, 111, 81, 0.12));
+            object-fit: cover;
+        }
+
+        .card-placeholder {
+            display: grid;
+            place-items: center;
+            color: var(--accent-deep);
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+        }
+
+        .card-body {
+            padding: 20px 20px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .card-topline {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            line-height: 1.1;
+        }
+
+        .card-description {
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        .tag-row,
+        .chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag,
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 8px 11px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--muted);
+            font-size: 0.86rem;
+        }
+
+        .prompt-box,
+        .code-box,
+        .warning-box,
+        .video-panel,
+        .detail-panel {
+            border-radius: 24px;
+            padding: 22px;
+            border: 1px solid var(--line);
+            background: var(--panel-strong);
+            box-shadow: var(--shadow);
+        }
+
+        .prompt-box code {
+            display: block;
+            white-space: pre-wrap;
+            color: var(--ink);
+            line-height: 1.7;
+            font-size: 0.92rem;
+        }
+
+        .card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .button,
+        .button-ghost {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 0 16px;
+            border-radius: 999px;
+            font-weight: 700;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .button {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .button-ghost {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.62);
+            color: var(--ink);
+        }
+
+        .button:hover,
+        .button-ghost:hover {
+            transform: translateY(-2px);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .video-frame {
+            margin-top: 16px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #111827;
+            border: 1px solid rgba(17, 24, 39, 0.18);
+        }
+
+        video {
+            width: 100%;
+            display: block;
+        }
+
+        .detail-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+            color: var(--accent-deep);
+            font-weight: 700;
+        }
+
+        .shot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+        }
+
+        .shot-card {
+            border-radius: 22px;
+            overflow: hidden;
+        }
+
+        .shot-card img,
+        .shot-card .shot-placeholder {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            display: block;
+            object-fit: cover;
+            background: linear-gradient(135deg, rgba(15, 118, 110, 0.14), rgba(231, 111, 81, 0.12));
+        }
+
+        .shot-placeholder {
+            display: grid;
+            place-items: center;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .shot-body {
+            padding: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .shot-step {
+            font-size: 0.8rem;
+            color: var(--accent-deep);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+        }
+
+        .shot-description,
+        .beat-text {
+            line-height: 1.65;
+        }
+
+        .shot-url {
+            font-size: 0.82rem;
+            color: var(--muted);
+            word-break: break-word;
+        }
+
+        .beat-grid {
+            display: grid;
+            gap: 14px;
+        }
+
+        .beat-card {
+            border-radius: 20px;
+            padding: 18px;
+        }
+
+        .beat-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .beat-step {
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-deep);
+            font-weight: 700;
+        }
+
+        .pause-pill {
+            border-radius: 999px;
+            padding: 6px 10px;
+            background: rgba(15, 118, 110, 0.08);
+            color: var(--accent-deep);
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .warning-box {
+            border-color: rgba(154, 52, 18, 0.22);
+            background: rgba(255, 251, 245, 0.9);
+        }
+
+        .warning-list {
+            margin: 12px 0 0;
+            padding-left: 18px;
+            color: var(--warning);
+            line-height: 1.75;
+        }
+
+        .code-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+            color: var(--ink);
+            line-height: 1.65;
+        }
+
+        .artifact-list {
+            margin: 12px 0 0;
+            padding-left: 18px;
+            line-height: 1.9;
+            color: var(--muted);
+        }
+
+        .artifact-list code {
+            color: var(--ink);
+        }
+
+        .footer-note {
+            margin-top: 28px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        @keyframes riseIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 920px) {
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page-shell {
+                padding: 22px 16px 56px;
+            }
+
+            .hero-card,
+            .prompt-box,
+            .code-box,
+            .warning-box,
+            .video-panel,
+            .detail-panel {
+                border-radius: 22px;
+                padding: 18px;
+            }
+
+            .card-grid,
+            .shot-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-topline,
+            .beat-head,
+            .section-heading {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    
+    </style>
+</head>
+<body>
+    <main class="page-shell">
+        <a class="back-link" href="../index.html">&larr; Back to showcase</a>
+
+        <section class="hero-card">
+            <div class="card-topline">
+                <span class="eyebrow">Data &amp; Research</span>
+                <span class="status-pill status-validated">
+                    Validated
+                </span>
+            </div>
+            <h1 class="hero-title">Query Geographic Data with Overpass Turbo</h1>
+            <p class="hero-description">Find hospitals, EV charging stations, and schools in any city using plain English queries, then export as GeoJSON.</p>
+            <div class="tag-row" style="margin-top: 18px;">
+                <span class="tag">16 steps</span>
+                <span class="tag">overpass-turbo.eu</span>
+                <span class="tag">demo_overpass.py</span>
+                <span class="tag">0 warnings</span>
+            </div>
+        </section>
+
+        <section class="section detail-grid">
+            <div class="video-panel">
+                <div class="section-heading">
+                    <h2>Watch The Demo</h2>
+                    <a class="button-ghost" href="../output/overpass_turbo_final.webm?v=1774354049">Open raw asset</a>
+                </div>
+                <p class="section-subtext">
+                    This page pairs the final video with publishable screenshots and the exact rerun recipe.
+                </p>
+                <div class="video-frame">
+                    <video controls preload="metadata" poster="../output/screenshots/overpass_turbo/step_01.png?v=1774354170">
+                        <source src="../output/overpass_turbo_final.webm?v=1774354049" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+            <div class="detail-stack">
+                <div class="prompt-box">
+                    <div class="section-heading">
+                        <h2>Prompt</h2>
+                    </div>
+                    <code>Go to overpass-turbo.eu, find all hospitals in Hyderabad, view on map, query EV charging stations, export as GeoJSON</code>
+                </div>
+
+                <div class="code-box">
+                    <div class="section-heading">
+                        <h2>Reproduce It</h2>
+                    </div>
+                    <pre>python run_all.py --demo overpass_turbo --record
+python run_all.py --demo overpass_turbo --narrate
+python run_all.py --demo overpass_turbo --process
+python run_all.py --demo overpass_turbo --record --narrate --process
+python run_all.py --page-only</pre>
+                </div>
+
+                <div class="detail-panel">
+                    <div class="section-heading">
+                        <h2>Toolchain</h2>
+                    </div>
+                    <div class="chip-row">
+                        <span class="chip">Playwright browser automation</span>
+<span class="chip">StepLogger captions and screenshots</span>
+<span class="chip">Gemini TTS with gTTS fallback</span>
+<span class="chip">FFmpeg compression and caption burn</span>
+                    </div>
+                </div>
+
+                <div class="detail-panel">
+                    <div class="section-heading">
+                        <h2>Artifacts</h2>
+                    </div>
+                    <ul class="artifact-list">
+                        <li><code>output/overpass_turbo_final.webm</code></li>
+<li><code>output/overpass_turbo_transcript.md</code></li>
+<li><code>screenshots/overpass_turbo_steps.json</code></li>
+<li><code>output/overpass_turbo_narration_beats.json</code></li>
+<li><code>output/overpass_turbo_manifest.json</code></li>
+<li><code>tutorials/overpass_turbo.html</code></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <h2>Storyboard Screenshots</h2>
+                <p class="section-subtext">Every logged step now ships with a screenshot reference, not only a video file.</p>
+            </div>
+            <div class="shot-grid">
+                
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_01.png?v=1774354170" alt="Step 1: Open Overpass Turbo and load the map + query editor workspace" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 1</div>
+                    <p class="shot-description">Open Overpass Turbo and load the map + query editor workspace</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#map=12/17.3850/78.4867" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#map=12/17.3850/78.4867</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_02.png?v=1774354170" alt="Step 2: Split view: query editor on left, map + controls on right" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 2</div>
+                    <p class="shot-description">Split view: query editor on left, map + controls on right</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#map=12/17.3850/78.4867" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#map=12/17.3850/78.4867</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_03.png?v=1774354170" alt="Step 3: Write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 3</div>
+                    <p class="shot-description">Write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#map=12/17.3850/78.4867" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#map=12/17.3850/78.4867</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_04.png?v=1774354170" alt="Step 4: Run query to load all mapped hospitals as explorable markers" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 4</div>
+                    <p class="shot-description">Run query to load all mapped hospitals as explorable markers</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#map=12/17.3850/78.4867" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#map=12/17.3850/78.4867</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_05.png?v=1774354170" alt="Step 5: Use &#x27;zoom to data&#x27; to jump map viewport directly onto Hyderabad results" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 5</div>
+                    <p class="shot-description">Use &#x27;zoom to data&#x27; to jump map viewport directly onto Hyderabad results</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_06.png?v=1774354170" alt="Step 6: Click map markers to inspect feature tags like name, address, and amenity type" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 6</div>
+                    <p class="shot-description">Click map markers to inspect feature tags like name, address, and amenity type</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_07.png?v=1774354170" alt="Step 7: Open Data tab to inspect raw tabular output and OSM attributes" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 7</div>
+                    <p class="shot-description">Open Data tab to inspect raw tabular output and OSM attributes</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_08.png?v=1774354170" alt="Step 8: Switch back to Map view to visually compare coverage across neighborhoods" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 8</div>
+                    <p class="shot-description">Switch back to Map view to visually compare coverage across neighborhoods</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_09.png?v=1774354170" alt="Step 9: Replace with EV charging station query to analyze clean-mobility readiness" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 9</div>
+                    <p class="shot-description">Replace with EV charging station query to analyze clean-mobility readiness</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_10.png?v=1774354170" alt="Step 10: EV charging points rendered; now compare spread versus healthcare locations" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 10</div>
+                    <p class="shot-description">EV charging points rendered; now compare spread versus healthcare locations</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_11.png?v=1774354170" alt="Step 11: Run school query to map education infrastructure in the same city boundary" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 11</div>
+                    <p class="shot-description">Run school query to map education infrastructure in the same city boundary</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_12.png?v=1774354170" alt="Step 12: Add pharmacy query as a fourth dataset to build a richer city-services comparison" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 12</div>
+                    <p class="shot-description">Add pharmacy query as a fourth dataset to build a richer city-services comparison</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_13.png?v=1774354170" alt="Step 13: Single editor workflow lets you iterate quickly across multiple urban datasets" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 13</div>
+                    <p class="shot-description">Single editor workflow lets you iterate quickly across multiple urban datasets</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_14.png?v=1774354170" alt="Step 14: Open Export options for downstream GIS and analytics workflows" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 14</div>
+                    <p class="shot-description">Open Export options for downstream GIS and analytics workflows</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_15.png?v=1774354170" alt="Step 15: Export supports GeoJSON, KML, GPX, and raw OSM for different tools" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 15</div>
+                    <p class="shot-description">Export supports GeoJSON, KML, GPX, and raw OSM for different tools</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#</a></div>
+                </div>
+            </article>
+            
+
+            <article class="shot-card">
+                <img src="../output/screenshots/overpass_turbo/step_16.png?v=1774354170" alt="Step 16: Tutorial complete: from iterative query editing to exportable, reproducible geo-data" loading="lazy">
+                <div class="shot-body">
+                    <div class="shot-step">Step 16</div>
+                    <p class="shot-description">Tutorial complete: from iterative query editing to exportable, reproducible geo-data</p>
+                    <div class="shot-url"><a href="https://overpass-turbo.eu/#" target="_blank" rel="noreferrer">https://overpass-turbo.eu/#</a></div>
+                </div>
+            </article>
+            
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-heading">
+                <h2>Story-First Narration</h2>
+                <p class="section-subtext">Shorter, human-sounding narration beats with explicit pause suggestions.</p>
+            </div>
+            <div class="beat-grid">
+                
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 1</span>
+                    <span class="pause-pill">Pause 0.45s</span>
+                </div>
+                <p class="beat-text">Let&#x27;s start by opening Overpass Turbo and load the map + query editor workspace. It gives the walkthrough a clean starting point before the real automation work begins.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 2</span>
+                    <span class="pause-pill">Pause 0.70s</span>
+                </div>
+                <p class="beat-text">Next, we split view: query editor on left, map + controls on right. The layout matters here because it makes cause and effect easy to follow.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 3</span>
+                    <span class="pause-pill">Pause 0.55s</span>
+                </div>
+                <p class="beat-text">From there, we write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box. Making the query visible is what turns the demo into a repeatable system.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 4</span>
+                    <span class="pause-pill">Pause 0.65s</span>
+                </div>
+                <p class="beat-text">Now we run query to load all mapped hospitals as explorable markers. Once we run it, the page does the heavy lifting for us.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 5</span>
+                    <span class="pause-pill">Pause 0.70s</span>
+                </div>
+                <p class="beat-text">After that, we use &#x27;zoom to data&#x27; to jump map viewport directly onto Hyderabad results. This is the moment where the walkthrough turns into something practical.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 6</span>
+                    <span class="pause-pill">Pause 0.70s</span>
+                </div>
+                <p class="beat-text">Next, we click map markers to inspect feature tags like name, address, and amenity type. A visible click here helps the viewer track the action instantly.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 7</span>
+                    <span class="pause-pill">Pause 0.70s</span>
+                </div>
+                <p class="beat-text">From there, we open Data tab to inspect raw tabular output and OSM attributes. It gives the walkthrough a clean starting point before the real automation work begins.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 8</span>
+                    <span class="pause-pill">Pause 0.70s</span>
+                </div>
+                <p class="beat-text">Now we switch back to Map view to visually compare coverage across neighborhoods. The change in view helps the viewer understand the comparison at a glance.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 9</span>
+                    <span class="pause-pill">Pause 0.45s</span>
+                </div>
+                <p class="beat-text">After that, we replace with EV charging station query to analyze clean-mobility readiness. A small swap here shows how reusable the flow really is.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 10</span>
+                    <span class="pause-pill">Pause 0.70s</span>
+                </div>
+                <p class="beat-text">Next, we EV charging points are now on the map, so we can compare spread versus healthcare locations. Seeing both patterns on screen is what makes the comparison click.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 11</span>
+                    <span class="pause-pill">Pause 0.65s</span>
+                </div>
+                <p class="beat-text">From there, we run school query to map education infrastructure in the same city boundary. Once we run it, the page does the heavy lifting for us.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 12</span>
+                    <span class="pause-pill">Pause 0.55s</span>
+                </div>
+                <p class="beat-text">Now we add pharmacy query as a fourth dataset to build a richer city-services comparison. It is a nice reminder that the workflow can grow without turning brittle.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 13</span>
+                    <span class="pause-pill">Pause 0.55s</span>
+                </div>
+                <p class="beat-text">After that, we single editor workflow lets you iterate quickly across multiple urban datasets. It keeps the flow easy to follow without sounding like a checklist.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 14</span>
+                    <span class="pause-pill">Pause 0.65s</span>
+                </div>
+                <p class="beat-text">Next, we open Export options for downstream GIS and analytics workflows. It gives the walkthrough a clean starting point before the real automation work begins.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 15</span>
+                    <span class="pause-pill">Pause 0.65s</span>
+                </div>
+                <p class="beat-text">From there, we export supports GeoJSON, KML, GPX, and raw OSM for different tools. This is the handoff point from browser workflow to reusable output.</p>
+            </article>
+            
+
+            <article class="beat-card">
+                <div class="beat-head">
+                    <span class="beat-step">Step 16</span>
+                    <span class="pause-pill">Pause 0.90s</span>
+                </div>
+                <p class="beat-text">And that is the finish line. The flow is now captured end to end and ready to replay or adapt.</p>
+            </article>
+            
+            </div>
+        </section>
+
+        
+
+        <p class="footer-note">
+            Validation checks compare steps JSON, transcript counts, narration beats, screenshot counts, and the final video artifact
+            so mismatches are visible during the build instead of surfacing in feedback later.
+        </p>
+    </main>
+</body>
+</html>

@@ -42,41 +42,80 @@ def get_media_duration(video_path: str) -> float:
     return float(result.stdout.strip())
 
 
-def generate_caption_file(steps_json_path: str, video_duration: float, output_path: str):
+def generate_caption_file(
+    steps_json_path: str,
+    video_duration: float,
+    output_path: str,
+    narration_beats_path: str | None = None,
+):
     """
     Generate an SRT subtitle file from steps JSON.
-    Distributes steps across the duration using relative caption word counts.
+    Distributes steps across the duration using relative caption word counts and
+    leaves small gaps between captions so the viewer can absorb each action.
     """
-    with open(steps_json_path) as f:
+    with open(steps_json_path, encoding="utf-8") as f:
         steps = json.load(f)
 
     num_steps = len(steps)
     if num_steps == 0:
         return
 
+    narration_beats = None
+    if narration_beats_path and os.path.exists(narration_beats_path):
+        try:
+            with open(narration_beats_path, encoding="utf-8") as f:
+                candidate_beats = json.load(f)
+            if len(candidate_beats) == num_steps:
+                narration_beats = candidate_beats
+        except Exception:
+            narration_beats = None
+
     weights = []
-    for step in steps:
-        caption_text = f"Step {step['step']}: {step['description']}"
+    caption_texts = []
+    desired_gaps = []
+
+    for index, step in enumerate(steps):
+        beat = narration_beats[index] if narration_beats else {}
+        caption_text = (beat.get("description") or step["description"]).strip()
+        caption_texts.append(caption_text)
         weights.append(max(len(caption_text.split()), 1))
+        pause_ms = int(beat.get("pause_ms", 420)) if index < num_steps - 1 else 0
+        desired_gaps.append(max(pause_ms / 1000.0, 0.0))
 
     total_weight = sum(weights)
+    requested_gap_budget = sum(desired_gaps[:-1])
+    max_gap_budget = video_duration * 0.18
+    gap_scale = min(1.0, max_gap_budget / requested_gap_budget) if requested_gap_budget else 1.0
+    scaled_gaps = [gap * gap_scale for gap in desired_gaps]
+    total_gap_budget = sum(scaled_gaps[:-1])
+    active_duration = max(video_duration - total_gap_budget, video_duration * 0.72)
+
+    # If we had to reserve too much time for captions, shrink the gaps again.
+    if active_duration + total_gap_budget > video_duration and requested_gap_budget:
+        revised_gap_budget = max(video_duration * 0.12, video_duration - active_duration)
+        gap_scale = revised_gap_budget / requested_gap_budget
+        scaled_gaps = [gap * gap_scale for gap in desired_gaps]
+        total_gap_budget = sum(scaled_gaps[:-1])
+        active_duration = video_duration - total_gap_budget
+
     current_sec = 0.0
 
-    with open(output_path, "w") as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         for i, step in enumerate(steps):
             start_sec = current_sec
             if i == num_steps - 1:
                 end_sec = video_duration
             else:
-                end_sec = current_sec + (video_duration * (weights[i] / total_weight))
-            current_sec = end_sec
+                step_duration = active_duration * (weights[i] / total_weight)
+                end_sec = current_sec + step_duration
+            current_sec = end_sec + (scaled_gaps[i] if i < num_steps - 1 else 0.0)
 
             start_time = format_srt_time(start_sec)
             end_time = format_srt_time(end_sec)
 
             f.write(f"{i + 1}\n")
             f.write(f"{start_time} --> {end_time}\n")
-            f.write(f"Step {step['step']}: {step['description']}\n\n")
+            f.write(f"{caption_texts[i]}\n\n")
 
     print(f"  Captions generated: {output_path}")
 
@@ -132,9 +171,10 @@ def burn_captions(input_path: str, srt_path: str, output_path: str):
         "-i", input_path,
         "-vf", (
             f"subtitles='{escaped_srt}':"
-            "force_style='FontSize=14,FontName=Arial,"
-            "PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,"
-            "Outline=2,Shadow=1,MarginV=30'"
+            "force_style='FontSize=18,FontName=Trebuchet MS,"
+            "PrimaryColour=&H00FFFFFF,OutlineColour=&H28000000,"
+            "BackColour=&H78000000,BorderStyle=3,Outline=1,Shadow=0,"
+            "MarginV=26,Alignment=2,Spacing=0.3'"
         ),
         "-c:v", "libvpx-vp9",
         "-crf", "45",
@@ -283,7 +323,13 @@ def process_demo(demo_name: str, fps: int = 5, crf: int = 55):
     captioned_path = caption_source_path
 
     if os.path.exists(steps_path):
-        generate_caption_file(steps_path, target_duration, srt_path)
+        narration_beats_path = os.path.join(OUTPUT_DIR, f"{demo_name}_narration_beats.json")
+        generate_caption_file(
+            steps_path,
+            target_duration,
+            srt_path,
+            narration_beats_path=narration_beats_path,
+        )
 
         # Step 4: Burn captions
         candidate_captioned_path = os.path.join(OUTPUT_DIR, f"{demo_name}_captioned.webm")

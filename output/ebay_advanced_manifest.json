@@ -1,0 +1,131 @@
+{
+  "name": "ebay_advanced",
+  "module": "demo_ebay",
+  "title": "eBay Advanced Search Automation",
+  "description": "Complete a real multi-input search form with keywords, price range, checkboxes, and submit.",
+  "prompt": "Go to eBay advanced search, fill multiple fields, set filters, and run the search.",
+  "category": "E-commerce",
+  "icon": "SHOP",
+  "site": "ebay.com",
+  "detail_page": "tutorials/ebay_advanced.html",
+  "video": "output/ebay_advanced_final.webm",
+  "poster": "output/screenshots/ebay_advanced/step_01.png",
+  "transcript": "output/ebay_advanced_transcript.md",
+  "steps_json": "screenshots/ebay_advanced_steps.json",
+  "narration_beats": "output/ebay_advanced_narration_beats.json",
+  "manifest": "output/ebay_advanced_manifest.json",
+  "toolchain": [
+    "Playwright browser automation",
+    "StepLogger captions and screenshots",
+    "Gemini TTS with gTTS fallback",
+    "FFmpeg compression and caption burn"
+  ],
+  "commands": {
+    "record": "python run_all.py --demo ebay_advanced --record",
+    "narrate": "python run_all.py --demo ebay_advanced --narrate",
+    "process": "python run_all.py --demo ebay_advanced --process",
+    "full_pipeline": "python run_all.py --demo ebay_advanced --record --narrate --process",
+    "page_only": "python run_all.py --page-only"
+  },
+  "validation": {
+    "status": "validated",
+    "status_label": "Validated",
+    "warnings": [],
+    "counts": {
+      "steps": 8,
+      "transcript_steps": 8,
+      "source_screenshots": 8,
+      "narration_beats": 8
+    }
+  },
+  "steps": [
+    {
+      "step": 1,
+      "caption": "Step 1: Open eBay Advanced Search",
+      "description": "Open eBay Advanced Search",
+      "url": "https://www.ebay.com/sch/ebayadvsearch",
+      "timestamp": "2026-03-24T10:51:51.008986",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_01.png",
+      "published_screenshot": "output/screenshots/ebay_advanced/step_01.png",
+      "narration": "Let's start by opening eBay Advanced Search. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "pause_ms": 450
+    },
+    {
+      "step": 2,
+      "caption": "Step 2: Enter main search keywords",
+      "description": "Enter main search keywords",
+      "url": "https://www.ebay.com/sch/ebayadvsearch",
+      "timestamp": "2026-03-24T10:51:53.093173",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_02.png",
+      "published_screenshot": "output/screenshots/ebay_advanced/step_02.png",
+      "narration": "Next, we enter main search keywords. A little data entry here saves the same keystrokes on every future run.",
+      "pause_ms": 550
+    },
+    {
+      "step": 3,
+      "caption": "Step 3: Change the keyword match dropdown to exact order",
+      "description": "Change the keyword match dropdown to exact order",
+      "url": "https://www.ebay.com/sch/ebayadvsearch",
+      "timestamp": "2026-03-24T10:51:55.326873",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_03.png",
+      "published_screenshot": "output/screenshots/ebay_advanced/step_03.png",
+      "narration": "From there, we change the keyword match dropdown to exact order. It keeps the flow easy to follow without sounding like a checklist.",
+      "pause_ms": 450
+    },
+    {
+      "step": 4,
+      "caption": "Step 4: Enter words to exclude from results",
+      "description": "Enter words to exclude from results",
+      "url": "https://www.ebay.com/sch/ebayadvsearch",
+      "timestamp": "2026-03-24T10:51:57.377369",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_04.png",
+      "published_screenshot": "output/screenshots/ebay_advanced/step_04.png",
+      "narration": "Now we enter words to exclude from results. A little data entry here saves the same keystrokes on every future run.",
+      "pause_ms": 550
+    },
+    {
+      "step": 5,
+      "caption": "Step 5: Include title and description in the search scope",
+      "description": "Include title and description in the search scope",
+      "url": "https://www.ebay.com/sch/ebayadvsearch",
+      "timestamp": "2026-03-24T10:51:59.410433",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_05.png",
+      "published_screenshot": "output/screenshots/ebay_advanced/step_05.png",
+      "narration": "After that, we include title and description in the search scope. It keeps the flow easy to follow without sounding like a checklist.",
+      "pause_ms": 450
+    },
+    {
+      "step": 6,
+      "caption": "Step 6: Set minimum and maximum price filters",
+      "description": "Set minimum and maximum price filters",
+      "url": "https://www.ebay.com/sch/ebayadvsearch",
+      "timestamp": "2026-03-24T10:52:01.938639",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_06.png",
+      "published_screenshot": "output/screenshots/ebay_advanced/step_06.png",
+      "narration": "Next, we set minimum and maximum price filters. Being explicit here keeps reruns consistent.",
+      "pause_ms": 550
+    },
+    {
+      "step": 7,
+      "caption": "Step 7: Filter for new-condition items",
+      "description": "Filter for new-condition items",
+      "url": "https://www.ebay.com/sch/ebayadvsearch",
+      "timestamp": "2026-03-24T10:52:03.976065",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_07.png",
+      "published_screenshot": "output/screenshots/ebay_advanced/step_07.png",
+      "narration": "From there, we filter for new-condition items. It keeps the flow easy to follow without sounding like a checklist.",
+      "pause_ms": 450
+    },
+    {
+      "step": 8,
+      "caption": "Step 8: Run the search and open the filtered results page",
+      "description": "Run the search and open the filtered results page",
+      "url": "https://www.ebay.com/sch/i.html?_nkw=Sony+WH-1000XM5&_in_kw=3&_ex_kw=broken+parts+only&LH_TitleDesc=1&_udlo=150&_udhi=400&LH_ItemCondition=1000",
+      "timestamp": "2026-03-24T10:52:12.301473",
+      "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_08.png",
+      "published_screenshot": "output/screenshots/ebay_advanced/step_08.png",
+      "narration": "Now we run the search and open the filtered results page. Once we run it, the page does the heavy lifting for us.",
+      "pause_ms": 900
+    }
+  ]
+}

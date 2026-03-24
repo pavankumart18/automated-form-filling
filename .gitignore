@@ -4,6 +4,8 @@ __pycache__/
 
 videos/
 screenshots/
+!output/screenshots/
+!output/screenshots/**
 output_videos/
 
 output/index.html
