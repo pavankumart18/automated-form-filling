@@ -3,7 +3,7 @@
     "step": 1,
     "caption": "Step 1: Open Screener.in - India's popular stock research platform",
     "description": "Open Screener.in - India's popular stock research platform",
-    "narration": "Let's start by opening Screener.in - India's popular stock research platform. It gives the walkthrough a clean starting point before the real automation work begins.",
+    "narration": "And... action. Let's start by opening Screener.in - India's popular stock research platform. Every good walkthrough needs an establishing shot, and this is ours.",
     "pause_ms": 450,
     "url": "https://www.screener.in/"
   },
@@ -11,7 +11,7 @@
     "step": 2,
     "caption": "Step 2: Navigate directly to Reliance Industries company page",
     "description": "Navigate directly to Reliance Industries company page",
-    "narration": "Next, we navigate directly to Reliance Industries company page. That skips the wandering and gets the important screen in front of us fast.",
+    "narration": "Now the camera swings to the next beat. We navigate directly to Reliance Industries company page. A clean jump like this keeps the momentum intact.",
     "pause_ms": 450,
     "url": "https://www.screener.in/company/RELIANCE/"
   },
@@ -19,7 +19,7 @@
     "step": 3,
     "caption": "Step 3: View key metrics - market cap, PE ratio, ROCE, and valuation snapshot",
     "description": "View key metrics - market cap, PE ratio, ROCE, and valuation snapshot",
-    "narration": "From there, we view key metrics - market cap, PE ratio, ROCE, and valuation snapshot. It gives us the quick snapshot before we go deeper.",
+    "narration": "Here comes the payoff shot. We view key metrics - market cap, PE ratio, ROCE, and valuation snapshot. It gives us the quick snapshot before we go deeper.",
     "pause_ms": 700,
     "url": "https://www.screener.in/company/RELIANCE/"
   },
@@ -27,7 +27,7 @@
     "step": 4,
     "caption": "Step 4: Review quarterly financial trends to understand recent performance",
     "description": "Review quarterly financial trends to understand recent performance",
-    "narration": "Now we review quarterly financial trends to understand recent performance. This is where the screen starts telling a story instead of just showing raw numbers.",
+    "narration": "Quick scene change. We review quarterly financial trends to understand recent performance. Now the plot thickens, in the best spreadsheet kind of way.",
     "pause_ms": 700,
     "url": "https://www.screener.in/company/RELIANCE/#quarters"
   },
@@ -35,7 +35,7 @@
     "step": 5,
     "caption": "Step 5: Inspect Profit and Loss details - revenue, expenses, and margins",
     "description": "Inspect Profit and Loss details - revenue, expenses, and margins",
-    "narration": "After that, we inspect Profit and Loss details - revenue, expenses, and margins. A close look here makes the important signal easier to spot.",
+    "narration": "Cue the montage. We inspect Profit and Loss details - revenue, expenses, and margins. This is where the small details quietly become the whole story.",
     "pause_ms": 700,
     "url": "https://www.screener.in/company/RELIANCE/#profit-loss"
   },
@@ -43,7 +43,7 @@
     "step": 6,
     "caption": "Step 6: Check balance sheet strength - assets, liabilities, and equity",
     "description": "Check balance sheet strength - assets, liabilities, and equity",
-    "narration": "Next, we check balance sheet strength - assets, liabilities, and equity. One quick check here tells us whether things look solid or stretched.",
+    "narration": "Now the camera swings to the next beat. We check balance sheet strength - assets, liabilities, and equity. One quick check here tells us whether things look solid or stretched.",
     "pause_ms": 700,
     "url": "https://www.screener.in/company/RELIANCE/#balance-sheet"
   },
@@ -51,7 +51,7 @@
     "step": 7,
     "caption": "Step 7: Open the Public Screens page to explore ready-made stock filters",
     "description": "Open the Public Screens page to explore ready-made stock filters",
-    "narration": "From there, we open the Public Screens page to explore ready-made stock filters. It gives the walkthrough a clean starting point before the real automation work begins.",
+    "narration": "Here comes the payoff shot. We open the Public Screens page to explore ready-made stock filters. Every good walkthrough needs an establishing shot, and this is ours.",
     "pause_ms": 450,
     "url": "https://www.screener.in/screens/"
   },
@@ -59,7 +59,7 @@
     "step": 8,
     "caption": "Step 8: Open a public screen to view companies matching prebuilt criteria",
     "description": "Open a public screen to view companies matching prebuilt criteria",
-    "narration": "Now we open a public screen to view companies matching prebuilt criteria. It gives the walkthrough a clean starting point before the real automation work begins.",
+    "narration": "Quick scene change. We open a public screen to view companies matching prebuilt criteria. Now the viewer knows exactly where the story starts.",
     "pause_ms": 700,
     "url": "https://www.screener.in/screens/343087/fii-buying/"
   },
@@ -67,7 +67,7 @@
     "step": 9,
     "caption": "Step 9: Browse filtered companies and compare PE, ROE, and market cap",
     "description": "Browse filtered companies and compare PE, ROE, and market cap",
-    "narration": "After that, we browse filtered companies and compare PE, ROE, and market cap. This keeps comparison easy without opening every result by hand.",
+    "narration": "Cue the montage. We browse filtered companies and compare PE, ROE, and market cap. This keeps comparison easy without opening every result by hand.",
     "pause_ms": 700,
     "url": "https://www.screener.in/screens/343087/fii-buying/"
   },
@@ -75,7 +75,7 @@
     "step": 10,
     "caption": "Step 10: Open Bank of India from the screen for deeper analysis",
     "description": "Open Bank of India from the screen for deeper analysis",
-    "narration": "Next, we open Bank of India from the screen for deeper analysis. It gives the walkthrough a clean starting point before the real automation work begins.",
+    "narration": "Now the camera swings to the next beat. We open Bank of India from the screen for deeper analysis. Every good walkthrough needs an establishing shot, and this is ours.",
     "pause_ms": 450,
     "url": "https://www.screener.in/screens/343087/fii-buying/"
   },
@@ -83,7 +83,7 @@
     "step": 11,
     "caption": "Step 11: Tutorial complete - you can now research and compare stocks on Screener.in",
     "description": "Tutorial complete - you can now research and compare stocks on Screener.in",
-    "narration": "And that is the finish line. The flow is now captured end to end and ready to replay or adapt.",
+    "narration": "And that is our closing scene. The flow is captured end to end and ready for a replay. The flow is now captured end to end and ready to replay or adapt.",
     "pause_ms": 900,
     "url": "https://www.screener.in/screens/343087/fii-buying/"
   }

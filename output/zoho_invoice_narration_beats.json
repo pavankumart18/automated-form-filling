@@ -3,7 +3,7 @@
     "step": 1,
     "caption": "Step 1: Open Zoho Invoice - free online invoicing tool for businesses",
     "description": "Open Zoho Invoice - free online invoicing tool for businesses",
-    "narration": "Let's start by opening Zoho Invoice - free online invoicing tool for businesses. It gives the walkthrough a clean starting point before the real automation work begins.",
+    "narration": "And... action. Let's start by opening Zoho Invoice - free online invoicing tool for businesses. Every good walkthrough needs an establishing shot, and this is ours.",
     "pause_ms": 450,
     "url": "https://www.zoho.com/in/invoice/"
   },
@@ -11,7 +11,7 @@
     "step": 2,
     "caption": "Step 2: Open the free invoice generator page - no login required",
     "description": "Open the free invoice generator page - no login required",
-    "narration": "Next, we open the free invoice generator page - no login required. It gives the walkthrough a clean starting point before the real automation work begins.",
+    "narration": "Now the camera swings to the next beat. We open the free invoice generator page - no login required. Now the viewer knows exactly where the story starts.",
     "pause_ms": 450,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
   },
@@ -19,7 +19,7 @@
     "step": 3,
     "caption": "Step 3: Enter business details: company name, contact, and address",
     "description": "Enter business details: company name, contact, and address",
-    "narration": "From there, we enter business details: company name, contact, and address. A little data entry here saves the same keystrokes on every future run.",
+    "narration": "Here comes the payoff shot. We enter business details: company name, contact, and address. A little data entry here saves the same keystrokes on every future run.",
     "pause_ms": 550,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
   },
@@ -27,7 +27,7 @@
     "step": 4,
     "caption": "Step 4: Enter Bill To details for Acme Corp International",
     "description": "Enter Bill To details for Acme Corp International",
-    "narration": "Now we enter Bill To details for Acme Corp International. A little data entry here saves the same keystrokes on every future run.",
+    "narration": "Quick scene change. We enter Bill To details for Acme Corp International. Nobody wins an award for manual retyping, so the automation can have this one.",
     "pause_ms": 550,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
   },
@@ -35,7 +35,7 @@
     "step": 5,
     "caption": "Step 5: Set invoice number to INV-2026-001",
     "description": "Set invoice number to INV-2026-001",
-    "narration": "After that, we set invoice number to INV-2026-001. Being explicit here keeps reruns consistent.",
+    "narration": "Cue the montage. We set invoice number to INV-2026-001. Locking this down keeps the workflow sharp on every replay.",
     "pause_ms": 550,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
   },
@@ -43,7 +43,7 @@
     "step": 6,
     "caption": "Step 6: Add line item 1 with quantity, rate, and GST",
     "description": "Add line item 1 with quantity, rate, and GST",
-    "narration": "Next, we add line item 1 with quantity, rate, and GST. It is a nice reminder that the workflow can grow without turning brittle.",
+    "narration": "Now the camera swings to the next beat. We add line item 1 with quantity, rate, and GST. It is a nice reminder that the workflow can grow without turning brittle.",
     "pause_ms": 550,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
   },
@@ -51,7 +51,7 @@
     "step": 7,
     "caption": "Step 7: Add line item 2: UI/UX Design services",
     "description": "Add line item 2: UI/UX Design services",
-    "narration": "From there, we add line item 2: UI/UX Design services. It is a nice reminder that the workflow can grow without turning brittle.",
+    "narration": "Here comes the payoff shot. We add line item 2: UI/UX Design services. One more layer, and the story gets richer without getting messier.",
     "pause_ms": 550,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
   },
@@ -59,7 +59,7 @@
     "step": 8,
     "caption": "Step 8: Add line item 3: annual server hosting",
     "description": "Add line item 3: annual server hosting",
-    "narration": "Now we add line item 3: annual server hosting. It is a nice reminder that the workflow can grow without turning brittle.",
+    "narration": "Quick scene change. We add line item 3: annual server hosting. This extra beat gives the demo a little more range without breaking its rhythm.",
     "pause_ms": 550,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
   },
@@ -67,7 +67,7 @@
     "step": 9,
     "caption": "Step 9: Add payment notes and terms for the client",
     "description": "Add payment notes and terms for the client",
-    "narration": "After that, we add payment notes and terms for the client. It is a nice reminder that the workflow can grow without turning brittle.",
+    "narration": "Cue the montage. We add payment notes and terms for the client. It is a nice reminder that the workflow can grow without turning brittle.",
     "pause_ms": 550,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
   },
@@ -75,7 +75,7 @@
     "step": 10,
     "caption": "Step 10: Review subtotal, GST breakdown, and grand total",
     "description": "Review subtotal, GST breakdown, and grand total",
-    "narration": "Next, we review subtotal, GST breakdown, and grand total. This is where the screen starts telling a story instead of just showing raw numbers.",
+    "narration": "Now the camera swings to the next beat. We review subtotal, GST breakdown, and grand total. Now the plot thickens, in the best spreadsheet kind of way.",
     "pause_ms": 700,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
   },
@@ -83,7 +83,7 @@
     "step": 11,
     "caption": "Step 11: Use Download/Print to export the invoice as PDF",
     "description": "Use Download/Print to export the invoice as PDF",
-    "narration": "From there, we use Download/Print to export the invoice as PDF. This is the moment where the walkthrough turns into something practical.",
+    "narration": "Here comes the payoff shot. We use Download/Print to export the invoice as PDF. This is where the workflow earns its applause.",
     "pause_ms": 650,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
   },
@@ -91,7 +91,7 @@
     "step": 12,
     "caption": "Step 12: Tutorial complete - create professional GST invoices in minutes",
     "description": "Tutorial complete - create professional GST invoices in minutes",
-    "narration": "And that is the finish line. The flow is now captured end to end and ready to replay or adapt.",
+    "narration": "Roll credits. The flow is captured end to end and ready for a replay. The flow is now captured end to end and ready to replay or adapt.",
     "pause_ms": 900,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
   }

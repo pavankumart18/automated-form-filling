@@ -13,12 +13,35 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 SCREENSHOT_DIR = os.path.join(BASE_DIR, "screenshots")
 SUPPORTED_AUDIO_EXTENSIONS = (".wav", ".mp3", ".ogg", ".flac", ".aac", ".m4a")
-NARRATION_LEADS = [
-    "Next, we",
-    "From there, we",
-    "Now we",
-    "After that, we",
+OPENING_CUES = [
+    "Lights up.",
+    "And... action.",
+    "Opening shot.",
 ]
+TRANSITION_CUES = [
+    "Quick scene change.",
+    "Cue the montage.",
+    "Now the camera swings to the next beat.",
+    "Here comes the payoff shot.",
+]
+SOFT_TRANSITION_CUES = [
+    "Next beat.",
+    "From here, we keep moving.",
+    "On the next screen.",
+    "Now we continue.",
+]
+FINALE_CUES = [
+    "Roll credits.",
+    "That is the hero shot.",
+    "And that is our closing scene.",
+]
+DEFAULT_TTS_DIRECTION = (
+    "Perform this as a warm, cinematic product-demo narrator. "
+    "Sound natural, expressive, and confident, with clean pauses between paragraphs. "
+    "Let the voice feel human, lightly playful, and polished, like a smart movie trailer narrator "
+    "guiding a slick tutorial. Keep jokes subtle and charming, never distracting or sarcastic. "
+    "Avoid robotic pacing, flat delivery, and rushed speech."
+)
 GERUND_OVERRIDES = {
     "open": "opening",
     "navigate": "navigating",
@@ -49,33 +72,141 @@ GERUND_OVERRIDES = {
     "stop": "stopping",
 }
 STEP_COMMENTARY = {
-    "open": "It gives the walkthrough a clean starting point before the real automation work begins.",
-    "navigate": "That skips the wandering and gets the important screen in front of us fast.",
-    "search": "This is usually where people lose time, so automation earns its keep immediately.",
-    "view": "It gives us the quick snapshot before we go deeper.",
-    "review": "This is where the screen starts telling a story instead of just showing raw numbers.",
-    "inspect": "A close look here makes the important signal easier to spot.",
-    "check": "One quick check here tells us whether things look solid or stretched.",
-    "browse": "This keeps comparison easy without opening every result by hand.",
-    "switch": "The change in view helps the viewer understand the comparison at a glance.",
-    "replace": "A small swap here shows how reusable the flow really is.",
-    "add": "It is a nice reminder that the workflow can grow without turning brittle.",
-    "run": "Once we run it, the page does the heavy lifting for us.",
-    "fill": "This is exactly the repetitive work automation should steal from us.",
-    "enter": "A little data entry here saves the same keystrokes on every future run.",
-    "set": "Being explicit here keeps reruns consistent.",
-    "choose": "Making the choice visible keeps the demo reproducible.",
-    "select": "This keeps the flow deterministic instead of relying on page defaults.",
-    "move": "It keeps the viewer oriented instead of jumping around too abruptly.",
-    "go": "That keeps the sequence moving while the context still feels fresh.",
-    "complete": "Now the end state is easy to verify.",
-    "use": "This is the moment where the walkthrough turns into something practical.",
-    "download": "That makes the outcome feel like a real deliverable, not just a demo.",
-    "export": "This is the handoff point from browser workflow to reusable output.",
-    "split": "The layout matters here because it makes cause and effect easy to follow.",
-    "write": "Making the query visible is what turns the demo into a repeatable system.",
-    "click": "A visible click here helps the viewer track the action instantly.",
-    "stop": "This is a deliberate stop, not a failure, and that distinction matters.",
+    "open": [
+        "This gets the right screen on stage before the real automation choreography begins.",
+        "Every good walkthrough needs an establishing shot, and this is ours.",
+        "Now the viewer knows exactly where the story starts.",
+    ],
+    "navigate": [
+        "That skips the wandering and gets the important screen in front of us fast.",
+        "Straight to the useful page, no side quest required.",
+        "A clean jump like this keeps the momentum intact.",
+    ],
+    "search": [
+        "This is usually where people lose time, so automation earns its keep immediately.",
+        "And just like that, the scavenger hunt is over.",
+        "A precise search here makes the rest of the flow feel inevitable.",
+    ],
+    "view": [
+        "It gives us the quick snapshot before we go deeper.",
+        "Here comes the close-up that frames the next few moves.",
+        "This wide shot makes the rest of the details easier to read.",
+    ],
+    "review": [
+        "This is where the screen starts telling a story instead of just showing raw numbers.",
+        "Now the plot thickens, in the best spreadsheet kind of way.",
+        "This is the moment where trends stop hiding and start speaking clearly.",
+    ],
+    "inspect": [
+        "A close look here makes the important signal easier to spot.",
+        "Time for the close-up, because the good clues live in the details.",
+        "This is where the small details quietly become the whole story.",
+    ],
+    "check": [
+        "One quick check here tells us whether things look solid or stretched.",
+        "A fast balance check like this keeps surprises out of the sequel.",
+        "This is the kind of sanity check that makes the whole workflow feel trustworthy.",
+    ],
+    "browse": [
+        "This keeps comparison easy without opening every result by hand.",
+        "It turns the click-fest into something much lighter.",
+        "Now the viewer can scan instead of slog, which is always a nice plot twist.",
+    ],
+    "switch": [
+        "The change in view helps the viewer understand the comparison at a glance.",
+        "A quick angle change here makes the story easier to follow.",
+        "Sometimes the smartest move is just a better camera angle, and this is one of those moments.",
+    ],
+    "replace": [
+        "A small swap here shows how reusable the flow really is.",
+        "Same workflow, new question, very satisfying.",
+        "This is where the system stops being a demo and starts looking reusable.",
+    ],
+    "add": [
+        "It is a nice reminder that the workflow can grow without turning brittle.",
+        "One more layer, and the story gets richer without getting messier.",
+        "This extra beat gives the demo a little more range without breaking its rhythm.",
+    ],
+    "run": [
+        "Once we run it, the page does the heavy lifting for us.",
+        "Cue the detective soundtrack; now the data gets to make its entrance.",
+        "This is the button where all the setup finally pays off.",
+    ],
+    "fill": [
+        "This is exactly the repetitive work automation should steal from us.",
+        "Because nobody asked for a sequel called type the same form twice.",
+        "A little typing here saves a lot of future boredom.",
+    ],
+    "enter": [
+        "A little data entry here saves the same keystrokes on every future run.",
+        "Nobody wins an award for manual retyping, so the automation can have this one.",
+        "This is the boring part, which makes it perfect for automation.",
+    ],
+    "set": [
+        "Being explicit here keeps reruns consistent.",
+        "A precise setting now saves a lot of guesswork later.",
+        "Locking this down keeps the workflow sharp on every replay.",
+    ],
+    "choose": [
+        "Making the choice visible keeps the demo reproducible.",
+        "A visible choice here turns guesswork into a repeatable scene.",
+        "This keeps the viewer aligned with exactly what the automation is deciding.",
+    ],
+    "select": [
+        "This keeps the flow deterministic instead of relying on page defaults.",
+        "A clean selection like this keeps the workflow from improvising.",
+        "Explicit beats like this are what make reruns feel dependable.",
+    ],
+    "move": [
+        "It keeps the viewer oriented instead of jumping around too abruptly.",
+        "A smooth move here makes the whole sequence easier on the eyes.",
+        "This keeps the pacing deliberate instead of twitchy.",
+    ],
+    "go": [
+        "That keeps the sequence moving while the context still feels fresh.",
+        "We keep the momentum without losing the thread.",
+        "A move like this keeps the scene flowing naturally.",
+    ],
+    "complete": [
+        "Now the end state is easy to verify.",
+        "That is the exact payoff shot we wanted.",
+        "The finish state lands cleanly here, and that matters.",
+    ],
+    "use": [
+        "This is the moment where the walkthrough turns into something practical.",
+        "A simple action here makes the whole demo feel useful, not decorative.",
+        "This is where the workflow earns its applause.",
+    ],
+    "download": [
+        "That makes the outcome feel like a real deliverable, not just a demo.",
+        "Boom, that is the handoff shot.",
+        "This is the part where the viewer gets something tangible at the end.",
+    ],
+    "export": [
+        "This is the handoff point from browser workflow to reusable output.",
+        "And there is the clean exit into the next tool in the chain.",
+        "This is where the browser scene hands the story over to the rest of the stack.",
+    ],
+    "split": [
+        "The layout matters here because it makes cause and effect easy to follow.",
+        "This framing does half the storytelling work for us.",
+        "A split view like this is basically free cinematography for a tutorial.",
+    ],
+    "write": [
+        "Making the query visible is what turns the demo into a repeatable system.",
+        "This is the script inside the script, and that is where the magic lives.",
+        "Once the logic is visible, the whole workflow feels much less mysterious.",
+    ],
+    "click": [
+        "A visible click here helps the viewer track the action instantly.",
+        "That click lands like a cue mark, exactly where the eye needs it.",
+        "A crisp click here keeps the viewer from playing hide and seek with the cursor.",
+    ],
+    "stop": [
+        "This is a deliberate stop, not a failure, and that distinction matters.",
+        "No stunt work beyond this point, and honestly that is the smart choice.",
+        "Stopping here keeps the demo safe while still making the flow fully understandable.",
+    ],
 }
 
 for directory in [OUTPUT_DIR, SCREENSHOT_DIR]:
@@ -224,9 +355,33 @@ def to_gerund_clause(text: str) -> str:
     return f"{gerund} {remainder}".strip()
 
 
-def narration_commentary(description: str) -> str:
+def pick_variant(options: list[str], seed: int) -> str:
+    """Choose a stable line variant so the narration does not feel repetitive."""
+    if not options:
+        return ""
+    return options[seed % len(options)]
+
+
+def is_sensitive_step(description: str, url: str = "") -> bool:
+    """Avoid jokey tone for sensitive government or identity flows."""
+    lowered = f"{normalize_text(description).lower()} {url.lower()}".strip()
+    return any(token in lowered for token in ["visa", "passport", "captcha", "nationality", "government"])
+
+
+def cinematic_cue(step_num: int, total_steps: int, sensitive: bool) -> str:
+    """Add a short cinematic expression to keep the delivery lively."""
+    if step_num == total_steps:
+        return pick_variant(FINALE_CUES, step_num)
+    if step_num == 1:
+        return pick_variant(OPENING_CUES, step_num)
+    cues = SOFT_TRANSITION_CUES if sensitive else TRANSITION_CUES
+    return pick_variant(cues, step_num)
+
+
+def narration_commentary(description: str, step_num: int, url: str = "") -> str:
     """Choose a short aside that keeps the script sounding human."""
     lowered = normalize_text(description).lower()
+    sensitive = is_sensitive_step(description, url)
 
     if "captcha" in lowered:
         return "That way the walkthrough stays safe while still showing the exact handoff point."
@@ -235,7 +390,13 @@ def narration_commentary(description: str) -> str:
     if "rendered; now compare" in lowered:
         return "Seeing both patterns on screen is what makes the comparison click."
 
-    return STEP_COMMENTARY.get(first_word(lowered), "It keeps the flow easy to follow without sounding like a checklist.")
+    verb = first_word(lowered)
+    variants = STEP_COMMENTARY.get(verb)
+    if variants:
+        if sensitive and len(variants) > 1:
+            return variants[0]
+        return pick_variant(variants, step_num)
+    return "It keeps the flow easy to follow without sounding like a checklist."
 
 
 def narration_pause_ms(description: str, step_num: int, total_steps: int) -> int:
@@ -257,35 +418,36 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
     """Rewrite a step into a short, more human narration beat."""
     step_num = step["step"]
     description = normalize_text(step["description"])
+    url = step.get("url", "")
     lowered = description.lower()
+    sensitive = is_sensitive_step(description, url)
+    cue = cinematic_cue(step_num, total_steps, sensitive)
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
         narration = (
-            "And that is the finish line. "
-            f"{narration_commentary(description)}"
+            f"{cue} The flow is captured end to end and ready for a replay. "
+            f"{narration_commentary(description, step_num, url)}"
         )
     elif "stop at captcha" in lowered or "captcha step" in lowered:
         narration = (
-            "We intentionally stop at the captcha step here. "
-            f"{narration_commentary(description)}"
+            f"{cue} We intentionally stop at the captcha step here. "
+            f"{narration_commentary(description, step_num, url)}"
         )
     elif "rendered; now compare" in lowered:
         subject, comparison = description.split("rendered; now compare", 1)
-        lead = NARRATION_LEADS[(step_num - 2) % len(NARRATION_LEADS)] if step_num > 1 else "Let's start by"
         narration = (
-            f"{lead} {subject.strip()} are now on the map, so we can compare {comparison.strip()}. "
-            f"{narration_commentary(description)}"
+            f"{cue} {subject.strip()} are now on the map, so we can compare {comparison.strip()}. "
+            f"{narration_commentary(description, step_num, url)}"
         )
     elif step_num == 1:
         narration = (
-            f"Let's start by {to_gerund_clause(description)}. "
-            f"{narration_commentary(description)}"
+            f"{cue} Let's start by {to_gerund_clause(description)}. "
+            f"{narration_commentary(description, step_num, url)}"
         )
     else:
-        lead = NARRATION_LEADS[(step_num - 2) % len(NARRATION_LEADS)]
         narration = (
-            f"{lead} {lower_first_non_acronym(description)}. "
-            f"{narration_commentary(description)}"
+            f"{cue} We {lower_first_non_acronym(description)}. "
+            f"{narration_commentary(description, step_num, url)}"
         )
 
     return {
@@ -294,7 +456,7 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
         "description": description,
         "narration": narration.strip(),
         "pause_ms": narration_pause_ms(description, step_num, total_steps),
-        "url": step.get("url", ""),
+        "url": url,
     }
 
 

@@ -3,7 +3,7 @@
     "step": 1,
     "caption": "Step 1: Open eBay Advanced Search",
     "description": "Open eBay Advanced Search",
-    "narration": "Let's start by opening eBay Advanced Search. It gives the walkthrough a clean starting point before the real automation work begins.",
+    "narration": "And... action. Let's start by opening eBay Advanced Search. Every good walkthrough needs an establishing shot, and this is ours.",
     "pause_ms": 450,
     "url": "https://www.ebay.com/sch/ebayadvsearch"
   },
@@ -11,7 +11,7 @@
     "step": 2,
     "caption": "Step 2: Enter main search keywords",
     "description": "Enter main search keywords",
-    "narration": "Next, we enter main search keywords. A little data entry here saves the same keystrokes on every future run.",
+    "narration": "Now the camera swings to the next beat. We enter main search keywords. This is the boring part, which makes it perfect for automation.",
     "pause_ms": 550,
     "url": "https://www.ebay.com/sch/ebayadvsearch"
   },
@@ -19,7 +19,7 @@
     "step": 3,
     "caption": "Step 3: Change the keyword match dropdown to exact order",
     "description": "Change the keyword match dropdown to exact order",
-    "narration": "From there, we change the keyword match dropdown to exact order. It keeps the flow easy to follow without sounding like a checklist.",
+    "narration": "Here comes the payoff shot. We change the keyword match dropdown to exact order. It keeps the flow easy to follow without sounding like a checklist.",
     "pause_ms": 450,
     "url": "https://www.ebay.com/sch/ebayadvsearch"
   },
@@ -27,7 +27,7 @@
     "step": 4,
     "caption": "Step 4: Enter words to exclude from results",
     "description": "Enter words to exclude from results",
-    "narration": "Now we enter words to exclude from results. A little data entry here saves the same keystrokes on every future run.",
+    "narration": "Quick scene change. We enter words to exclude from results. Nobody wins an award for manual retyping, so the automation can have this one.",
     "pause_ms": 550,
     "url": "https://www.ebay.com/sch/ebayadvsearch"
   },
@@ -35,7 +35,7 @@
     "step": 5,
     "caption": "Step 5: Include title and description in the search scope",
     "description": "Include title and description in the search scope",
-    "narration": "After that, we include title and description in the search scope. It keeps the flow easy to follow without sounding like a checklist.",
+    "narration": "Cue the montage. We include title and description in the search scope. It keeps the flow easy to follow without sounding like a checklist.",
     "pause_ms": 450,
     "url": "https://www.ebay.com/sch/ebayadvsearch"
   },
@@ -43,7 +43,7 @@
     "step": 6,
     "caption": "Step 6: Set minimum and maximum price filters",
     "description": "Set minimum and maximum price filters",
-    "narration": "Next, we set minimum and maximum price filters. Being explicit here keeps reruns consistent.",
+    "narration": "Now the camera swings to the next beat. We set minimum and maximum price filters. Being explicit here keeps reruns consistent.",
     "pause_ms": 550,
     "url": "https://www.ebay.com/sch/ebayadvsearch"
   },
@@ -51,7 +51,7 @@
     "step": 7,
     "caption": "Step 7: Filter for new-condition items",
     "description": "Filter for new-condition items",
-    "narration": "From there, we filter for new-condition items. It keeps the flow easy to follow without sounding like a checklist.",
+    "narration": "Here comes the payoff shot. We filter for new-condition items. It keeps the flow easy to follow without sounding like a checklist.",
     "pause_ms": 450,
     "url": "https://www.ebay.com/sch/ebayadvsearch"
   },
@@ -59,7 +59,7 @@
     "step": 8,
     "caption": "Step 8: Run the search and open the filtered results page",
     "description": "Run the search and open the filtered results page",
-    "narration": "Now we run the search and open the filtered results page. Once we run it, the page does the heavy lifting for us.",
+    "narration": "And that is our closing scene. We run the search and open the filtered results page. This is the button where all the setup finally pays off.",
     "pause_ms": 900,
     "url": "https://www.ebay.com/sch/i.html?_nkw=Sony+WH-1000XM5&_in_kw=3&_ex_kw=broken+parts+only&LH_TitleDesc=1&_udlo=150&_udhi=400&LH_ItemCondition=1000"
   }

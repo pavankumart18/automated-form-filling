@@ -47,7 +47,7 @@
       "timestamp": "2026-03-24T10:51:00.745471",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_01.png",
       "published_screenshot": "output/screenshots/indian_visa/step_01.png",
-      "narration": "Let's start by opening the Indian eVisa portal home page. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "narration": "And... action. Let's start by opening the Indian eVisa portal home page. This gets the right screen on stage before the real automation choreography begins.",
       "pause_ms": 450
     },
     {
@@ -58,7 +58,7 @@
       "timestamp": "2026-03-24T10:51:04.185206",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_02.png",
       "published_screenshot": "output/screenshots/indian_visa/step_02.png",
-      "narration": "Next, we open the eVisa application form start page. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "narration": "On the next screen. We open the eVisa application form start page. This gets the right screen on stage before the real automation choreography begins.",
       "pause_ms": 450
     },
     {
@@ -69,7 +69,7 @@
       "timestamp": "2026-03-24T10:51:37.348364",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_03.png",
       "published_screenshot": "output/screenshots/indian_visa/step_03.png",
-      "narration": "From there, we select nationality, passport type, and port of arrival. This keeps the flow deterministic instead of relying on page defaults.",
+      "narration": "Now we continue. We select nationality, passport type, and port of arrival. This keeps the flow deterministic instead of relying on page defaults.",
       "pause_ms": 550
     },
     {
@@ -80,7 +80,7 @@
       "timestamp": "2026-03-24T10:51:39.638282",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_04.png",
       "published_screenshot": "output/screenshots/indian_visa/step_04.png",
-      "narration": "Now we fill date of birth and email confirmation. This is exactly the repetitive work automation should steal from us.",
+      "narration": "Next beat. We fill date of birth and email confirmation. This is exactly the repetitive work automation should steal from us.",
       "pause_ms": 550
     },
     {
@@ -91,7 +91,7 @@
       "timestamp": "2026-03-24T10:51:41.461529",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_05.png",
       "published_screenshot": "output/screenshots/indian_visa/step_05.png",
-      "narration": "After that, we choose visa service: eTourist Visa (30 Days). Making the choice visible keeps the demo reproducible.",
+      "narration": "From here, we keep moving. We choose visa service: eTourist Visa (30 Days). Making the choice visible keeps the demo reproducible.",
       "pause_ms": 550
     },
     {
@@ -102,7 +102,7 @@
       "timestamp": "2026-03-24T10:51:43.270702",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_06.png",
       "published_screenshot": "output/screenshots/indian_visa/step_06.png",
-      "narration": "Next, we set expected date of arrival and acknowledge instructions. Being explicit here keeps reruns consistent.",
+      "narration": "On the next screen. We set expected date of arrival and acknowledge instructions. Being explicit here keeps reruns consistent.",
       "pause_ms": 550
     },
     {
@@ -113,7 +113,7 @@
       "timestamp": "2026-03-24T10:51:44.663652",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_07.png",
       "published_screenshot": "output/screenshots/indian_visa/step_07.png",
-      "narration": "We intentionally stop at the captcha step here. That way the walkthrough stays safe while still showing the exact handoff point.",
+      "narration": "That is the hero shot. We intentionally stop at the captcha step here. That way the walkthrough stays safe while still showing the exact handoff point.",
       "pause_ms": 900
     }
   ]

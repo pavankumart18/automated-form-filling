@@ -3,7 +3,7 @@
     "step": 1,
     "caption": "Step 1: Open the Mondula multi-step form demo page",
     "description": "Open the Mondula multi-step form demo page",
-    "narration": "Let's start by opening the Mondula multi-step form demo page. It gives the walkthrough a clean starting point before the real automation work begins.",
+    "narration": "And... action. Let's start by opening the Mondula multi-step form demo page. Every good walkthrough needs an establishing shot, and this is ours.",
     "pause_ms": 450,
     "url": "https://mondula.com/msf-demo/"
   },
@@ -11,7 +11,7 @@
     "step": 2,
     "caption": "Step 2: Move from the intro page to the first form step",
     "description": "Move from the intro page to the first form step",
-    "narration": "Next, we move from the intro page to the first form step. It keeps the viewer oriented instead of jumping around too abruptly.",
+    "narration": "Now the camera swings to the next beat. We move from the intro page to the first form step. This keeps the pacing deliberate instead of twitchy.",
     "pause_ms": 450,
     "url": "https://mondula.com/msf-demo/"
   },
@@ -19,7 +19,7 @@
     "step": 3,
     "caption": "Step 3: Fill first page text and textarea fields",
     "description": "Fill first page text and textarea fields",
-    "narration": "From there, we fill first page text and textarea fields. This is exactly the repetitive work automation should steal from us.",
+    "narration": "Here comes the payoff shot. We fill first page text and textarea fields. This is exactly the repetitive work automation should steal from us.",
     "pause_ms": 550,
     "url": "https://mondula.com/msf-demo/"
   },
@@ -27,7 +27,7 @@
     "step": 4,
     "caption": "Step 4: Go to the next page with additional input fields",
     "description": "Go to the next page with additional input fields",
-    "narration": "Now we go to the next page with additional input fields. That keeps the sequence moving while the context still feels fresh.",
+    "narration": "Quick scene change. We go to the next page with additional input fields. We keep the momentum without losing the thread.",
     "pause_ms": 550,
     "url": "https://mondula.com/msf-demo/"
   },
@@ -35,7 +35,7 @@
     "step": 5,
     "caption": "Step 5: Fill text, custom textarea, and date fields on page two",
     "description": "Fill text, custom textarea, and date fields on page two",
-    "narration": "After that, we fill text, custom textarea, and date fields on page two. This is exactly the repetitive work automation should steal from us.",
+    "narration": "Cue the montage. We fill text, custom textarea, and date fields on page two. A little typing here saves a lot of future boredom.",
     "pause_ms": 550,
     "url": "https://mondula.com/msf-demo/"
   },
@@ -43,7 +43,7 @@
     "step": 6,
     "caption": "Step 6: Proceed to radio, checkbox, and dropdown inputs",
     "description": "Proceed to radio, checkbox, and dropdown inputs",
-    "narration": "Next, we proceed to radio, checkbox, and dropdown inputs. It keeps the flow easy to follow without sounding like a checklist.",
+    "narration": "Now the camera swings to the next beat. We proceed to radio, checkbox, and dropdown inputs. It keeps the flow easy to follow without sounding like a checklist.",
     "pause_ms": 700,
     "url": "https://mondula.com/msf-demo/"
   },
@@ -51,7 +51,7 @@
     "step": 7,
     "caption": "Step 7: Select a radio option, multiple checkboxes, and a dropdown value",
     "description": "Select a radio option, multiple checkboxes, and a dropdown value",
-    "narration": "From there, we select a radio option, multiple checkboxes, and a dropdown value. This keeps the flow deterministic instead of relying on page defaults.",
+    "narration": "Here comes the payoff shot. We select a radio option, multiple checkboxes, and a dropdown value. A clean selection like this keeps the workflow from improvising.",
     "pause_ms": 700,
     "url": "https://mondula.com/msf-demo/"
   },
@@ -59,7 +59,7 @@
     "step": 8,
     "caption": "Step 8: Open the conditional input section",
     "description": "Open the conditional input section",
-    "narration": "Now we open the conditional input section. It gives the walkthrough a clean starting point before the real automation work begins.",
+    "narration": "Quick scene change. We open the conditional input section. Now the viewer knows exactly where the story starts.",
     "pause_ms": 450,
     "url": "https://mondula.com/msf-demo/"
   },
@@ -67,7 +67,7 @@
     "step": 9,
     "caption": "Step 9: Fill conditional fields based on the selected dish",
     "description": "Fill conditional fields based on the selected dish",
-    "narration": "After that, we fill conditional fields based on the selected dish. This is exactly the repetitive work automation should steal from us.",
+    "narration": "Cue the montage. We fill conditional fields based on the selected dish. This is exactly the repetitive work automation should steal from us.",
     "pause_ms": 550,
     "url": "https://mondula.com/msf-demo/"
   },
@@ -75,7 +75,7 @@
     "step": 10,
     "caption": "Step 10: Move to the final contact-details page",
     "description": "Move to the final contact-details page",
-    "narration": "Next, we move to the final contact-details page. It keeps the viewer oriented instead of jumping around too abruptly.",
+    "narration": "Now the camera swings to the next beat. We move to the final contact-details page. A smooth move here makes the whole sequence easier on the eyes.",
     "pause_ms": 450,
     "url": "https://mondula.com/msf-demo/"
   },
@@ -83,7 +83,7 @@
     "step": 11,
     "caption": "Step 11: Fill final contact page with six required input fields",
     "description": "Fill final contact page with six required input fields",
-    "narration": "From there, we fill final contact page with six required input fields. This is exactly the repetitive work automation should steal from us.",
+    "narration": "Here comes the payoff shot. We fill final contact page with six required input fields. A little typing here saves a lot of future boredom.",
     "pause_ms": 550,
     "url": "https://mondula.com/msf-demo/"
   },
@@ -91,7 +91,7 @@
     "step": 12,
     "caption": "Step 12: Review summary and reach submit-ready final state",
     "description": "Review summary and reach submit-ready final state",
-    "narration": "Now we review summary and reach submit-ready final state. This is where the screen starts telling a story instead of just showing raw numbers.",
+    "narration": "Roll credits. We review summary and reach submit-ready final state. This is where the screen starts telling a story instead of just showing raw numbers.",
     "pause_ms": 900,
     "url": "https://mondula.com/msf-demo/"
   }

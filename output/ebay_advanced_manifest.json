@@ -47,7 +47,7 @@
       "timestamp": "2026-03-24T10:51:51.008986",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_01.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_01.png",
-      "narration": "Let's start by opening eBay Advanced Search. It gives the walkthrough a clean starting point before the real automation work begins.",
+      "narration": "And... action. Let's start by opening eBay Advanced Search. Every good walkthrough needs an establishing shot, and this is ours.",
       "pause_ms": 450
     },
     {
@@ -58,7 +58,7 @@
       "timestamp": "2026-03-24T10:51:53.093173",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_02.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_02.png",
-      "narration": "Next, we enter main search keywords. A little data entry here saves the same keystrokes on every future run.",
+      "narration": "Now the camera swings to the next beat. We enter main search keywords. This is the boring part, which makes it perfect for automation.",
       "pause_ms": 550
     },
     {
@@ -69,7 +69,7 @@
       "timestamp": "2026-03-24T10:51:55.326873",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_03.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_03.png",
-      "narration": "From there, we change the keyword match dropdown to exact order. It keeps the flow easy to follow without sounding like a checklist.",
+      "narration": "Here comes the payoff shot. We change the keyword match dropdown to exact order. It keeps the flow easy to follow without sounding like a checklist.",
       "pause_ms": 450
     },
     {
@@ -80,7 +80,7 @@
       "timestamp": "2026-03-24T10:51:57.377369",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_04.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_04.png",
-      "narration": "Now we enter words to exclude from results. A little data entry here saves the same keystrokes on every future run.",
+      "narration": "Quick scene change. We enter words to exclude from results. Nobody wins an award for manual retyping, so the automation can have this one.",
       "pause_ms": 550
     },
     {
@@ -91,7 +91,7 @@
       "timestamp": "2026-03-24T10:51:59.410433",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_05.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_05.png",
-      "narration": "After that, we include title and description in the search scope. It keeps the flow easy to follow without sounding like a checklist.",
+      "narration": "Cue the montage. We include title and description in the search scope. It keeps the flow easy to follow without sounding like a checklist.",
       "pause_ms": 450
     },
     {
@@ -102,7 +102,7 @@
       "timestamp": "2026-03-24T10:52:01.938639",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_06.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_06.png",
-      "narration": "Next, we set minimum and maximum price filters. Being explicit here keeps reruns consistent.",
+      "narration": "Now the camera swings to the next beat. We set minimum and maximum price filters. Being explicit here keeps reruns consistent.",
       "pause_ms": 550
     },
     {
@@ -113,7 +113,7 @@
       "timestamp": "2026-03-24T10:52:03.976065",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_07.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_07.png",
-      "narration": "From there, we filter for new-condition items. It keeps the flow easy to follow without sounding like a checklist.",
+      "narration": "Here comes the payoff shot. We filter for new-condition items. It keeps the flow easy to follow without sounding like a checklist.",
       "pause_ms": 450
     },
     {
@@ -124,7 +124,7 @@
       "timestamp": "2026-03-24T10:52:12.301473",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_08.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_08.png",
-      "narration": "Now we run the search and open the filtered results page. Once we run it, the page does the heavy lifting for us.",
+      "narration": "And that is our closing scene. We run the search and open the filtered results page. This is the button where all the setup finally pays off.",
       "pause_ms": 900
     }
   ]
