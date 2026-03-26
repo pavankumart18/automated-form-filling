@@ -103,6 +103,16 @@ TINKERCAD_FALLBACK_WAITING_ASIDES = [
     "A short beat while the gallery catches up.",
     "The page is thinking, so we give it a second.",
 ]
+INDIAN_VISA_WAITING_ASIDES = [
+    "This step can take a moment while the portal validates the travel details, so we wait.",
+    "The portal is still catching up here. We give it another beat and keep the flow calm.",
+    "A short pause here while the application refreshes the next set of options.",
+]
+INDIAN_VISA_FALLBACK_WAITING_ASIDES = [
+    "The portal is still loading, so we give it a second.",
+    "A short beat here while the travel options refresh.",
+    "Still processing, so we wait a moment.",
+]
 DEFAULT_TTS_DIRECTION = (
     "Perform this as a warm, human product-demo narrator with light cinematic polish. "
     "Use a measured, conversational pace and make every sentence easy to understand on the first listen. "
@@ -120,6 +130,7 @@ OVERPASS_FILLER_THRESHOLD_SEC = 7.4
 SCREENER_FILLER_THRESHOLD_SEC = 7.9
 ZOHO_FILLER_THRESHOLD_SEC = 8.9
 TINKERCAD_FILLER_THRESHOLD_SEC = 7.8
+INDIAN_VISA_FILLER_THRESHOLD_SEC = 7.5
 GERUND_OVERRIDES = {
     "open": "opening",
     "navigate": "navigating",
@@ -737,6 +748,21 @@ def is_tinkercad_step(description: str, url: str = "") -> bool:
     return "tinkercad.com" in lowered or any(token in lowered for token in tinkercad_tokens)
 
 
+def is_indian_visa_step(description: str, url: str = "") -> bool:
+    """Identify Indian eVisa steps for careful pacing on slow portal refreshes."""
+    lowered = f"{normalize_text(description).lower()} {url.lower()}".strip()
+    visa_tokens = [
+        "indian evisa",
+        "evisa",
+        "captcha step",
+        "nationality and passport type",
+        "port of arrival",
+        "visa service",
+        "date of arrival",
+    ]
+    return "indianvisaonline.gov.in" in lowered or any(token in lowered for token in visa_tokens)
+
+
 def cinematic_cue(step_num: int, total_steps: int, sensitive: bool) -> str:
     """Add a short cinematic expression to keep the delivery lively."""
     if step_num == total_steps:
@@ -783,6 +809,8 @@ def build_waiting_aside(step: dict, step_num: int) -> str:
         return pick_variant(ZOHO_WAITING_ASIDES, step_num)
     if is_tinkercad_step(description, url):
         return pick_variant(TINKERCAD_WAITING_ASIDES, step_num)
+    if is_indian_visa_step(description, url):
+        return pick_variant(INDIAN_VISA_WAITING_ASIDES, step_num)
     variants = WAITING_ASIDES_SAFE if is_sensitive_step(description, url) else WAITING_ASIDES
     return pick_variant(variants, step_num)
 
@@ -797,6 +825,8 @@ def build_fallback_waiting_aside(step: dict, step_num: int) -> str:
         return pick_variant(ZOHO_FALLBACK_WAITING_ASIDES, step_num)
     if is_tinkercad_step(step.get("description", ""), step.get("url", "")):
         return pick_variant(TINKERCAD_FALLBACK_WAITING_ASIDES, step_num)
+    if is_indian_visa_step(step.get("description", ""), step.get("url", "")):
+        return pick_variant(INDIAN_VISA_FALLBACK_WAITING_ASIDES, step_num)
     if is_sensitive_step(step.get("description", ""), step.get("url", "")):
         return "We will give the page a second."
     return pick_variant(FALLBACK_WAITING_ASIDES, step_num)
@@ -1154,6 +1184,11 @@ def should_add_waiting_aside(beat: dict) -> bool:
         threshold = ZOHO_FILLER_THRESHOLD_SEC
     elif is_tinkercad_step(description, url):
         threshold = TINKERCAD_FILLER_THRESHOLD_SEC
+    elif is_indian_visa_step(description, url):
+        lowered = description.lower()
+        if "port of arrival" not in lowered:
+            return False
+        threshold = max(INDIAN_VISA_FILLER_THRESHOLD_SEC, 12.0)
     else:
         threshold = LONG_STEP_FILLER_THRESHOLD_SEC
     return duration_sec >= threshold and "tutorial complete" not in description.lower()
@@ -1180,10 +1215,42 @@ def filler_offset_and_budget(beat: dict, start_sec: float, end_sec: float, durat
         filler_offset = start_sec + max(duration_sec * 0.63, 4.0)
         filler_budget = max(end_sec - filler_offset - 0.45, 2.0)
         return round(filler_offset, 3), round(filler_budget, 3)
+    if is_indian_visa_step(description, url):
+        filler_offset = start_sec + max(duration_sec * 0.38, 5.0)
+        filler_budget = max(end_sec - filler_offset - 0.55, 2.2)
+        return round(filler_offset, 3), round(filler_budget, 3)
 
     filler_offset = start_sec + max(duration_sec * 0.74, 4.0)
     filler_budget = max(end_sec - filler_offset - 0.45, 1.9)
     return round(filler_offset, 3), round(filler_budget, 3)
+
+
+def extra_waiting_segments(beat: dict, step_num: int, start_sec: float, end_sec: float, duration_sec: float) -> list[dict]:
+    """Return extra filler beats for unusually slow steps that need more than one cover line."""
+    description = beat.get("description", "")
+    url = beat.get("url", "")
+    if not is_indian_visa_step(description, url) or duration_sec < 18.0:
+        return []
+
+    second_offset = start_sec + max(duration_sec * 0.74, 18.0)
+    second_budget = max(end_sec - second_offset - 0.45, 2.0)
+    if second_budget < 2.0:
+        return []
+
+    fallback_text = pick_variant(INDIAN_VISA_FALLBACK_WAITING_ASIDES, step_num + 1)
+    return [
+        {
+            "segment_id": f"step_{step_num:02d}_wait_02",
+            "step": step_num,
+            "type": "filler",
+            "offset_sec": round(second_offset, 3),
+            "budget_sec": round(second_budget, 3),
+            "text": pick_variant(INDIAN_VISA_WAITING_ASIDES, step_num + 1),
+            "fallback_text": fallback_text,
+            "subtitle": fallback_text,
+            "target_window_end_sec": round(end_sec, 3),
+        }
+    ]
 
 
 def build_fallback_primary_narration(
@@ -1381,6 +1448,8 @@ def build_narration_timeline(beats: list[dict]) -> list[dict]:
                 "target_window_end_sec": round(end_sec, 3),
             }
         )
+
+        timeline.extend(extra_waiting_segments(beat, step_num, start_sec, end_sec, duration_sec))
 
     timeline.sort(key=lambda item: (item["offset_sec"], item["segment_id"]))
     return timeline

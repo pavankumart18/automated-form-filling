@@ -24,6 +24,11 @@ DEMO_PROMPT = (
     "Open indianvisaonline.gov.in eVisa application, fill fake applicant details, "
     "and stop safely before final submission."
 )
+STEP_PREVIEW_HOLD_SEC = 0.85
+SYNC_LOG_WAIT_SEC = 0.1
+STEP_EXTRA_SETTLE_SEC = 0.9
+SHORT_STEP_EXTRA_SETTLE_SEC = 1.1
+FINAL_PREVIEW_HOLD_SEC = 1.5
 
 
 def pause(seconds: float = 0.7):
@@ -205,35 +210,51 @@ def run():
         logger = StepLogger(DEMO_NAME)
 
         try:
+            def announce(description: str, hold_sec: float = STEP_PREVIEW_HOLD_SEC):
+                logger.preview(page, description, hold_sec=hold_sec)
+
             # Step 1
             goto_with_retry(page, "https://indianvisaonline.gov.in/evisa/tvoa.html", attempts=4)
             pause(1.2)
             logger.log(page, "Open the Indian eVisa portal home page")
 
             # Step 2
+            announce("Open the eVisa application form start page")
             close_modal_overlays(page)
             page.get_by_text("Apply here for e-visa", exact=True).click(force=True)
             page.wait_for_load_state("domcontentloaded")
             pause(1.2)
-            logger.log(page, "Open the eVisa application form start page")
+            logger.log(page, "Open the eVisa application form start page", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 3
+            announce("Select nationality and passport type for the applicant")
             safe_select_option(page, "#nationality_id", ["UNITED STATES OF AMERICA", "USA", "AMERICAN"])
             safe_select_option(page, "#ppt_type_id", ["ORDINARY PASSPORT", "Ordinary Passport"])
-            safe_select_option(page, "#missioncode_id", ["Delhi", "NEW DELHI"])
-            logger.log(page, "Select nationality, passport type, and port of arrival")
+            pause(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Select nationality and passport type for the applicant", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 4
+            announce("Choose the port of arrival for the application")
+            safe_select_option(page, "#missioncode_id", ["Delhi", "NEW DELHI"])
+            pause(SHORT_STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Choose the port of arrival for the application", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+
+            # Step 5
+            announce("Fill date of birth and email confirmation")
             set_text(page, "#dob_id", "15/03/1990")
             set_text(page, "#email_id", "john.smith.demo@example.com")
             set_text(page, "#email_re_id", "john.smith.demo@example.com")
-            logger.log(page, "Fill date of birth and email confirmation")
-
-            # Step 5
-            set_checkbox(page, 'input[name="evisa_service"][value="31"]')
-            logger.log(page, "Choose visa service: eTourist Visa (30 Days)")
+            pause(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Fill date of birth and email confirmation", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 6
+            announce("Choose visa service: eTourist Visa (30 Days)")
+            set_checkbox(page, 'input[name="evisa_service"][value="31"]')
+            pause(SHORT_STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Choose visa service: eTourist Visa (30 Days)", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+
+            # Step 7
+            announce("Set expected date of arrival and acknowledge instructions")
             # journey date is readonly, set via script and dispatch change.
             try:
                 page.evaluate(
@@ -250,11 +271,12 @@ def run():
             except Exception:
                 pass
             set_checkbox(page, "#read_instructions_check")
-            logger.log(page, "Set expected date of arrival and acknowledge instructions")
+            pause(SHORT_STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Set expected date of arrival and acknowledge instructions", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
-            # Step 7
-            logger.show_caption(page, "Captcha is required here. No captcha bypass is attempted.")
-            logger.log(page, "Stop at captcha step for safe, non-submitting demo", wait_sec=0.8)
+            # Step 8
+            announce("Stop at captcha step for safe, non-submitting demo", hold_sec=FINAL_PREVIEW_HOLD_SEC)
+            logger.log(page, "Stop at captcha step for safe, non-submitting demo", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Optional manual-assisted continuation.
             if prompt_captcha and not captcha_code:
@@ -275,7 +297,11 @@ def run():
 
         except Exception as error:
             print(f"\nERROR during recording: {error}")
-            logger.log(page, f"Error encountered: {str(error)[:80]}", wait_sec=0)
+            try:
+                if not page.is_closed():
+                    logger.log(page, f"Error encountered: {str(error)[:80]}", wait_sec=0)
+            except Exception:
+                pass
 
         finally:
             logger.save()
