@@ -61,6 +61,18 @@ FALLBACK_WAITING_ASIDES = [
     "We will let the page catch up.",
     "A quick beat while the results arrive.",
 ]
+OVERPASS_WAITING_ASIDES = [
+    "Hmm... the map is thinking for a second, which feels fair.",
+    "Tiny dramatic pause here. Even cartography likes a movie beat.",
+    "Looks like the map wants a second cup of coffee, so we wait.",
+    "I think it is still loading, so we let the map finish the thought.",
+]
+OVERPASS_FALLBACK_WAITING_ASIDES = [
+    "Hmm... the map is still thinking. Let's give it a second.",
+    "Quick pause here while the map catches up.",
+    "Even the map wants a little breath here.",
+    "I think it is loading, so we wait for the reveal.",
+]
 DEFAULT_TTS_DIRECTION = (
     "Perform this as a warm, human product-demo narrator with light cinematic polish. "
     "Use a measured, conversational pace and make every sentence easy to understand on the first listen. "
@@ -71,8 +83,10 @@ DEFAULT_TTS_DIRECTION = (
 )
 MAX_AUDIO_SPEEDUP = 1.4
 DEFAULT_AUDIO_PACE = 0.94
+FALLBACK_AUDIO_PACE = 0.96
 GEMINI_QUOTA_EXHAUSTED = False
 LONG_STEP_FILLER_THRESHOLD_SEC = 11.5
+OVERPASS_FILLER_THRESHOLD_SEC = 7.4
 GERUND_OVERRIDES = {
     "open": "opening",
     "navigate": "navigating",
@@ -621,6 +635,24 @@ def is_sensitive_step(description: str, url: str = "") -> bool:
     return any(token in lowered for token in ["visa", "passport", "captcha", "nationality", "government"])
 
 
+def is_overpass_step(description: str, url: str = "") -> bool:
+    """Identify Overpass/map-query steps so we can keep that demo playful but tight."""
+    lowered = f"{normalize_text(description).lower()} {url.lower()}".strip()
+    overpass_tokens = [
+        "overpass",
+        "query",
+        "geojson",
+        "charging station",
+        "map view",
+        "zoom to data",
+        "data tab",
+        "pharmacy",
+        "school",
+        "hospital",
+    ]
+    return "overpass-turbo" in lowered or any(token in lowered for token in overpass_tokens)
+
+
 def cinematic_cue(step_num: int, total_steps: int, sensitive: bool) -> str:
     """Add a short cinematic expression to keep the delivery lively."""
     if step_num == total_steps:
@@ -659,12 +691,16 @@ def build_waiting_aside(step: dict, step_num: int) -> str:
     """Generate a short filler line for visibly slow steps."""
     description = step.get("description", "")
     url = step.get("url", "")
+    if is_overpass_step(description, url):
+        return pick_variant(OVERPASS_WAITING_ASIDES, step_num)
     variants = WAITING_ASIDES_SAFE if is_sensitive_step(description, url) else WAITING_ASIDES
     return pick_variant(variants, step_num)
 
 
 def build_fallback_waiting_aside(step: dict, step_num: int) -> str:
     """Generate a very short filler line for fallback narration."""
+    if is_overpass_step(step.get("description", ""), step.get("url", "")):
+        return pick_variant(OVERPASS_FALLBACK_WAITING_ASIDES, step_num)
     if is_sensitive_step(step.get("description", ""), step.get("url", "")):
         return "We will give the page a second."
     return pick_variant(FALLBACK_WAITING_ASIDES, step_num)
@@ -700,6 +736,138 @@ def compact_story_tail(description: str, url: str = "") -> str:
     return tail
 
 
+def overpass_fallback_line(description: str, step_num: int, total_steps: int) -> str | None:
+    """Return a concise, more interesting spoken line for Overpass steps."""
+    lowered = normalize_text(description).lower()
+
+    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+        return "That is the wrap."
+    if "open overpass turbo" in lowered:
+        return "Opening shot: Overpass Turbo, map ready, editor waiting."
+    if "split view" in lowered:
+        return "Editor left, map right. Nice."
+    if "write a hyderabad hospitals query" in lowered:
+        return "First question for the city: show us the hospitals in Hyderabad."
+    if "run query to load all mapped hospitals" in lowered:
+        return "And... run. Now we let the map do its detective work."
+    if "zoom to data" in lowered:
+        return "There we go, zoom straight to the results."
+    if "click map markers" in lowered:
+        return "Let's tap a marker and see the story behind the pin."
+    if "open data tab" in lowered:
+        return "Quick detour into Data view... this is the raw evidence."
+    if "switch back to map view" in lowered:
+        return "Back to the map. Easier to read."
+    if "replace with ev charging station query" in lowered:
+        return "Round two: same rhythm, new question... where are the charging stations?"
+    if "rendered; now compare" in lowered or "compare spread versus healthcare locations" in lowered:
+        return "Results are coming in. A little pause here while the map connects the dots."
+    if "run school query" in lowered:
+        return "Next scene: schools. Same city, new layer of the story."
+    if "add pharmacy query" in lowered:
+        return "Now pharmacies join the cast, and the city starts to feel complete."
+    if "single editor workflow" in lowered:
+        return "One editor, many datasets... that is the part I really like."
+    if "open export options" in lowered:
+        return "Open export. Now this can travel."
+    if "export supports geojson" in lowered or "choose geojson" in lowered:
+        return "GeoJSON, please. Clean handoff."
+
+    if step_num == total_steps:
+        return "That is the wrap."
+    return None
+
+
+def overpass_story_line(description: str) -> str | None:
+    """Return a richer primary narration line for Overpass that still fits the timing windows."""
+    lowered = normalize_text(description).lower()
+
+    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+        return "Final shot. We went from query editing to clean, exportable geo-data."
+    if "open overpass turbo" in lowered:
+        return "Opening shot. Overpass Turbo gives us a map, an editor, and a city-sized question."
+    if "split view" in lowered:
+        return "This framing helps immediately. Logic on one side, evidence on the other."
+    if "write a hyderabad hospitals query" in lowered:
+        return "Our first question is simple. Show us hospitals across Hyderabad, and keep the search area explicit."
+    if "run query to load all mapped hospitals" in lowered:
+        return "Now we run it. This is the part where the city answers back."
+    if "zoom to data" in lowered:
+        return "Instead of hunting around the map, we jump straight to where the results live."
+    if "click map markers" in lowered:
+        return "A marker turns the dots into actual places, with names, tags, and context."
+    if "open data tab" in lowered:
+        return "Data view is the reality check. The map looks nice, but the table tells the truth."
+    if "switch back to map view" in lowered:
+        return "Then we go back to the map, because spatial patterns are easier to feel than to read."
+    if "replace with ev charging station query" in lowered:
+        return "Same workflow, new question. This time we ask about charging stations instead of hospitals."
+    if "rendered; now compare" in lowered or "compare spread versus healthcare locations" in lowered:
+        return "Now the comparison gets interesting. Different services, same city, one visual frame."
+    if "run school query" in lowered:
+        return "Next layer: schools. The story gets better when we ask the city more than one question."
+    if "add pharmacy query" in lowered:
+        return "Now pharmacies join in, and the map starts feeling less like a query result and more like a city portrait."
+    if "single editor workflow" in lowered:
+        return "This is the quiet win. One editor lets us iterate across datasets without changing tools or losing context."
+    if "open export options" in lowered:
+        return "Once the map makes sense, export matters. A good demo should hand off cleanly to the next workflow."
+    if "export supports geojson" in lowered or "choose geojson" in lowered:
+        return "GeoJSON is the practical handoff here. Easy to carry into GIS tools, code, or a web map."
+    return None
+
+
+def narration_offset_sec(beat: dict) -> float:
+    """Place narration slightly inside the step so the screen establishes first."""
+    start_sec = float(beat.get("start_elapsed_sec", 0.0) or 0.0)
+    duration_sec = max(float(beat.get("duration_sec", 0.0) or 0.0), 0.1)
+    description = beat.get("description", "")
+    url = beat.get("url", "")
+
+    if is_overpass_step(description, url):
+        offset = 0.62 if duration_sec < 6.5 else 0.82
+    else:
+        offset = 0.32
+    return round(start_sec + offset, 3)
+
+
+def narration_primary_budget_sec(beat: dict) -> float:
+    """Reserve a smaller primary window on long Overpass steps so filler can land later."""
+    duration_sec = max(float(beat.get("duration_sec", 0.0) or 0.0), 0.1)
+    description = beat.get("description", "")
+    url = beat.get("url", "")
+
+    if is_overpass_step(description, url):
+        if duration_sec >= OVERPASS_FILLER_THRESHOLD_SEC:
+            return round(max(min(duration_sec * 0.48, duration_sec - 3.05), 3.15), 3)
+        return round(max(duration_sec * 0.7, 2.85), 3)
+    return round(max(duration_sec * (0.78 if duration_sec >= 7.0 else 0.93), 2.75), 3)
+
+
+def should_add_waiting_aside(beat: dict) -> bool:
+    """Decide whether a step deserves a second spoken beat during visible waiting."""
+    duration_sec = max(float(beat.get("duration_sec", 0.0) or 0.0), 0.1)
+    description = beat.get("description", "")
+    url = beat.get("url", "")
+    threshold = OVERPASS_FILLER_THRESHOLD_SEC if is_overpass_step(description, url) else LONG_STEP_FILLER_THRESHOLD_SEC
+    return duration_sec >= threshold and "tutorial complete" not in description.lower()
+
+
+def filler_offset_and_budget(beat: dict, start_sec: float, end_sec: float, duration_sec: float) -> tuple[float, float]:
+    """Choose a filler placement that lands in the back half of a long step."""
+    description = beat.get("description", "")
+    url = beat.get("url", "")
+
+    if is_overpass_step(description, url):
+        filler_offset = start_sec + max(duration_sec * 0.58, 4.35)
+        filler_budget = max(end_sec - filler_offset - 0.55, 2.2)
+        return round(filler_offset, 3), round(filler_budget, 3)
+
+    filler_offset = start_sec + max(duration_sec * 0.74, 4.0)
+    filler_budget = max(end_sec - filler_offset - 0.45, 1.9)
+    return round(filler_offset, 3), round(filler_budget, 3)
+
+
 def build_fallback_primary_narration(
     description: str,
     spoken_action: str,
@@ -710,6 +878,9 @@ def build_fallback_primary_narration(
 ) -> str:
     """Build a concise but less naive voice line that stays close to the screen action."""
     lowered = description.lower()
+    overpass_line = overpass_fallback_line(description, step_num, total_steps)
+    if overpass_line:
+        return overpass_line
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
         return "That completes the flow."
@@ -773,6 +944,7 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
     measured_start_sec = step_start_sec(step, 0.0)
     measured_end_sec = step_end_sec(step, measured_start_sec)
     measured_duration_sec = round(max(measured_end_sec - measured_start_sec, 0.1), 3)
+    overpass_primary = overpass_story_line(description) if is_overpass_step(description, url) else None
     commentary = narration_commentary(description, step_num, url)
     if len(spoken_action.split()) >= 6 and measured_duration_sec < 7.0:
         commentary = ""
@@ -782,7 +954,9 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
             return f"{base} {tail}".strip()
         return base.strip()
 
-    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+    if overpass_primary:
+        narration = overpass_primary
+    elif "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
         narration = f"{cue} The flow is ready to replay."
     elif "stop at captcha" in lowered or "captcha step" in lowered:
         narration = join_lines(f"{cue} We stop at the captcha step here.", commentary)
@@ -833,8 +1007,8 @@ def build_narration_timeline(beats: list[dict]) -> list[dict]:
         start_sec = float(beat.get("start_elapsed_sec", 0.0) or 0.0)
         end_sec = float(beat.get("end_elapsed_sec", start_sec) or start_sec)
         duration_sec = max(float(beat.get("duration_sec", end_sec - start_sec) or 0.0), 0.1)
-        offset_sec = round(start_sec + 0.32, 3)
-        primary_budget = max(duration_sec * (0.78 if duration_sec >= 7.0 else 0.93), 2.75)
+        offset_sec = narration_offset_sec(beat)
+        primary_budget = narration_primary_budget_sec(beat)
         timeline.append(
             {
                 "segment_id": f"step_{step_num:02d}_primary",
@@ -849,12 +1023,12 @@ def build_narration_timeline(beats: list[dict]) -> list[dict]:
             }
         )
 
-        if duration_sec < LONG_STEP_FILLER_THRESHOLD_SEC or "tutorial complete" in beat["description"].lower():
+        if not should_add_waiting_aside(beat):
             continue
 
-        filler_offset = start_sec + max(duration_sec * 0.74, 4.0)
-        filler_budget = max(end_sec - filler_offset - 0.45, 1.9)
-        if filler_budget < 1.9:
+        filler_offset, filler_budget = filler_offset_and_budget(beat, start_sec, end_sec, duration_sec)
+        minimum_budget = 2.2 if is_overpass_step(beat.get("description", ""), beat.get("url", "")) else 1.9
+        if filler_budget < minimum_budget:
             continue
 
         filler_text = build_waiting_aside(beat, step_num)
@@ -1032,7 +1206,7 @@ def synthesize_segment_audio(segment: dict, temp_dir: str):
         return None
 
     paced_path = f"{base_prefix}_paced.wav"
-    pace_factor = 1.0 if used_fallback else DEFAULT_AUDIO_PACE
+    pace_factor = FALLBACK_AUDIO_PACE if used_fallback else DEFAULT_AUDIO_PACE
     paced, _ = apply_audio_pace(normalized, pace_factor, paced_path)
 
     fitted_path = f"{base_prefix}_fitted.wav"

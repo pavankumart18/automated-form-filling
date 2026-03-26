@@ -44,10 +44,10 @@
       "caption": "Step 1: Open Overpass Turbo and load the map + query editor workspace",
       "description": "Open Overpass Turbo and load the map + query editor workspace",
       "url": "https://overpass-turbo.eu/#map=12/17.3850/78.4867",
-      "timestamp": "2026-03-26T08:56:06.149694",
+      "timestamp": "2026-03-26T09:20:18.819772",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_01.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_01.png",
-      "narration": "Here is the opening move. Let's start by opening Overpass Turbo and load the map + query editor workspace. This gives the whole demo a place to stand.",
+      "narration": "Opening shot. Overpass Turbo gives us a map, an editor, and a city-sized question.",
       "pause_ms": 920
     },
     {
@@ -55,10 +55,10 @@
       "caption": "Step 2: Split view: query editor on left, map + controls on right",
       "description": "Split view: query editor on left, map + controls on right",
       "url": "https://overpass-turbo.eu/#map=12/17.3850/78.4867",
-      "timestamp": "2026-03-26T08:56:10.092787",
+      "timestamp": "2026-03-26T09:20:22.764275",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_02.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_02.png",
-      "narration": "With the setup in place, we can chase the signal. We split view. Now the logic and the result can share the frame.",
+      "narration": "This framing helps immediately. Logic on one side, evidence on the other.",
       "pause_ms": 1200
     },
     {
@@ -66,10 +66,10 @@
       "caption": "Step 3: Write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box",
       "description": "Write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box",
       "url": "https://overpass-turbo.eu/#map=12/17.3850/78.4867",
-      "timestamp": "2026-03-26T08:56:19.060926",
+      "timestamp": "2026-03-26T09:20:34.330635",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_03.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_03.png",
-      "narration": "Now the target comes into focus. We write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box. Making the logic visible is what turns a demo into a recipe.",
+      "narration": "Our first question is simple. Show us hospitals across Hyderabad, and keep the search area explicit.",
       "pause_ms": 1050
     },
     {
@@ -77,10 +77,10 @@
       "caption": "Step 4: Run query to load all mapped hospitals as explorable markers",
       "description": "Run query to load all mapped hospitals as explorable markers",
       "url": "https://overpass-turbo.eu/#map=12/17.3850/78.4867",
-      "timestamp": "2026-03-26T08:56:28.678909",
+      "timestamp": "2026-03-26T09:20:45.892408",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_04.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_04.png",
-      "narration": "This is where the useful part starts. We run query to load all mapped hospitals as explorable markers. Now the page gets to do the heavy lifting.",
+      "narration": "Now we run it. This is the part where the city answers back.",
       "pause_ms": 1120
     },
     {
@@ -88,10 +88,10 @@
       "caption": "Step 5: Use 'zoom to data' to jump map viewport directly onto Hyderabad results",
       "description": "Use 'zoom to data' to jump map viewport directly onto Hyderabad results",
       "url": "https://overpass-turbo.eu/#",
-      "timestamp": "2026-03-26T08:56:30.903568",
+      "timestamp": "2026-03-26T09:20:50.564584",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_05.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_05.png",
-      "narration": "With the setup in place, we can chase the signal. We use 'zoom to data' to jump map viewport directly onto Hyderabad results.",
+      "narration": "Instead of hunting around the map, we jump straight to where the results live.",
       "pause_ms": 1200
     },
     {
@@ -99,10 +99,10 @@
       "caption": "Step 6: Click map markers to inspect feature tags like name, address, and amenity type",
       "description": "Click map markers to inspect feature tags like name, address, and amenity type",
       "url": "https://overpass-turbo.eu/#",
-      "timestamp": "2026-03-26T08:56:34.101140",
+      "timestamp": "2026-03-26T09:20:56.705229",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_06.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_06.png",
-      "narration": "Now the page has something to say. We click map markers to inspect feature tags like name, address, and amenity type.",
+      "narration": "A marker turns the dots into actual places, with names, tags, and context.",
       "pause_ms": 1200
     },
     {
@@ -110,10 +110,10 @@
       "caption": "Step 7: Open Data tab to inspect raw tabular output and OSM attributes",
       "description": "Open Data tab to inspect raw tabular output and OSM attributes",
       "url": "https://overpass-turbo.eu/#",
-      "timestamp": "2026-03-26T08:56:36.044409",
+      "timestamp": "2026-03-26T09:21:01.102414",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_07.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_07.png",
-      "narration": "This is where the pattern starts to show. We open Data tab to inspect raw tabular output and OSM attributes.",
+      "narration": "Data view is the reality check. The map looks nice, but the table tells the truth.",
       "pause_ms": 1200
     },
     {
@@ -121,10 +121,10 @@
       "caption": "Step 8: Switch back to Map view to visually compare coverage across neighborhoods",
       "description": "Switch back to Map view to visually compare coverage across neighborhoods",
       "url": "https://overpass-turbo.eu/#",
-      "timestamp": "2026-03-26T08:56:38.027597",
+      "timestamp": "2026-03-26T09:21:05.538805",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_08.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_08.png",
-      "narration": "Here the workflow stops posing and starts proving. We switch back to Map view to visually compare coverage across neighborhoods.",
+      "narration": "Then we go back to the map, because spatial patterns are easier to feel than to read.",
       "pause_ms": 1200
     },
     {
@@ -132,10 +132,10 @@
       "caption": "Step 9: Replace with EV charging station query to analyze clean-mobility readiness",
       "description": "Replace with EV charging station query to analyze clean-mobility readiness",
       "url": "https://overpass-turbo.eu/#",
-      "timestamp": "2026-03-26T08:56:47.812253",
+      "timestamp": "2026-03-26T09:21:17.775650",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_09.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_09.png",
-      "narration": "Now the page has something to say. We replace with EV charging station query to analyze clean-mobility readiness. Same rhythm, new question, and that is the whole point.",
+      "narration": "Same workflow, new question. This time we ask about charging stations instead of hospitals.",
       "pause_ms": 920
     },
     {
@@ -143,10 +143,10 @@
       "caption": "Step 10: EV charging points rendered; now compare spread versus healthcare locations",
       "description": "EV charging points rendered; now compare spread versus healthcare locations",
       "url": "https://overpass-turbo.eu/#",
-      "timestamp": "2026-03-26T08:56:57.410270",
+      "timestamp": "2026-03-26T09:21:29.321757",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_10.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_10.png",
-      "narration": "This is where the pattern starts to show. EV charging points are now on the map. We compare spread versus healthcare locations. Now the comparison is easy to read.",
+      "narration": "Now the comparison gets interesting. Different services, same city, one visual frame.",
       "pause_ms": 1200
     },
     {
@@ -154,10 +154,10 @@
       "caption": "Step 11: Run school query to map education infrastructure in the same city boundary",
       "description": "Run school query to map education infrastructure in the same city boundary",
       "url": "https://overpass-turbo.eu/#",
-      "timestamp": "2026-03-26T08:57:07.441024",
+      "timestamp": "2026-03-26T09:21:41.622178",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_11.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_11.png",
-      "narration": "Here the workflow stops posing and starts proving. We run school query to map education infrastructure in the same city boundary. This is where all the quiet setup finally earns applause.",
+      "narration": "Next layer: schools. The story gets better when we ask the city more than one question.",
       "pause_ms": 1120
     },
     {
@@ -165,10 +165,10 @@
       "caption": "Step 12: Add pharmacy query as a fourth dataset to build a richer city-services comparison",
       "description": "Add pharmacy query as a fourth dataset to build a richer city-services comparison",
       "url": "https://overpass-turbo.eu/#",
-      "timestamp": "2026-03-26T08:57:26.286925",
+      "timestamp": "2026-03-26T09:22:04.563654",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_12.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_12.png",
-      "narration": "Now the payoff is close enough to see. We add pharmacy query as a fourth dataset to build a richer city-services comparison. One more layer makes the picture richer without making it messy.",
+      "narration": "Now pharmacies join in, and the map starts feeling less like a query result and more like a city portrait.",
       "pause_ms": 1050
     },
     {
@@ -176,10 +176,10 @@
       "caption": "Step 13: Single editor workflow lets you iterate quickly across multiple urban datasets",
       "description": "Single editor workflow lets you iterate quickly across multiple urban datasets",
       "url": "https://overpass-turbo.eu/#",
-      "timestamp": "2026-03-26T08:57:34.896581",
+      "timestamp": "2026-03-26T09:22:15.304425",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_13.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_13.png",
-      "narration": "This is where the result starts to feel earned. We single editor workflow lets you iterate quickly across multiple urban datasets. It keeps the flow easy to follow without sounding like a checklist.",
+      "narration": "This is the quiet win. One editor lets us iterate across datasets without changing tools or losing context.",
       "pause_ms": 1050
     },
     {
@@ -187,10 +187,10 @@
       "caption": "Step 14: Open Export options for downstream GIS and analytics workflows",
       "description": "Open Export options for downstream GIS and analytics workflows",
       "url": "https://overpass-turbo.eu/#",
-      "timestamp": "2026-03-26T08:57:38.117677",
+      "timestamp": "2026-03-26T09:22:20.378698",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_14.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_14.png",
-      "narration": "From here, the workflow turns into something reusable. We open Export options for downstream GIS and analytics workflows.",
+      "narration": "Once the map makes sense, export matters. A good demo should hand off cleanly to the next workflow.",
       "pause_ms": 1120
     },
     {
@@ -198,10 +198,10 @@
       "caption": "Step 15: Export supports GeoJSON, KML, GPX, and raw OSM for different tools",
       "description": "Export supports GeoJSON, KML, GPX, and raw OSM for different tools",
       "url": "https://overpass-turbo.eu/#",
-      "timestamp": "2026-03-26T08:57:42.687359",
+      "timestamp": "2026-03-26T09:22:25.247775",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_15.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_15.png",
-      "narration": "Now the payoff is close enough to see. We export supports GeoJSON, KML, GPX, and raw OSM for different tools.",
+      "narration": "GeoJSON is the practical handoff here. Easy to carry into GIS tools, code, or a web map.",
       "pause_ms": 1120
     },
     {
@@ -209,10 +209,10 @@
       "caption": "Step 16: Tutorial complete: from iterative query editing to exportable, reproducible geo-data",
       "description": "Tutorial complete: from iterative query editing to exportable, reproducible geo-data",
       "url": "https://overpass-turbo.eu/#",
-      "timestamp": "2026-03-26T08:57:47.130020",
+      "timestamp": "2026-03-26T09:22:29.684434",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_16.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_16.png",
-      "narration": "That closes the loop cleanly. The flow is ready to replay.",
+      "narration": "Final shot. We went from query editing to clean, exportable geo-data.",
       "pause_ms": 1550
     }
   ]

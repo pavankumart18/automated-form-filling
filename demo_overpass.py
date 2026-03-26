@@ -23,13 +23,15 @@ DEMO_PROMPT = (
     "Map and Data views, then export the result."
 )
 HYD_BBOX = "(17.20,78.20,17.60,78.70)"
-STEP_PREVIEW_HOLD_SEC = 0.65
-ACTION_SETTLE_SEC = 1.15
-QUERY_TYPE_DELAY_MS = 24
-QUERY_TYPE_SETTLE_SEC = 1.0
-RUN_QUERY_WAIT_SEC = 7.6
-RUN_QUERY_SHORT_WAIT_SEC = 6.6
-MAP_CLICK_SETTLE_SEC = 1.0
+STEP_PREVIEW_HOLD_SEC = 0.95
+ACTION_SETTLE_SEC = 1.45
+QUERY_TYPE_DELAY_MS = 30
+QUERY_TYPE_SETTLE_SEC = 1.35
+RUN_QUERY_WAIT_SEC = 9.25
+RUN_QUERY_SHORT_WAIT_SEC = 8.45
+MAP_CLICK_SETTLE_SEC = 1.25
+SHORT_STEP_EXTRA_SETTLE_SEC = 2.15
+EXPORT_STEP_EXTRA_SETTLE_SEC = 1.55
 
 
 def first_visible(page: Page, selectors: list[str]):
@@ -241,15 +243,18 @@ out center;
             announce("Use 'zoom to data' to jump map viewport directly onto Hyderabad results")
             if not zoom_to_data(page):
                 set_hyderabad_view(page)
+            time.sleep(SHORT_STEP_EXTRA_SETTLE_SEC)
             logger.log(page, "Use 'zoom to data' to jump map viewport directly onto Hyderabad results", wait_sec=0, show_caption=False)
 
             announce("Click map markers to inspect feature tags like name, address, and amenity type")
             click_map_marker(page)
+            time.sleep(SHORT_STEP_EXTRA_SETTLE_SEC)
             logger.log(page, "Click map markers to inspect feature tags like name, address, and amenity type", wait_sec=0, show_caption=False)
 
             announce("Open Data tab to inspect raw tabular output and OSM attributes")
             data_opened = open_top_action(page, "Data")
             if data_opened:
+                time.sleep(SHORT_STEP_EXTRA_SETTLE_SEC)
                 rows = get_data_row_count(page)
                 if rows > 0:
                     logger.log(page, f"Open Data tab to inspect tabular results ({rows} rows visible)", wait_sec=0, show_caption=False)
@@ -260,6 +265,7 @@ out center;
 
             announce("Switch back to Map view to visually compare coverage across neighborhoods")
             open_top_action(page, "Map")
+            time.sleep(SHORT_STEP_EXTRA_SETTLE_SEC)
             logger.log(page, "Switch back to Map view to visually compare coverage across neighborhoods", wait_sec=0, show_caption=False)
 
             ev_query = """
@@ -317,6 +323,7 @@ out center;
             announce("Open Export options for downstream GIS and analytics workflows")
             exported = open_top_action(page, "Export")
             if exported:
+                time.sleep(EXPORT_STEP_EXTRA_SETTLE_SEC)
                 logger.log(page, "Open Export options for downstream GIS and analytics workflows", wait_sec=0, show_caption=False)
                 announce("Choose GeoJSON to move the result into QGIS, Python, or web map stacks")
                 geojson_clicked = click_any(
@@ -329,6 +336,7 @@ out center;
                     wait_after=0.8,
                 )
                 if geojson_clicked:
+                    time.sleep(EXPORT_STEP_EXTRA_SETTLE_SEC)
                     logger.log(page, "Choose GeoJSON to move the result into QGIS, Python, or web map stacks", wait_sec=0, show_caption=False)
                 else:
                     logger.log(page, "Export supports GeoJSON, KML, GPX, and raw OSM for different tools")
