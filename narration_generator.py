@@ -73,6 +73,16 @@ OVERPASS_FALLBACK_WAITING_ASIDES = [
     "Even the map wants a little breath here.",
     "I think it is loading, so we wait for the reveal.",
 ]
+SCREENER_WAITING_ASIDES = [
+    "The page is thinking for a second. Fair enough, markets are never in a hurry.",
+    "Quick pause here while Screener loads the next part of the story.",
+    "A short beat here. Even stock research likes a dramatic pause.",
+]
+SCREENER_FALLBACK_WAITING_ASIDES = [
+    "Quick pause while Screener catches up.",
+    "The page is loading, so we give it a second.",
+    "A short beat here while the data settles.",
+]
 DEFAULT_TTS_DIRECTION = (
     "Perform this as a warm, human product-demo narrator with light cinematic polish. "
     "Use a measured, conversational pace and make every sentence easy to understand on the first listen. "
@@ -87,6 +97,7 @@ FALLBACK_AUDIO_PACE = 0.96
 GEMINI_QUOTA_EXHAUSTED = False
 LONG_STEP_FILLER_THRESHOLD_SEC = 11.5
 OVERPASS_FILLER_THRESHOLD_SEC = 7.4
+SCREENER_FILLER_THRESHOLD_SEC = 7.9
 GERUND_OVERRIDES = {
     "open": "opening",
     "navigate": "navigating",
@@ -653,6 +664,25 @@ def is_overpass_step(description: str, url: str = "") -> bool:
     return "overpass-turbo" in lowered or any(token in lowered for token in overpass_tokens)
 
 
+def is_screener_step(description: str, url: str = "") -> bool:
+    """Identify Screener stock-research steps for custom story pacing."""
+    lowered = f"{normalize_text(description).lower()} {url.lower()}".strip()
+    screener_tokens = [
+        "screener.in",
+        "public screens",
+        "reliance industries",
+        "profit and loss",
+        "balance sheet",
+        "roe",
+        "roce",
+        "market cap",
+        "valuation snapshot",
+        "quarterly financial",
+        "bank of india",
+    ]
+    return "screener.in" in lowered or any(token in lowered for token in screener_tokens)
+
+
 def cinematic_cue(step_num: int, total_steps: int, sensitive: bool) -> str:
     """Add a short cinematic expression to keep the delivery lively."""
     if step_num == total_steps:
@@ -693,6 +723,8 @@ def build_waiting_aside(step: dict, step_num: int) -> str:
     url = step.get("url", "")
     if is_overpass_step(description, url):
         return pick_variant(OVERPASS_WAITING_ASIDES, step_num)
+    if is_screener_step(description, url):
+        return pick_variant(SCREENER_WAITING_ASIDES, step_num)
     variants = WAITING_ASIDES_SAFE if is_sensitive_step(description, url) else WAITING_ASIDES
     return pick_variant(variants, step_num)
 
@@ -701,6 +733,8 @@ def build_fallback_waiting_aside(step: dict, step_num: int) -> str:
     """Generate a very short filler line for fallback narration."""
     if is_overpass_step(step.get("description", ""), step.get("url", "")):
         return pick_variant(OVERPASS_FALLBACK_WAITING_ASIDES, step_num)
+    if is_screener_step(step.get("description", ""), step.get("url", "")):
+        return pick_variant(SCREENER_FALLBACK_WAITING_ASIDES, step_num)
     if is_sensitive_step(step.get("description", ""), step.get("url", "")):
         return "We will give the page a second."
     return pick_variant(FALLBACK_WAITING_ASIDES, step_num)
@@ -817,6 +851,67 @@ def overpass_story_line(description: str) -> str | None:
     return None
 
 
+def screener_fallback_line(description: str, step_num: int, total_steps: int) -> str | None:
+    """Return concise stock-research narration that fits tighter Screener windows."""
+    lowered = normalize_text(description).lower()
+
+    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+        return "That closes the research loop."
+    if "open screener.in" in lowered:
+        return "We open Screener and set the stage."
+    if "navigate directly to reliance industries" in lowered:
+        return "Straight to Reliance so the analysis starts fast."
+    if "view key metrics" in lowered:
+        return "This top block gives us the market snapshot."
+    if "review quarterly financial trends" in lowered:
+        return "Quarterly numbers tell us what changed recently."
+    if "inspect profit and loss" in lowered:
+        return "Profit and Loss shows how sales turn into earnings."
+    if "check balance sheet strength" in lowered:
+        return "Balance sheet tells us how sturdy the company looks."
+    if "open the public screens page" in lowered:
+        return "Now we jump to Public Screens for idea generation."
+    if "open a public screen" in lowered:
+        return "A public screen gives us a ready-made shortlist."
+    if "browse filtered companies" in lowered:
+        return "Here the table turns into a side-by-side comparison."
+    if "from the screen for deeper analysis" in lowered or "open any company from the screen results" in lowered:
+        return "Open one result and go deeper."
+
+    if step_num == total_steps:
+        return "That closes the research loop."
+    return None
+
+
+def screener_story_line(description: str) -> str | None:
+    """Return a richer, more human story line for Screener steps."""
+    lowered = normalize_text(description).lower()
+
+    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+        return "Final beat. We went from one company page to a reusable stock-research rhythm."
+    if "open screener.in" in lowered:
+        return "We start on Screener, which gets us from ticker to business story without wasting motion."
+    if "navigate directly to reliance industries" in lowered:
+        return "Rather than wander, we go straight to Reliance and start with a company most viewers already recognize."
+    if "view key metrics" in lowered:
+        return "This first block is the trailer: size, valuation, and return ratios in one quick glance."
+    if "review quarterly financial trends" in lowered:
+        return "Now we drop into the recent quarters, because the latest chapters matter more than the cover page."
+    if "inspect profit and loss" in lowered:
+        return "Profit and Loss tells us whether revenue is becoming a real business, not just a headline."
+    if "check balance sheet strength" in lowered:
+        return "Then we check the balance sheet, where leverage and resilience stop being opinions."
+    if "open the public screens page" in lowered:
+        return "Now we switch from one-company analysis to idea generation, and that is where Public Screens earns its keep."
+    if "open a public screen" in lowered:
+        return "A public screen is basically a ready-made hypothesis. One click, and the market starts shortlisting itself."
+    if "browse filtered companies" in lowered:
+        return "Now the table becomes a comparison board: valuation, returns, and size sitting side by side."
+    if "from the screen for deeper analysis" in lowered or "open any company from the screen results" in lowered:
+        return "From the shortlist, we open one company and turn a filter result into actual research."
+    return None
+
+
 def narration_offset_sec(beat: dict) -> float:
     """Place narration slightly inside the step so the screen establishes first."""
     start_sec = float(beat.get("start_elapsed_sec", 0.0) or 0.0)
@@ -826,6 +921,8 @@ def narration_offset_sec(beat: dict) -> float:
 
     if is_overpass_step(description, url):
         offset = 0.62 if duration_sec < 6.5 else 0.82
+    elif is_screener_step(description, url):
+        offset = 0.5 if duration_sec < 6.0 else 0.62
     else:
         offset = 0.32
     return round(start_sec + offset, 3)
@@ -841,6 +938,10 @@ def narration_primary_budget_sec(beat: dict) -> float:
         if duration_sec >= OVERPASS_FILLER_THRESHOLD_SEC:
             return round(max(min(duration_sec * 0.48, duration_sec - 3.05), 3.15), 3)
         return round(max(duration_sec * 0.7, 2.85), 3)
+    if is_screener_step(description, url):
+        if duration_sec >= SCREENER_FILLER_THRESHOLD_SEC:
+            return round(max(min(duration_sec * 0.62, duration_sec - 2.35), 3.1), 3)
+        return round(max(duration_sec * 0.78, 2.85), 3)
     return round(max(duration_sec * (0.78 if duration_sec >= 7.0 else 0.93), 2.75), 3)
 
 
@@ -849,7 +950,12 @@ def should_add_waiting_aside(beat: dict) -> bool:
     duration_sec = max(float(beat.get("duration_sec", 0.0) or 0.0), 0.1)
     description = beat.get("description", "")
     url = beat.get("url", "")
-    threshold = OVERPASS_FILLER_THRESHOLD_SEC if is_overpass_step(description, url) else LONG_STEP_FILLER_THRESHOLD_SEC
+    if is_overpass_step(description, url):
+        threshold = OVERPASS_FILLER_THRESHOLD_SEC
+    elif is_screener_step(description, url):
+        threshold = SCREENER_FILLER_THRESHOLD_SEC
+    else:
+        threshold = LONG_STEP_FILLER_THRESHOLD_SEC
     return duration_sec >= threshold and "tutorial complete" not in description.lower()
 
 
@@ -861,6 +967,10 @@ def filler_offset_and_budget(beat: dict, start_sec: float, end_sec: float, durat
     if is_overpass_step(description, url):
         filler_offset = start_sec + max(duration_sec * 0.58, 4.35)
         filler_budget = max(end_sec - filler_offset - 0.55, 2.2)
+        return round(filler_offset, 3), round(filler_budget, 3)
+    if is_screener_step(description, url):
+        filler_offset = start_sec + max(duration_sec * 0.63, 3.95)
+        filler_budget = max(end_sec - filler_offset - 0.45, 2.0)
         return round(filler_offset, 3), round(filler_budget, 3)
 
     filler_offset = start_sec + max(duration_sec * 0.74, 4.0)
@@ -881,6 +991,9 @@ def build_fallback_primary_narration(
     overpass_line = overpass_fallback_line(description, step_num, total_steps)
     if overpass_line:
         return overpass_line
+    screener_line = screener_fallback_line(description, step_num, total_steps)
+    if screener_line:
+        return screener_line
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
         return "That completes the flow."
@@ -945,6 +1058,7 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
     measured_end_sec = step_end_sec(step, measured_start_sec)
     measured_duration_sec = round(max(measured_end_sec - measured_start_sec, 0.1), 3)
     overpass_primary = overpass_story_line(description) if is_overpass_step(description, url) else None
+    screener_primary = screener_story_line(description) if is_screener_step(description, url) else None
     commentary = narration_commentary(description, step_num, url)
     if len(spoken_action.split()) >= 6 and measured_duration_sec < 7.0:
         commentary = ""
@@ -956,6 +1070,8 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
 
     if overpass_primary:
         narration = overpass_primary
+    elif screener_primary:
+        narration = screener_primary
     elif "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
         narration = f"{cue} The flow is ready to replay."
     elif "stop at captcha" in lowered or "captcha step" in lowered:
