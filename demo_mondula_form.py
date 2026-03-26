@@ -21,6 +21,13 @@ DEMO_PROMPT = (
     "Go to mondula.com/msf-demo, complete each step, fill at least six fields, "
     "and reach the submit-ready final state."
 )
+STEP_PREVIEW_HOLD_SEC = 0.85
+SYNC_LOG_WAIT_SEC = 0.1
+FIELD_TYPE_DELAY_MS = 78
+FIELD_SETTLE_SEC = 0.28
+STEP_EXTRA_SETTLE_SEC = 0.9
+SHORT_STEP_EXTRA_SETTLE_SEC = 1.1
+FINAL_PREVIEW_HOLD_SEC = 1.5
 
 
 def pause(seconds: float = 0.6):
@@ -76,7 +83,7 @@ def advance_to_step(page, expected_selector: str, max_attempts: int = 3) -> bool
     return is_visible(page, expected_selector)
 
 
-def set_text(page, selector: str, value: str, delay: int = 70, nth: int = 0) -> bool:
+def set_text(page, selector: str, value: str, delay: int = FIELD_TYPE_DELAY_MS, nth: int = 0) -> bool:
     field = page.locator(selector).nth(nth)
     try:
         if field.is_visible():
@@ -88,7 +95,7 @@ def set_text(page, selector: str, value: str, delay: int = 70, nth: int = 0) -> 
             except Exception:
                 pass
             field.type(value, delay=delay)
-            pause(0.2)
+            pause(FIELD_SETTLE_SEC)
             return True
     except Exception:
         pass
@@ -108,7 +115,7 @@ def set_text(page, selector: str, value: str, delay: int = 70, nth: int = 0) -> 
             """,
             [selector, value, nth],
         )
-        pause(0.2)
+        pause(FIELD_SETTLE_SEC)
         return True
     except Exception:
         return False
@@ -191,63 +198,85 @@ def run():
         logger = StepLogger(DEMO_NAME)
 
         try:
+            def announce(description: str, hold_sec: float = STEP_PREVIEW_HOLD_SEC):
+                logger.preview(page, description, hold_sec=hold_sec)
+
             # Step 1
             page.goto("https://mondula.com/msf-demo/", wait_until="networkidle", timeout=45000)
             dismiss_cookie_banner(page)
             logger.log(page, "Open the Mondula multi-step form demo page")
 
             # Step 2
+            announce("Move from the intro page to the first form step")
             advance_to_step(page, "#msf-text-example-textfield", max_attempts=4)
-            logger.log(page, "Move from the intro page to the first form step")
+            pause(SHORT_STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Move from the intro page to the first form step", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 3
+            announce("Fill first page text and textarea fields")
             set_text(page, "#msf-text-example-textfield", "Pavan Demo")
             set_text(
                 page,
                 "#msf-textarea-example-textarea",
                 "Testing a multi-page form automation workflow.",
             )
-            logger.log(page, "Fill first page text and textarea fields")
+            pause(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Fill first page text and textarea fields", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 4
+            announce("Go to the next page with additional input fields")
             advance_to_step(page, "#msf-date-date-field-with-calender-popup", max_attempts=4)
-            logger.log(page, "Go to the next page with additional input fields")
+            pause(SHORT_STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Go to the next page with additional input fields", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 5
+            announce("Fill text, custom textarea, and date fields on page two")
             set_text_all(page, "#msf-text-simple-text-field", ["Automation Field Value", "Second Value"])
             set_text(page, "#msf-textarea-custom-textarea", "This section demonstrates long-form answers.")
             set_text(page, "#msf-date-date-field-with-calender-popup", "03/13/2026")
-            logger.log(page, "Fill text, custom textarea, and date fields on page two")
+            pause(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Fill text, custom textarea, and date fields on page two", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 6
+            announce("Proceed to radio, checkbox, and dropdown inputs")
             advance_to_step(page, "#fw-12-3-0-0-1", max_attempts=4)
-            logger.log(page, "Proceed to radio, checkbox, and dropdown inputs")
+            pause(SHORT_STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Proceed to radio, checkbox, and dropdown inputs", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 7
+            announce("Select a radio option, multiple checkboxes, and a dropdown value")
             check_input(page, "#fw-12-3-0-0-2")
             check_input(page, "#fw-12-3-1-0-2")
             check_input(page, "#fw-12-3-1-0-5")
             select_index(page, "#msf-select-please-choose-a-option-from-the-list", 2)
-            logger.log(page, "Select a radio option, multiple checkboxes, and a dropdown value")
+            pause(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Select a radio option, multiple checkboxes, and a dropdown value", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 8
+            announce("Open the conditional input section")
             advance_to_step(page, "#msf-select-dish", max_attempts=4)
-            logger.log(page, "Open the conditional input section")
+            pause(SHORT_STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Open the conditional input section", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 9
+            announce("Fill conditional fields based on the selected dish")
             select_index(page, "#msf-select-dish", 1)  # Pizza
             check_input(page, "#fw-12-4-0-1-2")
             check_input(page, "#fw-12-4-0-2-2")
             check_input(page, "#fw-12-4-0-2-4")
             check_input(page, "#fw-12-4-0-3-2")
             check_input(page, "#fw-12-4-0-4-2")
-            logger.log(page, "Fill conditional fields based on the selected dish")
+            pause(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Fill conditional fields based on the selected dish", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 10
+            announce("Move to the final contact-details page")
             advance_to_step(page, "#msf-text-first-name", max_attempts=4)
-            logger.log(page, "Move to the final contact-details page")
+            pause(SHORT_STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Move to the final contact-details page", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 11
+            announce("Fill final contact page with six required input fields")
             set_text(page, "#msf-text-first-name", "Pavan")
             set_text(page, "#msf-text-last-name", "Kumar")
             set_text(page, "#msf-date-date-of-birth", "03/13/1992")
@@ -258,9 +287,11 @@ def run():
                 "#msf-textarea-feel-free-to-write-a-short-message",
                 "Please share plugin implementation details for production usage.",
             )
-            logger.log(page, "Fill final contact page with six required input fields")
+            pause(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Fill final contact page with six required input fields", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 12
+            announce("Review summary and reach submit-ready final state", hold_sec=FINAL_PREVIEW_HOLD_SEC)
             summary_btn = page.locator('button:has-text("SHOW SUMMARY"), a:has-text("SHOW SUMMARY")').first
             if summary_btn.is_visible():
                 summary_btn.click()
@@ -271,8 +302,8 @@ def run():
                 click_next_step(page)
                 pause(0.6)
 
-            logger.show_caption(page, "Form is complete and ready for submit.")
-            logger.log(page, "Review summary and reach submit-ready final state", wait_sec=0.8)
+            pause(SHORT_STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Review summary and reach submit-ready final state", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
         except Exception as error:
             print(f"\nERROR during recording: {error}")
