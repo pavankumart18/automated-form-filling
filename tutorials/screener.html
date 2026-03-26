@@ -341,19 +341,90 @@
             font-weight: 700;
         }
 
-        .shot-grid {
+        .storyboard-shell {
+            border-radius: 26px;
+            border: 1px solid var(--line);
+            background: var(--panel-strong);
+            box-shadow: var(--shadow);
+            padding: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 18px;
+            gap: 16px;
+            outline: none;
         }
 
-        .shot-card {
+        .storyboard-shell:focus-visible {
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.22), var(--shadow);
+        }
+
+        .storyboard-status {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .storyboard-frame {
+            position: relative;
             border-radius: 22px;
             overflow: hidden;
         }
 
-        .shot-card img,
-        .shot-card .shot-placeholder {
+        .storyboard-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+            border: 1px solid rgba(255, 255, 255, 0.72);
+            background: rgba(12, 19, 33, 0.58);
+            color: #ffffff;
+            width: 48px;
+            height: 48px;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+            opacity: 0.92;
+        }
+
+        .storyboard-button-prev {
+            left: 16px;
+        }
+
+        .storyboard-button-next {
+            right: 16px;
+        }
+
+        .storyboard-button:hover {
+            transform: translateY(-50%) scale(1.04);
+            background: rgba(12, 19, 33, 0.78);
+            opacity: 1;
+        }
+
+        .storyboard-track {
+            display: flex;
+            gap: 18px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+        }
+
+        .storyboard-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .storyboard-slide {
+            min-width: 100%;
+            scroll-snap-align: start;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.86);
+        }
+
+        .storyboard-image,
+        .storyboard-placeholder {
             width: 100%;
             aspect-ratio: 16 / 9;
             display: block;
@@ -361,17 +432,31 @@
             background: linear-gradient(135deg, rgba(15, 118, 110, 0.14), rgba(231, 111, 81, 0.12));
         }
 
-        .shot-placeholder {
+        .storyboard-placeholder {
             display: grid;
             place-items: center;
             color: var(--muted);
             font-weight: 700;
         }
 
-        .shot-body {
-            padding: 16px;
+        .storyboard-caption {
+            padding: 18px;
             display: grid;
             gap: 10px;
+        }
+
+        .storyboard-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .storyboard-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--ink);
         }
 
         .shot-step {
@@ -496,16 +581,23 @@
                 padding: 18px;
             }
 
-            .card-grid,
-            .shot-grid {
-                grid-template-columns: 1fr;
-            }
-
             .card-topline,
             .beat-head,
             .section-heading {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .storyboard-shell {
+                padding: 16px;
+            }
+
+            .storyboard-button-prev {
+                left: 10px;
+            }
+
+            .storyboard-button-next {
+                right: 10px;
             }
         }
     
@@ -536,14 +628,14 @@
             <div class="video-panel">
                 <div class="section-heading">
                     <h2>Watch The Demo</h2>
-                    <a class="button-ghost" href="../output/screener_final.webm?v=1774410211">Open raw asset</a>
+                    <a class="button-ghost" href="../output/screener_final.webm?v=1774494547">Open raw asset</a>
                 </div>
                 <p class="section-subtext">
                     This page pairs the final video with publishable screenshots and the exact rerun recipe.
                 </p>
                 <div class="video-frame">
-                    <video controls preload="metadata" poster="../output/screenshots/screener/step_01.png?v=1774410507">
-                        <source src="../output/screener_final.webm?v=1774410211" type="video/webm">
+                    <video controls preload="metadata" poster="../output/screenshots/screener/step_01.png?v=1774495753">
+                        <source src="../output/screener_final.webm?v=1774494547" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -598,121 +690,157 @@ python run_all.py --page-only</pre>
 
         <section class="section">
             <div class="section-heading">
-                <h2>Storyboard Screenshots</h2>
-                <p class="section-subtext">Every logged step now ships with a screenshot reference, not only a video file.</p>
+                <h2>Storyboard Slideshow</h2>
+                <p class="section-subtext">Slide through each screenshot one step at a time, with the image on top and the step content below.</p>
             </div>
-            <div class="shot-grid">
-                
-            <article class="shot-card">
-                <img src="../output/screenshots/screener/step_01.png?v=1774410507" alt="Step 1: Open Screener.in - India&#x27;s popular stock research platform" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 1</div>
+            
+        <div class="storyboard-shell" data-storyboard="screener" tabindex="0" aria-label="Storyboard slideshow for screener. Use left and right arrow keys to change slides.">
+            <div class="storyboard-status">
+                <strong>Storyboard Slideshow</strong>:
+                one step per slide with the screenshot on top and the step content below.
+            </div>
+            <div class="storyboard-status" data-storyboard-count="screener">Slide 1 of 11</div>
+            <div class="storyboard-frame">
+                <button class="storyboard-button storyboard-button-prev" type="button" data-storyboard-prev="screener" aria-label="Previous slide">&larr;</button>
+                <button class="storyboard-button storyboard-button-next" type="button" data-storyboard-next="screener" aria-label="Next slide">&rarr;</button>
+                <div class="storyboard-track" data-storyboard-track="screener">
+                    
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_01.png?v=1774495753" alt="Step 1: Open Screener.in - India&#x27;s popular stock research platform" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 1</div>
+                        <div class="storyboard-title">Step 1: Open Screener.in - India&#x27;s popular stock research platform</div>
+                    </div>
                     <p class="shot-description">Open Screener.in - India&#x27;s popular stock research platform</p>
                     <div class="shot-url"><a href="https://www.screener.in/" target="_blank" rel="noreferrer">https://www.screener.in/</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/screener/step_02.png?v=1774410507" alt="Step 2: Navigate directly to Reliance Industries company page" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 2</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_02.png?v=1774495753" alt="Step 2: Navigate directly to Reliance Industries company page" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 2</div>
+                        <div class="storyboard-title">Step 2: Navigate directly to Reliance Industries company page</div>
+                    </div>
                     <p class="shot-description">Navigate directly to Reliance Industries company page</p>
                     <div class="shot-url"><a href="https://www.screener.in/company/RELIANCE/" target="_blank" rel="noreferrer">https://www.screener.in/company/RELIANCE/</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/screener/step_03.png?v=1774410507" alt="Step 3: View key metrics - market cap, PE ratio, ROCE, and valuation snapshot" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 3</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_03.png?v=1774495753" alt="Step 3: View key metrics - market cap, PE ratio, ROCE, and valuation snapshot" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 3</div>
+                        <div class="storyboard-title">Step 3: View key metrics - market cap, PE ratio, ROCE, and valuation snapshot</div>
+                    </div>
                     <p class="shot-description">View key metrics - market cap, PE ratio, ROCE, and valuation snapshot</p>
                     <div class="shot-url"><a href="https://www.screener.in/company/RELIANCE/" target="_blank" rel="noreferrer">https://www.screener.in/company/RELIANCE/</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/screener/step_04.png?v=1774410507" alt="Step 4: Review quarterly financial trends to understand recent performance" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 4</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_04.png?v=1774495753" alt="Step 4: Review quarterly financial trends to understand recent performance" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 4</div>
+                        <div class="storyboard-title">Step 4: Review quarterly financial trends to understand recent performance</div>
+                    </div>
                     <p class="shot-description">Review quarterly financial trends to understand recent performance</p>
                     <div class="shot-url"><a href="https://www.screener.in/company/RELIANCE/#quarters" target="_blank" rel="noreferrer">https://www.screener.in/company/RELIANCE/#quarters</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/screener/step_05.png?v=1774410507" alt="Step 5: Inspect Profit and Loss details - revenue, expenses, and margins" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 5</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_05.png?v=1774495753" alt="Step 5: Inspect Profit and Loss details - revenue, expenses, and margins" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 5</div>
+                        <div class="storyboard-title">Step 5: Inspect Profit and Loss details - revenue, expenses, and margins</div>
+                    </div>
                     <p class="shot-description">Inspect Profit and Loss details - revenue, expenses, and margins</p>
                     <div class="shot-url"><a href="https://www.screener.in/company/RELIANCE/#profit-loss" target="_blank" rel="noreferrer">https://www.screener.in/company/RELIANCE/#profit-loss</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/screener/step_06.png?v=1774410507" alt="Step 6: Check balance sheet strength - assets, liabilities, and equity" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 6</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_06.png?v=1774495753" alt="Step 6: Check balance sheet strength - assets, liabilities, and equity" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 6</div>
+                        <div class="storyboard-title">Step 6: Check balance sheet strength - assets, liabilities, and equity</div>
+                    </div>
                     <p class="shot-description">Check balance sheet strength - assets, liabilities, and equity</p>
                     <div class="shot-url"><a href="https://www.screener.in/company/RELIANCE/#balance-sheet" target="_blank" rel="noreferrer">https://www.screener.in/company/RELIANCE/#balance-sheet</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/screener/step_07.png?v=1774410507" alt="Step 7: Open the Public Screens page to explore ready-made stock filters" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 7</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_07.png?v=1774495753" alt="Step 7: Open the Public Screens page to explore ready-made stock filters" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 7</div>
+                        <div class="storyboard-title">Step 7: Open the Public Screens page to explore ready-made stock filters</div>
+                    </div>
                     <p class="shot-description">Open the Public Screens page to explore ready-made stock filters</p>
                     <div class="shot-url"><a href="https://www.screener.in/screens/" target="_blank" rel="noreferrer">https://www.screener.in/screens/</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/screener/step_08.png?v=1774410507" alt="Step 8: Open a public screen to view companies matching prebuilt criteria" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 8</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_08.png?v=1774495753" alt="Step 8: Open a public screen to view companies matching prebuilt criteria" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 8</div>
+                        <div class="storyboard-title">Step 8: Open a public screen to view companies matching prebuilt criteria</div>
+                    </div>
                     <p class="shot-description">Open a public screen to view companies matching prebuilt criteria</p>
                     <div class="shot-url"><a href="https://www.screener.in/screens/343087/fii-buying/" target="_blank" rel="noreferrer">https://www.screener.in/screens/343087/fii-buying/</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/screener/step_09.png?v=1774410507" alt="Step 9: Browse filtered companies and compare PE, ROE, and market cap" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 9</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_09.png?v=1774495753" alt="Step 9: Browse filtered companies and compare PE, ROE, and market cap" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 9</div>
+                        <div class="storyboard-title">Step 9: Browse filtered companies and compare PE, ROE, and market cap</div>
+                    </div>
                     <p class="shot-description">Browse filtered companies and compare PE, ROE, and market cap</p>
                     <div class="shot-url"><a href="https://www.screener.in/screens/343087/fii-buying/" target="_blank" rel="noreferrer">https://www.screener.in/screens/343087/fii-buying/</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/screener/step_10.png?v=1774410507" alt="Step 10: Open Bank of India from the screen for deeper analysis" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 10</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_10.png?v=1774495753" alt="Step 10: Open Bank of India from the screen for deeper analysis" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 10</div>
+                        <div class="storyboard-title">Step 10: Open Bank of India from the screen for deeper analysis</div>
+                    </div>
                     <p class="shot-description">Open Bank of India from the screen for deeper analysis</p>
                     <div class="shot-url"><a href="https://www.screener.in/screens/343087/fii-buying/" target="_blank" rel="noreferrer">https://www.screener.in/screens/343087/fii-buying/</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/screener/step_11.png?v=1774410507" alt="Step 11: Tutorial complete - you can now research and compare stocks on Screener.in" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 11</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_11.png?v=1774495753" alt="Step 11: Tutorial complete - you can now research and compare stocks on Screener.in" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 11</div>
+                        <div class="storyboard-title">Step 11: Tutorial complete - you can now research and compare stocks on Screener.in</div>
+                    </div>
                     <p class="shot-description">Tutorial complete - you can now research and compare stocks on Screener.in</p>
                     <div class="shot-url"><a href="https://www.screener.in/screens/343087/fii-buying/" target="_blank" rel="noreferrer">https://www.screener.in/screens/343087/fii-buying/</a></div>
                 </div>
             </article>
             
+                </div>
             </div>
+        </div>
+    
         </section>
 
         <section class="section">
@@ -725,99 +853,99 @@ python run_all.py --page-only</pre>
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 1</span>
-                    <span class="pause-pill">Pause 0.45s</span>
+                    <span class="pause-pill">Pause 0.92s</span>
                 </div>
-                <p class="beat-text">And... action. Let&#x27;s start by opening Screener.in - India&#x27;s popular stock research platform. Every good walkthrough needs an establishing shot, and this is ours.</p>
+                <p class="beat-text">Here is the opening move. Let&#x27;s start by opening Screener.in. This gives the whole demo a place to stand.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 2</span>
-                    <span class="pause-pill">Pause 0.45s</span>
+                    <span class="pause-pill">Pause 0.92s</span>
                 </div>
-                <p class="beat-text">Now the camera swings to the next beat. We navigate directly to Reliance Industries company page. A clean jump like this keeps the momentum intact.</p>
+                <p class="beat-text">With the setup in place, we can chase the signal. We navigate directly to Reliance Industries company page.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 3</span>
-                    <span class="pause-pill">Pause 0.70s</span>
+                    <span class="pause-pill">Pause 1.20s</span>
                 </div>
-                <p class="beat-text">Here comes the payoff shot. We view key metrics - market cap, PE ratio, ROCE, and valuation snapshot. It gives us the quick snapshot before we go deeper.</p>
+                <p class="beat-text">Now the target comes into focus. We view key metrics. This is the first clean read on what matters.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 4</span>
-                    <span class="pause-pill">Pause 0.70s</span>
+                    <span class="pause-pill">Pause 1.20s</span>
                 </div>
-                <p class="beat-text">Quick scene change. We review quarterly financial trends to understand recent performance. Now the plot thickens, in the best spreadsheet kind of way.</p>
+                <p class="beat-text">This is where the pattern starts to show. We review quarterly financial trends to understand recent performance.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 5</span>
-                    <span class="pause-pill">Pause 0.70s</span>
+                    <span class="pause-pill">Pause 1.20s</span>
                 </div>
-                <p class="beat-text">Cue the montage. We inspect Profit and Loss details - revenue, expenses, and margins. This is where the small details quietly become the whole story.</p>
+                <p class="beat-text">Here the workflow stops posing and starts proving. We inspect Profit and Loss details. A quick inspection here saves a lot of guessing later.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 6</span>
-                    <span class="pause-pill">Pause 0.70s</span>
+                    <span class="pause-pill">Pause 1.20s</span>
                 </div>
-                <p class="beat-text">Now the camera swings to the next beat. We check balance sheet strength - assets, liabilities, and equity. One quick check here tells us whether things look solid or stretched.</p>
+                <p class="beat-text">Now the page has something to say. We check balance sheet strength. A fast check here tells us whether the foundation actually holds.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 7</span>
-                    <span class="pause-pill">Pause 0.45s</span>
+                    <span class="pause-pill">Pause 0.92s</span>
                 </div>
-                <p class="beat-text">Here comes the payoff shot. We open the Public Screens page to explore ready-made stock filters. Every good walkthrough needs an establishing shot, and this is ours.</p>
+                <p class="beat-text">This is where the pattern starts to show. We open the Public Screens page to explore ready-made stock filters.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 8</span>
-                    <span class="pause-pill">Pause 0.70s</span>
+                    <span class="pause-pill">Pause 1.20s</span>
                 </div>
-                <p class="beat-text">Quick scene change. We open a public screen to view companies matching prebuilt criteria. Now the viewer knows exactly where the story starts.</p>
+                <p class="beat-text">From here, the workflow turns into something reusable. We open a public screen to view companies matching prebuilt criteria.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 9</span>
-                    <span class="pause-pill">Pause 0.70s</span>
+                    <span class="pause-pill">Pause 1.20s</span>
                 </div>
-                <p class="beat-text">Cue the montage. We browse filtered companies and compare PE, ROE, and market cap. This keeps comparison easy without opening every result by hand.</p>
+                <p class="beat-text">Now the payoff is close enough to see. We browse filtered companies and compare PE, ROE, and market cap.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 10</span>
-                    <span class="pause-pill">Pause 0.45s</span>
+                    <span class="pause-pill">Pause 0.92s</span>
                 </div>
-                <p class="beat-text">Now the camera swings to the next beat. We open Bank of India from the screen for deeper analysis. Every good walkthrough needs an establishing shot, and this is ours.</p>
+                <p class="beat-text">This is where the result starts to feel earned. We open Bank of India from the screen for deeper analysis.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 11</span>
-                    <span class="pause-pill">Pause 0.90s</span>
+                    <span class="pause-pill">Pause 1.55s</span>
                 </div>
-                <p class="beat-text">And that is our closing scene. The flow is captured end to end and ready for a replay. The flow is now captured end to end and ready to replay or adapt.</p>
+                <p class="beat-text">That lands the result. The flow is ready to replay.</p>
             </article>
             
             </div>
@@ -830,5 +958,64 @@ python run_all.py --page-only</pre>
             so mismatches are visible during the build instead of surfacing in feedback later.
         </p>
     </main>
+    
+    <script>
+    (() => {
+      const storyboards = document.querySelectorAll('[data-storyboard]');
+      if (!storyboards.length) return;
+
+      storyboards.forEach((shell) => {
+        const key = shell.getAttribute('data-storyboard');
+        const track = shell.querySelector(`[data-storyboard-track="${key}"]`);
+        const count = shell.querySelector(`[data-storyboard-count="${key}"]`);
+        const prev = shell.querySelector(`[data-storyboard-prev="${key}"]`);
+        const next = shell.querySelector(`[data-storyboard-next="${key}"]`);
+        const slides = track ? Array.from(track.children) : [];
+        if (!track || !slides.length) return;
+
+        const slideSpan = () => {
+          const slideWidth = slides[0].getBoundingClientRect().width || 1;
+          return slideWidth + 18;
+        };
+
+        const currentIndex = () => {
+          const index = Math.round(track.scrollLeft / slideSpan());
+          return Math.max(0, Math.min(index, slides.length - 1));
+        };
+
+        const updateCount = () => {
+          const safeIndex = currentIndex();
+          if (count) count.textContent = `Slide ${safeIndex + 1} of ${slides.length}`;
+        };
+
+        const goToIndex = (index) => {
+          track.scrollTo({ left: index * slideSpan(), behavior: 'smooth' });
+          window.setTimeout(updateCount, 180);
+        };
+
+        const scrollBySlide = (direction) => {
+          const nextIndex = (currentIndex() + direction + slides.length) % slides.length;
+          goToIndex(nextIndex);
+        };
+
+        if (prev) prev.addEventListener('click', () => scrollBySlide(-1));
+        if (next) next.addEventListener('click', () => scrollBySlide(1));
+        shell.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            scrollBySlide(-1);
+          }
+          if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            scrollBySlide(1);
+          }
+        });
+        shell.addEventListener('click', () => shell.focus());
+        track.addEventListener('scroll', () => window.requestAnimationFrame(updateCount));
+        updateCount();
+      });
+    })();
+    </script>
+    
 </body>
 </html>

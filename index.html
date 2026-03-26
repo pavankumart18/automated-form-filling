@@ -341,19 +341,90 @@
             font-weight: 700;
         }
 
-        .shot-grid {
+        .storyboard-shell {
+            border-radius: 26px;
+            border: 1px solid var(--line);
+            background: var(--panel-strong);
+            box-shadow: var(--shadow);
+            padding: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 18px;
+            gap: 16px;
+            outline: none;
         }
 
-        .shot-card {
+        .storyboard-shell:focus-visible {
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.22), var(--shadow);
+        }
+
+        .storyboard-status {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .storyboard-frame {
+            position: relative;
             border-radius: 22px;
             overflow: hidden;
         }
 
-        .shot-card img,
-        .shot-card .shot-placeholder {
+        .storyboard-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+            border: 1px solid rgba(255, 255, 255, 0.72);
+            background: rgba(12, 19, 33, 0.58);
+            color: #ffffff;
+            width: 48px;
+            height: 48px;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+            opacity: 0.92;
+        }
+
+        .storyboard-button-prev {
+            left: 16px;
+        }
+
+        .storyboard-button-next {
+            right: 16px;
+        }
+
+        .storyboard-button:hover {
+            transform: translateY(-50%) scale(1.04);
+            background: rgba(12, 19, 33, 0.78);
+            opacity: 1;
+        }
+
+        .storyboard-track {
+            display: flex;
+            gap: 18px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+        }
+
+        .storyboard-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .storyboard-slide {
+            min-width: 100%;
+            scroll-snap-align: start;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.86);
+        }
+
+        .storyboard-image,
+        .storyboard-placeholder {
             width: 100%;
             aspect-ratio: 16 / 9;
             display: block;
@@ -361,17 +432,31 @@
             background: linear-gradient(135deg, rgba(15, 118, 110, 0.14), rgba(231, 111, 81, 0.12));
         }
 
-        .shot-placeholder {
+        .storyboard-placeholder {
             display: grid;
             place-items: center;
             color: var(--muted);
             font-weight: 700;
         }
 
-        .shot-body {
-            padding: 16px;
+        .storyboard-caption {
+            padding: 18px;
             display: grid;
             gap: 10px;
+        }
+
+        .storyboard-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .storyboard-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--ink);
         }
 
         .shot-step {
@@ -496,16 +581,23 @@
                 padding: 18px;
             }
 
-            .card-grid,
-            .shot-grid {
-                grid-template-columns: 1fr;
-            }
-
             .card-topline,
             .beat-head,
             .section-heading {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .storyboard-shell {
+                padding: 16px;
+            }
+
+            .storyboard-button-prev {
+                left: 10px;
+            }
+
+            .storyboard-button-next {
+                right: 10px;
             }
         }
     
@@ -549,7 +641,7 @@
             <div class="card-grid">
                 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/screener/step_01.png?v=1774410507" alt="Stock Research on Screener.in screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/screener/step_01.png?v=1774495753" alt="Stock Research on Screener.in screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">Financial Literacy</span>
@@ -569,14 +661,14 @@
                 </div>
                 <div class="card-actions">
                     <a class="button" href="tutorials/screener.html">Open Tutorial Page</a>
-                    <a class="button-ghost" href="output/screener_final.webm?v=1774410211">Open Video</a>
+                    <a class="button-ghost" href="output/screener_final.webm?v=1774494547">Open Video</a>
                 </div>
             </div>
         </article>
     
 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/zoho_invoice/step_01.png?v=1774410507" alt="Create a GST Invoice on Zoho screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/zoho_invoice/step_01.png?v=1774495753" alt="Create a GST Invoice on Zoho screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">Business Operations</span>
@@ -596,14 +688,14 @@
                 </div>
                 <div class="card-actions">
                     <a class="button" href="tutorials/zoho_invoice.html">Open Tutorial Page</a>
-                    <a class="button-ghost" href="output/zoho_invoice_final.webm?v=1774410256">Open Video</a>
+                    <a class="button-ghost" href="output/zoho_invoice_final.webm?v=1774494590">Open Video</a>
                 </div>
             </div>
         </article>
     
 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/tinkercad/step_01.png?v=1774410507" alt="3D Design in TinkerCAD screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/tinkercad/step_01.png?v=1774495753" alt="3D Design in TinkerCAD screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">Engineering &amp; Design</span>
@@ -623,14 +715,14 @@
                 </div>
                 <div class="card-actions">
                     <a class="button" href="tutorials/tinkercad.html">Open Tutorial Page</a>
-                    <a class="button-ghost" href="output/tinkercad_final.webm?v=1774410295">Open Video</a>
+                    <a class="button-ghost" href="output/tinkercad_final.webm?v=1774494621">Open Video</a>
                 </div>
             </div>
         </article>
     
 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/overpass_turbo/step_01.png?v=1774410507" alt="Query Geographic Data with Overpass Turbo screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/overpass_turbo/step_01.png?v=1774495753" alt="Query Geographic Data with Overpass Turbo screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">Data &amp; Research</span>
@@ -650,14 +742,14 @@
                 </div>
                 <div class="card-actions">
                     <a class="button" href="tutorials/overpass_turbo.html">Open Tutorial Page</a>
-                    <a class="button-ghost" href="output/overpass_turbo_final.webm?v=1774410374">Open Video</a>
+                    <a class="button-ghost" href="output/overpass_turbo_final.webm?v=1774495753">Open Video</a>
                 </div>
             </div>
         </article>
     
 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/mondula_form/step_01.png?v=1774410507" alt="Complete a Multi-Page Form on Mondula screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/mondula_form/step_01.png?v=1774495753" alt="Complete a Multi-Page Form on Mondula screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">Workflow Automation</span>
@@ -677,14 +769,14 @@
                 </div>
                 <div class="card-actions">
                     <a class="button" href="tutorials/mondula_form.html">Open Tutorial Page</a>
-                    <a class="button-ghost" href="output/mondula_form_final.webm?v=1774410432">Open Video</a>
+                    <a class="button-ghost" href="output/mondula_form_final.webm?v=1774494795">Open Video</a>
                 </div>
             </div>
         </article>
     
 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/indian_visa/step_01.png?v=1774410507" alt="Indian eVisa Form Walkthrough screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/indian_visa/step_01.png?v=1774495753" alt="Indian eVisa Form Walkthrough screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">Public Services</span>
@@ -704,14 +796,14 @@
                 </div>
                 <div class="card-actions">
                     <a class="button" href="tutorials/indian_visa.html">Open Tutorial Page</a>
-                    <a class="button-ghost" href="output/indian_visa_final.webm?v=1774410471">Open Video</a>
+                    <a class="button-ghost" href="output/indian_visa_final.webm?v=1774494824">Open Video</a>
                 </div>
             </div>
         </article>
     
 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/ebay_advanced/step_01.png?v=1774410507" alt="eBay Advanced Search Automation screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/ebay_advanced/step_01.png?v=1774495753" alt="eBay Advanced Search Automation screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">E-commerce</span>
@@ -731,7 +823,7 @@
                 </div>
                 <div class="card-actions">
                     <a class="button" href="tutorials/ebay_advanced.html">Open Tutorial Page</a>
-                    <a class="button-ghost" href="output/ebay_advanced_final.webm?v=1774410506">Open Video</a>
+                    <a class="button-ghost" href="output/ebay_advanced_final.webm?v=1774494848">Open Video</a>
                 </div>
             </div>
         </article>

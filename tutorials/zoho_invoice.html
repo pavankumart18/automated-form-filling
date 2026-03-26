@@ -341,19 +341,90 @@
             font-weight: 700;
         }
 
-        .shot-grid {
+        .storyboard-shell {
+            border-radius: 26px;
+            border: 1px solid var(--line);
+            background: var(--panel-strong);
+            box-shadow: var(--shadow);
+            padding: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 18px;
+            gap: 16px;
+            outline: none;
         }
 
-        .shot-card {
+        .storyboard-shell:focus-visible {
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.22), var(--shadow);
+        }
+
+        .storyboard-status {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .storyboard-frame {
+            position: relative;
             border-radius: 22px;
             overflow: hidden;
         }
 
-        .shot-card img,
-        .shot-card .shot-placeholder {
+        .storyboard-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+            border: 1px solid rgba(255, 255, 255, 0.72);
+            background: rgba(12, 19, 33, 0.58);
+            color: #ffffff;
+            width: 48px;
+            height: 48px;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+            opacity: 0.92;
+        }
+
+        .storyboard-button-prev {
+            left: 16px;
+        }
+
+        .storyboard-button-next {
+            right: 16px;
+        }
+
+        .storyboard-button:hover {
+            transform: translateY(-50%) scale(1.04);
+            background: rgba(12, 19, 33, 0.78);
+            opacity: 1;
+        }
+
+        .storyboard-track {
+            display: flex;
+            gap: 18px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+        }
+
+        .storyboard-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .storyboard-slide {
+            min-width: 100%;
+            scroll-snap-align: start;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.86);
+        }
+
+        .storyboard-image,
+        .storyboard-placeholder {
             width: 100%;
             aspect-ratio: 16 / 9;
             display: block;
@@ -361,17 +432,31 @@
             background: linear-gradient(135deg, rgba(15, 118, 110, 0.14), rgba(231, 111, 81, 0.12));
         }
 
-        .shot-placeholder {
+        .storyboard-placeholder {
             display: grid;
             place-items: center;
             color: var(--muted);
             font-weight: 700;
         }
 
-        .shot-body {
-            padding: 16px;
+        .storyboard-caption {
+            padding: 18px;
             display: grid;
             gap: 10px;
+        }
+
+        .storyboard-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .storyboard-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--ink);
         }
 
         .shot-step {
@@ -496,16 +581,23 @@
                 padding: 18px;
             }
 
-            .card-grid,
-            .shot-grid {
-                grid-template-columns: 1fr;
-            }
-
             .card-topline,
             .beat-head,
             .section-heading {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .storyboard-shell {
+                padding: 16px;
+            }
+
+            .storyboard-button-prev {
+                left: 10px;
+            }
+
+            .storyboard-button-next {
+                right: 10px;
             }
         }
     
@@ -536,14 +628,14 @@
             <div class="video-panel">
                 <div class="section-heading">
                     <h2>Watch The Demo</h2>
-                    <a class="button-ghost" href="../output/zoho_invoice_final.webm?v=1774410256">Open raw asset</a>
+                    <a class="button-ghost" href="../output/zoho_invoice_final.webm?v=1774494590">Open raw asset</a>
                 </div>
                 <p class="section-subtext">
                     This page pairs the final video with publishable screenshots and the exact rerun recipe.
                 </p>
                 <div class="video-frame">
-                    <video controls preload="metadata" poster="../output/screenshots/zoho_invoice/step_01.png?v=1774410507">
-                        <source src="../output/zoho_invoice_final.webm?v=1774410256" type="video/webm">
+                    <video controls preload="metadata" poster="../output/screenshots/zoho_invoice/step_01.png?v=1774495753">
+                        <source src="../output/zoho_invoice_final.webm?v=1774494590" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -598,131 +690,169 @@ python run_all.py --page-only</pre>
 
         <section class="section">
             <div class="section-heading">
-                <h2>Storyboard Screenshots</h2>
-                <p class="section-subtext">Every logged step now ships with a screenshot reference, not only a video file.</p>
+                <h2>Storyboard Slideshow</h2>
+                <p class="section-subtext">Slide through each screenshot one step at a time, with the image on top and the step content below.</p>
             </div>
-            <div class="shot-grid">
-                
-            <article class="shot-card">
-                <img src="../output/screenshots/zoho_invoice/step_01.png?v=1774410507" alt="Step 1: Open Zoho Invoice - free online invoicing tool for businesses" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 1</div>
+            
+        <div class="storyboard-shell" data-storyboard="zoho_invoice" tabindex="0" aria-label="Storyboard slideshow for zoho_invoice. Use left and right arrow keys to change slides.">
+            <div class="storyboard-status">
+                <strong>Storyboard Slideshow</strong>:
+                one step per slide with the screenshot on top and the step content below.
+            </div>
+            <div class="storyboard-status" data-storyboard-count="zoho_invoice">Slide 1 of 12</div>
+            <div class="storyboard-frame">
+                <button class="storyboard-button storyboard-button-prev" type="button" data-storyboard-prev="zoho_invoice" aria-label="Previous slide">&larr;</button>
+                <button class="storyboard-button storyboard-button-next" type="button" data-storyboard-next="zoho_invoice" aria-label="Next slide">&rarr;</button>
+                <div class="storyboard-track" data-storyboard-track="zoho_invoice">
+                    
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/zoho_invoice/step_01.png?v=1774495753" alt="Step 1: Open Zoho Invoice - free online invoicing tool for businesses" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 1</div>
+                        <div class="storyboard-title">Step 1: Open Zoho Invoice - free online invoicing tool for businesses</div>
+                    </div>
                     <p class="shot-description">Open Zoho Invoice - free online invoicing tool for businesses</p>
                     <div class="shot-url"><a href="https://www.zoho.com/in/invoice/" target="_blank" rel="noreferrer">https://www.zoho.com/in/invoice/</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/zoho_invoice/step_02.png?v=1774410507" alt="Step 2: Open the free invoice generator page - no login required" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 2</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/zoho_invoice/step_02.png?v=1774495753" alt="Step 2: Open the free invoice generator page - no login required" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 2</div>
+                        <div class="storyboard-title">Step 2: Open the free invoice generator page - no login required</div>
+                    </div>
                     <p class="shot-description">Open the free invoice generator page - no login required</p>
                     <div class="shot-url"><a href="https://www.zoho.com/in/invoice/free-invoice-generator.html" target="_blank" rel="noreferrer">https://www.zoho.com/in/invoice/free-invoice-generator.html</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/zoho_invoice/step_03.png?v=1774410507" alt="Step 3: Enter business details: company name, contact, and address" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 3</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/zoho_invoice/step_03.png?v=1774495753" alt="Step 3: Enter business details: company name, contact, and address" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 3</div>
+                        <div class="storyboard-title">Step 3: Enter business details: company name, contact, and address</div>
+                    </div>
                     <p class="shot-description">Enter business details: company name, contact, and address</p>
                     <div class="shot-url"><a href="https://www.zoho.com/in/invoice/free-invoice-generator.html" target="_blank" rel="noreferrer">https://www.zoho.com/in/invoice/free-invoice-generator.html</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/zoho_invoice/step_04.png?v=1774410507" alt="Step 4: Enter Bill To details for Acme Corp International" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 4</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/zoho_invoice/step_04.png?v=1774495753" alt="Step 4: Enter Bill To details for Acme Corp International" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 4</div>
+                        <div class="storyboard-title">Step 4: Enter Bill To details for Acme Corp International</div>
+                    </div>
                     <p class="shot-description">Enter Bill To details for Acme Corp International</p>
                     <div class="shot-url"><a href="https://www.zoho.com/in/invoice/free-invoice-generator.html" target="_blank" rel="noreferrer">https://www.zoho.com/in/invoice/free-invoice-generator.html</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/zoho_invoice/step_05.png?v=1774410507" alt="Step 5: Set invoice number to INV-2026-001" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 5</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/zoho_invoice/step_05.png?v=1774495753" alt="Step 5: Set invoice number to INV-2026-001" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 5</div>
+                        <div class="storyboard-title">Step 5: Set invoice number to INV-2026-001</div>
+                    </div>
                     <p class="shot-description">Set invoice number to INV-2026-001</p>
                     <div class="shot-url"><a href="https://www.zoho.com/in/invoice/free-invoice-generator.html" target="_blank" rel="noreferrer">https://www.zoho.com/in/invoice/free-invoice-generator.html</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/zoho_invoice/step_06.png?v=1774410507" alt="Step 6: Add line item 1 with quantity, rate, and GST" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 6</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/zoho_invoice/step_06.png?v=1774495753" alt="Step 6: Add line item 1 with quantity, rate, and GST" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 6</div>
+                        <div class="storyboard-title">Step 6: Add line item 1 with quantity, rate, and GST</div>
+                    </div>
                     <p class="shot-description">Add line item 1 with quantity, rate, and GST</p>
                     <div class="shot-url"><a href="https://www.zoho.com/in/invoice/free-invoice-generator.html" target="_blank" rel="noreferrer">https://www.zoho.com/in/invoice/free-invoice-generator.html</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/zoho_invoice/step_07.png?v=1774410507" alt="Step 7: Add line item 2: UI/UX Design services" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 7</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/zoho_invoice/step_07.png?v=1774495753" alt="Step 7: Add line item 2: UI/UX Design services" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 7</div>
+                        <div class="storyboard-title">Step 7: Add line item 2: UI/UX Design services</div>
+                    </div>
                     <p class="shot-description">Add line item 2: UI/UX Design services</p>
                     <div class="shot-url"><a href="https://www.zoho.com/in/invoice/free-invoice-generator.html" target="_blank" rel="noreferrer">https://www.zoho.com/in/invoice/free-invoice-generator.html</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/zoho_invoice/step_08.png?v=1774410507" alt="Step 8: Add line item 3: annual server hosting" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 8</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/zoho_invoice/step_08.png?v=1774495753" alt="Step 8: Add line item 3: annual server hosting" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 8</div>
+                        <div class="storyboard-title">Step 8: Add line item 3: annual server hosting</div>
+                    </div>
                     <p class="shot-description">Add line item 3: annual server hosting</p>
                     <div class="shot-url"><a href="https://www.zoho.com/in/invoice/free-invoice-generator.html" target="_blank" rel="noreferrer">https://www.zoho.com/in/invoice/free-invoice-generator.html</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/zoho_invoice/step_09.png?v=1774410507" alt="Step 9: Add payment notes and terms for the client" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 9</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/zoho_invoice/step_09.png?v=1774495753" alt="Step 9: Add payment notes and terms for the client" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 9</div>
+                        <div class="storyboard-title">Step 9: Add payment notes and terms for the client</div>
+                    </div>
                     <p class="shot-description">Add payment notes and terms for the client</p>
                     <div class="shot-url"><a href="https://www.zoho.com/in/invoice/free-invoice-generator.html" target="_blank" rel="noreferrer">https://www.zoho.com/in/invoice/free-invoice-generator.html</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/zoho_invoice/step_10.png?v=1774410507" alt="Step 10: Review subtotal, GST breakdown, and grand total" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 10</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/zoho_invoice/step_10.png?v=1774495753" alt="Step 10: Review subtotal, GST breakdown, and grand total" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 10</div>
+                        <div class="storyboard-title">Step 10: Review subtotal, GST breakdown, and grand total</div>
+                    </div>
                     <p class="shot-description">Review subtotal, GST breakdown, and grand total</p>
                     <div class="shot-url"><a href="https://www.zoho.com/in/invoice/free-invoice-generator.html" target="_blank" rel="noreferrer">https://www.zoho.com/in/invoice/free-invoice-generator.html</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/zoho_invoice/step_11.png?v=1774410507" alt="Step 11: Use Download/Print to export the invoice as PDF" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 11</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/zoho_invoice/step_11.png?v=1774495753" alt="Step 11: Use Download/Print to export the invoice as PDF" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 11</div>
+                        <div class="storyboard-title">Step 11: Use Download/Print to export the invoice as PDF</div>
+                    </div>
                     <p class="shot-description">Use Download/Print to export the invoice as PDF</p>
                     <div class="shot-url"><a href="https://www.zoho.com/in/invoice/free-invoice-generator.html" target="_blank" rel="noreferrer">https://www.zoho.com/in/invoice/free-invoice-generator.html</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/zoho_invoice/step_12.png?v=1774410507" alt="Step 12: Tutorial complete - create professional GST invoices in minutes" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 12</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/zoho_invoice/step_12.png?v=1774495753" alt="Step 12: Tutorial complete - create professional GST invoices in minutes" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 12</div>
+                        <div class="storyboard-title">Step 12: Tutorial complete - create professional GST invoices in minutes</div>
+                    </div>
                     <p class="shot-description">Tutorial complete - create professional GST invoices in minutes</p>
                     <div class="shot-url"><a href="https://www.zoho.com/in/invoice/free-invoice-generator.html" target="_blank" rel="noreferrer">https://www.zoho.com/in/invoice/free-invoice-generator.html</a></div>
                 </div>
             </article>
             
+                </div>
             </div>
+        </div>
+    
         </section>
 
         <section class="section">
@@ -735,108 +865,108 @@ python run_all.py --page-only</pre>
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 1</span>
-                    <span class="pause-pill">Pause 0.45s</span>
+                    <span class="pause-pill">Pause 0.92s</span>
                 </div>
-                <p class="beat-text">And... action. Let&#x27;s start by opening Zoho Invoice - free online invoicing tool for businesses. Every good walkthrough needs an establishing shot, and this is ours.</p>
+                <p class="beat-text">Here is the opening move. Let&#x27;s start by opening Zoho Invoice. This gives the whole demo a place to stand.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 2</span>
-                    <span class="pause-pill">Pause 0.45s</span>
+                    <span class="pause-pill">Pause 0.92s</span>
                 </div>
-                <p class="beat-text">Now the camera swings to the next beat. We open the free invoice generator page - no login required. Now the viewer knows exactly where the story starts.</p>
+                <p class="beat-text">With the setup in place, we can chase the signal. We open the free invoice generator page. From here, every click has context.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 3</span>
-                    <span class="pause-pill">Pause 0.55s</span>
+                    <span class="pause-pill">Pause 1.05s</span>
                 </div>
-                <p class="beat-text">Here comes the payoff shot. We enter business details: company name, contact, and address. A little data entry here saves the same keystrokes on every future run.</p>
+                <p class="beat-text">Now the target comes into focus. We enter business details. Every future rerun gets cheaper because of this little moment.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 4</span>
-                    <span class="pause-pill">Pause 0.55s</span>
+                    <span class="pause-pill">Pause 1.05s</span>
                 </div>
-                <p class="beat-text">Quick scene change. We enter Bill To details for Acme Corp International. Nobody wins an award for manual retyping, so the automation can have this one.</p>
+                <p class="beat-text">This is where the useful part starts. We enter Bill To details for Acme Corp International. The boring part belongs to automation, not to patience.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 5</span>
-                    <span class="pause-pill">Pause 0.55s</span>
+                    <span class="pause-pill">Pause 1.05s</span>
                 </div>
-                <p class="beat-text">Cue the montage. We set invoice number to INV-2026-001. Locking this down keeps the workflow sharp on every replay.</p>
+                <p class="beat-text">Here the workflow stops posing and starts proving. We set invoice number to INV-2026-001. This is where consistency gets baked into the flow.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 6</span>
-                    <span class="pause-pill">Pause 0.55s</span>
+                    <span class="pause-pill">Pause 1.05s</span>
                 </div>
-                <p class="beat-text">Now the camera swings to the next beat. We add line item 1 with quantity, rate, and GST. It is a nice reminder that the workflow can grow without turning brittle.</p>
+                <p class="beat-text">Now the page has something to say. We add line item 1 with quantity, rate, and GST. One more layer makes the picture richer without making it messy.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 7</span>
-                    <span class="pause-pill">Pause 0.55s</span>
+                    <span class="pause-pill">Pause 1.05s</span>
                 </div>
-                <p class="beat-text">Here comes the payoff shot. We add line item 2: UI/UX Design services. One more layer, and the story gets richer without getting messier.</p>
+                <p class="beat-text">This is where the pattern starts to show. We add line item 2. This expands the flow without breaking its rhythm.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 8</span>
-                    <span class="pause-pill">Pause 0.55s</span>
+                    <span class="pause-pill">Pause 1.05s</span>
                 </div>
-                <p class="beat-text">Quick scene change. We add line item 3: annual server hosting. This extra beat gives the demo a little more range without breaking its rhythm.</p>
+                <p class="beat-text">Here the workflow stops posing and starts proving. We add line item 3. Now the story has a little more range.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 9</span>
-                    <span class="pause-pill">Pause 0.55s</span>
+                    <span class="pause-pill">Pause 1.05s</span>
                 </div>
-                <p class="beat-text">Cue the montage. We add payment notes and terms for the client. It is a nice reminder that the workflow can grow without turning brittle.</p>
+                <p class="beat-text">Now the payoff is close enough to see. We add payment notes and terms for the client. One more layer makes the picture richer without making it messy.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 10</span>
-                    <span class="pause-pill">Pause 0.70s</span>
+                    <span class="pause-pill">Pause 1.20s</span>
                 </div>
-                <p class="beat-text">Now the camera swings to the next beat. We review subtotal, GST breakdown, and grand total. Now the plot thickens, in the best spreadsheet kind of way.</p>
+                <p class="beat-text">This is where the result starts to feel earned. We review subtotal, GST breakdown, and grand total.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 11</span>
-                    <span class="pause-pill">Pause 0.65s</span>
+                    <span class="pause-pill">Pause 1.12s</span>
                 </div>
-                <p class="beat-text">Here comes the payoff shot. We use Download/Print to export the invoice as PDF. This is where the workflow earns its applause.</p>
+                <p class="beat-text">From here, the workflow turns into something reusable. We use Download/Print to export the invoice as PDF.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 12</span>
-                    <span class="pause-pill">Pause 0.90s</span>
+                    <span class="pause-pill">Pause 1.55s</span>
                 </div>
-                <p class="beat-text">Roll credits. The flow is captured end to end and ready for a replay. The flow is now captured end to end and ready to replay or adapt.</p>
+                <p class="beat-text">That is the payoff shot. The flow is ready to replay.</p>
             </article>
             
             </div>
@@ -849,5 +979,64 @@ python run_all.py --page-only</pre>
             so mismatches are visible during the build instead of surfacing in feedback later.
         </p>
     </main>
+    
+    <script>
+    (() => {
+      const storyboards = document.querySelectorAll('[data-storyboard]');
+      if (!storyboards.length) return;
+
+      storyboards.forEach((shell) => {
+        const key = shell.getAttribute('data-storyboard');
+        const track = shell.querySelector(`[data-storyboard-track="${key}"]`);
+        const count = shell.querySelector(`[data-storyboard-count="${key}"]`);
+        const prev = shell.querySelector(`[data-storyboard-prev="${key}"]`);
+        const next = shell.querySelector(`[data-storyboard-next="${key}"]`);
+        const slides = track ? Array.from(track.children) : [];
+        if (!track || !slides.length) return;
+
+        const slideSpan = () => {
+          const slideWidth = slides[0].getBoundingClientRect().width || 1;
+          return slideWidth + 18;
+        };
+
+        const currentIndex = () => {
+          const index = Math.round(track.scrollLeft / slideSpan());
+          return Math.max(0, Math.min(index, slides.length - 1));
+        };
+
+        const updateCount = () => {
+          const safeIndex = currentIndex();
+          if (count) count.textContent = `Slide ${safeIndex + 1} of ${slides.length}`;
+        };
+
+        const goToIndex = (index) => {
+          track.scrollTo({ left: index * slideSpan(), behavior: 'smooth' });
+          window.setTimeout(updateCount, 180);
+        };
+
+        const scrollBySlide = (direction) => {
+          const nextIndex = (currentIndex() + direction + slides.length) % slides.length;
+          goToIndex(nextIndex);
+        };
+
+        if (prev) prev.addEventListener('click', () => scrollBySlide(-1));
+        if (next) next.addEventListener('click', () => scrollBySlide(1));
+        shell.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            scrollBySlide(-1);
+          }
+          if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            scrollBySlide(1);
+          }
+        });
+        shell.addEventListener('click', () => shell.focus());
+        track.addEventListener('scroll', () => window.requestAnimationFrame(updateCount));
+        updateCount();
+      });
+    })();
+    </script>
+    
 </body>
 </html>

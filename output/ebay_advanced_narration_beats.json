@@ -3,64 +3,96 @@
     "step": 1,
     "caption": "Step 1: Open eBay Advanced Search",
     "description": "Open eBay Advanced Search",
-    "narration": "And... action. Let's start by opening eBay Advanced Search. Every good walkthrough needs an establishing shot, and this is ours.",
-    "pause_ms": 450,
-    "url": "https://www.ebay.com/sch/ebayadvsearch"
+    "narration": "Here is the opening move. Let's start by opening eBay Advanced Search. This gives the whole demo a place to stand.",
+    "fallback_narration": "We start by opening eBay Advanced Search. That gives the workflow a stage.",
+    "pause_ms": 920,
+    "url": "https://www.ebay.com/sch/ebayadvsearch",
+    "start_elapsed_sec": 0.0,
+    "end_elapsed_sec": 8.702,
+    "duration_sec": 8.702
   },
   {
     "step": 2,
     "caption": "Step 2: Enter main search keywords",
     "description": "Enter main search keywords",
-    "narration": "Now the camera swings to the next beat. We enter main search keywords. This is the boring part, which makes it perfect for automation.",
-    "pause_ms": 550,
-    "url": "https://www.ebay.com/sch/ebayadvsearch"
+    "narration": "With the setup in place, we can chase the signal. We enter main search keywords. This is the sort of repetition the workflow should steal from us.",
+    "fallback_narration": "Next, we enter main search keywords. This is where repetition gets retired.",
+    "pause_ms": 1050,
+    "url": "https://www.ebay.com/sch/ebayadvsearch",
+    "start_elapsed_sec": 8.702,
+    "end_elapsed_sec": 13.151,
+    "duration_sec": 4.449
   },
   {
     "step": 3,
     "caption": "Step 3: Change the keyword match dropdown to exact order",
     "description": "Change the keyword match dropdown to exact order",
-    "narration": "Here comes the payoff shot. We change the keyword match dropdown to exact order. It keeps the flow easy to follow without sounding like a checklist.",
-    "pause_ms": 450,
-    "url": "https://www.ebay.com/sch/ebayadvsearch"
+    "narration": "Now the page has something to say. We change the keyword match dropdown to exact order.",
+    "fallback_narration": "Change the keyword match dropdown to exact order.",
+    "pause_ms": 920,
+    "url": "https://www.ebay.com/sch/ebayadvsearch",
+    "start_elapsed_sec": 13.151,
+    "end_elapsed_sec": 17.713,
+    "duration_sec": 4.562
   },
   {
     "step": 4,
     "caption": "Step 4: Enter words to exclude from results",
     "description": "Enter words to exclude from results",
-    "narration": "Quick scene change. We enter words to exclude from results. Nobody wins an award for manual retyping, so the automation can have this one.",
-    "pause_ms": 550,
-    "url": "https://www.ebay.com/sch/ebayadvsearch"
+    "narration": "This is where the pattern starts to show. We enter words to exclude from results.",
+    "fallback_narration": "Next, we enter words to exclude from results. This is where repetition gets retired.",
+    "pause_ms": 1050,
+    "url": "https://www.ebay.com/sch/ebayadvsearch",
+    "start_elapsed_sec": 17.713,
+    "end_elapsed_sec": 22.113,
+    "duration_sec": 4.4
   },
   {
     "step": 5,
     "caption": "Step 5: Include title and description in the search scope",
     "description": "Include title and description in the search scope",
-    "narration": "Cue the montage. We include title and description in the search scope. It keeps the flow easy to follow without sounding like a checklist.",
-    "pause_ms": 450,
-    "url": "https://www.ebay.com/sch/ebayadvsearch"
+    "narration": "Here the workflow stops posing and starts proving. We include title and description in the search scope.",
+    "fallback_narration": "Include title and description in the search scope.",
+    "pause_ms": 920,
+    "url": "https://www.ebay.com/sch/ebayadvsearch",
+    "start_elapsed_sec": 22.113,
+    "end_elapsed_sec": 26.516,
+    "duration_sec": 4.403
   },
   {
     "step": 6,
     "caption": "Step 6: Set minimum and maximum price filters",
     "description": "Set minimum and maximum price filters",
-    "narration": "Now the camera swings to the next beat. We set minimum and maximum price filters. Being explicit here keeps reruns consistent.",
-    "pause_ms": 550,
-    "url": "https://www.ebay.com/sch/ebayadvsearch"
+    "narration": "Now the payoff is close enough to see. We set minimum and maximum price filters.",
+    "fallback_narration": "Next, we set minimum and maximum price filters. That keeps the run honest.",
+    "pause_ms": 1050,
+    "url": "https://www.ebay.com/sch/ebayadvsearch",
+    "start_elapsed_sec": 26.516,
+    "end_elapsed_sec": 31.445,
+    "duration_sec": 4.929
   },
   {
     "step": 7,
     "caption": "Step 7: Filter for new-condition items",
     "description": "Filter for new-condition items",
-    "narration": "Here comes the payoff shot. We filter for new-condition items. It keeps the flow easy to follow without sounding like a checklist.",
-    "pause_ms": 450,
-    "url": "https://www.ebay.com/sch/ebayadvsearch"
+    "narration": "This is where the result starts to feel earned. We filter for new-condition items. It keeps the flow easy to follow without sounding like a checklist.",
+    "fallback_narration": "Filter for new-condition items.",
+    "pause_ms": 920,
+    "url": "https://www.ebay.com/sch/ebayadvsearch",
+    "start_elapsed_sec": 31.445,
+    "end_elapsed_sec": 35.832,
+    "duration_sec": 4.387
   },
   {
     "step": 8,
     "caption": "Step 8: Run the search and open the filtered results page",
     "description": "Run the search and open the filtered results page",
-    "narration": "And that is our closing scene. We run the search and open the filtered results page. This is the button where all the setup finally pays off.",
-    "pause_ms": 900,
-    "url": "https://www.ebay.com/sch/i.html?_nkw=Sony+WH-1000XM5&_in_kw=3&_ex_kw=broken+parts+only&LH_TitleDesc=1&_udlo=150&_udhi=400&LH_ItemCondition=1000"
+    "narration": "That lands the result. We run the search and open the filtered results page. This is where all the quiet setup finally earns applause.",
+    "fallback_narration": "That completes the flow. Here the setup turns into results.",
+    "pause_ms": 1550,
+    "url": "https://www.ebay.com/sch/i.html?_nkw=Sony+WH-1000XM5&_in_kw=3&_ex_kw=broken+parts+only&LH_TitleDesc=1&_udlo=150&_udhi=400&LH_ItemCondition=1000",
+    "start_elapsed_sec": 35.832,
+    "end_elapsed_sec": 46.525,
+    "duration_sec": 10.693
   }
 ]

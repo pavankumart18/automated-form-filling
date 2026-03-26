@@ -42,11 +42,26 @@ def get_media_duration(video_path: str) -> float:
     return float(result.stdout.strip())
 
 
+def load_narration_segments(narration_timeline_path: str | None) -> list[dict]:
+    """Load synthesized narration timeline segments if available."""
+    if not narration_timeline_path or not os.path.exists(narration_timeline_path):
+        return []
+
+    try:
+        with open(narration_timeline_path, encoding="utf-8") as f:
+            payload = json.load(f)
+        segments = payload.get("segments", [])
+        return segments if isinstance(segments, list) else []
+    except Exception:
+        return []
+
+
 def generate_caption_file(
     steps_json_path: str,
     video_duration: float,
     output_path: str,
     narration_beats_path: str | None = None,
+    narration_timeline_path: str | None = None,
 ):
     """
     Generate an SRT subtitle file from steps JSON.
@@ -60,6 +75,26 @@ def generate_caption_file(
     if num_steps == 0:
         return
 
+    narration_segments = load_narration_segments(narration_timeline_path)
+    if narration_segments:
+        with open(output_path, "w", encoding="utf-8") as f:
+            for index, segment in enumerate(narration_segments, start=1):
+                start_sec = max(0.0, float(segment.get("start_sec", segment.get("offset_sec", 0.0)) or 0.0))
+                fallback_duration = max(float(segment.get("clip_duration_sec", 0.0) or 0.0), 1.1)
+                end_sec = float(segment.get("end_sec", start_sec + fallback_duration) or (start_sec + fallback_duration))
+                start_sec = min(start_sec, video_duration)
+                end_sec = min(max(end_sec, start_sec + 0.2), video_duration)
+                subtitle = (segment.get("subtitle") or segment.get("text") or "").strip()
+                if not subtitle:
+                    continue
+
+                f.write(f"{index}\n")
+                f.write(f"{format_srt_time(start_sec)} --> {format_srt_time(end_sec)}\n")
+                f.write(f"{subtitle}\n\n")
+
+        print(f"  Captions generated from narration timeline: {output_path}")
+        return
+
     narration_beats = None
     if narration_beats_path and os.path.exists(narration_beats_path):
         try:
@@ -69,6 +104,38 @@ def generate_caption_file(
                 narration_beats = candidate_beats
         except Exception:
             narration_beats = None
+
+    timed_steps_available = all(
+        ("start_elapsed_sec" in step or "end_elapsed_sec" in step or "duration_sec" in step)
+        for step in steps
+    )
+    if timed_steps_available:
+        total_recorded_duration = 0.0
+        actual_ranges = []
+
+        previous_end = 0.0
+        for step in steps:
+            start_sec = float(step.get("start_elapsed_sec", previous_end) or previous_end)
+            end_sec = float(step.get("end_elapsed_sec", start_sec + float(step.get("duration_sec", 0.0) or 0.0)) or start_sec)
+            if end_sec <= start_sec:
+                end_sec = start_sec + max(float(step.get("duration_sec", 0.0) or 0.0), 0.4)
+            actual_ranges.append((start_sec, end_sec))
+            previous_end = end_sec
+            total_recorded_duration = max(total_recorded_duration, end_sec)
+
+        scale = (video_duration / total_recorded_duration) if total_recorded_duration > 0 else 1.0
+        with open(output_path, "w", encoding="utf-8") as f:
+            for index, step in enumerate(steps, start=1):
+                start_sec, end_sec = actual_ranges[index - 1]
+                caption_text = step["description"].strip()
+                scaled_start = min(start_sec * scale, video_duration)
+                scaled_end = min(max(end_sec * scale, scaled_start + 0.2), video_duration)
+                f.write(f"{index}\n")
+                f.write(f"{format_srt_time(scaled_start)} --> {format_srt_time(scaled_end)}\n")
+                f.write(f"{caption_text}\n\n")
+
+        print(f"  Captions generated from measured step timings: {output_path}")
+        return
 
     weights = []
     caption_texts = []
@@ -324,11 +391,13 @@ def process_demo(demo_name: str, fps: int = 5, crf: int = 55):
 
     if os.path.exists(steps_path):
         narration_beats_path = os.path.join(OUTPUT_DIR, f"{demo_name}_narration_beats.json")
+        narration_timeline_path = os.path.join(OUTPUT_DIR, f"{demo_name}_narration_timeline.json")
         generate_caption_file(
             steps_path,
             target_duration,
             srt_path,
             narration_beats_path=narration_beats_path,
+            narration_timeline_path=narration_timeline_path,
         )
 
         # Step 4: Burn captions

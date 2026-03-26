@@ -3,56 +3,84 @@
     "step": 1,
     "caption": "Step 1: Open the Indian eVisa portal home page",
     "description": "Open the Indian eVisa portal home page",
-    "narration": "And... action. Let's start by opening the Indian eVisa portal home page. This gets the right screen on stage before the real automation choreography begins.",
-    "pause_ms": 450,
-    "url": "https://indianvisaonline.gov.in/evisa/tvoa.html"
+    "narration": "Here is the opening move. Let's start by opening the Indian eVisa portal home page.",
+    "fallback_narration": "We start by opening the Indian eVisa portal home page. That gives the workflow a stage.",
+    "pause_ms": 920,
+    "url": "https://indianvisaonline.gov.in/evisa/tvoa.html",
+    "start_elapsed_sec": 0.0,
+    "end_elapsed_sec": 6.172,
+    "duration_sec": 6.172
   },
   {
     "step": 2,
     "caption": "Step 2: Open the eVisa application form start page",
     "description": "Open the eVisa application form start page",
-    "narration": "On the next screen. We open the eVisa application form start page. This gets the right screen on stage before the real automation choreography begins.",
-    "pause_ms": 450,
-    "url": "https://indianvisaonline.gov.in/evisa/Registration"
+    "narration": "On the next screen, the process stays easy to follow. We open the eVisa application form start page.",
+    "fallback_narration": "Next, we open the eVisa application form start page. That gives the workflow a stage.",
+    "pause_ms": 920,
+    "url": "https://indianvisaonline.gov.in/evisa/Registration",
+    "start_elapsed_sec": 6.172,
+    "end_elapsed_sec": 12.057,
+    "duration_sec": 5.885
   },
   {
     "step": 3,
     "caption": "Step 3: Select nationality, passport type, and port of arrival",
     "description": "Select nationality, passport type, and port of arrival",
-    "narration": "Now we continue. We select nationality, passport type, and port of arrival. This keeps the flow deterministic instead of relying on page defaults.",
-    "pause_ms": 550,
-    "url": "https://indianvisaonline.gov.in/evisa/Registration"
+    "narration": "We continue carefully from here. We select nationality, passport type, and port of arrival. A clean selection here keeps the run from improvising.",
+    "fallback_narration": "Next, we select nationality, passport type, and port of arrival. That keeps the flow deterministic.",
+    "pause_ms": 1050,
+    "url": "https://indianvisaonline.gov.in/evisa/Registration",
+    "start_elapsed_sec": 12.057,
+    "end_elapsed_sec": 47.686,
+    "duration_sec": 35.629
   },
   {
     "step": 4,
     "caption": "Step 4: Fill date of birth and email confirmation",
     "description": "Fill date of birth and email confirmation",
-    "narration": "Next beat. We fill date of birth and email confirmation. This is exactly the repetitive work automation should steal from us.",
-    "pause_ms": 550,
-    "url": "https://indianvisaonline.gov.in/evisa/Registration"
+    "narration": "Next, we keep the flow clear. We fill date of birth and email confirmation.",
+    "fallback_narration": "Next, we fill date of birth and email confirmation. The flow stays clear and respectful.",
+    "pause_ms": 1050,
+    "url": "https://indianvisaonline.gov.in/evisa/Registration",
+    "start_elapsed_sec": 47.686,
+    "end_elapsed_sec": 52.381,
+    "duration_sec": 4.695
   },
   {
     "step": 5,
     "caption": "Step 5: Choose visa service: eTourist Visa (30 Days)",
     "description": "Choose visa service: eTourist Visa (30 Days)",
-    "narration": "From here, we keep moving. We choose visa service: eTourist Visa (30 Days). Making the choice visible keeps the demo reproducible.",
-    "pause_ms": 550,
-    "url": "https://indianvisaonline.gov.in/evisa/Registration"
+    "narration": "Now we move one step further. We choose visa service. Keeping the choice visible is what makes the flow teachable.",
+    "fallback_narration": "Next, we choose visa service. The choice stays visible.",
+    "pause_ms": 1050,
+    "url": "https://indianvisaonline.gov.in/evisa/Registration",
+    "start_elapsed_sec": 52.381,
+    "end_elapsed_sec": 56.564,
+    "duration_sec": 4.183
   },
   {
     "step": 6,
     "caption": "Step 6: Set expected date of arrival and acknowledge instructions",
     "description": "Set expected date of arrival and acknowledge instructions",
-    "narration": "On the next screen. We set expected date of arrival and acknowledge instructions. Being explicit here keeps reruns consistent.",
-    "pause_ms": 550,
-    "url": "https://indianvisaonline.gov.in/evisa/Registration"
+    "narration": "On the next screen, the process stays easy to follow. We set expected date of arrival and acknowledge instructions.",
+    "fallback_narration": "Next, we set expected date of arrival and acknowledge instructions.",
+    "pause_ms": 1050,
+    "url": "https://indianvisaonline.gov.in/evisa/Registration",
+    "start_elapsed_sec": 56.564,
+    "end_elapsed_sec": 60.691,
+    "duration_sec": 4.127
   },
   {
     "step": 7,
     "caption": "Step 7: Stop at captcha step for safe, non-submitting demo",
     "description": "Stop at captcha step for safe, non-submitting demo",
-    "narration": "That is the hero shot. We intentionally stop at the captcha step here. That way the walkthrough stays safe while still showing the exact handoff point.",
-    "pause_ms": 900,
-    "url": "https://indianvisaonline.gov.in/evisa/Registration"
+    "narration": "That closes the loop cleanly. We stop at the captcha step here.",
+    "fallback_narration": "We stop at the captcha step here.",
+    "pause_ms": 1550,
+    "url": "https://indianvisaonline.gov.in/evisa/Registration",
+    "start_elapsed_sec": 60.691,
+    "end_elapsed_sec": 64.587,
+    "duration_sec": 3.896
   }
 ]

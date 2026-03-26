@@ -609,19 +609,90 @@ def shared_styles() -> str:
             font-weight: 700;
         }
 
-        .shot-grid {
+        .storyboard-shell {
+            border-radius: 26px;
+            border: 1px solid var(--line);
+            background: var(--panel-strong);
+            box-shadow: var(--shadow);
+            padding: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 18px;
+            gap: 16px;
+            outline: none;
         }
 
-        .shot-card {
+        .storyboard-shell:focus-visible {
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.22), var(--shadow);
+        }
+
+        .storyboard-status {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .storyboard-frame {
+            position: relative;
             border-radius: 22px;
             overflow: hidden;
         }
 
-        .shot-card img,
-        .shot-card .shot-placeholder {
+        .storyboard-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+            border: 1px solid rgba(255, 255, 255, 0.72);
+            background: rgba(12, 19, 33, 0.58);
+            color: #ffffff;
+            width: 48px;
+            height: 48px;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+            opacity: 0.92;
+        }
+
+        .storyboard-button-prev {
+            left: 16px;
+        }
+
+        .storyboard-button-next {
+            right: 16px;
+        }
+
+        .storyboard-button:hover {
+            transform: translateY(-50%) scale(1.04);
+            background: rgba(12, 19, 33, 0.78);
+            opacity: 1;
+        }
+
+        .storyboard-track {
+            display: flex;
+            gap: 18px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+        }
+
+        .storyboard-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .storyboard-slide {
+            min-width: 100%;
+            scroll-snap-align: start;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.86);
+        }
+
+        .storyboard-image,
+        .storyboard-placeholder {
             width: 100%;
             aspect-ratio: 16 / 9;
             display: block;
@@ -629,17 +700,31 @@ def shared_styles() -> str:
             background: linear-gradient(135deg, rgba(15, 118, 110, 0.14), rgba(231, 111, 81, 0.12));
         }
 
-        .shot-placeholder {
+        .storyboard-placeholder {
             display: grid;
             place-items: center;
             color: var(--muted);
             font-weight: 700;
         }
 
-        .shot-body {
-            padding: 16px;
+        .storyboard-caption {
+            padding: 18px;
             display: grid;
             gap: 10px;
+        }
+
+        .storyboard-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .storyboard-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--ink);
         }
 
         .shot-step {
@@ -764,16 +849,23 @@ def shared_styles() -> str:
                 padding: 18px;
             }
 
-            .card-grid,
-            .shot-grid {
-                grid-template-columns: 1fr;
-            }
-
             .card-topline,
             .beat-head,
             .section-heading {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .storyboard-shell {
+                padding: 16px;
+            }
+
+            .storyboard-button-prev {
+                left: 10px;
+            }
+
+            .storyboard-button-next {
+                right: 10px;
             }
         }
     """
@@ -829,15 +921,15 @@ def render_card(manifest: dict) -> str:
 
 
 def render_shot_cards(manifest: dict) -> str:
-    """Render screenshot cards for a demo detail page."""
+    """Render a slideshow-style storyboard for a demo detail page."""
     cards = []
     for step in manifest["steps"]:
         published = step.get("published_screenshot", "")
         image_markup = (
-            f'<img src="{html.escape(public_href(published, depth=1), quote=True)}" '
+            f'<img class="storyboard-image" src="{html.escape(public_href(published, depth=1), quote=True)}" '
             f'alt="{html.escape(step["caption"], quote=True)}" loading="lazy">'
             if published
-            else '<div class="shot-placeholder">Screenshot missing</div>'
+            else '<div class="storyboard-placeholder">Screenshot missing</div>'
         )
         url_markup = (
             f'<a href="{html.escape(step["url"], quote=True)}" target="_blank" rel="noreferrer">{html.escape(step["url"])}</a>'
@@ -847,10 +939,13 @@ def render_shot_cards(manifest: dict) -> str:
 
         cards.append(
             f"""
-            <article class="shot-card">
+            <article class="storyboard-slide">
                 {image_markup}
-                <div class="shot-body">
-                    <div class="shot-step">Step {step["step"]}</div>
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step {step["step"]}</div>
+                        <div class="storyboard-title">{html.escape(step["caption"])}</div>
+                    </div>
                     <p class="shot-description">{html.escape(step["description"])}</p>
                     <div class="shot-url">{url_markup}</div>
                 </div>
@@ -858,7 +953,27 @@ def render_shot_cards(manifest: dict) -> str:
             """
         )
 
-    return "\n".join(cards) if cards else '<div class="detail-panel">No screenshots were published for this demo yet.</div>'
+    if not cards:
+        return '<div class="detail-panel">No screenshots were published for this demo yet.</div>'
+
+    total_steps = len(manifest["steps"])
+    demo_name = html.escape(manifest["name"], quote=True)
+    return f"""
+        <div class="storyboard-shell" data-storyboard="{demo_name}" tabindex="0" aria-label="Storyboard slideshow for {demo_name}. Use left and right arrow keys to change slides.">
+            <div class="storyboard-status">
+                <strong>Storyboard Slideshow</strong>:
+                one step per slide with the screenshot on top and the step content below.
+            </div>
+            <div class="storyboard-status" data-storyboard-count="{demo_name}">Slide 1 of {total_steps}</div>
+            <div class="storyboard-frame">
+                <button class="storyboard-button storyboard-button-prev" type="button" data-storyboard-prev="{demo_name}" aria-label="Previous slide">&larr;</button>
+                <button class="storyboard-button storyboard-button-next" type="button" data-storyboard-next="{demo_name}" aria-label="Next slide">&rarr;</button>
+                <div class="storyboard-track" data-storyboard-track="{demo_name}">
+                    {"".join(cards)}
+                </div>
+            </div>
+        </div>
+    """
 
 
 def render_beat_cards(manifest: dict) -> str:
@@ -905,6 +1020,69 @@ def render_warning_box(manifest: dict) -> str:
                 </ul>
             </div>
         </section>
+    """
+
+
+def render_storyboard_script() -> str:
+    """Attach lightweight slideshow controls for detail pages."""
+    return """
+    <script>
+    (() => {
+      const storyboards = document.querySelectorAll('[data-storyboard]');
+      if (!storyboards.length) return;
+
+      storyboards.forEach((shell) => {
+        const key = shell.getAttribute('data-storyboard');
+        const track = shell.querySelector(`[data-storyboard-track="${key}"]`);
+        const count = shell.querySelector(`[data-storyboard-count="${key}"]`);
+        const prev = shell.querySelector(`[data-storyboard-prev="${key}"]`);
+        const next = shell.querySelector(`[data-storyboard-next="${key}"]`);
+        const slides = track ? Array.from(track.children) : [];
+        if (!track || !slides.length) return;
+
+        const slideSpan = () => {
+          const slideWidth = slides[0].getBoundingClientRect().width || 1;
+          return slideWidth + 18;
+        };
+
+        const currentIndex = () => {
+          const index = Math.round(track.scrollLeft / slideSpan());
+          return Math.max(0, Math.min(index, slides.length - 1));
+        };
+
+        const updateCount = () => {
+          const safeIndex = currentIndex();
+          if (count) count.textContent = `Slide ${safeIndex + 1} of ${slides.length}`;
+        };
+
+        const goToIndex = (index) => {
+          track.scrollTo({ left: index * slideSpan(), behavior: 'smooth' });
+          window.setTimeout(updateCount, 180);
+        };
+
+        const scrollBySlide = (direction) => {
+          const nextIndex = (currentIndex() + direction + slides.length) % slides.length;
+          goToIndex(nextIndex);
+        };
+
+        if (prev) prev.addEventListener('click', () => scrollBySlide(-1));
+        if (next) next.addEventListener('click', () => scrollBySlide(1));
+        shell.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            scrollBySlide(-1);
+          }
+          if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            scrollBySlide(1);
+          }
+        });
+        shell.addEventListener('click', () => shell.focus());
+        track.addEventListener('scroll', () => window.requestAnimationFrame(updateCount));
+        updateCount();
+      });
+    })();
+    </script>
     """
 
 
@@ -1090,12 +1268,10 @@ def render_detail_page(manifest: dict) -> str:
 
         <section class="section">
             <div class="section-heading">
-                <h2>Storyboard Screenshots</h2>
-                <p class="section-subtext">Every logged step now ships with a screenshot reference, not only a video file.</p>
+                <h2>Storyboard Slideshow</h2>
+                <p class="section-subtext">Slide through each screenshot one step at a time, with the image on top and the step content below.</p>
             </div>
-            <div class="shot-grid">
-                {render_shot_cards(manifest)}
-            </div>
+            {render_shot_cards(manifest)}
         </section>
 
         <section class="section">
@@ -1115,6 +1291,7 @@ def render_detail_page(manifest: dict) -> str:
             so mismatches are visible during the build instead of surfacing in feedback later.
         </p>
     </main>
+    {render_storyboard_script()}
 </body>
 </html>"""
 

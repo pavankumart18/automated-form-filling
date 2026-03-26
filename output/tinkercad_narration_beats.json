@@ -3,80 +3,120 @@
     "step": 1,
     "caption": "Step 1: Open TinkerCAD - Autodesk's free platform for 3D learning and design",
     "description": "Open TinkerCAD - Autodesk's free platform for 3D learning and design",
-    "narration": "And... action. Let's start by opening TinkerCAD - Autodesk's free platform for 3D learning and design. Every good walkthrough needs an establishing shot, and this is ours.",
-    "pause_ms": 450,
-    "url": "https://www.tinkercad.com/"
+    "narration": "Here is the opening move. Let's start by opening TinkerCAD. This gives the whole demo a place to stand.",
+    "fallback_narration": "We start by opening TinkerCAD. That gives the workflow a stage.",
+    "pause_ms": 920,
+    "url": "https://www.tinkercad.com/",
+    "start_elapsed_sec": 0.0,
+    "end_elapsed_sec": 8.268,
+    "duration_sec": 8.268
   },
   {
     "step": 2,
     "caption": "Step 2: Open the Learning Center where beginner tutorials are available without login",
     "description": "Open the Learning Center where beginner tutorials are available without login",
-    "narration": "Now the camera swings to the next beat. We open the Learning Center where beginner tutorials are available without login. Now the viewer knows exactly where the story starts.",
-    "pause_ms": 550,
-    "url": "https://www.tinkercad.com/learn/designs"
+    "narration": "With the setup in place, we can chase the signal. We open the Learning Center where beginner tutorials are available without login. From here, every click has context.",
+    "fallback_narration": "Next, we open the Learning Center where beginner tutorials are available without login. That gives the workflow a stage.",
+    "pause_ms": 1050,
+    "url": "https://www.tinkercad.com/learn/designs",
+    "start_elapsed_sec": 8.268,
+    "end_elapsed_sec": 17.198,
+    "duration_sec": 8.93
   },
   {
     "step": 3,
     "caption": "Step 3: Search for beginner 3D design tutorials using the search bar",
     "description": "Search for beginner 3D design tutorials using the search bar",
-    "narration": "Here comes the payoff shot. We search for beginner 3D design tutorials using the search bar. This is usually where people lose time, so automation earns its keep immediately.",
-    "pause_ms": 450,
-    "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics"
+    "narration": "Now the target comes into focus. We search for beginner 3D design tutorials using the search bar. That cuts straight through the hunting.",
+    "fallback_narration": "Next, we search for beginner 3D design tutorials using the search bar. That gets us to the signal fast.",
+    "pause_ms": 920,
+    "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
+    "start_elapsed_sec": 17.198,
+    "end_elapsed_sec": 24.713,
+    "duration_sec": 7.515
   },
   {
     "step": 4,
     "caption": "Step 4: Return to 3D Design tutorials for CAD-focused practice",
     "description": "Return to 3D Design tutorials for CAD-focused practice",
-    "narration": "Quick scene change. We return to 3D Design tutorials for CAD-focused practice. It keeps the flow easy to follow without sounding like a checklist.",
-    "pause_ms": 450,
-    "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics"
+    "narration": "This is where the pattern starts to show. We return to 3D Design tutorials for CAD-focused practice.",
+    "fallback_narration": "Return to 3D Design tutorials for CAD-focused practice.",
+    "pause_ms": 920,
+    "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
+    "start_elapsed_sec": 24.713,
+    "end_elapsed_sec": 28.634,
+    "duration_sec": 3.921
   },
   {
     "step": 5,
     "caption": "Step 5: Open a tutorial card to view guided learning content",
     "description": "Open a tutorial card to view guided learning content",
-    "narration": "Cue the montage. We open a tutorial card to view guided learning content. Now the viewer knows exactly where the story starts.",
-    "pause_ms": 700,
-    "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics"
+    "narration": "Here the workflow stops posing and starts proving. We open a tutorial card to view guided learning content.",
+    "fallback_narration": "Next, we open a tutorial card to view guided learning content.",
+    "pause_ms": 1200,
+    "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
+    "start_elapsed_sec": 28.634,
+    "end_elapsed_sec": 34.156,
+    "duration_sec": 5.522
   },
   {
     "step": 6,
     "caption": "Step 6: Scroll through the tutorial page to view lesson details and visuals",
     "description": "Scroll through the tutorial page to view lesson details and visuals",
-    "narration": "Now the camera swings to the next beat. We scroll through the tutorial page to view lesson details and visuals. It keeps the flow easy to follow without sounding like a checklist.",
-    "pause_ms": 700,
-    "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics"
+    "narration": "Now the page has something to say. We scroll through the tutorial page to view lesson details and visuals.",
+    "fallback_narration": "Scroll through the tutorial page to view lesson details and visuals.",
+    "pause_ms": 1200,
+    "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
+    "start_elapsed_sec": 34.156,
+    "end_elapsed_sec": 41.009,
+    "duration_sec": 6.853
   },
   {
     "step": 7,
     "caption": "Step 7: Open the TinkerCAD gallery to explore community designs",
     "description": "Open the TinkerCAD gallery to explore community designs",
-    "narration": "Here comes the payoff shot. We open the TinkerCAD gallery to explore community designs. Every good walkthrough needs an establishing shot, and this is ours.",
-    "pause_ms": 450,
-    "url": "https://www.tinkercad.com/things"
+    "narration": "This is where the pattern starts to show. We open the TinkerCAD gallery to explore community designs. This gives the whole demo a place to stand.",
+    "fallback_narration": "Next, we open the TinkerCAD gallery to explore community designs. That gives the workflow a stage.",
+    "pause_ms": 920,
+    "url": "https://www.tinkercad.com/things",
+    "start_elapsed_sec": 41.009,
+    "end_elapsed_sec": 56.382,
+    "duration_sec": 15.373
   },
   {
     "step": 8,
     "caption": "Step 8: Browse featured gallery designs for project inspiration",
     "description": "Browse featured gallery designs for project inspiration",
-    "narration": "Quick scene change. We browse featured gallery designs for project inspiration. Now the viewer can scan instead of slog, which is always a nice plot twist.",
-    "pause_ms": 700,
-    "url": "https://www.tinkercad.com/things"
+    "narration": "From here, the workflow turns into something reusable. We browse featured gallery designs for project inspiration. More clarity, fewer tiny detours.",
+    "fallback_narration": "Next, we browse featured gallery designs for project inspiration. Now comparison gets easier.",
+    "pause_ms": 1200,
+    "url": "https://www.tinkercad.com/things",
+    "start_elapsed_sec": 56.382,
+    "end_elapsed_sec": 65.353,
+    "duration_sec": 8.971
   },
   {
     "step": 9,
     "caption": "Step 9: Open a gallery design page to review details and references",
     "description": "Open a gallery design page to review details and references",
-    "narration": "Cue the montage. We open a gallery design page to review details and references. This gets the right screen on stage before the real automation choreography begins.",
-    "pause_ms": 700,
-    "url": "https://www.tinkercad.com/things/1IXJmC1WnYn-mushroom"
+    "narration": "Now the payoff is close enough to see. We open a gallery design page to review details and references.",
+    "fallback_narration": "Next, we open a gallery design page to review details and references.",
+    "pause_ms": 1200,
+    "url": "https://www.tinkercad.com/things/1IXJmC1WnYn-mushroom",
+    "start_elapsed_sec": 65.353,
+    "end_elapsed_sec": 70.675,
+    "duration_sec": 5.322
   },
   {
     "step": 10,
     "caption": "Step 10: Tutorial complete - start learning TinkerCAD with no-login resources",
     "description": "Tutorial complete - start learning TinkerCAD with no-login resources",
-    "narration": "That is the hero shot. The flow is captured end to end and ready for a replay. The flow is now captured end to end and ready to replay or adapt.",
-    "pause_ms": 900,
-    "url": "https://www.tinkercad.com/things/1IXJmC1WnYn-mushroom"
+    "narration": "That closes the loop cleanly. The flow is ready to replay.",
+    "fallback_narration": "That completes the flow.",
+    "pause_ms": 1550,
+    "url": "https://www.tinkercad.com/things/1IXJmC1WnYn-mushroom",
+    "start_elapsed_sec": 70.675,
+    "end_elapsed_sec": 76.191,
+    "duration_sec": 5.516
   }
 ]

@@ -23,6 +23,13 @@ DEMO_PROMPT = (
     "Map and Data views, then export the result."
 )
 HYD_BBOX = "(17.20,78.20,17.60,78.70)"
+STEP_PREVIEW_HOLD_SEC = 0.65
+ACTION_SETTLE_SEC = 1.15
+QUERY_TYPE_DELAY_MS = 24
+QUERY_TYPE_SETTLE_SEC = 1.0
+RUN_QUERY_WAIT_SEC = 7.6
+RUN_QUERY_SHORT_WAIT_SEC = 6.6
+MAP_CLICK_SETTLE_SEC = 1.0
 
 
 def first_visible(page: Page, selectors: list[str]):
@@ -37,7 +44,7 @@ def first_visible(page: Page, selectors: list[str]):
     return None
 
 
-def click_any(page: Page, selectors: list[str], wait_after: float = 0.8) -> bool:
+def click_any(page: Page, selectors: list[str], wait_after: float = ACTION_SETTLE_SEC) -> bool:
     """Click the first visible matching element."""
     target = first_visible(page, selectors)
     if not target:
@@ -58,7 +65,7 @@ def close_active_modal(page: Page):
     try:
         if active_modal.is_visible():
             page.keyboard.press("Escape")
-            time.sleep(0.7)
+            time.sleep(0.9)
     except Exception:
         pass
 
@@ -105,7 +112,7 @@ def set_hyderabad_view(page: Page):
         }
         """
     )
-    time.sleep(1.5)
+    time.sleep(2.0)
 
 
 def zoom_to_data(page: Page) -> bool:
@@ -131,7 +138,7 @@ def zoom_to_data(page: Page) -> bool:
         return False
     try:
         page.mouse.click(bounds["x"] + 24, bounds["y"] + 160)
-        time.sleep(1.0)
+        time.sleep(1.2)
         return True
     except Exception:
         return False
@@ -149,9 +156,9 @@ def click_map_marker(page: Page):
 
     # First click near map center, then nearby offset to increase chance of popup.
     page.mouse.click(bounds["x"] + bounds["width"] * 0.52, bounds["y"] + bounds["height"] * 0.43)
-    time.sleep(0.6)
+    time.sleep(MAP_CLICK_SETTLE_SEC)
     page.mouse.click(bounds["x"] + bounds["width"] * 0.58, bounds["y"] + bounds["height"] * 0.48)
-    time.sleep(0.8)
+    time.sleep(MAP_CLICK_SETTLE_SEC + 0.2)
 
 
 def get_data_row_count(page: Page) -> int:
@@ -170,17 +177,17 @@ def set_query_text(page: Page, query: str) -> bool:
     try:
         # Click inside left editor pane (stable across CodeMirror versions).
         page.mouse.click(220, 220)
-        time.sleep(0.2)
+        time.sleep(0.35)
         page.keyboard.press("Control+A")
         page.keyboard.press("Backspace")
-        page.keyboard.type(query, delay=12)
-        time.sleep(0.6)
+        page.keyboard.type(query, delay=QUERY_TYPE_DELAY_MS)
+        time.sleep(QUERY_TYPE_SETTLE_SEC)
         return True
     except Exception:
         return False
 
 
-def run_current_query(page: Page, wait_after: float = 6.0) -> bool:
+def run_current_query(page: Page, wait_after: float = RUN_QUERY_WAIT_SEC) -> bool:
     """Run the query currently in editor."""
     clicked = open_top_action(page, "Run")
     if not clicked:
@@ -210,6 +217,9 @@ def run():
 
             logger.log(page, "Split view: query editor on left, map + controls on right")
 
+            def announce(description: str):
+                logger.preview(page, description, hold_sec=STEP_PREVIEW_HOLD_SEC)
+
             hospital_query = """
 [out:json][timeout:25];
 (
@@ -219,32 +229,38 @@ def run():
 );
 out center;
             """.strip().replace("__BBOX__", HYD_BBOX)
+            announce("Write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box")
             if set_query_text(page, hospital_query):
-                logger.log(page, "Write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box")
-                run_current_query(page, wait_after=6.0)
-                logger.log(page, "Run query to load all mapped hospitals as explorable markers")
+                logger.log(page, "Write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box", wait_sec=0, show_caption=False)
+                announce("Run query to load all mapped hospitals as explorable markers")
+                run_current_query(page, wait_after=RUN_QUERY_WAIT_SEC)
+                logger.log(page, "Run query to load all mapped hospitals as explorable markers", wait_sec=0, show_caption=False)
             else:
                 logger.log(page, "If editor focus fails, click left pane, paste query, and press Run")
 
+            announce("Use 'zoom to data' to jump map viewport directly onto Hyderabad results")
             if not zoom_to_data(page):
                 set_hyderabad_view(page)
-            logger.log(page, "Use 'zoom to data' to jump map viewport directly onto Hyderabad results")
+            logger.log(page, "Use 'zoom to data' to jump map viewport directly onto Hyderabad results", wait_sec=0, show_caption=False)
 
+            announce("Click map markers to inspect feature tags like name, address, and amenity type")
             click_map_marker(page)
-            logger.log(page, "Click map markers to inspect feature tags like name, address, and amenity type")
+            logger.log(page, "Click map markers to inspect feature tags like name, address, and amenity type", wait_sec=0, show_caption=False)
 
+            announce("Open Data tab to inspect raw tabular output and OSM attributes")
             data_opened = open_top_action(page, "Data")
             if data_opened:
                 rows = get_data_row_count(page)
                 if rows > 0:
-                    logger.log(page, f"Open Data tab to inspect tabular results ({rows} rows visible)")
+                    logger.log(page, f"Open Data tab to inspect tabular results ({rows} rows visible)", wait_sec=0, show_caption=False)
                 else:
-                    logger.log(page, "Open Data tab to inspect raw tabular output and OSM attributes")
+                    logger.log(page, "Open Data tab to inspect raw tabular output and OSM attributes", wait_sec=0, show_caption=False)
             else:
                 logger.log(page, "Data tab can be used to validate each returned feature before export")
 
+            announce("Switch back to Map view to visually compare coverage across neighborhoods")
             open_top_action(page, "Map")
-            logger.log(page, "Switch back to Map view to visually compare coverage across neighborhoods")
+            logger.log(page, "Switch back to Map view to visually compare coverage across neighborhoods", wait_sec=0, show_caption=False)
 
             ev_query = """
 [out:json][timeout:25];
@@ -255,10 +271,12 @@ out center;
 );
 out center;
             """.strip().replace("__BBOX__", HYD_BBOX)
+            announce("Replace with EV charging station query to analyze clean-mobility readiness")
             if set_query_text(page, ev_query):
-                logger.log(page, "Replace with EV charging station query to analyze clean-mobility readiness")
-                run_current_query(page, wait_after=6.0)
-                logger.log(page, "EV charging points rendered; now compare spread versus healthcare locations")
+                logger.log(page, "Replace with EV charging station query to analyze clean-mobility readiness", wait_sec=0, show_caption=False)
+                announce("EV charging points rendered; now compare spread versus healthcare locations")
+                run_current_query(page, wait_after=RUN_QUERY_WAIT_SEC)
+                logger.log(page, "EV charging points rendered; now compare spread versus healthcare locations", wait_sec=0, show_caption=False)
                 if not zoom_to_data(page):
                     set_hyderabad_view(page)
 
@@ -271,9 +289,10 @@ out center;
 );
 out center;
             """.strip().replace("__BBOX__", HYD_BBOX)
+            announce("Run school query to map education infrastructure in the same city boundary")
             if set_query_text(page, schools_query):
-                logger.log(page, "Run school query to map education infrastructure in the same city boundary")
-                run_current_query(page, wait_after=6.0)
+                logger.log(page, "Run school query to map education infrastructure in the same city boundary", wait_sec=0, show_caption=False)
+                run_current_query(page, wait_after=RUN_QUERY_WAIT_SEC)
                 if not zoom_to_data(page):
                     set_hyderabad_view(page)
 
@@ -286,16 +305,20 @@ out center;
 );
 out center;
             """.strip().replace("__BBOX__", HYD_BBOX)
+            announce("Add pharmacy query as a fourth dataset to build a richer city-services comparison")
             if set_query_text(page, pharmacies_query):
-                logger.log(page, "Add pharmacy query as a fourth dataset to build a richer city-services comparison")
-                run_current_query(page, wait_after=5.0)
-                logger.log(page, "Single editor workflow lets you iterate quickly across multiple urban datasets")
+                logger.log(page, "Add pharmacy query as a fourth dataset to build a richer city-services comparison", wait_sec=0, show_caption=False)
+                announce("Single editor workflow lets you iterate quickly across multiple urban datasets")
+                run_current_query(page, wait_after=RUN_QUERY_SHORT_WAIT_SEC)
+                logger.log(page, "Single editor workflow lets you iterate quickly across multiple urban datasets", wait_sec=0, show_caption=False)
                 if not zoom_to_data(page):
                     set_hyderabad_view(page)
 
+            announce("Open Export options for downstream GIS and analytics workflows")
             exported = open_top_action(page, "Export")
             if exported:
-                logger.log(page, "Open Export options for downstream GIS and analytics workflows")
+                logger.log(page, "Open Export options for downstream GIS and analytics workflows", wait_sec=0, show_caption=False)
+                announce("Choose GeoJSON to move the result into QGIS, Python, or web map stacks")
                 geojson_clicked = click_any(
                     page,
                     [
@@ -306,7 +329,7 @@ out center;
                     wait_after=0.8,
                 )
                 if geojson_clicked:
-                    logger.log(page, "Choose GeoJSON to move the result into QGIS, Python, or web map stacks")
+                    logger.log(page, "Choose GeoJSON to move the result into QGIS, Python, or web map stacks", wait_sec=0, show_caption=False)
                 else:
                     logger.log(page, "Export supports GeoJSON, KML, GPX, and raw OSM for different tools")
             else:

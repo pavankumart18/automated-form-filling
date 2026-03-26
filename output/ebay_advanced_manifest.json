@@ -44,88 +44,88 @@
       "caption": "Step 1: Open eBay Advanced Search",
       "description": "Open eBay Advanced Search",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-24T10:51:51.008986",
+      "timestamp": "2026-03-25T23:52:13.259901",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_01.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_01.png",
-      "narration": "And... action. Let's start by opening eBay Advanced Search. Every good walkthrough needs an establishing shot, and this is ours.",
-      "pause_ms": 450
+      "narration": "Here is the opening move. Let's start by opening eBay Advanced Search. This gives the whole demo a place to stand.",
+      "pause_ms": 920
     },
     {
       "step": 2,
       "caption": "Step 2: Enter main search keywords",
       "description": "Enter main search keywords",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-24T10:51:53.093173",
+      "timestamp": "2026-03-25T23:52:17.708375",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_02.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_02.png",
-      "narration": "Now the camera swings to the next beat. We enter main search keywords. This is the boring part, which makes it perfect for automation.",
-      "pause_ms": 550
+      "narration": "With the setup in place, we can chase the signal. We enter main search keywords. This is the sort of repetition the workflow should steal from us.",
+      "pause_ms": 1050
     },
     {
       "step": 3,
       "caption": "Step 3: Change the keyword match dropdown to exact order",
       "description": "Change the keyword match dropdown to exact order",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-24T10:51:55.326873",
+      "timestamp": "2026-03-25T23:52:22.270962",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_03.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_03.png",
-      "narration": "Here comes the payoff shot. We change the keyword match dropdown to exact order. It keeps the flow easy to follow without sounding like a checklist.",
-      "pause_ms": 450
+      "narration": "Now the page has something to say. We change the keyword match dropdown to exact order.",
+      "pause_ms": 920
     },
     {
       "step": 4,
       "caption": "Step 4: Enter words to exclude from results",
       "description": "Enter words to exclude from results",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-24T10:51:57.377369",
+      "timestamp": "2026-03-25T23:52:26.670516",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_04.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_04.png",
-      "narration": "Quick scene change. We enter words to exclude from results. Nobody wins an award for manual retyping, so the automation can have this one.",
-      "pause_ms": 550
+      "narration": "This is where the pattern starts to show. We enter words to exclude from results.",
+      "pause_ms": 1050
     },
     {
       "step": 5,
       "caption": "Step 5: Include title and description in the search scope",
       "description": "Include title and description in the search scope",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-24T10:51:59.410433",
+      "timestamp": "2026-03-25T23:52:31.073585",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_05.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_05.png",
-      "narration": "Cue the montage. We include title and description in the search scope. It keeps the flow easy to follow without sounding like a checklist.",
-      "pause_ms": 450
+      "narration": "Here the workflow stops posing and starts proving. We include title and description in the search scope.",
+      "pause_ms": 920
     },
     {
       "step": 6,
       "caption": "Step 6: Set minimum and maximum price filters",
       "description": "Set minimum and maximum price filters",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-24T10:52:01.938639",
+      "timestamp": "2026-03-25T23:52:36.002582",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_06.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_06.png",
-      "narration": "Now the camera swings to the next beat. We set minimum and maximum price filters. Being explicit here keeps reruns consistent.",
-      "pause_ms": 550
+      "narration": "Now the payoff is close enough to see. We set minimum and maximum price filters.",
+      "pause_ms": 1050
     },
     {
       "step": 7,
       "caption": "Step 7: Filter for new-condition items",
       "description": "Filter for new-condition items",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-24T10:52:03.976065",
+      "timestamp": "2026-03-25T23:52:40.389384",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_07.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_07.png",
-      "narration": "Here comes the payoff shot. We filter for new-condition items. It keeps the flow easy to follow without sounding like a checklist.",
-      "pause_ms": 450
+      "narration": "This is where the result starts to feel earned. We filter for new-condition items. It keeps the flow easy to follow without sounding like a checklist.",
+      "pause_ms": 920
     },
     {
       "step": 8,
       "caption": "Step 8: Run the search and open the filtered results page",
       "description": "Run the search and open the filtered results page",
       "url": "https://www.ebay.com/sch/i.html?_nkw=Sony+WH-1000XM5&_in_kw=3&_ex_kw=broken+parts+only&LH_TitleDesc=1&_udlo=150&_udhi=400&LH_ItemCondition=1000",
-      "timestamp": "2026-03-24T10:52:12.301473",
+      "timestamp": "2026-03-25T23:52:51.083127",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_08.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_08.png",
-      "narration": "And that is our closing scene. We run the search and open the filtered results page. This is the button where all the setup finally pays off.",
-      "pause_ms": 900
+      "narration": "That lands the result. We run the search and open the filtered results page. This is where all the quiet setup finally earns applause.",
+      "pause_ms": 1550
     }
   ]
 }

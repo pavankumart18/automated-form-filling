@@ -3,96 +3,144 @@
     "step": 1,
     "caption": "Step 1: Open Zoho Invoice - free online invoicing tool for businesses",
     "description": "Open Zoho Invoice - free online invoicing tool for businesses",
-    "narration": "And... action. Let's start by opening Zoho Invoice - free online invoicing tool for businesses. Every good walkthrough needs an establishing shot, and this is ours.",
-    "pause_ms": 450,
-    "url": "https://www.zoho.com/in/invoice/"
+    "narration": "Here is the opening move. Let's start by opening Zoho Invoice. This gives the whole demo a place to stand.",
+    "fallback_narration": "We start by opening Zoho Invoice. That gives the workflow a stage.",
+    "pause_ms": 920,
+    "url": "https://www.zoho.com/in/invoice/",
+    "start_elapsed_sec": 0.0,
+    "end_elapsed_sec": 14.043,
+    "duration_sec": 14.043
   },
   {
     "step": 2,
     "caption": "Step 2: Open the free invoice generator page - no login required",
     "description": "Open the free invoice generator page - no login required",
-    "narration": "Now the camera swings to the next beat. We open the free invoice generator page - no login required. Now the viewer knows exactly where the story starts.",
-    "pause_ms": 450,
-    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
+    "narration": "With the setup in place, we can chase the signal. We open the free invoice generator page. From here, every click has context.",
+    "fallback_narration": "Next, we open the free invoice generator page. That gives the workflow a stage.",
+    "pause_ms": 920,
+    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
+    "start_elapsed_sec": 14.043,
+    "end_elapsed_sec": 23.048,
+    "duration_sec": 9.005
   },
   {
     "step": 3,
     "caption": "Step 3: Enter business details: company name, contact, and address",
     "description": "Enter business details: company name, contact, and address",
-    "narration": "Here comes the payoff shot. We enter business details: company name, contact, and address. A little data entry here saves the same keystrokes on every future run.",
-    "pause_ms": 550,
-    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
+    "narration": "Now the target comes into focus. We enter business details. Every future rerun gets cheaper because of this little moment.",
+    "fallback_narration": "Next, we enter business details. This is where repetition gets retired.",
+    "pause_ms": 1050,
+    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
+    "start_elapsed_sec": 23.048,
+    "end_elapsed_sec": 35.836,
+    "duration_sec": 12.788
   },
   {
     "step": 4,
     "caption": "Step 4: Enter Bill To details for Acme Corp International",
     "description": "Enter Bill To details for Acme Corp International",
-    "narration": "Quick scene change. We enter Bill To details for Acme Corp International. Nobody wins an award for manual retyping, so the automation can have this one.",
-    "pause_ms": 550,
-    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
+    "narration": "This is where the useful part starts. We enter Bill To details for Acme Corp International. The boring part belongs to automation, not to patience.",
+    "fallback_narration": "Next, we enter Bill To details for Acme Corp International. This is where repetition gets retired.",
+    "pause_ms": 1050,
+    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
+    "start_elapsed_sec": 35.836,
+    "end_elapsed_sec": 47.389,
+    "duration_sec": 11.553
   },
   {
     "step": 5,
     "caption": "Step 5: Set invoice number to INV-2026-001",
     "description": "Set invoice number to INV-2026-001",
-    "narration": "Cue the montage. We set invoice number to INV-2026-001. Locking this down keeps the workflow sharp on every replay.",
-    "pause_ms": 550,
-    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
+    "narration": "Here the workflow stops posing and starts proving. We set invoice number to INV-2026-001. This is where consistency gets baked into the flow.",
+    "fallback_narration": "Next, we set invoice number to INV-2026-001. That keeps the run honest.",
+    "pause_ms": 1050,
+    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
+    "start_elapsed_sec": 47.389,
+    "end_elapsed_sec": 53.29,
+    "duration_sec": 5.901
   },
   {
     "step": 6,
     "caption": "Step 6: Add line item 1 with quantity, rate, and GST",
     "description": "Add line item 1 with quantity, rate, and GST",
-    "narration": "Now the camera swings to the next beat. We add line item 1 with quantity, rate, and GST. It is a nice reminder that the workflow can grow without turning brittle.",
-    "pause_ms": 550,
-    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
+    "narration": "Now the page has something to say. We add line item 1 with quantity, rate, and GST. One more layer makes the picture richer without making it messy.",
+    "fallback_narration": "Next, we add line item 1 with quantity, rate, and GST. Now the picture gets fuller.",
+    "pause_ms": 1050,
+    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
+    "start_elapsed_sec": 53.29,
+    "end_elapsed_sec": 62.739,
+    "duration_sec": 9.449
   },
   {
     "step": 7,
     "caption": "Step 7: Add line item 2: UI/UX Design services",
     "description": "Add line item 2: UI/UX Design services",
-    "narration": "Here comes the payoff shot. We add line item 2: UI/UX Design services. One more layer, and the story gets richer without getting messier.",
-    "pause_ms": 550,
-    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
+    "narration": "This is where the pattern starts to show. We add line item 2. This expands the flow without breaking its rhythm.",
+    "fallback_narration": "Next, we add line item 2. Now the picture gets fuller.",
+    "pause_ms": 1050,
+    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
+    "start_elapsed_sec": 62.739,
+    "end_elapsed_sec": 71.275,
+    "duration_sec": 8.536
   },
   {
     "step": 8,
     "caption": "Step 8: Add line item 3: annual server hosting",
     "description": "Add line item 3: annual server hosting",
-    "narration": "Quick scene change. We add line item 3: annual server hosting. This extra beat gives the demo a little more range without breaking its rhythm.",
-    "pause_ms": 550,
-    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
+    "narration": "Here the workflow stops posing and starts proving. We add line item 3. Now the story has a little more range.",
+    "fallback_narration": "Next, we add line item 3. Now the picture gets fuller.",
+    "pause_ms": 1050,
+    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
+    "start_elapsed_sec": 71.275,
+    "end_elapsed_sec": 80.822,
+    "duration_sec": 9.547
   },
   {
     "step": 9,
     "caption": "Step 9: Add payment notes and terms for the client",
     "description": "Add payment notes and terms for the client",
-    "narration": "Cue the montage. We add payment notes and terms for the client. It is a nice reminder that the workflow can grow without turning brittle.",
-    "pause_ms": 550,
-    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
+    "narration": "Now the payoff is close enough to see. We add payment notes and terms for the client. One more layer makes the picture richer without making it messy.",
+    "fallback_narration": "Next, we add payment notes and terms for the client. Now the picture gets fuller.",
+    "pause_ms": 1050,
+    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
+    "start_elapsed_sec": 80.822,
+    "end_elapsed_sec": 91.263,
+    "duration_sec": 10.441
   },
   {
     "step": 10,
     "caption": "Step 10: Review subtotal, GST breakdown, and grand total",
     "description": "Review subtotal, GST breakdown, and grand total",
-    "narration": "Now the camera swings to the next beat. We review subtotal, GST breakdown, and grand total. Now the plot thickens, in the best spreadsheet kind of way.",
-    "pause_ms": 700,
-    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
+    "narration": "This is where the result starts to feel earned. We review subtotal, GST breakdown, and grand total.",
+    "fallback_narration": "Next, we review subtotal, GST breakdown, and grand total. Now the pattern has a voice.",
+    "pause_ms": 1200,
+    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
+    "start_elapsed_sec": 91.263,
+    "end_elapsed_sec": 95.994,
+    "duration_sec": 4.731
   },
   {
     "step": 11,
     "caption": "Step 11: Use Download/Print to export the invoice as PDF",
     "description": "Use Download/Print to export the invoice as PDF",
-    "narration": "Here comes the payoff shot. We use Download/Print to export the invoice as PDF. This is where the workflow earns its applause.",
-    "pause_ms": 650,
-    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
+    "narration": "From here, the workflow turns into something reusable. We use Download/Print to export the invoice as PDF.",
+    "fallback_narration": "Next, we use Download/Print to export the invoice as PDF.",
+    "pause_ms": 1120,
+    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
+    "start_elapsed_sec": 95.994,
+    "end_elapsed_sec": 101.018,
+    "duration_sec": 5.024
   },
   {
     "step": 12,
     "caption": "Step 12: Tutorial complete - create professional GST invoices in minutes",
     "description": "Tutorial complete - create professional GST invoices in minutes",
-    "narration": "Roll credits. The flow is captured end to end and ready for a replay. The flow is now captured end to end and ready to replay or adapt.",
-    "pause_ms": 900,
-    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html"
+    "narration": "That is the payoff shot. The flow is ready to replay.",
+    "fallback_narration": "That completes the flow.",
+    "pause_ms": 1550,
+    "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
+    "start_elapsed_sec": 101.018,
+    "end_elapsed_sec": 106.52,
+    "duration_sec": 5.502
   }
 ]

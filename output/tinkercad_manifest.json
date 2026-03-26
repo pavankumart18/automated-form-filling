@@ -44,110 +44,110 @@
       "caption": "Step 1: Open TinkerCAD - Autodesk's free platform for 3D learning and design",
       "description": "Open TinkerCAD - Autodesk's free platform for 3D learning and design",
       "url": "https://www.tinkercad.com/",
-      "timestamp": "2026-03-24T10:47:35.675052",
+      "timestamp": "2026-03-25T23:39:41.582675",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_01.png",
       "published_screenshot": "output/screenshots/tinkercad/step_01.png",
-      "narration": "And... action. Let's start by opening TinkerCAD - Autodesk's free platform for 3D learning and design. Every good walkthrough needs an establishing shot, and this is ours.",
-      "pause_ms": 450
+      "narration": "Here is the opening move. Let's start by opening TinkerCAD. This gives the whole demo a place to stand.",
+      "pause_ms": 920
     },
     {
       "step": 2,
       "caption": "Step 2: Open the Learning Center where beginner tutorials are available without login",
       "description": "Open the Learning Center where beginner tutorials are available without login",
       "url": "https://www.tinkercad.com/learn/designs",
-      "timestamp": "2026-03-24T10:47:40.735844",
+      "timestamp": "2026-03-25T23:39:50.512525",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_02.png",
       "published_screenshot": "output/screenshots/tinkercad/step_02.png",
-      "narration": "Now the camera swings to the next beat. We open the Learning Center where beginner tutorials are available without login. Now the viewer knows exactly where the story starts.",
-      "pause_ms": 550
+      "narration": "With the setup in place, we can chase the signal. We open the Learning Center where beginner tutorials are available without login. From here, every click has context.",
+      "pause_ms": 1050
     },
     {
       "step": 3,
       "caption": "Step 3: Search for beginner 3D design tutorials using the search bar",
       "description": "Search for beginner 3D design tutorials using the search bar",
       "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
-      "timestamp": "2026-03-24T10:47:45.805868",
+      "timestamp": "2026-03-25T23:39:58.027568",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_03.png",
       "published_screenshot": "output/screenshots/tinkercad/step_03.png",
-      "narration": "Here comes the payoff shot. We search for beginner 3D design tutorials using the search bar. This is usually where people lose time, so automation earns its keep immediately.",
-      "pause_ms": 450
+      "narration": "Now the target comes into focus. We search for beginner 3D design tutorials using the search bar. That cuts straight through the hunting.",
+      "pause_ms": 920
     },
     {
       "step": 4,
       "caption": "Step 4: Return to 3D Design tutorials for CAD-focused practice",
       "description": "Return to 3D Design tutorials for CAD-focused practice",
       "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
-      "timestamp": "2026-03-24T10:47:47.390810",
+      "timestamp": "2026-03-25T23:40:01.948705",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_04.png",
       "published_screenshot": "output/screenshots/tinkercad/step_04.png",
-      "narration": "Quick scene change. We return to 3D Design tutorials for CAD-focused practice. It keeps the flow easy to follow without sounding like a checklist.",
-      "pause_ms": 450
+      "narration": "This is where the pattern starts to show. We return to 3D Design tutorials for CAD-focused practice.",
+      "pause_ms": 920
     },
     {
       "step": 5,
       "caption": "Step 5: Open a tutorial card to view guided learning content",
       "description": "Open a tutorial card to view guided learning content",
       "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
-      "timestamp": "2026-03-24T10:47:50.567511",
+      "timestamp": "2026-03-25T23:40:07.470547",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_05.png",
       "published_screenshot": "output/screenshots/tinkercad/step_05.png",
-      "narration": "Cue the montage. We open a tutorial card to view guided learning content. Now the viewer knows exactly where the story starts.",
-      "pause_ms": 700
+      "narration": "Here the workflow stops posing and starts proving. We open a tutorial card to view guided learning content.",
+      "pause_ms": 1200
     },
     {
       "step": 6,
       "caption": "Step 6: Scroll through the tutorial page to view lesson details and visuals",
       "description": "Scroll through the tutorial page to view lesson details and visuals",
       "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
-      "timestamp": "2026-03-24T10:47:54.232315",
+      "timestamp": "2026-03-25T23:40:14.323538",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_06.png",
       "published_screenshot": "output/screenshots/tinkercad/step_06.png",
-      "narration": "Now the camera swings to the next beat. We scroll through the tutorial page to view lesson details and visuals. It keeps the flow easy to follow without sounding like a checklist.",
-      "pause_ms": 700
+      "narration": "Now the page has something to say. We scroll through the tutorial page to view lesson details and visuals.",
+      "pause_ms": 1200
     },
     {
       "step": 7,
       "caption": "Step 7: Open the TinkerCAD gallery to explore community designs",
       "description": "Open the TinkerCAD gallery to explore community designs",
       "url": "https://www.tinkercad.com/things",
-      "timestamp": "2026-03-24T10:48:04.489937",
+      "timestamp": "2026-03-25T23:40:29.696291",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_07.png",
       "published_screenshot": "output/screenshots/tinkercad/step_07.png",
-      "narration": "Here comes the payoff shot. We open the TinkerCAD gallery to explore community designs. Every good walkthrough needs an establishing shot, and this is ours.",
-      "pause_ms": 450
+      "narration": "This is where the pattern starts to show. We open the TinkerCAD gallery to explore community designs. This gives the whole demo a place to stand.",
+      "pause_ms": 920
     },
     {
       "step": 8,
       "caption": "Step 8: Browse featured gallery designs for project inspiration",
       "description": "Browse featured gallery designs for project inspiration",
       "url": "https://www.tinkercad.com/things",
-      "timestamp": "2026-03-24T10:48:11.101714",
+      "timestamp": "2026-03-25T23:40:38.667603",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_08.png",
       "published_screenshot": "output/screenshots/tinkercad/step_08.png",
-      "narration": "Quick scene change. We browse featured gallery designs for project inspiration. Now the viewer can scan instead of slog, which is always a nice plot twist.",
-      "pause_ms": 700
+      "narration": "From here, the workflow turns into something reusable. We browse featured gallery designs for project inspiration. More clarity, fewer tiny detours.",
+      "pause_ms": 1200
     },
     {
       "step": 9,
       "caption": "Step 9: Open a gallery design page to review details and references",
       "description": "Open a gallery design page to review details and references",
       "url": "https://www.tinkercad.com/things/1IXJmC1WnYn-mushroom",
-      "timestamp": "2026-03-24T10:48:14.033731",
+      "timestamp": "2026-03-25T23:40:43.989713",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_09.png",
       "published_screenshot": "output/screenshots/tinkercad/step_09.png",
-      "narration": "Cue the montage. We open a gallery design page to review details and references. This gets the right screen on stage before the real automation choreography begins.",
-      "pause_ms": 700
+      "narration": "Now the payoff is close enough to see. We open a gallery design page to review details and references.",
+      "pause_ms": 1200
     },
     {
       "step": 10,
       "caption": "Step 10: Tutorial complete - start learning TinkerCAD with no-login resources",
       "description": "Tutorial complete - start learning TinkerCAD with no-login resources",
       "url": "https://www.tinkercad.com/things/1IXJmC1WnYn-mushroom",
-      "timestamp": "2026-03-24T10:48:16.731058",
+      "timestamp": "2026-03-25T23:40:49.505850",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_10.png",
       "published_screenshot": "output/screenshots/tinkercad/step_10.png",
-      "narration": "That is the hero shot. The flow is captured end to end and ready for a replay. The flow is now captured end to end and ready to replay or adapt.",
-      "pause_ms": 900
+      "narration": "That closes the loop cleanly. The flow is ready to replay.",
+      "pause_ms": 1550
     }
   ]
 }

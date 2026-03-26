@@ -341,19 +341,90 @@
             font-weight: 700;
         }
 
-        .shot-grid {
+        .storyboard-shell {
+            border-radius: 26px;
+            border: 1px solid var(--line);
+            background: var(--panel-strong);
+            box-shadow: var(--shadow);
+            padding: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 18px;
+            gap: 16px;
+            outline: none;
         }
 
-        .shot-card {
+        .storyboard-shell:focus-visible {
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.22), var(--shadow);
+        }
+
+        .storyboard-status {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .storyboard-frame {
+            position: relative;
             border-radius: 22px;
             overflow: hidden;
         }
 
-        .shot-card img,
-        .shot-card .shot-placeholder {
+        .storyboard-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+            border: 1px solid rgba(255, 255, 255, 0.72);
+            background: rgba(12, 19, 33, 0.58);
+            color: #ffffff;
+            width: 48px;
+            height: 48px;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+            opacity: 0.92;
+        }
+
+        .storyboard-button-prev {
+            left: 16px;
+        }
+
+        .storyboard-button-next {
+            right: 16px;
+        }
+
+        .storyboard-button:hover {
+            transform: translateY(-50%) scale(1.04);
+            background: rgba(12, 19, 33, 0.78);
+            opacity: 1;
+        }
+
+        .storyboard-track {
+            display: flex;
+            gap: 18px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+        }
+
+        .storyboard-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .storyboard-slide {
+            min-width: 100%;
+            scroll-snap-align: start;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.86);
+        }
+
+        .storyboard-image,
+        .storyboard-placeholder {
             width: 100%;
             aspect-ratio: 16 / 9;
             display: block;
@@ -361,17 +432,31 @@
             background: linear-gradient(135deg, rgba(15, 118, 110, 0.14), rgba(231, 111, 81, 0.12));
         }
 
-        .shot-placeholder {
+        .storyboard-placeholder {
             display: grid;
             place-items: center;
             color: var(--muted);
             font-weight: 700;
         }
 
-        .shot-body {
-            padding: 16px;
+        .storyboard-caption {
+            padding: 18px;
             display: grid;
             gap: 10px;
+        }
+
+        .storyboard-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .storyboard-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--ink);
         }
 
         .shot-step {
@@ -496,16 +581,23 @@
                 padding: 18px;
             }
 
-            .card-grid,
-            .shot-grid {
-                grid-template-columns: 1fr;
-            }
-
             .card-topline,
             .beat-head,
             .section-heading {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .storyboard-shell {
+                padding: 16px;
+            }
+
+            .storyboard-button-prev {
+                left: 10px;
+            }
+
+            .storyboard-button-next {
+                right: 10px;
             }
         }
     
@@ -536,14 +628,14 @@
             <div class="video-panel">
                 <div class="section-heading">
                     <h2>Watch The Demo</h2>
-                    <a class="button-ghost" href="../output/indian_visa_final.webm?v=1774410471">Open raw asset</a>
+                    <a class="button-ghost" href="../output/indian_visa_final.webm?v=1774494824">Open raw asset</a>
                 </div>
                 <p class="section-subtext">
                     This page pairs the final video with publishable screenshots and the exact rerun recipe.
                 </p>
                 <div class="video-frame">
-                    <video controls preload="metadata" poster="../output/screenshots/indian_visa/step_01.png?v=1774410507">
-                        <source src="../output/indian_visa_final.webm?v=1774410471" type="video/webm">
+                    <video controls preload="metadata" poster="../output/screenshots/indian_visa/step_01.png?v=1774495753">
+                        <source src="../output/indian_visa_final.webm?v=1774494824" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -598,81 +690,109 @@ python run_all.py --page-only</pre>
 
         <section class="section">
             <div class="section-heading">
-                <h2>Storyboard Screenshots</h2>
-                <p class="section-subtext">Every logged step now ships with a screenshot reference, not only a video file.</p>
+                <h2>Storyboard Slideshow</h2>
+                <p class="section-subtext">Slide through each screenshot one step at a time, with the image on top and the step content below.</p>
             </div>
-            <div class="shot-grid">
-                
-            <article class="shot-card">
-                <img src="../output/screenshots/indian_visa/step_01.png?v=1774410507" alt="Step 1: Open the Indian eVisa portal home page" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 1</div>
+            
+        <div class="storyboard-shell" data-storyboard="indian_visa" tabindex="0" aria-label="Storyboard slideshow for indian_visa. Use left and right arrow keys to change slides.">
+            <div class="storyboard-status">
+                <strong>Storyboard Slideshow</strong>:
+                one step per slide with the screenshot on top and the step content below.
+            </div>
+            <div class="storyboard-status" data-storyboard-count="indian_visa">Slide 1 of 7</div>
+            <div class="storyboard-frame">
+                <button class="storyboard-button storyboard-button-prev" type="button" data-storyboard-prev="indian_visa" aria-label="Previous slide">&larr;</button>
+                <button class="storyboard-button storyboard-button-next" type="button" data-storyboard-next="indian_visa" aria-label="Next slide">&rarr;</button>
+                <div class="storyboard-track" data-storyboard-track="indian_visa">
+                    
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_01.png?v=1774495753" alt="Step 1: Open the Indian eVisa portal home page" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 1</div>
+                        <div class="storyboard-title">Step 1: Open the Indian eVisa portal home page</div>
+                    </div>
                     <p class="shot-description">Open the Indian eVisa portal home page</p>
                     <div class="shot-url"><a href="https://indianvisaonline.gov.in/evisa/tvoa.html" target="_blank" rel="noreferrer">https://indianvisaonline.gov.in/evisa/tvoa.html</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/indian_visa/step_02.png?v=1774410507" alt="Step 2: Open the eVisa application form start page" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 2</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_02.png?v=1774495753" alt="Step 2: Open the eVisa application form start page" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 2</div>
+                        <div class="storyboard-title">Step 2: Open the eVisa application form start page</div>
+                    </div>
                     <p class="shot-description">Open the eVisa application form start page</p>
                     <div class="shot-url"><a href="https://indianvisaonline.gov.in/evisa/Registration" target="_blank" rel="noreferrer">https://indianvisaonline.gov.in/evisa/Registration</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/indian_visa/step_03.png?v=1774410507" alt="Step 3: Select nationality, passport type, and port of arrival" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 3</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_03.png?v=1774495753" alt="Step 3: Select nationality, passport type, and port of arrival" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 3</div>
+                        <div class="storyboard-title">Step 3: Select nationality, passport type, and port of arrival</div>
+                    </div>
                     <p class="shot-description">Select nationality, passport type, and port of arrival</p>
                     <div class="shot-url"><a href="https://indianvisaonline.gov.in/evisa/Registration" target="_blank" rel="noreferrer">https://indianvisaonline.gov.in/evisa/Registration</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/indian_visa/step_04.png?v=1774410507" alt="Step 4: Fill date of birth and email confirmation" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 4</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_04.png?v=1774495753" alt="Step 4: Fill date of birth and email confirmation" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 4</div>
+                        <div class="storyboard-title">Step 4: Fill date of birth and email confirmation</div>
+                    </div>
                     <p class="shot-description">Fill date of birth and email confirmation</p>
                     <div class="shot-url"><a href="https://indianvisaonline.gov.in/evisa/Registration" target="_blank" rel="noreferrer">https://indianvisaonline.gov.in/evisa/Registration</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/indian_visa/step_05.png?v=1774410507" alt="Step 5: Choose visa service: eTourist Visa (30 Days)" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 5</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_05.png?v=1774495753" alt="Step 5: Choose visa service: eTourist Visa (30 Days)" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 5</div>
+                        <div class="storyboard-title">Step 5: Choose visa service: eTourist Visa (30 Days)</div>
+                    </div>
                     <p class="shot-description">Choose visa service: eTourist Visa (30 Days)</p>
                     <div class="shot-url"><a href="https://indianvisaonline.gov.in/evisa/Registration" target="_blank" rel="noreferrer">https://indianvisaonline.gov.in/evisa/Registration</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/indian_visa/step_06.png?v=1774410507" alt="Step 6: Set expected date of arrival and acknowledge instructions" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 6</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_06.png?v=1774495753" alt="Step 6: Set expected date of arrival and acknowledge instructions" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 6</div>
+                        <div class="storyboard-title">Step 6: Set expected date of arrival and acknowledge instructions</div>
+                    </div>
                     <p class="shot-description">Set expected date of arrival and acknowledge instructions</p>
                     <div class="shot-url"><a href="https://indianvisaonline.gov.in/evisa/Registration" target="_blank" rel="noreferrer">https://indianvisaonline.gov.in/evisa/Registration</a></div>
                 </div>
             </article>
             
-
-            <article class="shot-card">
-                <img src="../output/screenshots/indian_visa/step_07.png?v=1774410507" alt="Step 7: Stop at captcha step for safe, non-submitting demo" loading="lazy">
-                <div class="shot-body">
-                    <div class="shot-step">Step 7</div>
+            <article class="storyboard-slide">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_07.png?v=1774495753" alt="Step 7: Stop at captcha step for safe, non-submitting demo" loading="lazy">
+                <div class="storyboard-caption">
+                    <div class="storyboard-meta">
+                        <div class="shot-step">Step 7</div>
+                        <div class="storyboard-title">Step 7: Stop at captcha step for safe, non-submitting demo</div>
+                    </div>
                     <p class="shot-description">Stop at captcha step for safe, non-submitting demo</p>
                     <div class="shot-url"><a href="https://indianvisaonline.gov.in/evisa/Registration" target="_blank" rel="noreferrer">https://indianvisaonline.gov.in/evisa/Registration</a></div>
                 </div>
             </article>
             
+                </div>
             </div>
+        </div>
+    
         </section>
 
         <section class="section">
@@ -685,63 +805,63 @@ python run_all.py --page-only</pre>
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 1</span>
-                    <span class="pause-pill">Pause 0.45s</span>
+                    <span class="pause-pill">Pause 0.92s</span>
                 </div>
-                <p class="beat-text">And... action. Let&#x27;s start by opening the Indian eVisa portal home page. This gets the right screen on stage before the real automation choreography begins.</p>
+                <p class="beat-text">Here is the opening move. Let&#x27;s start by opening the Indian eVisa portal home page.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 2</span>
-                    <span class="pause-pill">Pause 0.45s</span>
+                    <span class="pause-pill">Pause 0.92s</span>
                 </div>
-                <p class="beat-text">On the next screen. We open the eVisa application form start page. This gets the right screen on stage before the real automation choreography begins.</p>
+                <p class="beat-text">On the next screen, the process stays easy to follow. We open the eVisa application form start page.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 3</span>
-                    <span class="pause-pill">Pause 0.55s</span>
+                    <span class="pause-pill">Pause 1.05s</span>
                 </div>
-                <p class="beat-text">Now we continue. We select nationality, passport type, and port of arrival. This keeps the flow deterministic instead of relying on page defaults.</p>
+                <p class="beat-text">We continue carefully from here. We select nationality, passport type, and port of arrival. A clean selection here keeps the run from improvising.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 4</span>
-                    <span class="pause-pill">Pause 0.55s</span>
+                    <span class="pause-pill">Pause 1.05s</span>
                 </div>
-                <p class="beat-text">Next beat. We fill date of birth and email confirmation. This is exactly the repetitive work automation should steal from us.</p>
+                <p class="beat-text">Next, we keep the flow clear. We fill date of birth and email confirmation.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 5</span>
-                    <span class="pause-pill">Pause 0.55s</span>
+                    <span class="pause-pill">Pause 1.05s</span>
                 </div>
-                <p class="beat-text">From here, we keep moving. We choose visa service: eTourist Visa (30 Days). Making the choice visible keeps the demo reproducible.</p>
+                <p class="beat-text">Now we move one step further. We choose visa service. Keeping the choice visible is what makes the flow teachable.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 6</span>
-                    <span class="pause-pill">Pause 0.55s</span>
+                    <span class="pause-pill">Pause 1.05s</span>
                 </div>
-                <p class="beat-text">On the next screen. We set expected date of arrival and acknowledge instructions. Being explicit here keeps reruns consistent.</p>
+                <p class="beat-text">On the next screen, the process stays easy to follow. We set expected date of arrival and acknowledge instructions.</p>
             </article>
             
 
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step 7</span>
-                    <span class="pause-pill">Pause 0.90s</span>
+                    <span class="pause-pill">Pause 1.55s</span>
                 </div>
-                <p class="beat-text">That is the hero shot. We intentionally stop at the captcha step here. That way the walkthrough stays safe while still showing the exact handoff point.</p>
+                <p class="beat-text">That closes the loop cleanly. We stop at the captcha step here.</p>
             </article>
             
             </div>
@@ -754,5 +874,64 @@ python run_all.py --page-only</pre>
             so mismatches are visible during the build instead of surfacing in feedback later.
         </p>
     </main>
+    
+    <script>
+    (() => {
+      const storyboards = document.querySelectorAll('[data-storyboard]');
+      if (!storyboards.length) return;
+
+      storyboards.forEach((shell) => {
+        const key = shell.getAttribute('data-storyboard');
+        const track = shell.querySelector(`[data-storyboard-track="${key}"]`);
+        const count = shell.querySelector(`[data-storyboard-count="${key}"]`);
+        const prev = shell.querySelector(`[data-storyboard-prev="${key}"]`);
+        const next = shell.querySelector(`[data-storyboard-next="${key}"]`);
+        const slides = track ? Array.from(track.children) : [];
+        if (!track || !slides.length) return;
+
+        const slideSpan = () => {
+          const slideWidth = slides[0].getBoundingClientRect().width || 1;
+          return slideWidth + 18;
+        };
+
+        const currentIndex = () => {
+          const index = Math.round(track.scrollLeft / slideSpan());
+          return Math.max(0, Math.min(index, slides.length - 1));
+        };
+
+        const updateCount = () => {
+          const safeIndex = currentIndex();
+          if (count) count.textContent = `Slide ${safeIndex + 1} of ${slides.length}`;
+        };
+
+        const goToIndex = (index) => {
+          track.scrollTo({ left: index * slideSpan(), behavior: 'smooth' });
+          window.setTimeout(updateCount, 180);
+        };
+
+        const scrollBySlide = (direction) => {
+          const nextIndex = (currentIndex() + direction + slides.length) % slides.length;
+          goToIndex(nextIndex);
+        };
+
+        if (prev) prev.addEventListener('click', () => scrollBySlide(-1));
+        if (next) next.addEventListener('click', () => scrollBySlide(1));
+        shell.addEventListener('keydown', (event) => {
+          if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            scrollBySlide(-1);
+          }
+          if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            scrollBySlide(1);
+          }
+        });
+        shell.addEventListener('click', () => shell.focus());
+        track.addEventListener('scroll', () => window.requestAnimationFrame(updateCount));
+        updateCount();
+      });
+    })();
+    </script>
+    
 </body>
 </html>

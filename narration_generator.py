@@ -5,7 +5,9 @@ Uses Google's Gemini API for text-to-speech generation.
 
 import json
 import os
+import subprocess
 import sys
+import tempfile
 import time
 import wave
 
@@ -14,34 +16,63 @@ OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 SCREENSHOT_DIR = os.path.join(BASE_DIR, "screenshots")
 SUPPORTED_AUDIO_EXTENSIONS = (".wav", ".mp3", ".ogg", ".flac", ".aac", ".m4a")
 OPENING_CUES = [
-    "Lights up.",
-    "And... action.",
-    "Opening shot.",
+    "We start at the front door.",
+    "Here is the opening move.",
+    "First, the stage.",
 ]
-TRANSITION_CUES = [
-    "Quick scene change.",
-    "Cue the montage.",
-    "Now the camera swings to the next beat.",
-    "Here comes the payoff shot.",
+EARLY_TRANSITION_CUES = [
+    "Now the target comes into focus.",
+    "This is where the useful part starts.",
+    "With the setup in place, we can chase the signal.",
+]
+MID_TRANSITION_CUES = [
+    "Now the page has something to say.",
+    "This is where the pattern starts to show.",
+    "Here the workflow stops posing and starts proving.",
+]
+LATE_TRANSITION_CUES = [
+    "Now the payoff is close enough to see.",
+    "This is where the result starts to feel earned.",
+    "From here, the workflow turns into something reusable.",
 ]
 SOFT_TRANSITION_CUES = [
-    "Next beat.",
-    "From here, we keep moving.",
-    "On the next screen.",
-    "Now we continue.",
+    "Next, we keep the flow clear.",
+    "Now we move one step further.",
+    "On the next screen, the process stays easy to follow.",
+    "We continue carefully from here.",
 ]
 FINALE_CUES = [
-    "Roll credits.",
-    "That is the hero shot.",
-    "And that is our closing scene.",
+    "That is the payoff shot.",
+    "That closes the loop cleanly.",
+    "That lands the result.",
+]
+WAITING_ASIDES = [
+    "Hmm... little pause here. The page is still catching up, so we give it a second.",
+    "We will hold for a beat here and let the screen settle before we move on.",
+    "Still thinking. No rush, we will wait for the page to finish the move.",
+]
+WAITING_ASIDES_SAFE = [
+    "The page is still working, so we give it a moment and keep the flow steady.",
+    "A short pause here while the screen catches up cleanly.",
+    "Still loading, so we wait a beat before the next move.",
+]
+FALLBACK_WAITING_ASIDES = [
+    "Give this a second to settle.",
+    "We will let the page catch up.",
+    "A quick beat while the results arrive.",
 ]
 DEFAULT_TTS_DIRECTION = (
-    "Perform this as a warm, cinematic product-demo narrator. "
-    "Sound natural, expressive, and confident, with clean pauses between paragraphs. "
-    "Let the voice feel human, lightly playful, and polished, like a smart movie trailer narrator "
-    "guiding a slick tutorial. Keep jokes subtle and charming, never distracting or sarcastic. "
-    "Avoid robotic pacing, flat delivery, and rushed speech."
+    "Perform this as a warm, human product-demo narrator with light cinematic polish. "
+    "Use a measured, conversational pace and make every sentence easy to understand on the first listen. "
+    "Leave short, audible pauses between ideas, especially after the first sentence in each beat. "
+    "Sound expressive, friendly, and lightly playful, like a great explainer walking beside the viewer. "
+    "Keep jokes subtle and charming, never distracting or sarcastic. "
+    "Avoid robotic pacing, flat delivery, breathless reads, and rushed speech."
 )
+MAX_AUDIO_SPEEDUP = 1.4
+DEFAULT_AUDIO_PACE = 0.94
+GEMINI_QUOTA_EXHAUSTED = False
+LONG_STEP_FILLER_THRESHOLD_SEC = 11.5
 GERUND_OVERRIDES = {
     "open": "opening",
     "navigate": "navigating",
@@ -73,140 +104,168 @@ GERUND_OVERRIDES = {
 }
 STEP_COMMENTARY = {
     "open": [
-        "This gets the right screen on stage before the real automation choreography begins.",
-        "Every good walkthrough needs an establishing shot, and this is ours.",
-        "Now the viewer knows exactly where the story starts.",
+        "Now the workflow has a stage.",
+        "This gives the whole demo a place to stand.",
+        "From here, every click has context.",
     ],
     "navigate": [
-        "That skips the wandering and gets the important screen in front of us fast.",
-        "Straight to the useful page, no side quest required.",
-        "A clean jump like this keeps the momentum intact.",
+        "We skip the wandering and land on the part that matters.",
+        "No side quest, just the useful page.",
+        "That puts the real subject right in front of us.",
     ],
     "search": [
-        "This is usually where people lose time, so automation earns its keep immediately.",
-        "And just like that, the scavenger hunt is over.",
-        "A precise search here makes the rest of the flow feel inevitable.",
+        "That cuts straight through the hunting.",
+        "The signal shows up faster when the search is this tight.",
+        "Now the next move is obvious for a reason.",
     ],
     "view": [
-        "It gives us the quick snapshot before we go deeper.",
-        "Here comes the close-up that frames the next few moves.",
-        "This wide shot makes the rest of the details easier to read.",
+        "This is the first clean read on what matters.",
+        "Now the screen stops feeling busy and starts feeling useful.",
+        "The headline numbers do the first round of storytelling here.",
     ],
     "review": [
-        "This is where the screen starts telling a story instead of just showing raw numbers.",
-        "Now the plot thickens, in the best spreadsheet kind of way.",
-        "This is the moment where trends stop hiding and start speaking clearly.",
+        "This is where the pattern stops hiding.",
+        "Now the trend line starts behaving like evidence.",
+        "Here the page finally tells us something worth listening to.",
     ],
     "inspect": [
-        "A close look here makes the important signal easier to spot.",
-        "Time for the close-up, because the good clues live in the details.",
-        "This is where the small details quietly become the whole story.",
+        "The close-up matters because the clues live here.",
+        "This is the layer where the small details start carrying weight.",
+        "A quick inspection here saves a lot of guessing later.",
     ],
     "check": [
-        "One quick check here tells us whether things look solid or stretched.",
-        "A fast balance check like this keeps surprises out of the sequel.",
-        "This is the kind of sanity check that makes the whole workflow feel trustworthy.",
+        "A fast check here tells us whether the foundation actually holds.",
+        "This is where confidence is either earned or lost.",
+        "That keeps the whole run grounded in something real.",
     ],
     "browse": [
-        "This keeps comparison easy without opening every result by hand.",
-        "It turns the click-fest into something much lighter.",
-        "Now the viewer can scan instead of slog, which is always a nice plot twist.",
+        "Now comparison gets lighter and the noise drops out.",
+        "This turns a click-fest into something you can actually scan.",
+        "More clarity, fewer tiny detours.",
     ],
     "switch": [
-        "The change in view helps the viewer understand the comparison at a glance.",
-        "A quick angle change here makes the story easier to follow.",
-        "Sometimes the smartest move is just a better camera angle, and this is one of those moments.",
+        "A different angle tells the story faster here.",
+        "The view changes, and suddenly the read gets easier.",
+        "Sometimes one switch is all it takes for the page to make sense.",
     ],
     "replace": [
-        "A small swap here shows how reusable the flow really is.",
-        "Same workflow, new question, very satisfying.",
-        "This is where the system stops being a demo and starts looking reusable.",
+        "Same rhythm, new question, and that is the whole point.",
+        "This is where the workflow proves it is reusable.",
+        "One small swap and the demo starts feeling like a system.",
     ],
     "add": [
-        "It is a nice reminder that the workflow can grow without turning brittle.",
-        "One more layer, and the story gets richer without getting messier.",
-        "This extra beat gives the demo a little more range without breaking its rhythm.",
+        "One more layer makes the picture richer without making it messy.",
+        "This expands the flow without breaking its rhythm.",
+        "Now the story has a little more range.",
     ],
     "run": [
-        "Once we run it, the page does the heavy lifting for us.",
-        "Cue the detective soundtrack; now the data gets to make its entrance.",
-        "This is the button where all the setup finally pays off.",
+        "This is the moment the setup cashes out into something visible.",
+        "Now the page gets to do the heavy lifting.",
+        "This is where all the quiet setup finally earns applause.",
     ],
     "fill": [
-        "This is exactly the repetitive work automation should steal from us.",
-        "Because nobody asked for a sequel called type the same form twice.",
-        "A little typing here saves a lot of future boredom.",
+        "This is exactly the repetitive work a person should only explain once.",
+        "No one needs a sequel called type the same thing again.",
+        "Automation earns trust fastest in moments like this.",
     ],
     "enter": [
-        "A little data entry here saves the same keystrokes on every future run.",
-        "Nobody wins an award for manual retyping, so the automation can have this one.",
-        "This is the boring part, which makes it perfect for automation.",
+        "Every future rerun gets cheaper because of this little moment.",
+        "The boring part belongs to automation, not to patience.",
+        "This is the sort of repetition the workflow should steal from us.",
     ],
     "set": [
-        "Being explicit here keeps reruns consistent.",
-        "A precise setting now saves a lot of guesswork later.",
-        "Locking this down keeps the workflow sharp on every replay.",
+        "That small setting keeps future runs honest.",
+        "A precise value here saves a lot of drift later.",
+        "This is where consistency gets baked into the flow.",
     ],
     "choose": [
-        "Making the choice visible keeps the demo reproducible.",
-        "A visible choice here turns guesswork into a repeatable scene.",
-        "This keeps the viewer aligned with exactly what the automation is deciding.",
+        "Keeping the choice visible is what makes the flow teachable.",
+        "Now the decision is explicit, not implied.",
+        "This is where reproducibility stops being a promise and becomes a detail.",
     ],
     "select": [
-        "This keeps the flow deterministic instead of relying on page defaults.",
-        "A clean selection like this keeps the workflow from improvising.",
-        "Explicit beats like this are what make reruns feel dependable.",
+        "A clean selection here keeps the run from improvising.",
+        "This is how reruns stay dependable instead of lucky.",
+        "The more explicit this beat is, the calmer the whole workflow feels.",
     ],
     "move": [
-        "It keeps the viewer oriented instead of jumping around too abruptly.",
-        "A smooth move here makes the whole sequence easier on the eyes.",
-        "This keeps the pacing deliberate instead of twitchy.",
+        "This keeps the eye oriented instead of yanking it around.",
+        "The move is simple, but it keeps the rhythm under control.",
+        "A deliberate shift here keeps the story readable.",
     ],
     "go": [
-        "That keeps the sequence moving while the context still feels fresh.",
-        "We keep the momentum without losing the thread.",
-        "A move like this keeps the scene flowing naturally.",
+        "The flow moves forward without dropping the thread.",
+        "That keeps the sequence moving while the context is still warm.",
+        "A move like this keeps the scene from getting sticky.",
     ],
     "complete": [
-        "Now the end state is easy to verify.",
-        "That is the exact payoff shot we wanted.",
-        "The finish state lands cleanly here, and that matters.",
+        "Now the finish state is unmistakable.",
+        "That is the exact payoff the workflow was building toward.",
+        "The end lands cleanly, and that matters more than it sounds.",
     ],
     "use": [
-        "This is the moment where the walkthrough turns into something practical.",
-        "A simple action here makes the whole demo feel useful, not decorative.",
-        "This is where the workflow earns its applause.",
+        "This is where the demo stops being decorative and starts being useful.",
+        "Now the workflow earns its keep.",
+        "A simple action here makes the whole thing feel practical.",
     ],
     "download": [
-        "That makes the outcome feel like a real deliverable, not just a demo.",
-        "Boom, that is the handoff shot.",
-        "This is the part where the viewer gets something tangible at the end.",
+        "Now the result feels like something you can actually hand off.",
+        "This is the handoff shot, not just the end of a demo.",
+        "The outcome turns tangible right here.",
     ],
     "export": [
-        "This is the handoff point from browser workflow to reusable output.",
-        "And there is the clean exit into the next tool in the chain.",
-        "This is where the browser scene hands the story over to the rest of the stack.",
+        "This is the handoff from browser moment to reusable artifact.",
+        "Now the output can travel beyond the demo.",
+        "The browser does its part, and the result is ready for the next tool.",
     ],
     "split": [
-        "The layout matters here because it makes cause and effect easy to follow.",
-        "This framing does half the storytelling work for us.",
-        "A split view like this is basically free cinematography for a tutorial.",
+        "The framing matters because it lets cause and effect sit in one glance.",
+        "A split like this does half the storytelling for us.",
+        "Now the logic and the result can share the frame.",
     ],
     "write": [
-        "Making the query visible is what turns the demo into a repeatable system.",
-        "This is the script inside the script, and that is where the magic lives.",
-        "Once the logic is visible, the whole workflow feels much less mysterious.",
+        "Making the logic visible is what turns a demo into a recipe.",
+        "Now the workflow feels repeatable instead of magical.",
+        "Once the query is on screen, the mystery mostly disappears.",
     ],
     "click": [
-        "A visible click here helps the viewer track the action instantly.",
-        "That click lands like a cue mark, exactly where the eye needs it.",
-        "A crisp click here keeps the viewer from playing hide and seek with the cursor.",
+        "A clear click like this keeps the eye exactly where it needs to be.",
+        "The action lands on target, and the viewer never has to hunt for it.",
+        "This is the kind of click that keeps the whole scene readable.",
     ],
     "stop": [
-        "This is a deliberate stop, not a failure, and that distinction matters.",
-        "No stunt work beyond this point, and honestly that is the smart choice.",
-        "Stopping here keeps the demo safe while still making the flow fully understandable.",
+        "This stop is deliberate, not hesitant.",
+        "Stopping here keeps the demo safe without making it vague.",
+        "The flow remains understandable even because we stop at the right boundary.",
     ],
+}
+COMPACT_STORY_TAGS = {
+    "open": "That gives the workflow a stage.",
+    "navigate": "That puts the real subject in front of us.",
+    "search": "That gets us to the signal fast.",
+    "view": "Now the key read is visible.",
+    "review": "Now the pattern has a voice.",
+    "inspect": "The clues live in this layer.",
+    "check": "That tells us if the foundation holds.",
+    "browse": "Now comparison gets easier.",
+    "switch": "A better angle changes the read.",
+    "replace": "Same flow, different question.",
+    "add": "Now the picture gets fuller.",
+    "run": "Here the setup turns into results.",
+    "fill": "This is where automation saves patience.",
+    "enter": "This is where repetition gets retired.",
+    "set": "That keeps the run honest.",
+    "choose": "The choice stays visible.",
+    "select": "That keeps the flow deterministic.",
+    "move": "That keeps the eye oriented.",
+    "go": "The thread stays intact.",
+    "use": "Now the workflow becomes useful.",
+    "download": "Now there is something to hand off.",
+    "export": "This is the handoff point.",
+    "split": "Now both sides of the workflow are visible.",
+    "write": "Now the logic has a voice.",
+    "click": "The action stays easy to track.",
+    "stop": "That keeps the demo safe.",
 }
 
 for directory in [OUTPUT_DIR, SCREENSHOT_DIR]:
@@ -315,6 +374,179 @@ def get_retry_delay_seconds(error: Exception) -> float:
     return 20.0
 
 
+def run_media_command(cmd: list[str], label: str) -> bool:
+    """Run FFmpeg/FFprobe commands and print the useful tail on failure."""
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if result.returncode == 0:
+        return True
+
+    print(f"  WARNING: {label} failed with exit code {result.returncode}.")
+    stderr = (result.stderr or "").strip()
+    if stderr:
+        print("\n".join(stderr.splitlines()[-8:]))
+    return False
+
+
+def get_media_duration(path: str) -> float:
+    """Read a media duration in seconds via ffprobe."""
+    result = subprocess.run(
+        [
+            "ffprobe",
+            "-v",
+            "quiet",
+            "-show_entries",
+            "format=duration",
+            "-of",
+            "default=noprint_wrappers=1:nokey=1",
+            path,
+        ],
+        capture_output=True,
+        text=True,
+    )
+    return float((result.stdout or "0").strip() or "0")
+
+
+def normalize_audio_to_wav(input_path: str, output_path: str):
+    """Convert any generated clip into one concat-friendly WAV format."""
+    cmd = [
+        "ffmpeg",
+        "-y",
+        "-i",
+        input_path,
+        "-ac",
+        "1",
+        "-ar",
+        "24000",
+        "-c:a",
+        "pcm_s16le",
+        output_path,
+    ]
+    if not run_media_command(cmd, f"Audio normalization for {os.path.basename(input_path)}"):
+        return None
+    return output_path
+
+
+def apply_audio_pace(input_path: str, pace_factor: float, output_path: str):
+    """Gently slow a clip down so the narration is easier to follow."""
+    if abs(pace_factor - 1.0) <= 0.01:
+        return input_path, get_media_duration(input_path)
+
+    cmd = [
+        "ffmpeg",
+        "-y",
+        "-i",
+        input_path,
+        "-filter:a",
+        f"atempo={pace_factor:.6f}",
+        "-ac",
+        "1",
+        "-ar",
+        "24000",
+        "-c:a",
+        "pcm_s16le",
+        output_path,
+    ]
+    if not run_media_command(cmd, f"Audio pacing for {os.path.basename(input_path)}"):
+        return input_path, get_media_duration(input_path)
+    return output_path, get_media_duration(output_path)
+
+
+def atempo_filter_for_ratio(speed_factor: float) -> str:
+    """Build an ffmpeg atempo chain that supports large speed-ups."""
+    remaining = max(speed_factor, 1.0)
+    factors = []
+    while remaining > 2.0:
+        factors.append(2.0)
+        remaining /= 2.0
+    factors.append(remaining)
+    return ",".join(f"atempo={factor:.6f}" for factor in factors)
+
+
+def fit_audio_clip_to_duration(input_path: str, max_duration: float, output_path: str):
+    """Speed up an audio clip only a little if it would overflow its timing budget."""
+    current_duration = get_media_duration(input_path)
+    if max_duration <= 0 or current_duration <= max_duration + 0.06:
+        return input_path, current_duration
+
+    speed_factor = current_duration / max_duration
+    if speed_factor <= 1.05:
+        return input_path, current_duration
+
+    applied_speed = min(speed_factor, MAX_AUDIO_SPEEDUP)
+    cmd = [
+        "ffmpeg",
+        "-y",
+        "-i",
+        input_path,
+        "-filter:a",
+        atempo_filter_for_ratio(applied_speed),
+        "-ac",
+        "1",
+        "-ar",
+        "24000",
+        "-c:a",
+        "pcm_s16le",
+        output_path,
+    ]
+    if not run_media_command(cmd, f"Audio timing fit for {os.path.basename(input_path)}"):
+        return input_path, current_duration
+    return output_path, get_media_duration(output_path)
+
+
+def create_silence_clip(duration_sec: float, output_path: str):
+    """Create a silence WAV clip for timeline gaps."""
+    safe_duration = max(duration_sec, 0.02)
+    cmd = [
+        "ffmpeg",
+        "-y",
+        "-f",
+        "lavfi",
+        "-i",
+        f"anullsrc=r=24000:cl=mono",
+        "-t",
+        f"{safe_duration:.3f}",
+        "-ac",
+        "1",
+        "-ar",
+        "24000",
+        "-c:a",
+        "pcm_s16le",
+        output_path,
+    ]
+    if not run_media_command(cmd, f"Silence generation for {os.path.basename(output_path)}"):
+        return None
+    return output_path
+
+
+def concat_audio_clips(input_paths: list[str], output_path: str):
+    """Concatenate WAV clips into one final narration track."""
+    list_path = f"{output_path}.txt"
+    with open(list_path, "w", encoding="utf-8") as file:
+        for path in input_paths:
+            normalized = path.replace("\\", "/").replace("'", "'\\''")
+            file.write(f"file '{normalized}'\n")
+
+    cmd = [
+        "ffmpeg",
+        "-y",
+        "-f",
+        "concat",
+        "-safe",
+        "0",
+        "-i",
+        list_path,
+        "-c",
+        "copy",
+        output_path,
+    ]
+    success = run_media_command(cmd, f"Audio concat for {os.path.basename(output_path)}")
+    try:
+        os.remove(list_path)
+    except OSError:
+        pass
+    return output_path if success else None
+
+
 load_local_env()
 
 
@@ -355,6 +587,27 @@ def to_gerund_clause(text: str) -> str:
     return f"{gerund} {remainder}".strip()
 
 
+def spoken_description(text: str) -> str:
+    """Trim detailed labels into a cleaner line for voice narration."""
+    cleaned = normalize_text(text)
+    if not cleaned:
+        return cleaned
+
+    for token in [" - ", ": ", "; "]:
+        head, separator, _ = cleaned.partition(token)
+        if separator and len(head.split()) >= 2:
+            return head.strip()
+    return cleaned
+
+
+def trim_words(text: str, max_words: int) -> str:
+    """Limit a line to a manageable spoken length."""
+    words = normalize_text(text).split()
+    if len(words) <= max_words:
+        return " ".join(words)
+    return " ".join(words[:max_words]).rstrip(",;:-")
+
+
 def pick_variant(options: list[str], seed: int) -> str:
     """Choose a stable line variant so the narration does not feel repetitive."""
     if not options:
@@ -374,8 +627,102 @@ def cinematic_cue(step_num: int, total_steps: int, sensitive: bool) -> str:
         return pick_variant(FINALE_CUES, step_num)
     if step_num == 1:
         return pick_variant(OPENING_CUES, step_num)
-    cues = SOFT_TRANSITION_CUES if sensitive else TRANSITION_CUES
+
+    if sensitive:
+        return pick_variant(SOFT_TRANSITION_CUES, step_num)
+
+    progress = step_num / max(total_steps, 1)
+    if progress <= 0.34:
+        cues = EARLY_TRANSITION_CUES
+    elif progress <= 0.72:
+        cues = MID_TRANSITION_CUES
+    else:
+        cues = LATE_TRANSITION_CUES
     return pick_variant(cues, step_num)
+
+
+def step_start_sec(step: dict, fallback: float) -> float:
+    """Resolve the measured start time for a step."""
+    return float(step.get("start_elapsed_sec", fallback) or fallback)
+
+
+def step_end_sec(step: dict, fallback: float) -> float:
+    """Resolve the measured end time for a step."""
+    end_value = step.get("end_elapsed_sec")
+    if end_value is not None:
+        return float(end_value)
+    duration = float(step.get("duration_sec", 0.0) or 0.0)
+    return fallback + duration
+
+
+def build_waiting_aside(step: dict, step_num: int) -> str:
+    """Generate a short filler line for visibly slow steps."""
+    description = step.get("description", "")
+    url = step.get("url", "")
+    variants = WAITING_ASIDES_SAFE if is_sensitive_step(description, url) else WAITING_ASIDES
+    return pick_variant(variants, step_num)
+
+
+def build_fallback_waiting_aside(step: dict, step_num: int) -> str:
+    """Generate a very short filler line for fallback narration."""
+    if is_sensitive_step(step.get("description", ""), step.get("url", "")):
+        return "We will give the page a second."
+    return pick_variant(FALLBACK_WAITING_ASIDES, step_num)
+
+
+def build_compact_action_line(spoken_action: str, step_num: int, total_steps: int) -> str:
+    """Build a short line that reads naturally in the fallback voice."""
+    compact_action = trim_words(spoken_action, 11)
+    verb = first_word(compact_action)
+    if step_num == 1:
+        return f"We start by {to_gerund_clause(compact_action)}."
+    if step_num == total_steps:
+        return "That completes the flow."
+    if verb in GERUND_OVERRIDES:
+        return f"Next, we {lower_first_non_acronym(compact_action)}."
+    return f"{compact_action}."
+
+
+def compact_story_tail(description: str, url: str = "") -> str:
+    """Return a compact why-it-matters line for the fallback voice."""
+    lowered = normalize_text(description).lower()
+    if "captcha" in lowered:
+        return "That keeps the demo safe."
+    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+        return "The flow is ready to replay."
+    if "rendered; now compare" in lowered:
+        return "Now the comparison is easy to read."
+
+    verb = first_word(lowered)
+    tail = COMPACT_STORY_TAGS.get(verb, "")
+    if is_sensitive_step(description, url) and verb in {"fill", "enter", "stop"}:
+        return "The flow stays clear and respectful."
+    return tail
+
+
+def build_fallback_primary_narration(
+    description: str,
+    spoken_action: str,
+    step_num: int,
+    total_steps: int,
+    duration_sec: float,
+    url: str = "",
+) -> str:
+    """Build a concise but less naive voice line that stays close to the screen action."""
+    lowered = description.lower()
+
+    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+        return "That completes the flow."
+    if "stop at captcha" in lowered or "captcha step" in lowered:
+        return "We stop at the captcha step here."
+    if "rendered; now compare" in lowered:
+        return "Now the new results are on the map for comparison."
+
+    action_line = build_compact_action_line(spoken_action, step_num, total_steps)
+    tail = compact_story_tail(description, url)
+    if tail and (duration_sec >= 6.0 or len(spoken_action.split()) <= 7):
+        return f"{action_line} {tail}".strip()
+    return action_line
 
 
 def narration_commentary(description: str, step_num: int, url: str = "") -> str:
@@ -384,11 +731,11 @@ def narration_commentary(description: str, step_num: int, url: str = "") -> str:
     sensitive = is_sensitive_step(description, url)
 
     if "captcha" in lowered:
-        return "That way the walkthrough stays safe while still showing the exact handoff point."
+        return "That keeps the demo safe and clear."
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
-        return "The flow is now captured end to end and ready to replay or adapt."
+        return "The flow is ready to replay."
     if "rendered; now compare" in lowered:
-        return "Seeing both patterns on screen is what makes the comparison click."
+        return "Now the comparison is easy to read."
 
     verb = first_word(lowered)
     variants = STEP_COMMENTARY.get(verb)
@@ -404,50 +751,56 @@ def narration_pause_ms(description: str, step_num: int, total_steps: int) -> int
     lowered = normalize_text(description).lower()
 
     if step_num == total_steps or "tutorial complete" in lowered or "captcha" in lowered:
-        return 900
+        return 1550
     if any(token in lowered for token in ["review", "browse", "inspect", "check", "compare", "view"]):
-        return 700
+        return 1200
     if any(token in lowered for token in ["fill", "enter", "set", "add", "write", "select", "choose"]):
-        return 550
+        return 1050
     if any(token in lowered for token in ["download", "export", "run"]):
-        return 650
-    return 450
+        return 1120
+    return 920
 
 
 def build_story_beat(step: dict, total_steps: int) -> dict:
     """Rewrite a step into a short, more human narration beat."""
     step_num = step["step"]
     description = normalize_text(step["description"])
+    spoken_action = spoken_description(description)
     url = step.get("url", "")
     lowered = description.lower()
     sensitive = is_sensitive_step(description, url)
     cue = cinematic_cue(step_num, total_steps, sensitive)
+    measured_start_sec = step_start_sec(step, 0.0)
+    measured_end_sec = step_end_sec(step, measured_start_sec)
+    measured_duration_sec = round(max(measured_end_sec - measured_start_sec, 0.1), 3)
+    commentary = narration_commentary(description, step_num, url)
+    if len(spoken_action.split()) >= 6 and measured_duration_sec < 7.0:
+        commentary = ""
+
+    def join_lines(base: str, tail: str = "") -> str:
+        if tail:
+            return f"{base} {tail}".strip()
+        return base.strip()
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
-        narration = (
-            f"{cue} The flow is captured end to end and ready for a replay. "
-            f"{narration_commentary(description, step_num, url)}"
-        )
+        narration = f"{cue} The flow is ready to replay."
     elif "stop at captcha" in lowered or "captcha step" in lowered:
-        narration = (
-            f"{cue} We intentionally stop at the captcha step here. "
-            f"{narration_commentary(description, step_num, url)}"
-        )
+        narration = join_lines(f"{cue} We stop at the captcha step here.", commentary)
     elif "rendered; now compare" in lowered:
         subject, comparison = description.split("rendered; now compare", 1)
-        narration = (
-            f"{cue} {subject.strip()} are now on the map, so we can compare {comparison.strip()}. "
-            f"{narration_commentary(description, step_num, url)}"
+        narration = join_lines(
+            f"{cue} {subject.strip()} are now on the map. We compare {comparison.strip()}.",
+            commentary,
         )
     elif step_num == 1:
-        narration = (
-            f"{cue} Let's start by {to_gerund_clause(description)}. "
-            f"{narration_commentary(description, step_num, url)}"
+        narration = join_lines(
+            f"{cue} Let's start by {to_gerund_clause(spoken_action)}.",
+            commentary,
         )
     else:
-        narration = (
-            f"{cue} We {lower_first_non_acronym(description)}. "
-            f"{narration_commentary(description, step_num, url)}"
+        narration = join_lines(
+            f"{cue} We {lower_first_non_acronym(spoken_action)}.",
+            commentary,
         )
 
     return {
@@ -455,9 +808,72 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
         "caption": step.get("caption") or f"Step {step_num}: {description}",
         "description": description,
         "narration": narration.strip(),
+        "fallback_narration": build_fallback_primary_narration(
+            description,
+            spoken_action,
+            step_num,
+            total_steps,
+            measured_duration_sec,
+            url,
+        ),
         "pause_ms": narration_pause_ms(description, step_num, total_steps),
         "url": url,
+        "start_elapsed_sec": round(measured_start_sec, 3),
+        "end_elapsed_sec": round(measured_end_sec, 3),
+        "duration_sec": measured_duration_sec,
     }
+
+
+def build_narration_timeline(beats: list[dict]) -> list[dict]:
+    """Create timed narration segments from the measured step windows."""
+    timeline = []
+
+    for beat in beats:
+        step_num = beat["step"]
+        start_sec = float(beat.get("start_elapsed_sec", 0.0) or 0.0)
+        end_sec = float(beat.get("end_elapsed_sec", start_sec) or start_sec)
+        duration_sec = max(float(beat.get("duration_sec", end_sec - start_sec) or 0.0), 0.1)
+        offset_sec = round(start_sec + 0.32, 3)
+        primary_budget = max(duration_sec * (0.78 if duration_sec >= 7.0 else 0.93), 2.75)
+        timeline.append(
+            {
+                "segment_id": f"step_{step_num:02d}_primary",
+                "step": step_num,
+                "type": "primary",
+                "offset_sec": offset_sec,
+                "budget_sec": round(primary_budget, 3),
+                "text": beat["narration"],
+                "fallback_text": beat.get("fallback_narration") or beat["narration"],
+                "subtitle": f"Step {step_num}: {beat['description']}",
+                "target_window_end_sec": round(end_sec, 3),
+            }
+        )
+
+        if duration_sec < LONG_STEP_FILLER_THRESHOLD_SEC or "tutorial complete" in beat["description"].lower():
+            continue
+
+        filler_offset = start_sec + max(duration_sec * 0.74, 4.0)
+        filler_budget = max(end_sec - filler_offset - 0.45, 1.9)
+        if filler_budget < 1.9:
+            continue
+
+        filler_text = build_waiting_aside(beat, step_num)
+        timeline.append(
+            {
+                "segment_id": f"step_{step_num:02d}_wait",
+                "step": step_num,
+                "type": "filler",
+                "offset_sec": round(filler_offset, 3),
+                "budget_sec": round(filler_budget, 3),
+                "text": filler_text,
+                "fallback_text": build_fallback_waiting_aside(beat, step_num),
+                "subtitle": filler_text,
+                "target_window_end_sec": round(end_sec, 3),
+            }
+        )
+
+    timeline.sort(key=lambda item: (item["offset_sec"], item["segment_id"]))
+    return timeline
 
 
 def generate_narration_package(steps_json_path: str) -> dict:
@@ -467,8 +883,15 @@ def generate_narration_package(steps_json_path: str) -> dict:
 
     total_steps = len(steps)
     beats = [build_story_beat(step, total_steps) for step in steps]
-    script = "\n\n".join(beat["narration"] for beat in beats)
-    return {"beats": beats, "script": script}
+    timeline = build_narration_timeline(beats)
+    script = "\n\n".join(segment["text"] for segment in timeline)
+    total_duration = max((float(beat.get("end_elapsed_sec", 0.0) or 0.0) for beat in beats), default=0.0)
+    return {
+        "beats": beats,
+        "timeline": timeline,
+        "script": script,
+        "total_duration_sec": round(total_duration, 3),
+    }
 
 
 def generate_narration_script(steps_json_path: str) -> str:
@@ -497,6 +920,10 @@ def generate_audio_gemini(text: str, output_prefix: str, api_key: str = None):
     if not api_key:
         print("ERROR: No Gemini API key found.")
         print("Set it in the project .env file as GEMINI_API_KEY=your_key_here")
+        return None
+
+    global GEMINI_QUOTA_EXHAUSTED
+    if GEMINI_QUOTA_EXHAUSTED:
         return None
 
     model_name = os.environ.get("GEMINI_TTS_MODEL", "gemini-2.5-flash-preview-tts")
@@ -539,6 +966,18 @@ def generate_audio_gemini(text: str, output_prefix: str, api_key: str = None):
 
         except Exception as e:
             is_retryable = "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e)
+            is_daily_quota_issue = any(
+                token in str(e)
+                for token in [
+                    "GenerateRequestsPerDayPerProjectPerModel",
+                    "generate_requests_per_model_per_day",
+                    "per_day",
+                ]
+            )
+            if is_daily_quota_issue:
+                GEMINI_QUOTA_EXHAUSTED = True
+                print("  WARNING: Gemini daily TTS quota is exhausted, switching remaining segments to fallback audio.")
+                return None
             if is_retryable and attempt < 2:
                 delay_seconds = get_retry_delay_seconds(e)
                 print(f"  WARNING: Gemini rate-limited. Retrying in {delay_seconds:.1f}s...")
@@ -546,7 +985,7 @@ def generate_audio_gemini(text: str, output_prefix: str, api_key: str = None):
                 continue
 
             print(f"  WARNING: Gemini audio generation failed: {e}")
-            print("  Falling back to script-only mode (no audio)")
+            print("  Falling back to alternate audio generation")
             return None
 
     return None
@@ -575,6 +1014,84 @@ def generate_audio_gtts_fallback(text: str, output_prefix: str):
         return None
 
 
+def synthesize_segment_audio(segment: dict, temp_dir: str):
+    """Generate one narration clip and force it into a concat-friendly WAV shape."""
+    base_prefix = os.path.join(temp_dir, segment["segment_id"])
+    raw_path = generate_audio_gemini(segment["text"], base_prefix)
+    used_fallback = False
+    if not raw_path:
+        fallback_text = segment.get("fallback_text") or segment["text"]
+        raw_path = generate_audio_gtts_fallback(fallback_text, base_prefix)
+        used_fallback = raw_path is not None
+    if not raw_path:
+        return None
+
+    normalized_path = f"{base_prefix}_normalized.wav"
+    normalized = normalize_audio_to_wav(raw_path, normalized_path)
+    if not normalized:
+        return None
+
+    paced_path = f"{base_prefix}_paced.wav"
+    pace_factor = 1.0 if used_fallback else DEFAULT_AUDIO_PACE
+    paced, _ = apply_audio_pace(normalized, pace_factor, paced_path)
+
+    fitted_path = f"{base_prefix}_fitted.wav"
+    fitted, fitted_duration = fit_audio_clip_to_duration(
+        paced,
+        float(segment.get("budget_sec", 0.0) or 0.0),
+        fitted_path,
+    )
+    segment["clip_duration_sec"] = round(fitted_duration, 3)
+    segment["clip_path"] = fitted
+    return fitted
+
+
+def build_timed_audio_track(timeline: list[dict], total_duration_sec: float, output_path: str):
+    """Create one final narration track by placing segment clips on the measured timeline."""
+    if not timeline:
+        return None
+
+    with tempfile.TemporaryDirectory(prefix="narration_timeline_", dir=OUTPUT_DIR) as temp_dir:
+        clip_sequence = []
+        current_cursor_sec = 0.0
+
+        for index, segment in enumerate(timeline, start=1):
+            clip_path = synthesize_segment_audio(segment, temp_dir)
+            if not clip_path:
+                print(f"  WARNING: Skipping failed narration segment {segment['segment_id']}")
+                continue
+
+            offset_sec = float(segment.get("offset_sec", current_cursor_sec) or current_cursor_sec)
+            placed_start_sec = max(offset_sec, current_cursor_sec)
+            if placed_start_sec > current_cursor_sec + 0.02:
+                silence_path = create_silence_clip(
+                    placed_start_sec - current_cursor_sec,
+                    os.path.join(temp_dir, f"silence_{index:02d}.wav"),
+                )
+                if silence_path:
+                    clip_sequence.append(silence_path)
+                current_cursor_sec = placed_start_sec
+
+            clip_sequence.append(clip_path)
+            clip_duration = float(segment.get("clip_duration_sec", get_media_duration(clip_path)) or 0.0)
+            segment["start_sec"] = round(placed_start_sec, 3)
+            segment["end_sec"] = round(placed_start_sec + clip_duration, 3)
+            current_cursor_sec = placed_start_sec + clip_duration
+
+        if total_duration_sec > current_cursor_sec + 0.02:
+            tail_silence = create_silence_clip(
+                total_duration_sec - current_cursor_sec,
+                os.path.join(temp_dir, "silence_tail.wav"),
+            )
+            if tail_silence:
+                clip_sequence.append(tail_silence)
+
+        if not clip_sequence:
+            return None
+
+        return concat_audio_clips(clip_sequence, output_path)
+
+
 def generate_narration(demo_name: str):
     """
     Full narration pipeline:
@@ -591,6 +1108,8 @@ def generate_narration(demo_name: str):
     package = generate_narration_package(steps_path)
     script = package["script"]
     beats = package["beats"]
+    timeline = package["timeline"]
+    total_duration_sec = float(package.get("total_duration_sec", 0.0) or 0.0)
     print(f"\n  Narration script ({len(script)} chars):")
     print(f"  {script[:200]}...")
 
@@ -603,25 +1122,49 @@ def generate_narration(demo_name: str):
     with open(beats_path, "w", encoding="utf-8") as f:
         json.dump(beats, f, indent=2)
 
+    timeline_path = os.path.join(OUTPUT_DIR, f"{demo_name}_narration_timeline.json")
+    with open(timeline_path, "w", encoding="utf-8") as f:
+        json.dump(
+            {
+                "demo_name": demo_name,
+                "total_duration_sec": total_duration_sec,
+                "segments": timeline,
+            },
+            f,
+            indent=2,
+        )
+
     # Generate audio
     audio_prefix = os.path.join(OUTPUT_DIR, f"{demo_name}_narration")
-    temp_audio_prefix = os.path.join(OUTPUT_DIR, f"{demo_name}_narration_tmp")
     existing_audio_path = find_existing_audio_output(audio_prefix)
-    remove_existing_audio_outputs(temp_audio_prefix)
+    remove_existing_audio_outputs(audio_prefix)
 
-    # Try Gemini first, then gTTS fallback
-    audio_path = generate_audio_gemini(script, temp_audio_prefix)
-    if not audio_path:
-        audio_path = generate_audio_gtts_fallback(script, temp_audio_prefix)
+    final_audio_path = f"{audio_prefix}.wav"
+    temp_audio_path = os.path.join(OUTPUT_DIR, f"{demo_name}_narration_tmp.wav")
+    remove_existing_audio_outputs(os.path.join(OUTPUT_DIR, f"{demo_name}_narration_tmp"))
+    audio_path = build_timed_audio_track(timeline, total_duration_sec, temp_audio_path)
 
     if audio_path:
-        _, extension = os.path.splitext(audio_path)
-        final_audio_path = f"{audio_prefix}{extension}"
         remove_existing_audio_outputs(audio_prefix)
-        os.replace(audio_path, final_audio_path)
-        return final_audio_path
+        if os.path.abspath(audio_path) != os.path.abspath(final_audio_path):
+            os.replace(audio_path, final_audio_path)
+        audio_path = final_audio_path
+        with open(timeline_path, "w", encoding="utf-8") as f:
+            json.dump(
+                {
+                    "demo_name": demo_name,
+                    "total_duration_sec": round(
+                        max(total_duration_sec, get_media_duration(audio_path)),
+                        3,
+                    ),
+                    "segments": timeline,
+                },
+                f,
+                indent=2,
+            )
+        return audio_path
     else:
-        remove_existing_audio_outputs(temp_audio_prefix)
+        remove_existing_audio_outputs(os.path.join(OUTPUT_DIR, f"{demo_name}_narration_tmp"))
         if existing_audio_path:
             print(f"  NOTE: Keeping previous narration audio: {existing_audio_path}")
             return existing_audio_path

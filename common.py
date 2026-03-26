@@ -32,6 +32,12 @@ def ensure_clean_directory(path: str):
     os.makedirs(path, exist_ok=True)
 
 
+MIN_STEP_SETTLE_SEC = 1.8
+CAPTION_HOLD_SEC = 1.05
+POST_STEP_BREATH_SEC = 0.95
+FAST_ERROR_STEP_SEC = 0.15
+
+
 CLICK_INDICATOR_JS = """
 (() => {
   const init = () => {
@@ -43,14 +49,14 @@ CLICK_INDICATOR_JS = """
       @keyframes clickRipple {
         0% {
           transform: translate(-50%, -50%) scale(0.28);
-          opacity: 0.95;
+          opacity: 0.92;
         }
         70% {
-          transform: translate(-50%, -50%) scale(1.9);
-          opacity: 0.38;
+          transform: translate(-50%, -50%) scale(1.95);
+          opacity: 0.34;
         }
         100% {
-          transform: translate(-50%, -50%) scale(2.75);
+          transform: translate(-50%, -50%) scale(2.85);
           opacity: 0;
         }
       }
@@ -66,33 +72,34 @@ CLICK_INDICATOR_JS = """
       }
       .click-indicator {
         position: fixed;
-        width: 56px;
-        height: 56px;
+        width: 64px;
+        height: 64px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(255, 64, 64, 0.42) 0%, rgba(255, 64, 64, 0.22) 52%, rgba(255, 64, 64, 0) 72%);
-        border: 4px solid rgba(255, 64, 64, 0.8);
-        box-shadow: 0 0 0 10px rgba(255, 64, 64, 0.16), 0 12px 28px rgba(120, 0, 0, 0.24);
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.1) 48%, rgba(255, 255, 255, 0) 74%);
+        border: 4px solid rgba(255, 255, 255, 0.92);
+        box-shadow: 0 0 0 10px rgba(123, 219, 255, 0.2), 0 12px 28px rgba(10, 24, 40, 0.2);
         pointer-events: none;
         z-index: 999999;
         transform: translate(-50%, -50%) scale(0.28);
-        animation: clickRipple 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation: clickRipple 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       }
       .click-indicator::after {
         content: '';
         position: absolute;
-        inset: 14px;
+        inset: 20px;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.82);
-        opacity: 0.7;
+        background: rgba(108, 207, 255, 0.18);
+        border: 2px solid rgba(255, 255, 255, 0.88);
+        opacity: 0.86;
       }
       .click-dot {
         position: fixed;
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         border-radius: 50%;
-        background: rgba(255, 64, 64, 0.96);
-        border: 4px solid rgba(255, 255, 255, 0.72);
-        box-shadow: 0 0 0 8px rgba(255, 64, 64, 0.18), 0 8px 18px rgba(120, 0, 0, 0.26);
+        background: rgba(255, 255, 255, 0.58);
+        border: 3px solid rgba(33, 48, 66, 0.52);
+        box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.08), 0 8px 18px rgba(10, 24, 40, 0.18);
         pointer-events: none;
         z-index: 999999;
         transition: opacity 0.3s ease-out;
@@ -298,6 +305,8 @@ class StepLogger:
         self.demo_name = demo_name
         self.steps = []
         self.screenshot_dir = os.path.join(SCREENSHOT_DIR, demo_name)
+        self.recording_started_at = time.perf_counter()
+        self.last_elapsed_sec = 0.0
         ensure_clean_directory(self.screenshot_dir)
 
     def show_caption(self, page: Page, text: str):
@@ -307,18 +316,37 @@ class StepLogger:
         except Exception as error:
             print(f"  WARNING: Could not render caption overlay: {error}")
 
-    def log(self, page: Page, description: str, wait_sec: float = 1.0):
+    def preview(self, page: Page, description: str, hold_sec: float = 0.55):
+        """Show the upcoming step caption before the action starts."""
+        step_num = len(self.steps) + 1
+        step_label = f"Step {step_num}: {description}"
+        self.show_caption(page, step_label)
+        if hold_sec > 0:
+            time.sleep(hold_sec)
+
+    def log(self, page: Page, description: str, wait_sec: float = 1.0, show_caption: bool = True):
         """Log a step: take screenshot, record metadata, show caption."""
-        time.sleep(wait_sec)
+        step_start_elapsed = self.last_elapsed_sec
+        is_fast_step = wait_sec <= 0.05
+        settle_before_capture = wait_sec if is_fast_step else max(wait_sec, MIN_STEP_SETTLE_SEC)
+        caption_hold = 0.35 if is_fast_step else CAPTION_HOLD_SEC
+        post_step_breath = FAST_ERROR_STEP_SEC if is_fast_step else POST_STEP_BREATH_SEC
+
+        time.sleep(settle_before_capture)
 
         step_num = len(self.steps) + 1
         step_label = f"Step {step_num}: {description}"
         screenshot_path = os.path.join(self.screenshot_dir, f"step_{step_num:02d}.png")
 
-        self.show_caption(page, step_label)
-        time.sleep(0.65)
+        if show_caption:
+            self.show_caption(page, step_label)
+            time.sleep(caption_hold)
 
         page.screenshot(path=screenshot_path)
+        time.sleep(post_step_breath)
+        step_end_elapsed = round(time.perf_counter() - self.recording_started_at, 3)
+        duration_sec = round(max(step_end_elapsed - step_start_elapsed, 0.1), 3)
+        self.last_elapsed_sec = step_end_elapsed
 
         self.steps.append(
             {
@@ -327,6 +355,9 @@ class StepLogger:
                 "description": description,
                 "url": page.url,
                 "timestamp": datetime.now().isoformat(),
+                "start_elapsed_sec": round(step_start_elapsed, 3),
+                "end_elapsed_sec": step_end_elapsed,
+                "duration_sec": duration_sec,
                 "screenshot": screenshot_path,
             }
         )
@@ -345,6 +376,7 @@ class StepLogger:
         lines = [f"## Tutorial: {self.demo_name}\n"]
         for step in self.steps:
             lines.append(f"**Step {step['step']}:** {step['description']}")
+            lines.append(f"  - Duration: {step.get('duration_sec', 0):.2f}s")
             lines.append(f"  - URL: {step['url']}\n")
         return "\n".join(lines)
 
@@ -406,7 +438,10 @@ def safe_click(page: Page, selector: str, timeout: int = 10000):
     """Click with wait and error handling."""
     try:
         page.wait_for_selector(selector, timeout=timeout, state="visible")
+        page.hover(selector)
+        time.sleep(0.22)
         page.click(selector)
+        time.sleep(0.28)
     except Exception as error:
         print(f"  WARNING: Could not click '{selector}': {error}")
 
@@ -415,9 +450,12 @@ def safe_fill(page: Page, selector: str, text: str, timeout: int = 10000):
     """Fill input with wait, clear first, then type slowly for visual effect."""
     try:
         page.wait_for_selector(selector, timeout=timeout, state="visible")
+        page.hover(selector)
+        time.sleep(0.2)
         page.click(selector)
         page.fill(selector, "")
-        page.type(selector, text, delay=80)
+        page.type(selector, text, delay=115)
+        time.sleep(0.22)
     except Exception as error:
         print(f"  WARNING: Could not fill '{selector}': {error}")
 
@@ -427,7 +465,7 @@ def slow_scroll(page: Page, pixels: int = 300, steps: int = 3):
     step_size = pixels // steps
     for _ in range(steps):
         page.mouse.wheel(0, step_size)
-        time.sleep(0.3)
+        time.sleep(0.5)
 
 
 def finish_recording(browser, context, demo_name: str, page: Page | None = None) -> str:
