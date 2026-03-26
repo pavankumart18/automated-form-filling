@@ -21,6 +21,13 @@ DEMO_PROMPT = (
     "Open Zoho free invoice generator, create an invoice for Acme Corp with 3 line items, "
     "review tax totals, and download it."
 )
+STEP_PREVIEW_HOLD_SEC = 0.9
+SYNC_LOG_WAIT_SEC = 0.1
+FIELD_TYPE_DELAY_MS = 72
+FIELD_SETTLE_SEC = 0.35
+STEP_EXTRA_SETTLE_SEC = 1.0
+SHORT_STEP_EXTRA_SETTLE_SEC = 1.25
+FINAL_PREVIEW_HOLD_SEC = 1.7
 
 
 def wait_short(seconds: float = 0.6):
@@ -54,7 +61,7 @@ def dismiss_blockers(page):
         pass
 
 
-def type_field(page, selector: str, value: str, delay: int = 65) -> bool:
+def type_field(page, selector: str, value: str, delay: int = FIELD_TYPE_DELAY_MS) -> bool:
     """
     Type with human pacing for clearer videos. Falls back to direct value set.
     """
@@ -74,7 +81,7 @@ def type_field(page, selector: str, value: str, delay: int = 65) -> bool:
         except Exception:
             pass
         locator.type(value, delay=delay)
-        wait_short(0.25)
+        wait_short(FIELD_SETTLE_SEC)
         return True
     except Exception:
         pass
@@ -93,7 +100,7 @@ def type_field(page, selector: str, value: str, delay: int = 65) -> bool:
             """,
             [selector, value],
         )
-        wait_short(0.2)
+        wait_short(FIELD_SETTLE_SEC)
         return True
     except Exception:
         return False
@@ -121,98 +128,110 @@ def run():
         logger = StepLogger(DEMO_NAME)
 
         try:
+            def announce(description: str, hold_sec: float = STEP_PREVIEW_HOLD_SEC):
+                logger.preview(page, description, hold_sec=hold_sec)
+
             # Step 1
             page.goto("https://www.zoho.com/invoice/", wait_until="networkidle", timeout=30000)
             logger.log(page, "Open Zoho Invoice - free online invoicing tool for businesses", wait_sec=1.2)
 
             # Step 2
+            announce("Open the free invoice generator page - no login required")
             page.goto(
                 "https://www.zoho.com/invoice/free-invoice-generator.html",
                 wait_until="networkidle",
                 timeout=30000,
             )
             dismiss_blockers(page)
-            logger.log(page, "Open the free invoice generator page - no login required", wait_sec=1.2)
+            logger.log(page, "Open the free invoice generator page - no login required", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 3: company details
+            announce("Enter business details: company name, contact, and address")
             type_field(page, "#address1", "TechStar Solutions Pvt Ltd")
             type_field(page, "#custName", "Pavan Kumar")
             type_field(page, "#address2", "42 MG Road")
             type_field(page, "#address3", "Hyderabad")
             type_field(page, "#companyState", "Telangana")
-            wait_short(0.8)
-            logger.log(page, "Enter business details: company name, contact, and address", wait_sec=1.0)
+            wait_short(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Enter business details: company name, contact, and address", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 4: client details
+            announce("Enter Bill To details for Acme Corp International")
             type_field(page, "#billingAddress1", "Acme Corp International")
             type_field(page, "#billingAddress2", "100 Business Park")
             type_field(page, "#billingAddress3", "Mumbai")
             type_field(page, "#customerState", "Maharashtra")
-            wait_short(0.8)
-            logger.log(page, "Enter Bill To details for Acme Corp International", wait_sec=1.0)
+            wait_short(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Enter Bill To details for Acme Corp International", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 5: invoice number/date area
+            announce("Set invoice number to INV-2026-001")
             type_field(page, "#invNumber", "INV-2026-001")
-            wait_short(0.5)
-            logger.log(page, "Set invoice number to INV-2026-001", wait_sec=1.0)
+            wait_short(SHORT_STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Set invoice number to INV-2026-001", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 6: item 1
+            announce("Add line item 1 with quantity, rate, and GST")
             type_field(page, "#itemDesc\\.1", "Web Development Services")
             type_field(page, "#itemQty\\.1", "40")
             type_field(page, "#itemRate\\.1", "2500")
             type_field(page, "#itemTax1\\.1", "9")
-            wait_short(0.6)
-            logger.log(page, "Add line item 1 with quantity, rate, and GST", wait_sec=1.0)
+            wait_short(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Add line item 1 with quantity, rate, and GST", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 7: item 2
+            announce("Add line item 2: UI/UX Design services")
             type_field(page, "#itemDesc\\.2", "UI/UX Design")
             type_field(page, "#itemQty\\.2", "20")
             type_field(page, "#itemRate\\.2", "3000")
             type_field(page, "#itemTax1\\.2", "9")
-            wait_short(0.6)
-            logger.log(page, "Add line item 2: UI/UX Design services", wait_sec=1.0)
+            wait_short(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Add line item 2: UI/UX Design services", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 8: item 3
+            announce("Add line item 3: annual server hosting")
             type_field(page, "#itemDesc\\.3", "Server Hosting (Annual)")
             type_field(page, "#itemQty\\.3", "1")
             type_field(page, "#itemRate\\.3", "18000")
             type_field(page, "#itemTax1\\.3", "9")
-            wait_short(0.8)
-            logger.log(page, "Add line item 3: annual server hosting", wait_sec=1.0)
+            wait_short(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Add line item 3: annual server hosting", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 9: notes and terms
+            announce("Add payment notes and terms for the client")
             notes = page.locator("#customerNotes").first
             if notes.is_visible():
                 notes.scroll_into_view_if_needed()
             type_field(page, "#customerNotes", "Payment due within 30 days.")
             type_field(page, "#terms", "Bank: HDFC | IFSC: HDFC0001234")
-            wait_short(0.8)
-            logger.log(page, "Add payment notes and terms for the client", wait_sec=1.0)
+            wait_short(STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Add payment notes and terms for the client", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 10: totals section (keep frame on totals area)
+            announce("Review subtotal, GST breakdown, and grand total")
             totals_anchor = page.get_by_text("Sub Total").first
             if totals_anchor.is_visible():
                 totals_anchor.scroll_into_view_if_needed()
-            wait_short(0.8)
-            logger.log(page, "Review subtotal, GST breakdown, and grand total", wait_sec=1.0)
+            wait_short(SHORT_STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Review subtotal, GST breakdown, and grand total", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 11: download action
+            announce("Use Download/Print to export the invoice as PDF")
             clicked_download = (
                 click_visible(page, 'button:has-text("Download/Print")')
                 or click_visible(page, 'button:has-text("Download")')
                 or click_visible(page, ".action-btn.btn-main")
                 or click_visible(page, ".btn-main")
             )
-            wait_short(0.8)
+            wait_short(SHORT_STEP_EXTRA_SETTLE_SEC)
             if clicked_download:
-                logger.log(page, "Use Download/Print to export the invoice as PDF", wait_sec=1.0)
+                logger.log(page, "Use Download/Print to export the invoice as PDF", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
             else:
-                logger.log(page, "Download/Print is available on the right panel to export PDF", wait_sec=1.0)
+                logger.log(page, "Download/Print is available on the right panel to export PDF", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 12
-            logger.show_caption(page, "Tutorial complete! You can now create GST invoices in Zoho Invoice")
-            wait_short(1.6)
-            logger.log(page, "Tutorial complete - create professional GST invoices in minutes", wait_sec=0.6)
+            logger.preview(page, "Tutorial complete - create professional GST invoices in minutes", hold_sec=FINAL_PREVIEW_HOLD_SEC)
+            logger.log(page, "Tutorial complete - create professional GST invoices in minutes", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
         except Exception as error:
             print(f"\nERROR during recording: {error}")

@@ -44,10 +44,10 @@
       "caption": "Step 1: Open Zoho Invoice - free online invoicing tool for businesses",
       "description": "Open Zoho Invoice - free online invoicing tool for businesses",
       "url": "https://www.zoho.com/in/invoice/",
-      "timestamp": "2026-03-25T23:37:59.137547",
+      "timestamp": "2026-03-26T09:54:42.175632",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_01.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_01.png",
-      "narration": "Here is the opening move. Let's start by opening Zoho Invoice. This gives the whole demo a place to stand.",
+      "narration": "We start on Zoho Invoice, which turns raw work into something a client can actually pay.",
       "pause_ms": 920
     },
     {
@@ -55,10 +55,10 @@
       "caption": "Step 2: Open the free invoice generator page - no login required",
       "description": "Open the free invoice generator page - no login required",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-25T23:38:08.142709",
+      "timestamp": "2026-03-26T09:54:49.187195",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_02.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_02.png",
-      "narration": "With the setup in place, we can chase the signal. We open the free invoice generator page. From here, every click has context.",
+      "narration": "Then we jump straight to the free generator. No login detour, just the useful part.",
       "pause_ms": 920
     },
     {
@@ -66,7 +66,7 @@
       "caption": "Step 3: Enter business details: company name, contact, and address",
       "description": "Enter business details: company name, contact, and address",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-25T23:38:20.930539",
+      "timestamp": "2026-03-26T09:55:02.684302",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_03.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_03.png",
       "narration": "Now the target comes into focus. We enter business details. Every future rerun gets cheaper because of this little moment.",
@@ -77,10 +77,10 @@
       "caption": "Step 4: Enter Bill To details for Acme Corp International",
       "description": "Enter Bill To details for Acme Corp International",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-25T23:38:32.483664",
+      "timestamp": "2026-03-26T09:55:14.772197",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_04.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_04.png",
-      "narration": "This is where the useful part starts. We enter Bill To details for Acme Corp International. The boring part belongs to automation, not to patience.",
+      "narration": "Now the client details go in, and the document starts changing from form fields into a real bill.",
       "pause_ms": 1050
     },
     {
@@ -88,10 +88,10 @@
       "caption": "Step 5: Set invoice number to INV-2026-001",
       "description": "Set invoice number to INV-2026-001",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-25T23:38:38.384527",
+      "timestamp": "2026-03-26T09:55:21.433102",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_05.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_05.png",
-      "narration": "Here the workflow stops posing and starts proving. We set invoice number to INV-2026-001. This is where consistency gets baked into the flow.",
+      "narration": "A good invoice number looks small, but it is what makes the document traceable later.",
       "pause_ms": 1050
     },
     {
@@ -99,10 +99,10 @@
       "caption": "Step 6: Add line item 1 with quantity, rate, and GST",
       "description": "Add line item 1 with quantity, rate, and GST",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-25T23:38:47.833326",
+      "timestamp": "2026-03-26T09:55:31.488749",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_06.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_06.png",
-      "narration": "Now the page has something to say. We add line item 1 with quantity, rate, and GST. One more layer makes the picture richer without making it messy.",
+      "narration": "The first line item puts real billable work on the page, and suddenly the invoice has a backbone.",
       "pause_ms": 1050
     },
     {
@@ -110,10 +110,10 @@
       "caption": "Step 7: Add line item 2: UI/UX Design services",
       "description": "Add line item 2: UI/UX Design services",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-25T23:38:56.369528",
+      "timestamp": "2026-03-26T09:55:40.491829",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_07.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_07.png",
-      "narration": "This is where the pattern starts to show. We add line item 2. This expands the flow without breaking its rhythm.",
+      "narration": "Now we add design work, which makes the scope feel broader and the pricing more believable.",
       "pause_ms": 1050
     },
     {
@@ -121,10 +121,10 @@
       "caption": "Step 8: Add line item 3: annual server hosting",
       "description": "Add line item 3: annual server hosting",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-25T23:39:05.915826",
+      "timestamp": "2026-03-26T09:55:50.400862",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_08.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_08.png",
-      "narration": "Here the workflow stops posing and starts proving. We add line item 3. Now the story has a little more range.",
+      "narration": "Hosting closes the loop here. One more line item, and the invoice feels complete instead of decorative.",
       "pause_ms": 1050
     },
     {
@@ -132,10 +132,10 @@
       "caption": "Step 9: Add payment notes and terms for the client",
       "description": "Add payment notes and terms for the client",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-25T23:39:16.357633",
+      "timestamp": "2026-03-26T09:56:01.264780",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_09.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_09.png",
-      "narration": "Now the payoff is close enough to see. We add payment notes and terms for the client. One more layer makes the picture richer without making it messy.",
+      "narration": "Payment notes matter more than people admit. This is where clarity saves follow-up emails.",
       "pause_ms": 1050
     },
     {
@@ -143,10 +143,10 @@
       "caption": "Step 10: Review subtotal, GST breakdown, and grand total",
       "description": "Review subtotal, GST breakdown, and grand total",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-25T23:39:21.088195",
+      "timestamp": "2026-03-26T09:56:06.263902",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_10.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_10.png",
-      "narration": "This is where the result starts to feel earned. We review subtotal, GST breakdown, and grand total.",
+      "narration": "Then we do the fast finance check: subtotal, tax, and final amount.",
       "pause_ms": 1200
     },
     {
@@ -154,10 +154,10 @@
       "caption": "Step 11: Use Download/Print to export the invoice as PDF",
       "description": "Use Download/Print to export the invoice as PDF",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-25T23:39:26.112603",
+      "timestamp": "2026-03-26T09:56:11.564847",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_11.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_11.png",
-      "narration": "From here, the workflow turns into something reusable. We use Download/Print to export the invoice as PDF.",
+      "narration": "Once the numbers look right, download is the handoff from draft to deliverable.",
       "pause_ms": 1120
     },
     {
@@ -165,10 +165,10 @@
       "caption": "Step 12: Tutorial complete - create professional GST invoices in minutes",
       "description": "Tutorial complete - create professional GST invoices in minutes",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-25T23:39:31.614159",
+      "timestamp": "2026-03-26T09:56:16.111405",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_12.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_12.png",
-      "narration": "That is the payoff shot. The flow is ready to replay.",
+      "narration": "Final beat. We went from a blank form to a client-ready invoice.",
       "pause_ms": 1550
     }
   ]

@@ -83,6 +83,16 @@ SCREENER_FALLBACK_WAITING_ASIDES = [
     "The page is loading, so we give it a second.",
     "A short beat here while the data settles.",
 ]
+ZOHO_WAITING_ASIDES = [
+    "Small pause here while the invoice catches up. Forms like their dramatic beats too.",
+    "We give the invoice a second to settle, which is still faster than fixing a rushed total later.",
+    "A quick breath here while the form finishes updating.",
+]
+ZOHO_FALLBACK_WAITING_ASIDES = [
+    "Quick pause while the invoice updates.",
+    "The form is settling, so we give it a second.",
+    "A short beat here while the totals catch up.",
+]
 DEFAULT_TTS_DIRECTION = (
     "Perform this as a warm, human product-demo narrator with light cinematic polish. "
     "Use a measured, conversational pace and make every sentence easy to understand on the first listen. "
@@ -98,6 +108,7 @@ GEMINI_QUOTA_EXHAUSTED = False
 LONG_STEP_FILLER_THRESHOLD_SEC = 11.5
 OVERPASS_FILLER_THRESHOLD_SEC = 7.4
 SCREENER_FILLER_THRESHOLD_SEC = 7.9
+ZOHO_FILLER_THRESHOLD_SEC = 8.9
 GERUND_OVERRIDES = {
     "open": "opening",
     "navigate": "navigating",
@@ -683,6 +694,23 @@ def is_screener_step(description: str, url: str = "") -> bool:
     return "screener.in" in lowered or any(token in lowered for token in screener_tokens)
 
 
+def is_zoho_invoice_step(description: str, url: str = "") -> bool:
+    """Identify Zoho Invoice form-filling steps for custom pacing and story tone."""
+    lowered = f"{normalize_text(description).lower()} {url.lower()}".strip()
+    zoho_tokens = [
+        "zoho invoice",
+        "invoice generator",
+        "bill to",
+        "gst",
+        "line item",
+        "invoice number",
+        "payment notes",
+        "download/print",
+        "professional gst invoices",
+    ]
+    return "zoho.com/invoice" in lowered or any(token in lowered for token in zoho_tokens)
+
+
 def cinematic_cue(step_num: int, total_steps: int, sensitive: bool) -> str:
     """Add a short cinematic expression to keep the delivery lively."""
     if step_num == total_steps:
@@ -725,6 +753,8 @@ def build_waiting_aside(step: dict, step_num: int) -> str:
         return pick_variant(OVERPASS_WAITING_ASIDES, step_num)
     if is_screener_step(description, url):
         return pick_variant(SCREENER_WAITING_ASIDES, step_num)
+    if is_zoho_invoice_step(description, url):
+        return pick_variant(ZOHO_WAITING_ASIDES, step_num)
     variants = WAITING_ASIDES_SAFE if is_sensitive_step(description, url) else WAITING_ASIDES
     return pick_variant(variants, step_num)
 
@@ -735,6 +765,8 @@ def build_fallback_waiting_aside(step: dict, step_num: int) -> str:
         return pick_variant(OVERPASS_FALLBACK_WAITING_ASIDES, step_num)
     if is_screener_step(step.get("description", ""), step.get("url", "")):
         return pick_variant(SCREENER_FALLBACK_WAITING_ASIDES, step_num)
+    if is_zoho_invoice_step(step.get("description", ""), step.get("url", "")):
+        return pick_variant(ZOHO_FALLBACK_WAITING_ASIDES, step_num)
     if is_sensitive_step(step.get("description", ""), step.get("url", "")):
         return "We will give the page a second."
     return pick_variant(FALLBACK_WAITING_ASIDES, step_num)
@@ -912,6 +944,71 @@ def screener_story_line(description: str) -> str | None:
     return None
 
 
+def zoho_fallback_line(description: str, step_num: int, total_steps: int) -> str | None:
+    """Return concise invoice-demo lines that fit Zoho's form-filling windows."""
+    lowered = normalize_text(description).lower()
+
+    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+        return "That wraps the invoice flow."
+    if "open zoho invoice" in lowered:
+        return "We open Zoho Invoice and set the stage."
+    if "free invoice generator" in lowered:
+        return "Straight to the free generator. No login detour."
+    if "enter business details" in lowered:
+        return "First, fill the business identity so the invoice knows who is billing."
+    if "enter bill to details" in lowered:
+        return "Now the client details go in, and the invoice starts feeling real."
+    if "set invoice number" in lowered:
+        return "Set the invoice number so this draft becomes trackable."
+    if "add line item 1" in lowered:
+        return "Line item one puts real billable work on the page."
+    if "add line item 2" in lowered:
+        return "Second line item adds design work to the story."
+    if "add line item 3" in lowered:
+        return "Third line item covers hosting, and the invoice gets its full shape."
+    if "add payment notes and terms" in lowered:
+        return "Now we add payment notes, so the handoff is clear."
+    if "review subtotal" in lowered or "gst breakdown" in lowered:
+        return "Quick total check: subtotal, GST, and final amount."
+    if "download/print" in lowered or "export the invoice as pdf" in lowered:
+        return "Download or print, and the invoice is ready to leave the browser."
+
+    if step_num == total_steps:
+        return "That wraps the invoice flow."
+    return None
+
+
+def zoho_story_line(description: str) -> str | None:
+    """Return a warmer story line for the Zoho invoice flow."""
+    lowered = normalize_text(description).lower()
+
+    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+        return "Final beat. We went from a blank form to a client-ready invoice."
+    if "open zoho invoice" in lowered:
+        return "We start on Zoho Invoice, which turns raw work into something a client can actually pay."
+    if "free invoice generator" in lowered:
+        return "Then we jump straight to the free generator. No login detour, just the useful part."
+    if "enter business details" in lowered:
+        return "First we fill the business identity, because an invoice should feel like it came from a real company, not a blank template."
+    if "enter bill to details" in lowered:
+        return "Now the client details go in, and the document starts changing from form fields into a real bill."
+    if "set invoice number" in lowered:
+        return "A good invoice number looks small, but it is what makes the document traceable later."
+    if "add line item 1" in lowered:
+        return "The first line item puts real billable work on the page, and suddenly the invoice has a backbone."
+    if "add line item 2" in lowered:
+        return "Now we add design work, which makes the scope feel broader and the pricing more believable."
+    if "add line item 3" in lowered:
+        return "Hosting closes the loop here. One more line item, and the invoice feels complete instead of decorative."
+    if "add payment notes and terms" in lowered:
+        return "Payment notes matter more than people admit. This is where clarity saves follow-up emails."
+    if "review subtotal" in lowered or "gst breakdown" in lowered:
+        return "Then we do the fast finance check: subtotal, tax, and final amount."
+    if "download/print" in lowered or "export the invoice as pdf" in lowered:
+        return "Once the numbers look right, download is the handoff from draft to deliverable."
+    return None
+
+
 def narration_offset_sec(beat: dict) -> float:
     """Place narration slightly inside the step so the screen establishes first."""
     start_sec = float(beat.get("start_elapsed_sec", 0.0) or 0.0)
@@ -923,6 +1020,8 @@ def narration_offset_sec(beat: dict) -> float:
         offset = 0.62 if duration_sec < 6.5 else 0.82
     elif is_screener_step(description, url):
         offset = 0.5 if duration_sec < 6.0 else 0.62
+    elif is_zoho_invoice_step(description, url):
+        offset = 0.54 if duration_sec < 6.5 else 0.68
     else:
         offset = 0.32
     return round(start_sec + offset, 3)
@@ -942,6 +1041,10 @@ def narration_primary_budget_sec(beat: dict) -> float:
         if duration_sec >= SCREENER_FILLER_THRESHOLD_SEC:
             return round(max(min(duration_sec * 0.62, duration_sec - 2.35), 3.1), 3)
         return round(max(duration_sec * 0.78, 2.85), 3)
+    if is_zoho_invoice_step(description, url):
+        if duration_sec >= ZOHO_FILLER_THRESHOLD_SEC:
+            return round(max(min(duration_sec * 0.58, duration_sec - 2.9), 3.2), 3)
+        return round(max(duration_sec * 0.72, 2.95), 3)
     return round(max(duration_sec * (0.78 if duration_sec >= 7.0 else 0.93), 2.75), 3)
 
 
@@ -954,6 +1057,8 @@ def should_add_waiting_aside(beat: dict) -> bool:
         threshold = OVERPASS_FILLER_THRESHOLD_SEC
     elif is_screener_step(description, url):
         threshold = SCREENER_FILLER_THRESHOLD_SEC
+    elif is_zoho_invoice_step(description, url):
+        threshold = ZOHO_FILLER_THRESHOLD_SEC
     else:
         threshold = LONG_STEP_FILLER_THRESHOLD_SEC
     return duration_sec >= threshold and "tutorial complete" not in description.lower()
@@ -971,6 +1076,10 @@ def filler_offset_and_budget(beat: dict, start_sec: float, end_sec: float, durat
     if is_screener_step(description, url):
         filler_offset = start_sec + max(duration_sec * 0.63, 3.95)
         filler_budget = max(end_sec - filler_offset - 0.45, 2.0)
+        return round(filler_offset, 3), round(filler_budget, 3)
+    if is_zoho_invoice_step(description, url):
+        filler_offset = start_sec + max(duration_sec * 0.64, 4.25)
+        filler_budget = max(end_sec - filler_offset - 0.5, 2.1)
         return round(filler_offset, 3), round(filler_budget, 3)
 
     filler_offset = start_sec + max(duration_sec * 0.74, 4.0)
@@ -994,6 +1103,9 @@ def build_fallback_primary_narration(
     screener_line = screener_fallback_line(description, step_num, total_steps)
     if screener_line:
         return screener_line
+    zoho_line = zoho_fallback_line(description, step_num, total_steps)
+    if zoho_line:
+        return zoho_line
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
         return "That completes the flow."
@@ -1059,6 +1171,7 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
     measured_duration_sec = round(max(measured_end_sec - measured_start_sec, 0.1), 3)
     overpass_primary = overpass_story_line(description) if is_overpass_step(description, url) else None
     screener_primary = screener_story_line(description) if is_screener_step(description, url) else None
+    zoho_primary = zoho_story_line(description) if is_zoho_invoice_step(description, url) else None
     commentary = narration_commentary(description, step_num, url)
     if len(spoken_action.split()) >= 6 and measured_duration_sec < 7.0:
         commentary = ""
@@ -1072,6 +1185,8 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
         narration = overpass_primary
     elif screener_primary:
         narration = screener_primary
+    elif zoho_primary:
+        narration = zoho_primary
     elif "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
         narration = f"{cue} The flow is ready to replay."
     elif "stop at captcha" in lowered or "captcha step" in lowered:
