@@ -93,6 +93,16 @@ ZOHO_FALLBACK_WAITING_ASIDES = [
     "The form is settling, so we give it a second.",
     "A short beat here while the totals catch up.",
 ]
+TINKERCAD_WAITING_ASIDES = [
+    "Tiny pause here while TinkerCAD lines up the next scene.",
+    "We give the page a second to load. Even creative tools like an entrance.",
+    "A quick beat here while the gallery catches up.",
+]
+TINKERCAD_FALLBACK_WAITING_ASIDES = [
+    "Quick pause while TinkerCAD loads.",
+    "A short beat while the gallery catches up.",
+    "The page is thinking, so we give it a second.",
+]
 DEFAULT_TTS_DIRECTION = (
     "Perform this as a warm, human product-demo narrator with light cinematic polish. "
     "Use a measured, conversational pace and make every sentence easy to understand on the first listen. "
@@ -109,6 +119,7 @@ LONG_STEP_FILLER_THRESHOLD_SEC = 11.5
 OVERPASS_FILLER_THRESHOLD_SEC = 7.4
 SCREENER_FILLER_THRESHOLD_SEC = 7.9
 ZOHO_FILLER_THRESHOLD_SEC = 8.9
+TINKERCAD_FILLER_THRESHOLD_SEC = 7.8
 GERUND_OVERRIDES = {
     "open": "opening",
     "navigate": "navigating",
@@ -711,6 +722,21 @@ def is_zoho_invoice_step(description: str, url: str = "") -> bool:
     return "zoho.com/invoice" in lowered or any(token in lowered for token in zoho_tokens)
 
 
+def is_tinkercad_step(description: str, url: str = "") -> bool:
+    """Identify TinkerCAD learning/gallery steps for custom pacing and story tone."""
+    lowered = f"{normalize_text(description).lower()} {url.lower()}".strip()
+    tinkercad_tokens = [
+        "tinkercad",
+        "learning center",
+        "3d design tutorials",
+        "gallery designs",
+        "guided learning content",
+        "circuits category",
+        "phone stand",
+    ]
+    return "tinkercad.com" in lowered or any(token in lowered for token in tinkercad_tokens)
+
+
 def cinematic_cue(step_num: int, total_steps: int, sensitive: bool) -> str:
     """Add a short cinematic expression to keep the delivery lively."""
     if step_num == total_steps:
@@ -755,6 +781,8 @@ def build_waiting_aside(step: dict, step_num: int) -> str:
         return pick_variant(SCREENER_WAITING_ASIDES, step_num)
     if is_zoho_invoice_step(description, url):
         return pick_variant(ZOHO_WAITING_ASIDES, step_num)
+    if is_tinkercad_step(description, url):
+        return pick_variant(TINKERCAD_WAITING_ASIDES, step_num)
     variants = WAITING_ASIDES_SAFE if is_sensitive_step(description, url) else WAITING_ASIDES
     return pick_variant(variants, step_num)
 
@@ -767,6 +795,8 @@ def build_fallback_waiting_aside(step: dict, step_num: int) -> str:
         return pick_variant(SCREENER_FALLBACK_WAITING_ASIDES, step_num)
     if is_zoho_invoice_step(step.get("description", ""), step.get("url", "")):
         return pick_variant(ZOHO_FALLBACK_WAITING_ASIDES, step_num)
+    if is_tinkercad_step(step.get("description", ""), step.get("url", "")):
+        return pick_variant(TINKERCAD_FALLBACK_WAITING_ASIDES, step_num)
     if is_sensitive_step(step.get("description", ""), step.get("url", "")):
         return "We will give the page a second."
     return pick_variant(FALLBACK_WAITING_ASIDES, step_num)
@@ -1009,6 +1039,63 @@ def zoho_story_line(description: str) -> str | None:
     return None
 
 
+def tinkercad_fallback_line(description: str, step_num: int, total_steps: int) -> str | None:
+    """Return concise learning-demo lines that fit TinkerCAD windows."""
+    lowered = normalize_text(description).lower()
+
+    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+        return "That wraps the learning tour."
+    if "open tinkercad" in lowered:
+        return "We open TinkerCAD and set the stage."
+    if "learning center" in lowered:
+        return "Straight to the Learning Center. No login detour."
+    if "search for beginner 3d design tutorials" in lowered:
+        return "A quick search gets the beginner path on screen."
+    if "return to 3d design tutorials" in lowered:
+        return "Back to 3D Design so the focus stays on CAD."
+    if "open a tutorial card" in lowered or "select any visible tutorial card" in lowered:
+        return "Open one tutorial and see the guided path."
+    if "scroll through the tutorial page" in lowered:
+        return "Scroll the lesson and get a feel for the walkthrough."
+    if "open the tinkercad gallery" in lowered:
+        return "Now we jump to the gallery for inspiration."
+    if "search gallery designs" in lowered or "browse featured gallery designs" in lowered:
+        return "The gallery is where ideas start showing up fast."
+    if "open a gallery design page" in lowered or "scroll through gallery results" in lowered:
+        return "Open one design and look at the reference details."
+
+    if step_num == total_steps:
+        return "That wraps the learning tour."
+    return None
+
+
+def tinkercad_story_line(description: str) -> str | None:
+    """Return a warmer story line for the TinkerCAD exploration flow."""
+    lowered = normalize_text(description).lower()
+
+    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+        return "Final beat. We went from a blank landing page to tutorials, examples, and creative starting points."
+    if "open tinkercad" in lowered:
+        return "We start on TinkerCAD, where the barrier to entry is low and the curiosity payoff is high."
+    if "learning center" in lowered:
+        return "Then we jump straight into the Learning Center, because the fastest way into a tool is usually through a guided win."
+    if "search for beginner 3d design tutorials" in lowered:
+        return "A quick search pulls the beginner path into focus, which is better than wandering through every lesson card."
+    if "return to 3d design tutorials" in lowered:
+        return "We peek at another category, then come back to 3D Design so the story stays grounded in CAD."
+    if "open a tutorial card" in lowered or "select any visible tutorial card" in lowered:
+        return "Open one tutorial card and the platform stops feeling like a homepage and starts feeling like a classroom."
+    if "scroll through the tutorial page" in lowered:
+        return "A quick scroll through the lesson shows the pace, the visuals, and the kind of guidance a beginner will actually get."
+    if "open the tinkercad gallery" in lowered:
+        return "Then we switch gears and head to the gallery, because learning gets easier when inspiration is visible."
+    if "search gallery designs" in lowered or "browse featured gallery designs" in lowered:
+        return "This is the fun part. The gallery turns abstract learning into real project ideas you might actually want to build."
+    if "open a gallery design page" in lowered or "scroll through gallery results" in lowered:
+        return "Open one design and the reference quality becomes tangible, not theoretical."
+    return None
+
+
 def narration_offset_sec(beat: dict) -> float:
     """Place narration slightly inside the step so the screen establishes first."""
     start_sec = float(beat.get("start_elapsed_sec", 0.0) or 0.0)
@@ -1022,6 +1109,8 @@ def narration_offset_sec(beat: dict) -> float:
         offset = 0.5 if duration_sec < 6.0 else 0.62
     elif is_zoho_invoice_step(description, url):
         offset = 0.54 if duration_sec < 6.5 else 0.68
+    elif is_tinkercad_step(description, url):
+        offset = 0.5 if duration_sec < 6.0 else 0.64
     else:
         offset = 0.32
     return round(start_sec + offset, 3)
@@ -1045,6 +1134,10 @@ def narration_primary_budget_sec(beat: dict) -> float:
         if duration_sec >= ZOHO_FILLER_THRESHOLD_SEC:
             return round(max(min(duration_sec * 0.58, duration_sec - 2.9), 3.2), 3)
         return round(max(duration_sec * 0.72, 2.95), 3)
+    if is_tinkercad_step(description, url):
+        if duration_sec >= TINKERCAD_FILLER_THRESHOLD_SEC:
+            return round(max(min(duration_sec * 0.6, duration_sec - 2.6), 3.05), 3)
+        return round(max(duration_sec * 0.76, 2.85), 3)
     return round(max(duration_sec * (0.78 if duration_sec >= 7.0 else 0.93), 2.75), 3)
 
 
@@ -1059,6 +1152,8 @@ def should_add_waiting_aside(beat: dict) -> bool:
         threshold = SCREENER_FILLER_THRESHOLD_SEC
     elif is_zoho_invoice_step(description, url):
         threshold = ZOHO_FILLER_THRESHOLD_SEC
+    elif is_tinkercad_step(description, url):
+        threshold = TINKERCAD_FILLER_THRESHOLD_SEC
     else:
         threshold = LONG_STEP_FILLER_THRESHOLD_SEC
     return duration_sec >= threshold and "tutorial complete" not in description.lower()
@@ -1080,6 +1175,10 @@ def filler_offset_and_budget(beat: dict, start_sec: float, end_sec: float, durat
     if is_zoho_invoice_step(description, url):
         filler_offset = start_sec + max(duration_sec * 0.64, 4.25)
         filler_budget = max(end_sec - filler_offset - 0.5, 2.1)
+        return round(filler_offset, 3), round(filler_budget, 3)
+    if is_tinkercad_step(description, url):
+        filler_offset = start_sec + max(duration_sec * 0.63, 4.0)
+        filler_budget = max(end_sec - filler_offset - 0.45, 2.0)
         return round(filler_offset, 3), round(filler_budget, 3)
 
     filler_offset = start_sec + max(duration_sec * 0.74, 4.0)
@@ -1106,6 +1205,9 @@ def build_fallback_primary_narration(
     zoho_line = zoho_fallback_line(description, step_num, total_steps)
     if zoho_line:
         return zoho_line
+    tinkercad_line = tinkercad_fallback_line(description, step_num, total_steps)
+    if tinkercad_line:
+        return tinkercad_line
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
         return "That completes the flow."
@@ -1172,6 +1274,7 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
     overpass_primary = overpass_story_line(description) if is_overpass_step(description, url) else None
     screener_primary = screener_story_line(description) if is_screener_step(description, url) else None
     zoho_primary = zoho_story_line(description) if is_zoho_invoice_step(description, url) else None
+    tinkercad_primary = tinkercad_story_line(description) if is_tinkercad_step(description, url) else None
     commentary = narration_commentary(description, step_num, url)
     if len(spoken_action.split()) >= 6 and measured_duration_sec < 7.0:
         commentary = ""
@@ -1187,6 +1290,8 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
         narration = screener_primary
     elif zoho_primary:
         narration = zoho_primary
+    elif tinkercad_primary:
+        narration = tinkercad_primary
     elif "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
         narration = f"{cue} The flow is ready to replay."
     elif "stop at captcha" in lowered or "captcha step" in lowered:
