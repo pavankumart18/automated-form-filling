@@ -1,6 +1,6 @@
 {
   "demo_name": "indian_visa",
-  "total_duration_sec": 74.824,
+  "total_duration_sec": 74.852,
   "segments": [
     {
       "segment_id": "step_01_primary",
@@ -8,14 +8,14 @@
       "type": "primary",
       "offset_sec": 0.32,
       "budget_sec": 6.05,
-      "text": "Here is the opening move. Let's start by opening the Indian eVisa portal home page. Now the workflow has a stage.",
-      "fallback_text": "We start by opening the Indian eVisa portal home page. That gives the workflow a stage.",
+      "text": "Welcome, traveler. Open the Indian eVisa portal. All those colors feel like a bureaucratic rangoli. The quest begins now.",
+      "fallback_text": "Open the Indian eVisa portal.",
       "subtitle": "Step 1: Open the Indian eVisa portal home page",
       "target_window_end_sec": 7.756,
-      "clip_duration_sec": 6.052,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bwz6hew9\\step_01_primary_fitted.wav",
+      "clip_duration_sec": 6.051,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_fr2tqtn3\\step_01_primary_fitted.wav",
       "start_sec": 0.32,
-      "end_sec": 6.372
+      "end_sec": 6.371
     },
     {
       "segment_id": "step_02_primary",
@@ -23,14 +23,14 @@
       "type": "primary",
       "offset_sec": 8.076,
       "budget_sec": 5.663,
-      "text": "On the next screen, the process stays easy to follow. We open the eVisa application form start page.",
-      "fallback_text": "Next, we open the eVisa application form start page. That gives the workflow a stage.",
+      "text": "Hit Apply like it's a win-a-million-dollars link. Boom, the form appears, blue, white, and ready for your life story.",
+      "fallback_text": "Open the application form.",
       "subtitle": "Step 2: Open the eVisa application form start page",
       "target_window_end_sec": 13.845,
-      "clip_duration_sec": 5.672,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bwz6hew9\\step_02_primary_fitted.wav",
+      "clip_duration_sec": 5.663,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_fr2tqtn3\\step_02_primary_fitted.wav",
       "start_sec": 8.076,
-      "end_sec": 13.748
+      "end_sec": 13.739
     },
     {
       "segment_id": "step_03_primary",
@@ -38,14 +38,14 @@
       "type": "primary",
       "offset_sec": 14.165,
       "budget_sec": 5.427,
-      "text": "We continue carefully from here. We select nationality and passport type for the applicant.",
-      "fallback_text": "Next, we select nationality and passport type for the applicant.",
+      "text": "Tell them who you are. United States. Ordinary Passport. Diplomatic passport holders can skip this tutorial.",
+      "fallback_text": "Choose nationality and passport type.",
       "subtitle": "Step 3: Select nationality and passport type for the applicant",
       "target_window_end_sec": 19.681,
-      "clip_duration_sec": 5.347,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bwz6hew9\\step_03_primary_paced.wav",
+      "clip_duration_sec": 5.437,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_fr2tqtn3\\step_03_primary_fitted.wav",
       "start_sec": 14.165,
-      "end_sec": 19.512
+      "end_sec": 19.602
     },
     {
       "segment_id": "step_04_primary",
@@ -53,14 +53,14 @@
       "type": "primary",
       "offset_sec": 20.001,
       "budget_sec": 27.481,
-      "text": "Next, we keep the flow clear. We choose the port of arrival for the application. Keeping the choice visible is what makes the flow teachable.",
-      "fallback_text": "Next, we choose the port of arrival for the application. The choice stays visible.",
+      "text": "Choose your Port of Arrival. Today we're catching sea breeze at Agatti Seaport. Fancy. And now the portal enters its meditation break.",
+      "fallback_text": "Choose the port of arrival and wait for the portal.",
       "subtitle": "Step 4: Choose the port of arrival for the application",
       "target_window_end_sec": 54.913,
-      "clip_duration_sec": 6.322,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bwz6hew9\\step_04_primary_paced.wav",
+      "clip_duration_sec": 8.24,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_fr2tqtn3\\step_04_primary_paced.wav",
       "start_sec": 20.001,
-      "end_sec": 26.323
+      "end_sec": 28.241
     },
     {
       "segment_id": "step_04_wait",
@@ -68,14 +68,14 @@
       "type": "filler",
       "offset_sec": 33.069,
       "budget_sec": 21.294,
-      "text": "The portal is still catching up here. We give it another beat and keep the flow calm.",
-      "fallback_text": "A short beat here while the travel options refresh.",
-      "subtitle": "The portal is still catching up here. We give it another beat and keep the flow calm.",
+      "text": "And now we wait. This blank screen is digital dharma. Check your sunscreen, respect the spice, maybe hydrate. Government loading bars move only after enlightenment.",
+      "fallback_text": "The portal is taking a meditation break.",
+      "subtitle": "And now we wait. This blank screen is digital dharma. Check your sunscreen, respect the spice, maybe hydrate. Government loading bars move only after enlightenment.",
       "target_window_end_sec": 54.913,
-      "clip_duration_sec": 3.897,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bwz6hew9\\step_04_wait_paced.wav",
+      "clip_duration_sec": 10.84,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_fr2tqtn3\\step_04_wait_paced.wav",
       "start_sec": 33.069,
-      "end_sec": 36.966
+      "end_sec": 43.909
     },
     {
       "segment_id": "step_04_wait_02",
@@ -83,14 +83,14 @@
       "type": "filler",
       "offset_sec": 45.753,
       "budget_sec": 8.71,
-      "text": "A short pause here while the application refreshes the next set of options.",
-      "fallback_text": "Still processing, so we wait a moment.",
-      "subtitle": "Still processing, so we wait a moment.",
+      "text": "Still nothing? Not a glitch. A spiritual test. Namaste, loading screen, please have mercy on us. Stay with me.",
+      "fallback_text": "Still waiting, stay with me.",
+      "subtitle": "Still waiting, stay with me.",
       "target_window_end_sec": 54.913,
-      "clip_duration_sec": 3.422,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bwz6hew9\\step_04_wait_02_paced.wav",
+      "clip_duration_sec": 7.702,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_fr2tqtn3\\step_04_wait_02_paced.wav",
       "start_sec": 45.753,
-      "end_sec": 49.175
+      "end_sec": 53.455
     },
     {
       "segment_id": "step_05_primary",
@@ -98,14 +98,14 @@
       "type": "primary",
       "offset_sec": 55.233,
       "budget_sec": 5.028,
-      "text": "Now we move one step further. We fill date of birth and email confirmation.",
-      "fallback_text": "Next, we fill date of birth and email confirmation. The flow stays clear and respectful.",
+      "text": "We're back. Add the birth date and your email. Use one you actually check, not batman123 at gmail.",
+      "fallback_text": "Fill the birth date and email.",
       "subtitle": "Step 5: Fill date of birth and email confirmation",
       "target_window_end_sec": 60.319,
-      "clip_duration_sec": 5.074,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bwz6hew9\\step_05_primary_fitted.wav",
+      "clip_duration_sec": 5.037,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_fr2tqtn3\\step_05_primary_fitted.wav",
       "start_sec": 55.233,
-      "end_sec": 60.307
+      "end_sec": 60.27
     },
     {
       "segment_id": "step_06_primary",
@@ -113,14 +113,14 @@
       "type": "primary",
       "offset_sec": 60.639,
       "budget_sec": 4.757,
-      "text": "On the next screen, the process stays easy to follow. We choose visa service. Keeping the choice visible is what makes the flow teachable.",
-      "fallback_text": "Next, we choose visa service. The choice stays visible.",
+      "text": "Choose the service: 30-Day e-Tourist Visa. The taster menu of visas. Tourism, recreation, all the hits.",
+      "fallback_text": "Choose the 30 day tourist visa.",
       "subtitle": "Step 6: Choose visa service: eTourist Visa (30 Days)",
       "target_window_end_sec": 65.434,
-      "clip_duration_sec": 4.946,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bwz6hew9\\step_06_primary_paced.wav",
+      "clip_duration_sec": 4.761,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_fr2tqtn3\\step_06_primary_fitted.wav",
       "start_sec": 60.639,
-      "end_sec": 65.585
+      "end_sec": 65.4
     },
     {
       "segment_id": "step_07_primary",
@@ -128,14 +128,14 @@
       "type": "primary",
       "offset_sec": 65.754,
       "budget_sec": 4.688,
-      "text": "We continue carefully from here. We set expected date of arrival and acknowledge instructions.",
-      "fallback_text": "Next, we set expected date of arrival and acknowledge instructions.",
+      "text": "Set the arrival date and tick the instructions box. We are almost at the good part.",
+      "fallback_text": "Set the arrival date and acknowledge the instructions.",
       "subtitle": "Step 7: Set expected date of arrival and acknowledge instructions",
       "target_window_end_sec": 70.475,
-      "clip_duration_sec": 4.692,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bwz6hew9\\step_07_primary_fitted.wav",
+      "clip_duration_sec": 4.698,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_fr2tqtn3\\step_07_primary_fitted.wav",
       "start_sec": 65.754,
-      "end_sec": 70.446
+      "end_sec": 70.452
     },
     {
       "segment_id": "step_08_primary",
@@ -143,14 +143,14 @@
       "type": "primary",
       "offset_sec": 70.795,
       "budget_sec": 4.045,
-      "text": "That lands the result. We stop at the captcha step here.",
-      "fallback_text": "That is the wrap.",
+      "text": "Final boss: captcha. We stop here for safety, but India is right around the corner.",
+      "fallback_text": "And that's a wrap for Overpass.",
       "subtitle": "Step 8: Stop at captcha step for safe, non-submitting demo",
       "target_window_end_sec": 74.824,
-      "clip_duration_sec": 1.523,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bwz6hew9\\step_08_primary_paced.wav",
+      "clip_duration_sec": 4.055,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_fr2tqtn3\\step_08_primary_fitted.wav",
       "start_sec": 70.795,
-      "end_sec": 72.318
+      "end_sec": 74.85
     }
   ]
 }

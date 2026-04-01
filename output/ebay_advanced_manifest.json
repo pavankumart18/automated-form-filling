@@ -47,7 +47,7 @@
       "timestamp": "2026-03-25T23:52:13.259901",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_01.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_01.png",
-      "narration": "Here is the opening move. Let's start by opening eBay Advanced Search. This gives the whole demo a place to stand.",
+      "narration": "Alright team, this is not shopping. Advanced Search is where the real hunt starts.",
       "pause_ms": 920
     },
     {
@@ -58,7 +58,7 @@
       "timestamp": "2026-03-25T23:52:17.708375",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_02.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_02.png",
-      "narration": "With the setup in place, we can chase the signal. We enter main search keywords. This is the sort of repetition the workflow should steal from us.",
+      "narration": "Target acquired: Sony WH-1000XM5. Type it clean and keep it precise.",
       "pause_ms": 1050
     },
     {
@@ -69,7 +69,7 @@
       "timestamp": "2026-03-25T23:52:22.270962",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_03.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_03.png",
-      "narration": "Now the page has something to say. We change the keyword match dropdown to exact order.",
+      "narration": "Exact words, exact order. No batteries, no posters, no nonsense.",
       "pause_ms": 920
     },
     {
@@ -80,7 +80,7 @@
       "timestamp": "2026-03-25T23:52:26.670516",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_04.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_04.png",
-      "narration": "This is where the pattern starts to show. We enter words to exclude from results.",
+      "narration": "Exclude broken parts. We want headphones, not a glue-gun recovery project.",
       "pause_ms": 1050
     },
     {
@@ -91,7 +91,7 @@
       "timestamp": "2026-03-25T23:52:31.073585",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_05.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_05.png",
-      "narration": "Here the workflow stops posing and starts proving. We include title and description in the search scope.",
+      "narration": "Expand to title and description. Hidden deals love hiding in the fine print.",
       "pause_ms": 920
     },
     {
@@ -102,7 +102,7 @@
       "timestamp": "2026-03-25T23:52:36.002582",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_06.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_06.png",
-      "narration": "Now the payoff is close enough to see. We set minimum and maximum price filters.",
+      "narration": "Price window locked: 150 to 400. Steal? Yes. Suspicious envelope listing? No.",
       "pause_ms": 1050
     },
     {
@@ -113,7 +113,7 @@
       "timestamp": "2026-03-25T23:52:40.389384",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_07.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_07.png",
-      "narration": "This is where the result starts to feel earned. We filter for new-condition items. It keeps the flow easy to follow without sounding like a checklist.",
+      "narration": "Filter for New. Fresh-box energy only.",
       "pause_ms": 920
     },
     {
@@ -124,7 +124,7 @@
       "timestamp": "2026-03-25T23:52:51.083127",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_08.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_08.png",
-      "narration": "That lands the result. We run the search and open the filtered results page. This is where all the quiet setup finally earns applause.",
+      "narration": "Hit Search. Boom. Filtered results, pure audio gold, zero junk.",
       "pause_ms": 1550
     }
   ]

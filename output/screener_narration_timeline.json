@@ -1,6 +1,6 @@
 {
   "demo_name": "screener",
-  "total_duration_sec": 66.932,
+  "total_duration_sec": 66.933,
   "segments": [
     {
       "segment_id": "step_01_primary",
@@ -8,14 +8,14 @@
       "type": "primary",
       "offset_sec": 0.62,
       "budget_sec": 5.735,
-      "text": "We start on Screener, which gets us from ticker to business story without wasting motion.",
-      "fallback_text": "We open Screener and set the stage.",
+      "text": "Alright, stop gambling and start investing. Screener is basically Google for Indian stocks, minus the ads.",
+      "fallback_text": "Open Screener and start the research.",
       "subtitle": "Step 1: Open Screener.in - India's popular stock research platform",
       "target_window_end_sec": 7.353,
-      "clip_duration_sec": 3.023,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_gwpb8ed_\\step_01_primary_paced.wav",
+      "clip_duration_sec": 5.743,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_05bip5v9\\step_01_primary_fitted.wav",
       "start_sec": 0.62,
-      "end_sec": 3.643
+      "end_sec": 6.363
     },
     {
       "segment_id": "step_02_primary",
@@ -23,14 +23,14 @@
       "type": "primary",
       "offset_sec": 7.973,
       "budget_sec": 5.599,
-      "text": "Rather than wander, we go straight to Reliance and start with a company most viewers already recognize.",
-      "fallback_text": "Straight to Reliance so the analysis starts fast.",
+      "text": "Type in Reliance. Boom. Straight to the mothership. Clean layout, serious numbers.",
+      "fallback_text": "Open Reliance and head to the company page.",
       "subtitle": "Step 2: Navigate directly to Reliance Industries company page",
       "target_window_end_sec": 14.531,
-      "clip_duration_sec": 3.898,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_gwpb8ed_\\step_02_primary_paced.wav",
+      "clip_duration_sec": 5.563,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_05bip5v9\\step_02_primary_paced.wav",
       "start_sec": 7.973,
-      "end_sec": 11.871
+      "end_sec": 13.536
     },
     {
       "segment_id": "step_03_primary",
@@ -38,14 +38,14 @@
       "type": "primary",
       "offset_sec": 15.031,
       "budget_sec": 3.813,
-      "text": "This first block is the trailer: size, valuation, and return ratios in one quick glance.",
-      "fallback_text": "This top block gives us the market snapshot.",
+      "text": "Dashboard time. Market Cap, P/E, ROCE. The whole report card, right in your face.",
+      "fallback_text": "Check the dashboard metrics.",
       "subtitle": "Step 3: View key metrics - market cap, PE ratio, ROCE, and valuation snapshot",
       "target_window_end_sec": 19.419,
-      "clip_duration_sec": 3.571,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_gwpb8ed_\\step_03_primary_paced.wav",
+      "clip_duration_sec": 3.812,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_05bip5v9\\step_03_primary_fitted.wav",
       "start_sec": 15.031,
-      "end_sec": 18.602
+      "end_sec": 18.843
     },
     {
       "segment_id": "step_04_primary",
@@ -53,14 +53,14 @@
       "type": "primary",
       "offset_sec": 19.919,
       "budget_sec": 4.353,
-      "text": "Now we drop into the recent quarters, because the latest chapters matter more than the cover page.",
-      "fallback_text": "Quarterly numbers tell us what changed recently.",
+      "text": "Quarterly Results. We want up and to the right. If it looks ugly, keep scrolling.",
+      "fallback_text": "Review the quarterly trend.",
       "subtitle": "Step 4: Review quarterly financial trends to understand recent performance",
       "target_window_end_sec": 25.0,
-      "clip_duration_sec": 3.847,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_gwpb8ed_\\step_04_primary_paced.wav",
+      "clip_duration_sec": 4.36,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_05bip5v9\\step_04_primary_fitted.wav",
       "start_sec": 19.919,
-      "end_sec": 23.766
+      "end_sec": 24.279
     },
     {
       "segment_id": "step_05_primary",
@@ -68,14 +68,14 @@
       "type": "primary",
       "offset_sec": 25.5,
       "budget_sec": 4.359,
-      "text": "Profit and Loss tells us whether revenue is becoming a real business, not just a headline.",
-      "fallback_text": "Profit and Loss shows how sales turn into earnings.",
+      "text": "Profit and Loss. Ten years of history in one click. Maximum transparency.",
+      "fallback_text": "Open profit and loss for the long view.",
       "subtitle": "Step 5: Inspect Profit and Loss details - revenue, expenses, and margins",
       "target_window_end_sec": 30.588,
-      "clip_duration_sec": 4.047,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_gwpb8ed_\\step_05_primary_paced.wav",
+      "clip_duration_sec": 4.37,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_05bip5v9\\step_05_primary_fitted.wav",
       "start_sec": 25.5,
-      "end_sec": 29.547
+      "end_sec": 29.87
     },
     {
       "segment_id": "step_06_primary",
@@ -83,14 +83,14 @@
       "type": "primary",
       "offset_sec": 31.088,
       "budget_sec": 4.36,
-      "text": "Then we check the balance sheet, where leverage and resilience stop being opinions.",
-      "fallback_text": "Balance sheet tells us how sturdy the company looks.",
+      "text": "Balance Sheet. We want what they own to beat what they owe. Simple math, big impact.",
+      "fallback_text": "Check assets versus liabilities.",
       "subtitle": "Step 6: Check balance sheet strength - assets, liabilities, and equity",
       "target_window_end_sec": 36.178,
-      "clip_duration_sec": 4.072,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_gwpb8ed_\\step_06_primary_paced.wav",
+      "clip_duration_sec": 4.373,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_05bip5v9\\step_06_primary_fitted.wav",
       "start_sec": 31.088,
-      "end_sec": 35.16
+      "end_sec": 35.461
     },
     {
       "segment_id": "step_07_primary",
@@ -98,14 +98,14 @@
       "type": "primary",
       "offset_sec": 36.678,
       "budget_sec": 4.643,
-      "text": "Now we switch from one-company analysis to idea generation, and that is where Public Screens earns its keep.",
-      "fallback_text": "Now we jump to Public Screens for idea generation.",
+      "text": "Do not want to do the math? Hit Screens. It's a best-of playlist for stock filters.",
+      "fallback_text": "Open Screens for ready-made filters.",
       "subtitle": "Step 7: Open the Public Screens page to explore ready-made stock filters",
       "target_window_end_sec": 42.131,
-      "clip_duration_sec": 4.171,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_gwpb8ed_\\step_07_primary_paced.wav",
+      "clip_duration_sec": 4.654,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_05bip5v9\\step_07_primary_fitted.wav",
       "start_sec": 36.678,
-      "end_sec": 40.849
+      "end_sec": 41.332
     },
     {
       "segment_id": "step_08_primary",
@@ -113,14 +113,14 @@
       "type": "primary",
       "offset_sec": 42.751,
       "budget_sec": 5.72,
-      "text": "A public screen is basically a ready-made hypothesis. One click, and the market starts shortlisting itself.",
-      "fallback_text": "A public screen gives us a ready-made shortlist.",
+      "text": "We open the high-growth, low-PE style screen. Ganesh Infra jumps right out of the list.",
+      "fallback_text": "Open the growth screen.",
       "subtitle": "Step 8: Open a public screen to view companies matching prebuilt criteria",
       "target_window_end_sec": 49.464,
-      "clip_duration_sec": 3.697,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_gwpb8ed_\\step_08_primary_paced.wav",
+      "clip_duration_sec": 5.326,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_05bip5v9\\step_08_primary_paced.wav",
       "start_sec": 42.751,
-      "end_sec": 46.448
+      "end_sec": 48.077
     },
     {
       "segment_id": "step_09_primary",
@@ -128,14 +128,14 @@
       "type": "primary",
       "offset_sec": 50.084,
       "budget_sec": 5.607,
-      "text": "Now the table becomes a comparison board: valuation, returns, and size sitting side by side.",
-      "fallback_text": "Here the table turns into a side-by-side comparison.",
+      "text": "Compare sales growth and ROE. If the numbers look wild, verify before you celebrate.",
+      "fallback_text": "Compare growth and ROE in the results.",
       "subtitle": "Step 9: Browse filtered companies and compare PE, ROE, and market cap",
       "target_window_end_sec": 56.653,
-      "clip_duration_sec": 4.229,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_gwpb8ed_\\step_09_primary_paced.wav",
+      "clip_duration_sec": 5.652,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_05bip5v9\\step_09_primary_paced.wav",
       "start_sec": 50.084,
-      "end_sec": 54.313
+      "end_sec": 55.736
     },
     {
       "segment_id": "step_10_primary",
@@ -143,14 +143,14 @@
       "type": "primary",
       "offset_sec": 57.153,
       "budget_sec": 4.403,
-      "text": "From the shortlist, we open one company and turn a filter result into actual research.",
-      "fallback_text": "Open one result and go deeper.",
+      "text": "One click on Ganesh Infra and we do the deep dive. Trust, but verify.",
+      "fallback_text": "Open Ganesh Infra for the deep dive.",
       "subtitle": "Step 10: Open Ganesh Infra. from the screen for deeper analysis",
       "target_window_end_sec": 62.298,
-      "clip_duration_sec": 2.747,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_gwpb8ed_\\step_10_primary_paced.wav",
+      "clip_duration_sec": 4.61,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_05bip5v9\\step_10_primary_paced.wav",
       "start_sec": 57.153,
-      "end_sec": 59.9
+      "end_sec": 61.763
     },
     {
       "segment_id": "step_11_primary",
@@ -158,14 +158,14 @@
       "type": "primary",
       "offset_sec": 62.798,
       "budget_sec": 3.615,
-      "text": "Final beat. We went from one company page to a reusable stock-research rhythm.",
-      "fallback_text": "That is the wrap.",
+      "text": "And that's it. Go research, go compare, and go get those gains.",
+      "fallback_text": "And that's a wrap for Overpass.",
       "subtitle": "Step 11: Tutorial complete - you can now research and compare stocks on Screener.in",
       "target_window_end_sec": 66.932,
-      "clip_duration_sec": 1.523,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_gwpb8ed_\\step_11_primary_paced.wav",
+      "clip_duration_sec": 3.609,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_05bip5v9\\step_11_primary_fitted.wav",
       "start_sec": 62.798,
-      "end_sec": 64.321
+      "end_sec": 66.407
     }
   ]
 }

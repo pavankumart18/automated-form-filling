@@ -8,14 +8,14 @@
       "type": "primary",
       "offset_sec": 0.64,
       "budget_sec": 5.335,
-      "text": "We start on TinkerCAD, where the barrier to entry is low and the curiosity payoff is high.",
-      "fallback_text": "We open TinkerCAD and set the stage.",
+      "text": "Welcome, future architects. TinkerCAD is open, and free is still the best price in software.",
+      "fallback_text": "Open TinkerCAD and land on the design home page.",
       "subtitle": "Step 1: Open TinkerCAD - Autodesk's free platform for 3D learning and design",
       "target_window_end_sec": 8.891,
-      "clip_duration_sec": 3.323,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_01_primary_paced.wav",
+      "clip_duration_sec": 5.373,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_01_primary_paced.wav",
       "start_sec": 0.64,
-      "end_sec": 3.963
+      "end_sec": 6.013
     },
     {
       "segment_id": "step_01_wait",
@@ -23,14 +23,14 @@
       "type": "filler",
       "offset_sec": 5.601,
       "budget_sec": 2.84,
-      "text": "We give the page a second to load. Even creative tools like an entrance.",
-      "fallback_text": "A short beat while the gallery catches up.",
-      "subtitle": "We give the page a second to load. Even creative tools like an entrance.",
+      "text": "Look at that plane. My what-if is a rocket in pajamas. Tiny render break, then we're back.",
+      "fallback_text": "The home page is rendering now.",
+      "subtitle": "Look at that plane. My what-if is a rocket in pajamas. Tiny render break, then we're back.",
       "target_window_end_sec": 8.891,
-      "clip_duration_sec": 2.843,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_01_wait_fitted.wav",
-      "start_sec": 5.601,
-      "end_sec": 8.444
+      "clip_duration_sec": 2.842,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_01_wait_fitted.wav",
+      "start_sec": 6.013,
+      "end_sec": 8.855
     },
     {
       "segment_id": "step_02_primary",
@@ -38,14 +38,14 @@
       "type": "primary",
       "offset_sec": 9.531,
       "budget_sec": 5.597,
-      "text": "Then we jump straight into the Learning Center, because the fastest way into a tool is usually through a guided win.",
-      "fallback_text": "Straight to the Learning Center. No login detour.",
+      "text": "Step two. Learning Center. The VIP lounge for knowledge with none of the create-an-account drama.",
+      "fallback_text": "Open the Learning Center.",
       "subtitle": "Step 2: Open the Learning Center where beginner tutorials are available without login",
       "target_window_end_sec": 18.22,
-      "clip_duration_sec": 4.047,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_02_primary_paced.wav",
+      "clip_duration_sec": 5.594,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_02_primary_fitted.wav",
       "start_sec": 9.531,
-      "end_sec": 13.578
+      "end_sec": 15.125
     },
     {
       "segment_id": "step_02_wait",
@@ -53,14 +53,14 @@
       "type": "filler",
       "offset_sec": 14.768,
       "budget_sec": 3.002,
-      "text": "A quick beat here while the gallery catches up.",
-      "fallback_text": "The page is thinking, so we give it a second.",
-      "subtitle": "A quick beat here while the gallery catches up.",
+      "text": "The lesson grid is loading. Like a souffle, you do not rush the pixels.",
+      "fallback_text": "The lesson grid is loading.",
+      "subtitle": "The lesson grid is loading. Like a souffle, you do not rush the pixels.",
       "target_window_end_sec": 18.22,
-      "clip_duration_sec": 3.004,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_02_wait_fitted.wav",
-      "start_sec": 14.768,
-      "end_sec": 17.772
+      "clip_duration_sec": 3.006,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_02_wait_fitted.wav",
+      "start_sec": 15.125,
+      "end_sec": 18.131
     },
     {
       "segment_id": "step_03_primary",
@@ -68,14 +68,14 @@
       "type": "primary",
       "offset_sec": 18.86,
       "budget_sec": 4.706,
-      "text": "A quick search pulls the beginner path into focus, which is better than wandering through every lesson card.",
-      "fallback_text": "A quick search gets the beginner path on screen.",
+      "text": "Search 3D design basics. Every keystroke is one more brick in the empire.",
+      "fallback_text": "Search for 3D design basics.",
       "subtitle": "Step 3: Search for beginner 3D design tutorials using the search bar",
       "target_window_end_sec": 26.064,
-      "clip_duration_sec": 3.647,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_03_primary_paced.wav",
+      "clip_duration_sec": 4.723,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_03_primary_fitted.wav",
       "start_sec": 18.86,
-      "end_sec": 22.507
+      "end_sec": 23.583
     },
     {
       "segment_id": "step_03_wait",
@@ -83,14 +83,14 @@
       "type": "filler",
       "offset_sec": 23.162,
       "budget_sec": 2.452,
-      "text": "Tiny pause here while TinkerCAD lines up the next scene.",
-      "fallback_text": "Quick pause while TinkerCAD loads.",
-      "subtitle": "Tiny pause here while TinkerCAD lines up the next scene.",
+      "text": "TinkerCAD is thinking. Castle, donut, ego monument, whatever you build, creativity gets a second.",
+      "fallback_text": "Search results are loading now.",
+      "subtitle": "TinkerCAD is thinking. Castle, donut, ego monument, whatever you build, creativity gets a second.",
       "target_window_end_sec": 26.064,
-      "clip_duration_sec": 2.455,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_03_wait_fitted.wav",
-      "start_sec": 23.162,
-      "end_sec": 25.617
+      "clip_duration_sec": 3.169,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_03_wait_fitted.wav",
+      "start_sec": 23.583,
+      "end_sec": 26.752
     },
     {
       "segment_id": "step_04_primary",
@@ -98,14 +98,14 @@
       "type": "primary",
       "offset_sec": 26.564,
       "budget_sec": 3.934,
-      "text": "We peek at another category, then come back to 3D Design so the story stays grounded in CAD.",
-      "fallback_text": "Back to 3D Design so the focus stays on CAD.",
+      "text": "Back to CAD-focused practice. Professional games only. Focus, precision, geometry.",
+      "fallback_text": "Return to the CAD-focused tutorials.",
       "subtitle": "Step 4: Return to 3D Design tutorials for CAD-focused practice",
       "target_window_end_sec": 31.24,
-      "clip_duration_sec": 4.073,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_04_primary_paced.wav",
-      "start_sec": 26.564,
-      "end_sec": 30.637
+      "clip_duration_sec": 3.927,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_04_primary_fitted.wav",
+      "start_sec": 26.752,
+      "end_sec": 30.679
     },
     {
       "segment_id": "step_05_primary",
@@ -113,14 +113,14 @@
       "type": "primary",
       "offset_sec": 31.74,
       "budget_sec": 4.285,
-      "text": "Open one tutorial card and the platform stops feeling like a homepage and starts feeling like a classroom.",
-      "fallback_text": "Open one tutorial and see the guided path.",
+      "text": "Open a tutorial card. Treasure chest vibes, except the prize is Z-axis wisdom.",
+      "fallback_text": "Open a tutorial card.",
       "subtitle": "Step 5: Open a tutorial card to view guided learning content",
       "target_window_end_sec": 36.878,
-      "clip_duration_sec": 3.547,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_05_primary_paced.wav",
+      "clip_duration_sec": 4.298,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_05_primary_fitted.wav",
       "start_sec": 31.74,
-      "end_sec": 35.287
+      "end_sec": 36.038
     },
     {
       "segment_id": "step_06_primary",
@@ -128,14 +128,14 @@
       "type": "primary",
       "offset_sec": 37.518,
       "budget_sec": 5.616,
-      "text": "A quick scroll through the lesson shows the pace, the visuals, and the kind of guidance a beginner will actually get.",
-      "fallback_text": "Scroll the lesson and get a feel for the walkthrough.",
+      "text": "Scroll through the visuals. Space stations, moon talk, enough inspiration to make NASA curious.",
+      "fallback_text": "Scroll through the lesson visuals.",
       "subtitle": "Step 6: Scroll through the tutorial page to view lesson details and visuals",
       "target_window_end_sec": 44.267,
-      "clip_duration_sec": 3.547,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_06_primary_paced.wav",
+      "clip_duration_sec": 5.791,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_06_primary_paced.wav",
       "start_sec": 37.518,
-      "end_sec": 41.065
+      "end_sec": 43.309
     },
     {
       "segment_id": "step_07_primary",
@@ -143,14 +143,14 @@
       "type": "primary",
       "offset_sec": 44.907,
       "budget_sec": 6.293,
-      "text": "Then we switch gears and head to the gallery, because learning gets easier when inspiration is visible.",
-      "fallback_text": "Now we jump to the gallery for inspiration.",
+      "text": "Gallery time. Nine million designs, all born while somebody was supposed to be doing taxes.",
+      "fallback_text": "Open the gallery.",
       "subtitle": "Step 7: Open the TinkerCAD gallery to explore community designs",
       "target_window_end_sec": 54.755,
-      "clip_duration_sec": 3.423,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_07_primary_paced.wav",
+      "clip_duration_sec": 5.328,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_07_primary_paced.wav",
       "start_sec": 44.907,
-      "end_sec": 48.33
+      "end_sec": 50.235
     },
     {
       "segment_id": "step_07_wait",
@@ -158,14 +158,14 @@
       "type": "filler",
       "offset_sec": 50.874,
       "budget_sec": 3.431,
-      "text": "We give the page a second to load. Even creative tools like an entrance.",
-      "fallback_text": "A short beat while the gallery catches up.",
-      "subtitle": "We give the page a second to load. Even creative tools like an entrance.",
+      "text": "Short render break. Mushroom or car? The suspense is crushing my ergonomic chair.",
+      "fallback_text": "The gallery page is rendering.",
+      "subtitle": "Short render break. Mushroom or car? The suspense is crushing my ergonomic chair.",
       "target_window_end_sec": 54.755,
-      "clip_duration_sec": 3.247,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_07_wait_paced.wav",
+      "clip_duration_sec": 3.438,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_07_wait_fitted.wav",
       "start_sec": 50.874,
-      "end_sec": 54.121
+      "end_sec": 54.312
     },
     {
       "segment_id": "step_08_primary",
@@ -173,14 +173,14 @@
       "type": "primary",
       "offset_sec": 55.395,
       "budget_sec": 6.676,
-      "text": "This is the fun part. The gallery turns abstract learning into real project ideas you might actually want to build.",
-      "fallback_text": "The gallery is where ideas start showing up fast.",
+      "text": "Browse the hits. Mushroom, Retro Diner, drawer caddy. Practicality and chaos in perfect harmony.",
+      "fallback_text": "Browse featured designs for inspiration.",
       "subtitle": "Step 8: Browse featured gallery designs for project inspiration",
       "target_window_end_sec": 65.882,
-      "clip_duration_sec": 3.923,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_08_primary_paced.wav",
+      "clip_duration_sec": 6.839,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_08_primary_paced.wav",
       "start_sec": 55.395,
-      "end_sec": 59.318
+      "end_sec": 62.234
     },
     {
       "segment_id": "step_08_wait",
@@ -188,14 +188,14 @@
       "type": "filler",
       "offset_sec": 61.765,
       "budget_sec": 3.667,
-      "text": "A quick beat here while the gallery catches up.",
-      "fallback_text": "The page is thinking, so we give it a second.",
-      "subtitle": "A quick beat here while the gallery catches up.",
+      "text": "Almost there. I can feel my brain getting more creative by the second.",
+      "fallback_text": "Featured designs are still loading.",
+      "subtitle": "Almost there. I can feel my brain getting more creative by the second.",
       "target_window_end_sec": 65.882,
-      "clip_duration_sec": 3.672,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_08_wait_paced.wav",
-      "start_sec": 61.765,
-      "end_sec": 65.437
+      "clip_duration_sec": 3.675,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_08_wait_fitted.wav",
+      "start_sec": 62.234,
+      "end_sec": 65.909
     },
     {
       "segment_id": "step_09_primary",
@@ -203,14 +203,14 @@
       "type": "primary",
       "offset_sec": 66.382,
       "budget_sec": 4.022,
-      "text": "Open one design and the reference quality becomes tangible, not theoretical.",
-      "fallback_text": "Open one design and look at the reference details.",
+      "text": "Open Mushroom by Demirarh. Purple, spotted, Staff Picked. Honestly, life goals.",
+      "fallback_text": "Open the featured Mushroom design.",
       "subtitle": "Step 9: Open a gallery design page to review details and references",
       "target_window_end_sec": 71.174,
-      "clip_duration_sec": 3.772,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_09_primary_paced.wav",
+      "clip_duration_sec": 4.031,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_09_primary_fitted.wav",
       "start_sec": 66.382,
-      "end_sec": 70.154
+      "end_sec": 70.413
     },
     {
       "segment_id": "step_10_primary",
@@ -218,14 +218,14 @@
       "type": "primary",
       "offset_sec": 71.674,
       "budget_sec": 3.46,
-      "text": "Final beat. We went from a blank landing page to tutorials, examples, and creative starting points.",
-      "fallback_text": "That is the wrap.",
+      "text": "Tutorial complete. You skipped the login, found the spark, and now Euclid expects greatness.",
+      "fallback_text": "That wraps the TinkerCAD speedrun.",
       "subtitle": "Step 10: Tutorial complete - start learning TinkerCAD with no-login resources",
       "target_window_end_sec": 75.727,
-      "clip_duration_sec": 1.523,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_bp3yxz83\\step_10_primary_paced.wav",
+      "clip_duration_sec": 3.461,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_nzdfda3i\\step_10_primary_fitted.wav",
       "start_sec": 71.674,
-      "end_sec": 73.197
+      "end_sec": 75.135
     }
   ]
 }

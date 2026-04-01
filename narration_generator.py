@@ -1,14 +1,17 @@
 """
-narration_generator.py - Generate audio narration from step transcripts using Gemini.
-Uses Google's Gemini API for text-to-speech generation.
+narration_generator.py - Generate audio narration from step transcripts.
+Supports ElevenLabs, Gemini, and a gTTS fallback for text-to-speech generation.
 """
 
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
 import time
+import urllib.error
+import urllib.request
 import wave
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -16,121 +19,130 @@ OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 SCREENSHOT_DIR = os.path.join(BASE_DIR, "screenshots")
 SUPPORTED_AUDIO_EXTENSIONS = (".wav", ".mp3", ".ogg", ".flac", ".aac", ".m4a")
 OPENING_CUES = [
-    "We start at the front door.",
-    "Here is the opening move.",
-    "First, the stage.",
+    "Alright, let's dive right in.",
+    "Okay, here we go.",
+    "Let's set the scene.",
+    "*claps hands* Let's get to work.",
 ]
 EARLY_TRANSITION_CUES = [
-    "Now the target comes into focus.",
-    "This is where the useful part starts.",
-    "With the setup in place, we can chase the signal.",
+    "Good, now we're getting to the interesting part.",
+    "Alright, this is where things start to click.",
+    "Nice. Now we can focus on what actually matters.",
+    "And there it is... our first real clue.",
 ]
 MID_TRANSITION_CUES = [
-    "Now the page has something to say.",
-    "This is where the pattern starts to show.",
-    "Here the workflow stops posing and starts proving.",
+    "Okay, watch this part closely.",
+    "Now here's where it gets good.",
+    "This is the part that makes the whole thing worth it.",
+    "*smirks* Watch what happens next.",
 ]
 LATE_TRANSITION_CUES = [
-    "Now the payoff is close enough to see.",
-    "This is where the result starts to feel earned.",
-    "From here, the workflow turns into something reusable.",
+    "Almost there, and you can already see the payoff.",
+    "We're in the home stretch now.",
+    "Just a couple more moves and we're done.",
 ]
 SOFT_TRANSITION_CUES = [
-    "Next, we keep the flow clear.",
-    "Now we move one step further.",
-    "On the next screen, the process stays easy to follow.",
-    "We continue carefully from here.",
+    "Moving along smoothly.",
+    "Let's keep going, step by step.",
+    "Nice and steady, on to the next part.",
+    "Continuing the process carefully.",
 ]
 FINALE_CUES = [
-    "That is the payoff shot.",
-    "That closes the loop cleanly.",
-    "That lands the result.",
+    "And that's a wrap.",
+    "And just like that, we're done.",
+    "There it is, mission accomplished. *chuckles*",
+    "Easy enough, right?",
 ]
 WAITING_ASIDES = [
-    "Hmm... little pause here. The page is still catching up, so we give it a second.",
-    "We will hold for a beat here and let the screen settle before we move on.",
-    "Still thinking. No rush, we will wait for the page to finish the move.",
+    "Just a moment while the page catches up with us. *laughs* No rush.",
+    "Quick breather here while things load.",
+    "The page is still doing its thing... any second now.",
 ]
 WAITING_ASIDES_SAFE = [
-    "The page is still working, so we give it a moment and keep the flow steady.",
-    "A short pause here while the screen catches up cleanly.",
-    "Still loading, so we wait a beat before the next move.",
+    "Give the page a second to finish loading.",
+    "Short pause while everything settles.",
+    "Still loading, so we'll wait right here.",
 ]
 FALLBACK_WAITING_ASIDES = [
-    "Give this a second to settle.",
-    "We will let the page catch up.",
-    "A quick beat while the results arrive.",
+    "One moment while this loads.",
+    "Let's give it a second.",
+    "Quick pause while the results come in.",
 ]
 OVERPASS_WAITING_ASIDES = [
-    "Hmm... the map is thinking for a second, which feels fair.",
-    "Tiny dramatic pause here. Even cartography likes a movie beat.",
-    "Looks like the map wants a second cup of coffee, so we wait.",
-    "I think it is still loading, so we let the map finish the thought.",
+    "The map is crunching through the data, give it a sec.",
+    "Processing all those map nodes takes a moment. *chuckles*",
+    "Rendering the results now, almost there.",
+    "Just loading the map data, won't be long.",
 ]
 OVERPASS_FALLBACK_WAITING_ASIDES = [
-    "Hmm... the map is still thinking. Let's give it a second.",
-    "Quick pause here while the map catches up.",
-    "Even the map wants a little breath here.",
-    "I think it is loading, so we wait for the reveal.",
+    "Map's still loading, hang tight.",
+    "One moment while the map renders.",
+    "Quick pause for the map data.",
+    "Almost there, just rendering.",
 ]
 SCREENER_WAITING_ASIDES = [
-    "The page is thinking for a second. Fair enough, markets are never in a hurry.",
-    "Quick pause here while Screener loads the next part of the story.",
-    "A short beat here. Even stock research likes a dramatic pause.",
+    "Loading the financial data... markets are never in a hurry.",
+    "Screener is pulling up the numbers. Any second now.",
+    "Quick pause while the data populates.",
 ]
 SCREENER_FALLBACK_WAITING_ASIDES = [
-    "Quick pause while Screener catches up.",
-    "The page is loading, so we give it a second.",
-    "A short beat here while the data settles.",
+    "Screener's loading, one sec.",
+    "Data is coming in, hang tight.",
+    "Just a moment for the numbers.",
 ]
 ZOHO_WAITING_ASIDES = [
-    "Small pause here while the invoice catches up. Forms like their dramatic beats too.",
-    "We give the invoice a second to settle, which is still faster than fixing a rushed total later.",
-    "A quick breath here while the form finishes updating.",
+    "The form is updating the calculations... math is hard, let's give it a second.",
+    "Give the invoice a moment to recalculate.",
+    "Quick pause while the totals update.",
 ]
 ZOHO_FALLBACK_WAITING_ASIDES = [
-    "Quick pause while the invoice updates.",
-    "The form is settling, so we give it a second.",
-    "A short beat here while the totals catch up.",
+    "Invoice is updating, one moment.",
+    "Totals are recalculating.",
+    "Just a second for the form.",
 ]
 TINKERCAD_WAITING_ASIDES = [
-    "Tiny pause here while TinkerCAD lines up the next scene.",
-    "We give the page a second to load. Even creative tools like an entrance.",
-    "A quick beat here while the gallery catches up.",
+    "TinkerCAD is loading the content. Creativity takes time! *laughs*",
+    "Just a moment while the page renders.",
+    "Gallery is loading up, almost there.",
 ]
 TINKERCAD_FALLBACK_WAITING_ASIDES = [
-    "Quick pause while TinkerCAD loads.",
-    "A short beat while the gallery catches up.",
-    "The page is thinking, so we give it a second.",
+    "TinkerCAD's loading, one sec.",
+    "Quick pause for the gallery.",
+    "Content is rendering, hang tight.",
 ]
 INDIAN_VISA_WAITING_ASIDES = [
-    "This step can take a moment while the portal validates the travel details, so we wait.",
-    "The portal is still catching up here. We give it another beat and keep the flow calm.",
-    "A short pause here while the application refreshes the next set of options.",
+    "The portal is validating the details... government servers, you know how it is. *laughs*",
+    "Government portals can be a bit slow, we'll wait patiently.",
+    "Form is refreshing the options, just a second.",
 ]
 INDIAN_VISA_FALLBACK_WAITING_ASIDES = [
-    "The portal is still loading, so we give it a second.",
-    "A short beat here while the travel options refresh.",
-    "Still processing, so we wait a moment.",
+    "Portal is still loading.",
+    "Options are refreshing, one moment.",
+    "Still processing the form data.",
 ]
 DEFAULT_TTS_DIRECTION = (
-    "Perform this as a warm, human product-demo narrator with light cinematic polish. "
-    "Use a measured, conversational pace and make every sentence easy to understand on the first listen. "
-    "Leave short, audible pauses between ideas, especially after the first sentence in each beat. "
-    "Sound expressive, friendly, and lightly playful, like a great explainer walking beside the viewer. "
-    "Keep jokes subtle and charming, never distracting or sarcastic. "
-    "Avoid robotic pacing, flat delivery, breathless reads, and rushed speech."
+    "Speak like a captivating storyteller or documentary narrator revealing a profound and fascinating narrative. "
+    "Do NOT sound like you are giving instructions or doing a tutorial. Instead, sound like you are "
+    "uncovering a mystery or telling an enchanting fable. Use dynamic pacing, a tone of discovery, "
+    "and dramatic pauses to let the words sink in. Make it beautiful, emotional, and thoroughly engaging."
 )
+DEFAULT_ELEVENLABS_VOICE_ID = "jfIS2w2yJi0grJZPyEsk"
+DEFAULT_ELEVENLABS_MODEL_ID = "eleven_multilingual_v2"
+DEFAULT_ELEVENLABS_OUTPUT_FORMAT = "mp3_44100_128"
 MAX_AUDIO_SPEEDUP = 1.4
+ELEVENLABS_MAX_AUDIO_SPEEDUP = 2.0
 DEFAULT_AUDIO_PACE = 0.94
+ELEVENLABS_AUDIO_PACE = 1.02
 FALLBACK_AUDIO_PACE = 0.96
 GEMINI_QUOTA_EXHAUSTED = False
+ELEVENLABS_VOICE_UNAVAILABLE = False
 LONG_STEP_FILLER_THRESHOLD_SEC = 11.5
 OVERPASS_FILLER_THRESHOLD_SEC = 7.4
 SCREENER_FILLER_THRESHOLD_SEC = 7.9
 ZOHO_FILLER_THRESHOLD_SEC = 8.9
 TINKERCAD_FILLER_THRESHOLD_SEC = 7.8
 INDIAN_VISA_FILLER_THRESHOLD_SEC = 7.5
+EBAY_FILLER_THRESHOLD_SEC = 7.6
 GERUND_OVERRIDES = {
     "open": "opening",
     "navigate": "navigating",
@@ -162,168 +174,168 @@ GERUND_OVERRIDES = {
 }
 STEP_COMMENTARY = {
     "open": [
-        "Now the workflow has a stage.",
-        "This gives the whole demo a place to stand.",
-        "From here, every click has context.",
+        "And now we have our starting point.",
+        "Perfect, this is where everything begins.",
+        "Great, we're all set up and ready to go.",
     ],
     "navigate": [
-        "We skip the wandering and land on the part that matters.",
-        "No side quest, just the useful page.",
-        "That puts the real subject right in front of us.",
+        "Straight to the right page, no detours.",
+        "And boom, we're exactly where we need to be.",
+        "That takes us right to the good stuff.",
     ],
     "search": [
-        "That cuts straight through the hunting.",
-        "The signal shows up faster when the search is this tight.",
-        "Now the next move is obvious for a reason.",
+        "That narrows things down instantly.",
+        "And just like that, we've got our results.",
+        "Search does the heavy lifting for us here.",
     ],
     "view": [
-        "This is the first clean read on what matters.",
-        "Now the screen stops feeling busy and starts feeling useful.",
-        "The headline numbers do the first round of storytelling here.",
+        "Now we can see what we're working with.",
+        "There's our data, clear as day.",
+        "And the key information is right here.",
     ],
     "review": [
-        "This is where the pattern stops hiding.",
-        "Now the trend line starts behaving like evidence.",
-        "Here the page finally tells us something worth listening to.",
+        "Let's take a closer look at what we've got.",
+        "Now this is where the insights start appearing.",
+        "Really useful data to dig into here.",
     ],
     "inspect": [
-        "The close-up matters because the clues live here.",
-        "This is the layer where the small details start carrying weight.",
-        "A quick inspection here saves a lot of guessing later.",
+        "The details here are worth paying attention to.",
+        "Let's zoom in and see what's really going on.",
+        "A closer look reveals some interesting stuff.",
     ],
     "check": [
-        "A fast check here tells us whether the foundation actually holds.",
-        "This is where confidence is either earned or lost.",
-        "That keeps the whole run grounded in something real.",
+        "Quick sanity check to make sure everything looks right.",
+        "Always good to verify before moving on.",
+        "Let's confirm this is all looking correct.",
     ],
     "browse": [
-        "Now comparison gets lighter and the noise drops out.",
-        "This turns a click-fest into something you can actually scan.",
-        "More clarity, fewer tiny detours.",
+        "Easy to compare options from here.",
+        "Now we can scan through everything at a glance.",
+        "Nice overview that makes picking easier.",
     ],
     "switch": [
-        "A different angle tells the story faster here.",
-        "The view changes, and suddenly the read gets easier.",
-        "Sometimes one switch is all it takes for the page to make sense.",
+        "Different view, and suddenly things are much clearer.",
+        "Switching perspective really helps here.",
+        "That change makes all the difference.",
     ],
     "replace": [
-        "Same rhythm, new question, and that is the whole point.",
-        "This is where the workflow proves it is reusable.",
-        "One small swap and the demo starts feeling like a system.",
+        "Same process, different input, and it works just as smoothly.",
+        "See how easy it is to swap things around?",
+        "The beauty is that this workflow is totally reusable.",
     ],
     "add": [
-        "One more layer makes the picture richer without making it messy.",
-        "This expands the flow without breaking its rhythm.",
-        "Now the story has a little more range.",
+        "Adding this gives us a more complete picture.",
+        "One more piece of the puzzle.",
+        "That rounds things out nicely.",
     ],
     "run": [
-        "This is the moment the setup cashes out into something visible.",
-        "Now the page gets to do the heavy lifting.",
-        "This is where all the quiet setup finally earns applause.",
+        "And now we hit go and watch the magic happen.",
+        "Here's where all the setup pays off.",
+        "Let's see what we get.",
     ],
     "fill": [
-        "This is exactly the repetitive work a person should only explain once.",
-        "No one needs a sequel called type the same thing again.",
-        "Automation earns trust fastest in moments like this.",
+        "This is the kind of tedious work that automation handles perfectly.",
+        "Imagine doing this manually every time. Exactly.",
+        "Automation at its finest right here.",
     ],
     "enter": [
-        "Every future rerun gets cheaper because of this little moment.",
-        "The boring part belongs to automation, not to patience.",
-        "This is the sort of repetition the workflow should steal from us.",
+        "Quick data entry, and we're moving on.",
+        "Just plugging in the details.",
+        "Type it once, and it's done forever.",
     ],
     "set": [
-        "That small setting keeps future runs honest.",
-        "A precise value here saves a lot of drift later.",
-        "This is where consistency gets baked into the flow.",
+        "That little setting makes a big difference.",
+        "Small detail, but it keeps everything consistent.",
+        "Precision matters here, and we've got it set.",
     ],
     "choose": [
-        "Keeping the choice visible is what makes the flow teachable.",
-        "Now the decision is explicit, not implied.",
-        "This is where reproducibility stops being a promise and becomes a detail.",
+        "Making our selection clear and deliberate.",
+        "An easy choice when you know what you need.",
+        "That decision locks in our direction.",
     ],
     "select": [
-        "A clean selection here keeps the run from improvising.",
-        "This is how reruns stay dependable instead of lucky.",
-        "The more explicit this beat is, the calmer the whole workflow feels.",
+        "Clean pick, no ambiguity.",
+        "Selected and ready to go.",
+        "That keeps the workflow predictable and reliable.",
     ],
     "move": [
-        "This keeps the eye oriented instead of yanking it around.",
-        "The move is simple, but it keeps the rhythm under control.",
-        "A deliberate shift here keeps the story readable.",
+        "Smooth transition to the next section.",
+        "Simple move that keeps everything flowing.",
+        "And we're right where we need to be.",
     ],
     "go": [
-        "The flow moves forward without dropping the thread.",
-        "That keeps the sequence moving while the context is still warm.",
-        "A move like this keeps the scene from getting sticky.",
+        "Onward, keeping the momentum going.",
+        "Moving right along without losing our place.",
+        "And we continue the flow seamlessly.",
     ],
     "complete": [
-        "Now the finish state is unmistakable.",
-        "That is the exact payoff the workflow was building toward.",
-        "The end lands cleanly, and that matters more than it sounds.",
+        "And that's the finish line right there.",
+        "Done! Exactly the result we were after.",
+        "Everything comes together perfectly.",
     ],
     "use": [
-        "This is where the demo stops being decorative and starts being useful.",
-        "Now the workflow earns its keep.",
-        "A simple action here makes the whole thing feel practical.",
+        "Now we're actually putting this to work.",
+        "This is where the real value shows up.",
+        "Practical and useful, just the way it should be.",
     ],
     "download": [
-        "Now the result feels like something you can actually hand off.",
-        "This is the handoff shot, not just the end of a demo.",
-        "The outcome turns tangible right here.",
+        "And now we have something tangible to show for it.",
+        "Download ready, that's a real deliverable.",
+        "The output is ready to use right away.",
     ],
     "export": [
-        "This is the handoff from browser moment to reusable artifact.",
-        "Now the output can travel beyond the demo.",
-        "The browser does its part, and the result is ready for the next tool.",
+        "Exporting so we can use this outside the browser.",
+        "Now this data can go anywhere we need it.",
+        "Clean export, ready for the next step.",
     ],
     "split": [
-        "The framing matters because it lets cause and effect sit in one glance.",
-        "A split like this does half the storytelling for us.",
-        "Now the logic and the result can share the frame.",
+        "Side by side makes it so much easier to compare.",
+        "Now we can see both halves of the picture at once.",
+        "This layout tells the whole story in one glance.",
     ],
     "write": [
-        "Making the logic visible is what turns a demo into a recipe.",
-        "Now the workflow feels repeatable instead of magical.",
-        "Once the query is on screen, the mystery mostly disappears.",
+        "Writing it out so anyone can follow along.",
+        "Now the logic is transparent and repeatable.",
+        "Once it's written down, anyone can reproduce this.",
     ],
     "click": [
-        "A clear click like this keeps the eye exactly where it needs to be.",
-        "The action lands on target, and the viewer never has to hunt for it.",
-        "This is the kind of click that keeps the whole scene readable.",
+        "One click, and we're there.",
+        "Simple and precise.",
+        "Easy to follow, easy to repeat.",
     ],
     "stop": [
-        "This stop is deliberate, not hesitant.",
-        "Stopping here keeps the demo safe without making it vague.",
-        "The flow remains understandable even because we stop at the right boundary.",
+        "We stop here on purpose, this is the safe boundary.",
+        "That's our stopping point, clean and deliberate.",
+        "We know exactly where to draw the line.",
     ],
 }
 COMPACT_STORY_TAGS = {
-    "open": "That gives the workflow a stage.",
-    "navigate": "That puts the real subject in front of us.",
-    "search": "That gets us to the signal fast.",
-    "view": "Now the key read is visible.",
-    "review": "Now the pattern has a voice.",
-    "inspect": "The clues live in this layer.",
-    "check": "That tells us if the foundation holds.",
-    "browse": "Now comparison gets easier.",
-    "switch": "A better angle changes the read.",
-    "replace": "Same flow, different question.",
-    "add": "Now the picture gets fuller.",
-    "run": "Here the setup turns into results.",
-    "fill": "This is where automation saves patience.",
-    "enter": "This is where repetition gets retired.",
-    "set": "That keeps the run honest.",
-    "choose": "The choice stays visible.",
-    "select": "That keeps the flow deterministic.",
-    "move": "That keeps the eye oriented.",
-    "go": "The thread stays intact.",
-    "use": "Now the workflow becomes useful.",
-    "download": "Now there is something to hand off.",
-    "export": "This is the handoff point.",
-    "split": "Now both sides of the workflow are visible.",
-    "write": "Now the logic has a voice.",
-    "click": "The action stays easy to track.",
-    "stop": "That keeps the demo safe.",
+    "open": "And we're up and running.",
+    "navigate": "Right where we need to be.",
+    "search": "Results come up instantly.",
+    "view": "Clear view of what matters.",
+    "review": "The data speaks for itself.",
+    "inspect": "Worth a closer look.",
+    "check": "Quick verification.",
+    "browse": "Easy to scan through.",
+    "switch": "Better angle on the data.",
+    "replace": "Same flow, fresh input.",
+    "add": "Building out the full picture.",
+    "run": "And we get our results.",
+    "fill": "Automation handles the tedium.",
+    "enter": "Punched in and done.",
+    "set": "Locked in.",
+    "choose": "Decision made.",
+    "select": "Clean selection.",
+    "move": "Smooth transition.",
+    "go": "Keeping the flow going.",
+    "use": "Putting it to work.",
+    "download": "Ready to use offline.",
+    "export": "Data is portable now.",
+    "split": "Both sides visible at once.",
+    "write": "Logic is on screen.",
+    "click": "One click, done.",
+    "stop": "Safe stopping point.",
 }
 
 for directory in [OUTPUT_DIR, SCREENSHOT_DIR]:
@@ -343,6 +355,70 @@ def load_local_env():
         return
 
     load_dotenv(env_path, override=False)
+
+
+def sanitize_tts_text(text: str) -> str:
+    """Strip non-spoken stage directions so TTS reads more naturally."""
+    cleaned = text or ""
+    cleaned = re.sub(r"\*\s*\[[^\]]+\]\s*\*", " ", cleaned)
+    cleaned = re.sub(r"\[[^\]]+\]", " ", cleaned)
+    cleaned = re.sub(r"\*[^*\n]+\*", " ", cleaned)
+    cleaned = cleaned.replace("**", " ")
+    return " ".join(cleaned.split())
+
+
+def elevenlabs_api_key_from_env() -> str | None:
+    """Return the configured ElevenLabs API key from common env variable names."""
+    return os.environ.get("ELEVENLABS_API_KEY") or os.environ.get("ELEVEN_LABS_API_KEY")
+
+
+def elevenlabs_voice_id_from_env() -> str:
+    """Return the voice id to use for ElevenLabs narration."""
+    return (
+        os.environ.get("ELEVENLABS_VOICE_ID")
+        or os.environ.get("ELEVEN_LABS_VOICE_ID")
+        or DEFAULT_ELEVENLABS_VOICE_ID
+    )
+
+
+def elevenlabs_model_id_from_env() -> str:
+    """Return the ElevenLabs model id for narration generation."""
+    return os.environ.get("ELEVENLABS_MODEL_ID", DEFAULT_ELEVENLABS_MODEL_ID)
+
+
+def elevenlabs_output_format_from_env() -> str:
+    """Return the desired ElevenLabs audio output format."""
+    return os.environ.get("ELEVENLABS_OUTPUT_FORMAT", DEFAULT_ELEVENLABS_OUTPUT_FORMAT)
+
+
+def extension_for_output_format(output_format: str | None) -> str:
+    """Map an ElevenLabs output format to a file extension."""
+    format_key = (output_format or "").split("_", 1)[0].lower()
+    mapping = {
+        "mp3": ".mp3",
+        "wav": ".wav",
+        "pcm": ".wav",
+        "ulaw": ".wav",
+    }
+    return mapping.get(format_key, ".mp3")
+
+
+def narration_provider_order() -> list[str]:
+    """Choose a TTS provider order from the environment, favoring ElevenLabs."""
+    configured = (os.environ.get("NARRATION_TTS_PROVIDER") or "auto").strip().lower()
+    if configured == "elevenlabs":
+        return ["elevenlabs", "gemini", "gtts"]
+    if configured == "gemini":
+        return ["gemini", "elevenlabs", "gtts"]
+    if configured == "gtts":
+        return ["gtts"]
+    return ["elevenlabs", "gemini", "gtts"]
+
+
+def is_elevenlabs_voice_unavailable(error_text: str) -> bool:
+    """Detect account or plan errors that will fail every future ElevenLabs segment."""
+    lowered = (error_text or "").lower()
+    return "paid_plan_required" in lowered or "free users cannot use library voices" in lowered
 
 
 def remove_existing_audio_outputs(output_prefix: str):
@@ -520,7 +596,12 @@ def atempo_filter_for_ratio(speed_factor: float) -> str:
     return ",".join(f"atempo={factor:.6f}" for factor in factors)
 
 
-def fit_audio_clip_to_duration(input_path: str, max_duration: float, output_path: str):
+def fit_audio_clip_to_duration(
+    input_path: str,
+    max_duration: float,
+    output_path: str,
+    max_speedup: float = MAX_AUDIO_SPEEDUP,
+):
     """Speed up an audio clip only a little if it would overflow its timing budget."""
     current_duration = get_media_duration(input_path)
     if max_duration <= 0 or current_duration <= max_duration + 0.06:
@@ -530,7 +611,7 @@ def fit_audio_clip_to_duration(input_path: str, max_duration: float, output_path
     if speed_factor <= 1.05:
         return input_path, current_duration
 
-    applied_speed = min(speed_factor, MAX_AUDIO_SPEEDUP)
+    applied_speed = min(speed_factor, max_speedup)
     cmd = [
         "ffmpeg",
         "-y",
@@ -706,14 +787,16 @@ def is_screener_step(description: str, url: str = "") -> bool:
         "reliance industries",
         "profit and loss",
         "balance sheet",
-        "roe",
-        "roce",
         "market cap",
         "valuation snapshot",
         "quarterly financial",
         "bank of india",
     ]
-    return "screener.in" in lowered or any(token in lowered for token in screener_tokens)
+    return (
+        "screener.in" in lowered
+        or any(token in lowered for token in screener_tokens)
+        or re.search(r"\b(?:roe|roce)\b", lowered) is not None
+    )
 
 
 def is_zoho_invoice_step(description: str, url: str = "") -> bool:
@@ -722,15 +805,42 @@ def is_zoho_invoice_step(description: str, url: str = "") -> bool:
     zoho_tokens = [
         "zoho invoice",
         "invoice generator",
+        "business details",
         "bill to",
+        "client details",
         "gst",
         "line item",
         "invoice number",
         "payment notes",
+        "payment terms",
         "download/print",
         "professional gst invoices",
     ]
-    return "zoho.com/invoice" in lowered or any(token in lowered for token in zoho_tokens)
+    return (
+        "zoho.com/invoice" in lowered
+        or "zoho.com/in/invoice" in lowered
+        or any(token in lowered for token in zoho_tokens)
+    )
+
+
+def is_mondula_step(description: str, url: str = "") -> bool:
+    """Identify Mondula form-demo steps for custom pacing and punchier narration."""
+    lowered = f"{normalize_text(description).lower()} {url.lower()}".strip()
+    mondula_tokens = [
+        "mondula",
+        "intro page",
+        "first form step",
+        "textarea",
+        "date fields",
+        "radio option",
+        "checkboxes",
+        "dropdown value",
+        "conditional input section",
+        "selected dish",
+        "contact-details page",
+        "submit-ready final state",
+    ]
+    return "mondula.com/msf-demo" in lowered or any(token in lowered for token in mondula_tokens)
 
 
 def is_tinkercad_step(description: str, url: str = "") -> bool:
@@ -761,6 +871,27 @@ def is_indian_visa_step(description: str, url: str = "") -> bool:
         "date of arrival",
     ]
     return "indianvisaonline.gov.in" in lowered or any(token in lowered for token in visa_tokens)
+
+
+def is_ebay_step(description: str, url: str = "") -> bool:
+    """Identify eBay Advanced Search steps for a punchier shopping-heist tone."""
+    lowered = f"{normalize_text(description).lower()} {url.lower()}".strip()
+    ebay_tokens = [
+        "ebay advanced search",
+        "keyword match dropdown",
+        "exact order",
+        "exclude from results",
+        "title and description",
+        "price filters",
+        "new-condition items",
+        "filtered results page",
+        "wh-1000xm5",
+    ]
+    return (
+        "ebay.com/sch/ebayadvsearch" in lowered
+        or "ebay.com/sch/i.html" in lowered
+        or any(token in lowered for token in ebay_tokens)
+    )
 
 
 def cinematic_cue(step_num: int, total_steps: int, sensitive: bool) -> str:
@@ -802,15 +933,32 @@ def build_waiting_aside(step: dict, step_num: int) -> str:
     description = step.get("description", "")
     url = step.get("url", "")
     if is_overpass_step(description, url):
+        custom_overpass_line = overpass_waiting_aside(description)
+        if custom_overpass_line:
+            return custom_overpass_line
         return pick_variant(OVERPASS_WAITING_ASIDES, step_num)
     if is_screener_step(description, url):
         return pick_variant(SCREENER_WAITING_ASIDES, step_num)
     if is_zoho_invoice_step(description, url):
+        custom_zoho_line = zoho_waiting_aside(description)
+        if custom_zoho_line:
+            return custom_zoho_line
         return pick_variant(ZOHO_WAITING_ASIDES, step_num)
     if is_tinkercad_step(description, url):
+        custom_tinkercad_line = tinkercad_waiting_aside(description)
+        if custom_tinkercad_line:
+            return custom_tinkercad_line
         return pick_variant(TINKERCAD_WAITING_ASIDES, step_num)
     if is_indian_visa_step(description, url):
+        custom_visa_line = indian_visa_waiting_aside(description)
+        if custom_visa_line:
+            return custom_visa_line
         return pick_variant(INDIAN_VISA_WAITING_ASIDES, step_num)
+    if is_ebay_step(description, url):
+        custom_ebay_line = ebay_waiting_aside(description)
+        if custom_ebay_line:
+            return custom_ebay_line
+        return pick_variant(WAITING_ASIDES, step_num)
     variants = WAITING_ASIDES_SAFE if is_sensitive_step(description, url) else WAITING_ASIDES
     return pick_variant(variants, step_num)
 
@@ -818,15 +966,32 @@ def build_waiting_aside(step: dict, step_num: int) -> str:
 def build_fallback_waiting_aside(step: dict, step_num: int) -> str:
     """Generate a very short filler line for fallback narration."""
     if is_overpass_step(step.get("description", ""), step.get("url", "")):
+        custom_overpass_line = overpass_fallback_waiting_aside(step.get("description", ""))
+        if custom_overpass_line:
+            return custom_overpass_line
         return pick_variant(OVERPASS_FALLBACK_WAITING_ASIDES, step_num)
     if is_screener_step(step.get("description", ""), step.get("url", "")):
         return pick_variant(SCREENER_FALLBACK_WAITING_ASIDES, step_num)
     if is_zoho_invoice_step(step.get("description", ""), step.get("url", "")):
+        custom_zoho_line = zoho_fallback_waiting_aside(step.get("description", ""))
+        if custom_zoho_line:
+            return custom_zoho_line
         return pick_variant(ZOHO_FALLBACK_WAITING_ASIDES, step_num)
     if is_tinkercad_step(step.get("description", ""), step.get("url", "")):
+        custom_tinkercad_line = tinkercad_fallback_waiting_aside(step.get("description", ""))
+        if custom_tinkercad_line:
+            return custom_tinkercad_line
         return pick_variant(TINKERCAD_FALLBACK_WAITING_ASIDES, step_num)
     if is_indian_visa_step(step.get("description", ""), step.get("url", "")):
+        custom_visa_line = indian_visa_fallback_waiting_aside(step.get("description", ""))
+        if custom_visa_line:
+            return custom_visa_line
         return pick_variant(INDIAN_VISA_FALLBACK_WAITING_ASIDES, step_num)
+    if is_ebay_step(step.get("description", ""), step.get("url", "")):
+        custom_ebay_line = ebay_fallback_waiting_aside(step.get("description", ""))
+        if custom_ebay_line:
+            return custom_ebay_line
+        return pick_variant(FALLBACK_WAITING_ASIDES, step_num)
     if is_sensitive_step(step.get("description", ""), step.get("url", "")):
         return "We will give the page a second."
     return pick_variant(FALLBACK_WAITING_ASIDES, step_num)
@@ -867,40 +1032,40 @@ def overpass_fallback_line(description: str, step_num: int, total_steps: int) ->
     lowered = normalize_text(description).lower()
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
-        return "That is the wrap."
+        return "That wraps the Overpass run."
     if "open overpass turbo" in lowered:
-        return "Opening shot: Overpass Turbo, map ready, editor waiting."
+        return "Open Overpass Turbo and load the workspace."
     if "split view" in lowered:
-        return "Editor left, map right. Nice."
+        return "Split view: editor left, map right."
     if "write a hyderabad hospitals query" in lowered:
-        return "First question for the city: show us the hospitals in Hyderabad."
+        return "Write the Hyderabad hospitals query."
     if "run query to load all mapped hospitals" in lowered:
-        return "And... run. Now we let the map do its detective work."
+        return "Run the hospitals query."
     if "zoom to data" in lowered:
-        return "There we go, zoom straight to the results."
+        return "Zoom straight to the results."
     if "click map markers" in lowered:
-        return "Let's tap a marker and see the story behind the pin."
+        return "Inspect marker tags."
     if "open data tab" in lowered:
-        return "Quick detour into Data view... this is the raw evidence."
+        return "Open the Data tab."
     if "switch back to map view" in lowered:
-        return "Back to the map. Easier to read."
+        return "Back to the Map view."
     if "replace with ev charging station query" in lowered:
-        return "Round two: same rhythm, new question... where are the charging stations?"
+        return "Swap to EV charging stations."
     if "rendered; now compare" in lowered or "compare spread versus healthcare locations" in lowered:
-        return "Results are coming in. A little pause here while the map connects the dots."
+        return "Compare EV chargers with hospitals."
     if "run school query" in lowered:
-        return "Next scene: schools. Same city, new layer of the story."
+        return "Run the schools query."
     if "add pharmacy query" in lowered:
-        return "Now pharmacies join the cast, and the city starts to feel complete."
+        return "Add pharmacies as the fourth layer."
     if "single editor workflow" in lowered:
-        return "One editor, many datasets... that is the part I really like."
+        return "One editor, rapid iteration."
     if "open export options" in lowered:
-        return "Open export. Now this can travel."
+        return "Open Export options."
     if "export supports geojson" in lowered or "choose geojson" in lowered:
-        return "GeoJSON, please. Clean handoff."
+        return "Choose a format like GeoJSON."
 
     if step_num == total_steps:
-        return "That is the wrap."
+        return "That wraps the Overpass run."
     return None
 
 
@@ -909,98 +1074,140 @@ def overpass_story_line(description: str) -> str | None:
     lowered = normalize_text(description).lower()
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
-        return "Final shot. We went from query editing to clean, exportable geo-data."
+        return "Tutorial complete. Blank screen to geo-intelligence. Go bend maps to your will."
     if "open overpass turbo" in lowered:
-        return "Opening shot. Overpass Turbo gives us a map, an editor, and a city-sized question."
+        return "Welcome to the cockpit, data hunters. Overpass Turbo is live. Calm canvas now, storm next."
     if "split view" in lowered:
-        return "This framing helps immediately. Logic on one side, evidence on the other."
+        return "Split view. Query wand on the left, map battlefield on the right."
     if "write a hyderabad hospitals query" in lowered:
-        return "Our first question is simple. Show us hospitals across Hyderabad, and keep the search area explicit."
+        return "Hospitals in Hyderabad. Fixed city box, full Overpass QL, nodes, ways, relations. Feed the machine."
     if "run query to load all mapped hospitals" in lowered:
-        return "Now we run it. This is the part where the city answers back."
+        return "Run it. The API is sprinting across the planet to fetch every hospital marker it can find."
     if "zoom to data" in lowered:
-        return "Instead of hunting around the map, we jump straight to where the results live."
+        return "Blue circles everywhere. Zoom to data and teleport onto Hyderabad."
     if "click map markers" in lowered:
-        return "A marker turns the dots into actual places, with names, tags, and context."
+        return "Click a marker and read the tags. Name, address, amenity type. Pure urban DNA."
     if "open data tab" in lowered:
-        return "Data view is the reality check. The map looks nice, but the table tells the truth."
+        return "Hit the Data tab. Raw OSM attributes. Nerd heaven."
     if "switch back to map view" in lowered:
-        return "Then we go back to the map, because spatial patterns are easier to feel than to read."
+        return "Back to Map view so we can compare actual coverage."
     if "replace with ev charging station query" in lowered:
-        return "Same workflow, new question. This time we ask about charging stations instead of hospitals."
+        return "Pivot time. Swap hospitals for EV chargers. Same city, totally different future."
     if "rendered; now compare" in lowered or "compare spread versus healthcare locations" in lowered:
-        return "Now the comparison gets interesting. Different services, same city, one visual frame."
+        return "Rendering complete. See those gaps? That is urban planning screaming for attention."
     if "run school query" in lowered:
-        return "Next layer: schools. The story gets better when we ask the city more than one question."
+        return "Now add schools. Education layer, same boundary. Watch the city grow in fast-forward."
     if "add pharmacy query" in lowered:
-        return "Now pharmacies join in, and the map starts feeling less like a query result and more like a city portrait."
+        return "One more. Add pharmacies and build a four-layer dataset cake. City hall wishes it had this."
     if "single editor workflow" in lowered:
-        return "This is the quiet win. One editor lets us iterate across datasets without changing tools or losing context."
+        return "Single editor workflow. That is the superpower: iterate faster, analyze deeper, conquer the urban jungle."
     if "open export options" in lowered:
-        return "Once the map makes sense, export matters. A good demo should hand off cleanly to the next workflow."
+        return "Open Export. We are done playing; now we go pro."
     if "export supports geojson" in lowered or "choose geojson" in lowered:
-        return "GeoJSON is the practical handoff here. Easy to carry into GIS tools, code, or a web map."
+        return "GeoJSON, KML, GPX, raw OSM. Pick your ammo and ship the data."
+    return None
+
+
+def overpass_waiting_aside(description: str) -> str | None:
+    """Return custom wait-cover lines for the Overpass map flow."""
+    lowered = normalize_text(description).lower()
+
+    if "open overpass turbo" in lowered:
+        return "Map nodes take a second. More math than high school. Boom, rendered."
+    if "run query to load all mapped hospitals" in lowered:
+        return "The API is hauling hospital markers worldwide. Fast fiber beats virtue."
+    if "replace with ev charging station query" in lowered:
+        return "Processing again. Come on, little data packets, do your thing."
+    if "rendered; now compare" in lowered or "compare spread versus healthcare locations" in lowered:
+        return "That spread tells you exactly where the future still needs building."
+    if "run school query" in lowered:
+        return "Schools are loading. Keep the processors humming. City timelapse, live."
+    if "add pharmacy query" in lowered:
+        return "Final crunch. If the fan is spinning, that is just the sound of progress."
+    if "single editor workflow" in lowered:
+        return "One last pass. Look at that density. Pure data art."
+    return None
+
+
+def overpass_fallback_waiting_aside(description: str) -> str | None:
+    """Return shorter fallback wait lines for Overpass steps."""
+    lowered = normalize_text(description).lower()
+
+    if "open overpass turbo" in lowered:
+        return "Map is rendering now."
+    if "run query to load all mapped hospitals" in lowered:
+        return "Hospital markers are loading."
+    if "replace with ev charging station query" in lowered:
+        return "EV charger data is loading."
+    if "rendered; now compare" in lowered or "compare spread versus healthcare locations" in lowered:
+        return "Comparison view is rendering."
+    if "run school query" in lowered:
+        return "School data is loading."
+    if "add pharmacy query" in lowered:
+        return "Map is crunching the final layer."
+    if "single editor workflow" in lowered:
+        return "One last render pass."
     return None
 
 
 def screener_fallback_line(description: str, step_num: int, total_steps: int) -> str | None:
-    """Return concise stock-research narration that fits tighter Screener windows."""
+    """Return a fallback story beat for Screener."""
     lowered = normalize_text(description).lower()
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
-        return "That closes the research loop."
+        return "And that's the Screener speedrun."
     if "open screener.in" in lowered:
-        return "We open Screener and set the stage."
+        return "Open Screener and start the research."
     if "navigate directly to reliance industries" in lowered:
-        return "Straight to Reliance so the analysis starts fast."
+        return "Open Reliance and head to the company page."
     if "view key metrics" in lowered:
-        return "This top block gives us the market snapshot."
+        return "Check the dashboard metrics."
     if "review quarterly financial trends" in lowered:
-        return "Quarterly numbers tell us what changed recently."
+        return "Review the quarterly trend."
     if "inspect profit and loss" in lowered:
-        return "Profit and Loss shows how sales turn into earnings."
+        return "Open profit and loss for the long view."
     if "check balance sheet strength" in lowered:
-        return "Balance sheet tells us how sturdy the company looks."
+        return "Check assets versus liabilities."
     if "open the public screens page" in lowered:
-        return "Now we jump to Public Screens for idea generation."
+        return "Open Screens for ready-made filters."
     if "open a public screen" in lowered:
-        return "A public screen gives us a ready-made shortlist."
+        return "Open the growth screen."
     if "browse filtered companies" in lowered:
-        return "Here the table turns into a side-by-side comparison."
+        return "Compare growth and ROE in the results."
     if "from the screen for deeper analysis" in lowered or "open any company from the screen results" in lowered:
-        return "Open one result and go deeper."
+        return "Open Ganesh Infra for the deep dive."
 
     if step_num == total_steps:
-        return "That closes the research loop."
+        return "And that's the Screener speedrun."
     return None
 
 
 def screener_story_line(description: str) -> str | None:
-    """Return a richer, more human story line for Screener steps."""
+    """Return a completely narrative, documentary-style story for Screener."""
     lowered = normalize_text(description).lower()
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
-        return "Final beat. We went from one company page to a reusable stock-research rhythm."
+        return "And that's it. Go research, go compare, and go get those gains."
     if "open screener.in" in lowered:
-        return "We start on Screener, which gets us from ticker to business story without wasting motion."
+        return "Alright, stop gambling and start investing. Screener is basically Google for Indian stocks, minus the ads."
     if "navigate directly to reliance industries" in lowered:
-        return "Rather than wander, we go straight to Reliance and start with a company most viewers already recognize."
+        return "Type in Reliance. Boom. Straight to the mothership. Clean layout, serious numbers."
     if "view key metrics" in lowered:
-        return "This first block is the trailer: size, valuation, and return ratios in one quick glance."
+        return "Dashboard time. Market Cap, P/E, ROCE. The whole report card, right in your face."
     if "review quarterly financial trends" in lowered:
-        return "Now we drop into the recent quarters, because the latest chapters matter more than the cover page."
+        return "Quarterly Results. We want up and to the right. If it looks ugly, keep scrolling."
     if "inspect profit and loss" in lowered:
-        return "Profit and Loss tells us whether revenue is becoming a real business, not just a headline."
+        return "Profit and Loss. Ten years of history in one click. Maximum transparency."
     if "check balance sheet strength" in lowered:
-        return "Then we check the balance sheet, where leverage and resilience stop being opinions."
+        return "Balance Sheet. We want what they own to beat what they owe. Simple math, big impact."
     if "open the public screens page" in lowered:
-        return "Now we switch from one-company analysis to idea generation, and that is where Public Screens earns its keep."
+        return "Do not want to do the math? Hit Screens. It's a best-of playlist for stock filters."
     if "open a public screen" in lowered:
-        return "A public screen is basically a ready-made hypothesis. One click, and the market starts shortlisting itself."
+        return "We open the high-growth, low-PE style screen. Ganesh Infra jumps right out of the list."
     if "browse filtered companies" in lowered:
-        return "Now the table becomes a comparison board: valuation, returns, and size sitting side by side."
+        return "Compare sales growth and ROE. If the numbers look wild, verify before you celebrate."
     if "from the screen for deeper analysis" in lowered or "open any company from the screen results" in lowered:
-        return "From the shortlist, we open one company and turn a filter result into actual research."
+        return "One click on Ganesh Infra and we do the deep dive. Trust, but verify."
     return None
 
 
@@ -1009,32 +1216,32 @@ def zoho_fallback_line(description: str, step_num: int, total_steps: int) -> str
     lowered = normalize_text(description).lower()
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
-        return "That wraps the invoice flow."
+        return "And that's a clean Zoho invoice, done."
     if "open zoho invoice" in lowered:
-        return "We open Zoho Invoice and set the stage."
+        return "Open Zoho Invoice."
     if "free invoice generator" in lowered:
-        return "Straight to the free generator. No login detour."
+        return "Jump into the free generator. No login needed."
     if "enter business details" in lowered:
-        return "First, fill the business identity so the invoice knows who is billing."
+        return "Add your company details first."
     if "enter bill to details" in lowered:
-        return "Now the client details go in, and the invoice starts feeling real."
+        return "Now fill in the client details."
     if "set invoice number" in lowered:
-        return "Set the invoice number so this draft becomes trackable."
+        return "Set the invoice number."
     if "add line item 1" in lowered:
-        return "Line item one puts real billable work on the page."
+        return "Add the first billable item."
     if "add line item 2" in lowered:
-        return "Second line item adds design work to the story."
+        return "Add the second line item."
     if "add line item 3" in lowered:
-        return "Third line item covers hosting, and the invoice gets its full shape."
+        return "Add the hosting line item."
     if "add payment notes and terms" in lowered:
-        return "Now we add payment notes, so the handoff is clear."
+        return "Add the payment terms and bank details."
     if "review subtotal" in lowered or "gst breakdown" in lowered:
-        return "Quick total check: subtotal, GST, and final amount."
+        return "Check the totals and GST."
     if "download/print" in lowered or "export the invoice as pdf" in lowered:
-        return "Download or print, and the invoice is ready to leave the browser."
+        return "Download the invoice as a PDF."
 
     if step_num == total_steps:
-        return "That wraps the invoice flow."
+        return "And that's a clean Zoho invoice, done."
     return None
 
 
@@ -1043,29 +1250,270 @@ def zoho_story_line(description: str) -> str | None:
     lowered = normalize_text(description).lower()
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
-        return "Final beat. We went from a blank form to a client-ready invoice."
+        return "Flawless GST invoice in under two minutes. Now go get your money!"
     if "open zoho invoice" in lowered:
-        return "We start on Zoho Invoice, which turns raw work into something a client can actually pay."
+        return "Alright hustlers and founders, stop crying over broken spreadsheets! Today, we are generating a pristine, professional GST invoice using Zoho Invoice."
     if "free invoice generator" in lowered:
-        return "Then we jump straight to the free generator. No login detour, just the useful part."
+        return "The best part? It's free and needs zero logins. No passwords to forget today. Fire up the free generator page and let's get this bread."
     if "enter business details" in lowered:
-        return "First we fill the business identity, because an invoice should feel like it came from a real company, not a blank template."
+        return "Boom, we're in. First up, who's getting paid? We are. Type in your company name, TechStar Solutions, your name, and address."
     if "enter bill to details" in lowered:
-        return "Now the client details go in, and the document starts changing from form fields into a real bill."
+        return "Time to bill the big fish. Enter the client details: Acme Corp International. Drop in their address and lock in the billing state, because the taxman is always watching."
     if "set invoice number" in lowered:
-        return "A good invoice number looks small, but it is what makes the document traceable later."
+        return "Set that invoice number to INV-2026-001. The first invoice is always the sweetest."
     if "add line item 1" in lowered:
-        return "The first line item puts real billable work on the page, and suddenly the invoice has a backbone."
+        return "Now for the fun part. Line item one: Web Development Services. Forty units at twenty-five hundred a pop. Don't forget the 9 percent GST."
     if "add line item 2" in lowered:
-        return "Now we add design work, which makes the scope feel broader and the pricing more believable."
+        return "Line item two: UI/UX Design, twenty units at three thousand."
     if "add line item 3" in lowered:
-        return "Hosting closes the loop here. One more line item, and the invoice feels complete instead of decorative."
+        return "One more for the road! Line item three: Annual Server Hosting. Eighteen thousand flat."
     if "add payment notes and terms" in lowered:
-        return "Payment notes matter more than people admit. This is where clarity saves follow-up emails."
+        return "Almost home. Drop your payment terms in the notes: payment due within 30 days. Add your bank details so the money actually finds its way to you."
     if "review subtotal" in lowered or "gst breakdown" in lowered:
-        return "Then we do the fast finance check: subtotal, tax, and final amount."
+        return "Final sanity check. Subtotal, GST, grand total looking absolutely crispy."
     if "download/print" in lowered or "export the invoice as pdf" in lowered:
-        return "Once the numbers look right, download is the handoff from draft to deliverable."
+        return "Hit that Download button, grab your PDF, and boom!"
+    return None
+
+
+def zoho_waiting_aside(description: str) -> str | None:
+    """Return pause-covering lines for the longer Zoho form steps."""
+    lowered = normalize_text(description).lower()
+
+    if "enter business details" in lowered:
+        return "And now we take a deep breath. The internet is doing its magic. Hydrate. Stare intensely at the screen... and we're good!"
+    if "add line item 2" in lowered:
+        return "Now we let Zoho do the heavy lifting. We are not here for mental math."
+    if "add line item 3" in lowered:
+        return "Quick pause while the totals update. Like a slot machine spin, except you actually win every time."
+    return None
+
+
+def zoho_fallback_waiting_aside(description: str) -> str | None:
+    """Return shorter fallback pause lines for Zoho timing gaps."""
+    lowered = normalize_text(description).lower()
+
+    if "enter business details" in lowered:
+        return "One moment while the form catches up."
+    if "add line item 2" in lowered:
+        return "Zoho is handling the math for us."
+    if "add line item 3" in lowered:
+        return "Quick pause while the totals refresh."
+    return None
+
+
+def mondula_fallback_line(description: str, step_num: int, total_steps: int) -> str | None:
+    """Return concise fallback lines for the Mondula form demo."""
+    lowered = normalize_text(description).lower()
+
+    if "review summary" in lowered or "submit-ready final state" in lowered:
+        return "Summary looks clean and submit-ready."
+    if "open the mondula multi-step form demo page" in lowered:
+        return "Opening the Mondula demo page."
+    if "move from the intro page" in lowered:
+        return "Accept the intro and move to the first real step."
+    if "fill first page text and textarea fields" in lowered:
+        return "Fill the first text fields and the textarea."
+    if "go to the next page with additional input fields" in lowered:
+        return "Move to page two and wait for the next section."
+    if "fill text, custom textarea, and date fields on page two" in lowered:
+        return "Fill page two and choose the date."
+    if "proceed to radio, checkbox, and dropdown inputs" in lowered:
+        return "Next page. Radio, checkboxes, and dropdowns are loading."
+    if "select a radio option, multiple checkboxes, and a dropdown value" in lowered:
+        return "Pick the radio, checkboxes, and dropdown."
+    if "open the conditional input section" in lowered:
+        return "Open the conditional section."
+    if "fill conditional fields based on the selected dish" in lowered:
+        return "Fill the pizza options."
+    if "move to the final contact-details page" in lowered:
+        return "One last wait before the contact page."
+    if "fill final contact page with six required input fields" in lowered:
+        return "Fill the final contact details."
+
+    if step_num == total_steps:
+        return "Summary looks clean and submit-ready."
+    return None
+
+
+def mondula_story_line(description: str) -> str | None:
+    """Return high-energy narration lines for the Mondula form flow."""
+    lowered = normalize_text(description).lower()
+
+    if "review summary" in lowered or "submit-ready final state" in lowered:
+        return "Grand finale. Review the summary. Everything looks perfect. We came, we automated. Mondula zero, Pavan one."
+    if "open the mondula multi-step form demo page" in lowered:
+        return "Ladies and gentlemen, fasten your seatbelts. We are about to make a web form feel exciting. Mondula is sleek, green, and suspiciously clean."
+    if "move from the intro page" in lowered:
+        return "Accept those cookies, om nom nom, and blow past the intro. Hit Next Step and let's get to work."
+    if "fill first page text and textarea fields" in lowered:
+        return "Section one. Watch the fingers fly. Pavan Demo goes in, and the textarea becomes a tiny manifesto for automation."
+    if "go to the next page with additional input fields" in lowered:
+        return "Page two, and now we wait. Quick breather. Why do we mash dead remote batteries harder? Nobody knows."
+    if "fill text, custom textarea, and date fields on page two" in lowered:
+        return "Boom, we're back. Automation field, check. Second value, check. March thirteenth on the calendar. A fine day for destiny."
+    if "proceed to radio, checkbox, and dropdown inputs" in lowered:
+        return "Next step, please. Loading takes its sweet time, like a cat deciding whether it actually wants to go outside."
+    if "select a radio option, multiple checkboxes, and a dropdown value" in lowered:
+        return "And we're live. Radio buttons, checkboxes, dropdowns. A digital buffet, and we're sampling like professionals."
+    if "open the conditional input section" in lowered:
+        return "Now the conditional section opens, and the plot thickens. We choose pizza, because we are not monsters."
+    if "fill conditional fields based on the selected dish" in lowered:
+        return "Thin crust, obviously. Olives and corn, bold choice. Pesto Rosso sauce, because we're fancy today."
+    if "move to the final contact-details page" in lowered:
+        return "One last wait. If you're still here, you're a champion. Data immortality is seconds away."
+    if "fill final contact page with six required input fields" in lowered:
+        return "Final lap. Pavan Kumar goes in, birthday locked, phone, email, and production details all lined up. Big leagues only."
+    return None
+
+
+def indian_visa_fallback_line(description: str, step_num: int, total_steps: int) -> str | None:
+    """Return concise fallback lines for the Indian eVisa demo."""
+    lowered = normalize_text(description).lower()
+
+    if "open the indian evisa portal home page" in lowered:
+        return "Open the Indian eVisa portal."
+    if "open the evisa application form start page" in lowered:
+        return "Open the application form."
+    if "select nationality and passport type" in lowered:
+        return "Choose nationality and passport type."
+    if "choose the port of arrival" in lowered:
+        return "Choose the port of arrival and wait for the portal."
+    if "fill date of birth and email confirmation" in lowered:
+        return "Fill the birth date and email."
+    if "choose visa service" in lowered:
+        return "Choose the 30 day tourist visa."
+    if "set expected date of arrival and acknowledge instructions" in lowered:
+        return "Set the arrival date and acknowledge the instructions."
+    if "stop at captcha step" in lowered or "captcha step" in lowered:
+        return "Stop safely at the captcha step."
+
+    if step_num == total_steps:
+        return "Stop safely at the captcha step."
+    return None
+
+
+def indian_visa_story_line(description: str) -> str | None:
+    """Return a punchier story line for the Indian eVisa flow."""
+    lowered = normalize_text(description).lower()
+
+    if "open the indian evisa portal home page" in lowered:
+        return "Welcome, traveler. Open the Indian eVisa portal. All those colors feel like a bureaucratic rangoli. The quest begins now."
+    if "open the evisa application form start page" in lowered:
+        return "Hit Apply like it's a win-a-million-dollars link. Boom, the form appears, blue, white, and ready for your life story."
+    if "select nationality and passport type" in lowered:
+        return "Tell them who you are. United States. Ordinary Passport. Diplomatic passport holders can skip this tutorial."
+    if "choose the port of arrival" in lowered:
+        return "Choose your Port of Arrival. Today we're catching sea breeze at Agatti Seaport. Fancy. And now the portal enters its meditation break."
+    if "fill date of birth and email confirmation" in lowered:
+        return "We're back. Add the birth date and your email. Use one you actually check, not batman123 at gmail."
+    if "choose visa service" in lowered:
+        return "Choose the service: 30-Day e-Tourist Visa. The taster menu of visas. Tourism, recreation, all the hits."
+    if "set expected date of arrival and acknowledge instructions" in lowered:
+        return "Set the arrival date and tick the instructions box. We are almost at the good part."
+    if "stop at captcha step" in lowered or "captcha step" in lowered:
+        return "Final boss: captcha. We stop here for safety, but India is right around the corner."
+    return None
+
+
+def indian_visa_waiting_aside(description: str, variant: int = 1) -> str | None:
+    """Return custom long-wait lines for the Indian eVisa portal."""
+    lowered = normalize_text(description).lower()
+    if "port of arrival" not in lowered:
+        return None
+
+    if variant == 1:
+        return "And now we wait. This blank screen is digital dharma. Check your sunscreen, respect the spice, maybe hydrate. Government loading bars move only after enlightenment."
+    if variant == 2:
+        return "Still nothing? Not a glitch. A spiritual test. Namaste, loading screen, please have mercy on us. Stay with me."
+    return None
+
+
+def indian_visa_fallback_waiting_aside(description: str, variant: int = 1) -> str | None:
+    """Return shorter fallback wait lines for the Indian eVisa portal."""
+    lowered = normalize_text(description).lower()
+    if "port of arrival" not in lowered:
+        return None
+
+    if variant == 1:
+        return "The portal is taking a meditation break."
+    if variant == 2:
+        return "Still waiting, stay with me."
+    return None
+
+
+def ebay_fallback_line(description: str, step_num: int, total_steps: int) -> str | None:
+    """Return concise fallback lines for the eBay Advanced Search demo."""
+    lowered = normalize_text(description).lower()
+
+    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+        return "That wraps the eBay gear grab."
+    if "open ebay advanced search" in lowered:
+        return "Open eBay Advanced Search."
+    if "enter main search keywords" in lowered:
+        return "Enter the Sony WH-1000XM5 keywords."
+    if "change the keyword match dropdown to exact order" in lowered:
+        return "Set the keyword match to exact order."
+    if "enter words to exclude from results" in lowered:
+        return "Exclude broken parts from the results."
+    if "include title and description in the search scope" in lowered:
+        return "Search title and description too."
+    if "set minimum and maximum price filters" in lowered:
+        return "Set the price range from 150 to 400."
+    if "filter for new-condition items" in lowered:
+        return "Filter for new items only."
+    if "run the search and open the filtered results page" in lowered:
+        return "Run the search and open the filtered results."
+
+    if step_num == total_steps:
+        return "That wraps the eBay gear grab."
+    return None
+
+
+def ebay_story_line(description: str) -> str | None:
+    """Return a high-energy narration line for the eBay Advanced Search flow."""
+    lowered = normalize_text(description).lower()
+
+    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
+        return "Search complete. Clean results, solid filters, and zero amateur moves."
+    if "open ebay advanced search" in lowered:
+        return "Alright team, this is not shopping. Advanced Search is where the real hunt starts."
+    if "enter main search keywords" in lowered:
+        return "Target acquired: Sony WH-1000XM5. Type it clean and keep it precise."
+    if "change the keyword match dropdown to exact order" in lowered:
+        return "Exact words, exact order. No batteries, no posters, no nonsense."
+    if "enter words to exclude from results" in lowered:
+        return "Exclude broken parts. We want headphones, not a glue-gun recovery project."
+    if "include title and description in the search scope" in lowered:
+        return "Expand to title and description. Hidden deals love hiding in the fine print."
+    if "set minimum and maximum price filters" in lowered:
+        return "Price window locked: 150 to 400. Steal? Yes. Suspicious envelope listing? No."
+    if "filter for new-condition items" in lowered:
+        return "Filter for New. Fresh-box energy only."
+    if "run the search and open the filtered results page" in lowered:
+        return "Hit Search. Boom. Filtered results, pure audio gold, zero junk."
+    return None
+
+
+def ebay_waiting_aside(description: str) -> str | None:
+    """Return custom wait-cover lines for slower eBay steps."""
+    lowered = normalize_text(description).lower()
+
+    if "open ebay advanced search" in lowered:
+        return "Mainframe is loading. The amateurs already got lost at the basic search bar."
+    if "run the search and open the filtered results page" in lowered:
+        return "There it is. Clean results, no broken plastic, just the serious listings."
+    return None
+
+
+def ebay_fallback_waiting_aside(description: str) -> str | None:
+    """Return shorter fallback wait lines for eBay timing gaps."""
+    lowered = normalize_text(description).lower()
+
+    if "open ebay advanced search" in lowered:
+        return "Advanced Search is loading now."
+    if "run the search and open the filtered results page" in lowered:
+        return "Results are loading in now."
     return None
 
 
@@ -1074,55 +1522,89 @@ def tinkercad_fallback_line(description: str, step_num: int, total_steps: int) -
     lowered = normalize_text(description).lower()
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
-        return "That wraps the learning tour."
+        return "That wraps the TinkerCAD speedrun."
     if "open tinkercad" in lowered:
-        return "We open TinkerCAD and set the stage."
+        return "Open TinkerCAD and land on the design home page."
     if "learning center" in lowered:
-        return "Straight to the Learning Center. No login detour."
+        return "Open the Learning Center."
     if "search for beginner 3d design tutorials" in lowered:
-        return "A quick search gets the beginner path on screen."
+        return "Search for 3D design basics."
     if "return to 3d design tutorials" in lowered:
-        return "Back to 3D Design so the focus stays on CAD."
+        return "Return to the CAD-focused tutorials."
     if "open a tutorial card" in lowered or "select any visible tutorial card" in lowered:
-        return "Open one tutorial and see the guided path."
+        return "Open a tutorial card."
     if "scroll through the tutorial page" in lowered:
-        return "Scroll the lesson and get a feel for the walkthrough."
+        return "Scroll through the lesson visuals."
     if "open the tinkercad gallery" in lowered:
-        return "Now we jump to the gallery for inspiration."
+        return "Open the gallery."
     if "search gallery designs" in lowered or "browse featured gallery designs" in lowered:
-        return "The gallery is where ideas start showing up fast."
+        return "Browse featured designs for inspiration."
     if "open a gallery design page" in lowered or "scroll through gallery results" in lowered:
-        return "Open one design and look at the reference details."
+        return "Open the featured Mushroom design."
 
     if step_num == total_steps:
-        return "That wraps the learning tour."
+        return "That wraps the TinkerCAD speedrun."
     return None
 
 
 def tinkercad_story_line(description: str) -> str | None:
-    """Return a warmer story line for the TinkerCAD exploration flow."""
+    """Return a cinematic story line for the TinkerCAD exploration flow."""
     lowered = normalize_text(description).lower()
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
-        return "Final beat. We went from a blank landing page to tutorials, examples, and creative starting points."
+        return "Tutorial complete. You skipped the login, found the spark, and now Euclid expects greatness."
     if "open tinkercad" in lowered:
-        return "We start on TinkerCAD, where the barrier to entry is low and the curiosity payoff is high."
+        return "Welcome, future architects. TinkerCAD is open, and free is still the best price in software."
     if "learning center" in lowered:
-        return "Then we jump straight into the Learning Center, because the fastest way into a tool is usually through a guided win."
+        return "Step two. Learning Center. The VIP lounge for knowledge with none of the create-an-account drama."
     if "search for beginner 3d design tutorials" in lowered:
-        return "A quick search pulls the beginner path into focus, which is better than wandering through every lesson card."
+        return "Search 3D design basics. Every keystroke is one more brick in the empire."
     if "return to 3d design tutorials" in lowered:
-        return "We peek at another category, then come back to 3D Design so the story stays grounded in CAD."
+        return "Back to CAD-focused practice. Professional games only. Focus, precision, geometry."
     if "open a tutorial card" in lowered or "select any visible tutorial card" in lowered:
-        return "Open one tutorial card and the platform stops feeling like a homepage and starts feeling like a classroom."
+        return "Open a tutorial card. Treasure chest vibes, except the prize is Z-axis wisdom."
     if "scroll through the tutorial page" in lowered:
-        return "A quick scroll through the lesson shows the pace, the visuals, and the kind of guidance a beginner will actually get."
+        return "Scroll through the visuals. Space stations, moon talk, enough inspiration to make NASA curious."
     if "open the tinkercad gallery" in lowered:
-        return "Then we switch gears and head to the gallery, because learning gets easier when inspiration is visible."
+        return "Gallery time. Nine million designs, all born while somebody was supposed to be doing taxes."
     if "search gallery designs" in lowered or "browse featured gallery designs" in lowered:
-        return "This is the fun part. The gallery turns abstract learning into real project ideas you might actually want to build."
+        return "Browse the hits. Mushroom, Retro Diner, drawer caddy. Practicality and chaos in perfect harmony."
     if "open a gallery design page" in lowered or "scroll through gallery results" in lowered:
-        return "Open one design and the reference quality becomes tangible, not theoretical."
+        return "Open Mushroom by Demirarh. Purple, spotted, Staff Picked. Honestly, life goals."
+    return None
+
+
+def tinkercad_waiting_aside(description: str) -> str | None:
+    """Return custom wait-cover lines for the longer TinkerCAD steps."""
+    lowered = normalize_text(description).lower()
+
+    if "open tinkercad" in lowered:
+        return "Look at that plane. My what-if is a rocket in pajamas. Tiny render break, then we're back."
+    if "learning center" in lowered:
+        return "The lesson grid is loading. Like a souffle, you do not rush the pixels."
+    if "search for beginner 3d design tutorials" in lowered:
+        return "TinkerCAD is thinking. Castle, donut, ego monument, whatever you build, creativity gets a second."
+    if "open the tinkercad gallery" in lowered:
+        return "Short render break. Mushroom or car? The suspense is crushing my ergonomic chair."
+    if "search gallery designs" in lowered or "browse featured gallery designs" in lowered:
+        return "Almost there. I can feel my brain getting more creative by the second."
+    return None
+
+
+def tinkercad_fallback_waiting_aside(description: str) -> str | None:
+    """Return shorter fallback wait lines for TinkerCAD timing gaps."""
+    lowered = normalize_text(description).lower()
+
+    if "open tinkercad" in lowered:
+        return "The home page is rendering now."
+    if "learning center" in lowered:
+        return "The lesson grid is loading."
+    if "search for beginner 3d design tutorials" in lowered:
+        return "Search results are loading now."
+    if "open the tinkercad gallery" in lowered:
+        return "The gallery page is rendering."
+    if "search gallery designs" in lowered or "browse featured gallery designs" in lowered:
+        return "Featured designs are still loading."
     return None
 
 
@@ -1139,8 +1621,12 @@ def narration_offset_sec(beat: dict) -> float:
         offset = 0.5 if duration_sec < 6.0 else 0.62
     elif is_zoho_invoice_step(description, url):
         offset = 0.54 if duration_sec < 6.5 else 0.68
+    elif is_mondula_step(description, url):
+        offset = 0.54 if duration_sec < 6.8 else 0.7
     elif is_tinkercad_step(description, url):
         offset = 0.5 if duration_sec < 6.0 else 0.64
+    elif is_ebay_step(description, url):
+        offset = 0.5 if duration_sec < 6.2 else 0.66
     else:
         offset = 0.32
     return round(start_sec + offset, 3)
@@ -1153,21 +1639,27 @@ def narration_primary_budget_sec(beat: dict) -> float:
     url = beat.get("url", "")
 
     if is_overpass_step(description, url):
-        if duration_sec >= OVERPASS_FILLER_THRESHOLD_SEC:
+        if overpass_waiting_aside(description):
             return round(max(min(duration_sec * 0.48, duration_sec - 3.05), 3.15), 3)
-        return round(max(duration_sec * 0.7, 2.85), 3)
+        return round(max(min(duration_sec * 0.9, duration_sec - 0.85), 3.05), 3)
     if is_screener_step(description, url):
         if duration_sec >= SCREENER_FILLER_THRESHOLD_SEC:
             return round(max(min(duration_sec * 0.62, duration_sec - 2.35), 3.1), 3)
         return round(max(duration_sec * 0.78, 2.85), 3)
     if is_zoho_invoice_step(description, url):
-        if duration_sec >= ZOHO_FILLER_THRESHOLD_SEC:
+        if zoho_waiting_aside(description):
             return round(max(min(duration_sec * 0.58, duration_sec - 2.9), 3.2), 3)
-        return round(max(duration_sec * 0.72, 2.95), 3)
+        return round(max(min(duration_sec * 0.9, duration_sec - 0.85), 3.1), 3)
+    if is_mondula_step(description, url):
+        return round(max(min(duration_sec * 0.9, duration_sec - 0.8), 3.2), 3)
     if is_tinkercad_step(description, url):
         if duration_sec >= TINKERCAD_FILLER_THRESHOLD_SEC:
             return round(max(min(duration_sec * 0.6, duration_sec - 2.6), 3.05), 3)
         return round(max(duration_sec * 0.76, 2.85), 3)
+    if is_ebay_step(description, url):
+        if ebay_waiting_aside(description):
+            return round(max(min(duration_sec * 0.56, duration_sec - 2.7), 3.05), 3)
+        return round(max(min(duration_sec * 0.88, duration_sec - 0.75), 2.95), 3)
     return round(max(duration_sec * (0.78 if duration_sec >= 7.0 else 0.93), 2.75), 3)
 
 
@@ -1177,11 +1669,13 @@ def should_add_waiting_aside(beat: dict) -> bool:
     description = beat.get("description", "")
     url = beat.get("url", "")
     if is_overpass_step(description, url):
-        threshold = OVERPASS_FILLER_THRESHOLD_SEC
+        return duration_sec >= OVERPASS_FILLER_THRESHOLD_SEC and overpass_waiting_aside(description) is not None
     elif is_screener_step(description, url):
         threshold = SCREENER_FILLER_THRESHOLD_SEC
     elif is_zoho_invoice_step(description, url):
-        threshold = ZOHO_FILLER_THRESHOLD_SEC
+        return duration_sec >= ZOHO_FILLER_THRESHOLD_SEC and zoho_waiting_aside(description) is not None
+    elif is_mondula_step(description, url):
+        return False
     elif is_tinkercad_step(description, url):
         threshold = TINKERCAD_FILLER_THRESHOLD_SEC
     elif is_indian_visa_step(description, url):
@@ -1189,6 +1683,8 @@ def should_add_waiting_aside(beat: dict) -> bool:
         if "port of arrival" not in lowered:
             return False
         threshold = max(INDIAN_VISA_FILLER_THRESHOLD_SEC, 12.0)
+    elif is_ebay_step(description, url):
+        return duration_sec >= EBAY_FILLER_THRESHOLD_SEC and ebay_waiting_aside(description) is not None
     else:
         threshold = LONG_STEP_FILLER_THRESHOLD_SEC
     return duration_sec >= threshold and "tutorial complete" not in description.lower()
@@ -1208,8 +1704,8 @@ def filler_offset_and_budget(beat: dict, start_sec: float, end_sec: float, durat
         filler_budget = max(end_sec - filler_offset - 0.45, 2.0)
         return round(filler_offset, 3), round(filler_budget, 3)
     if is_zoho_invoice_step(description, url):
-        filler_offset = start_sec + max(duration_sec * 0.64, 4.25)
-        filler_budget = max(end_sec - filler_offset - 0.5, 2.1)
+        filler_offset = start_sec + max(duration_sec * 0.54, 4.0)
+        filler_budget = max(end_sec - filler_offset - 0.35, 2.6)
         return round(filler_offset, 3), round(filler_budget, 3)
     if is_tinkercad_step(description, url):
         filler_offset = start_sec + max(duration_sec * 0.63, 4.0)
@@ -1218,6 +1714,10 @@ def filler_offset_and_budget(beat: dict, start_sec: float, end_sec: float, durat
     if is_indian_visa_step(description, url):
         filler_offset = start_sec + max(duration_sec * 0.38, 5.0)
         filler_budget = max(end_sec - filler_offset - 0.55, 2.2)
+        return round(filler_offset, 3), round(filler_budget, 3)
+    if is_ebay_step(description, url):
+        filler_offset = start_sec + max(duration_sec * 0.58, 4.1)
+        filler_budget = max(end_sec - filler_offset - 0.4, 2.0)
         return round(filler_offset, 3), round(filler_budget, 3)
 
     filler_offset = start_sec + max(duration_sec * 0.74, 4.0)
@@ -1237,7 +1737,11 @@ def extra_waiting_segments(beat: dict, step_num: int, start_sec: float, end_sec:
     if second_budget < 2.0:
         return []
 
-    fallback_text = pick_variant(INDIAN_VISA_FALLBACK_WAITING_ASIDES, step_num + 1)
+    custom_text = indian_visa_waiting_aside(description, variant=2)
+    fallback_text = indian_visa_fallback_waiting_aside(description, variant=2) or pick_variant(
+        INDIAN_VISA_FALLBACK_WAITING_ASIDES,
+        step_num + 1,
+    )
     return [
         {
             "segment_id": f"step_{step_num:02d}_wait_02",
@@ -1245,7 +1749,7 @@ def extra_waiting_segments(beat: dict, step_num: int, start_sec: float, end_sec:
             "type": "filler",
             "offset_sec": round(second_offset, 3),
             "budget_sec": round(second_budget, 3),
-            "text": pick_variant(INDIAN_VISA_WAITING_ASIDES, step_num + 1),
+            "text": custom_text or pick_variant(INDIAN_VISA_WAITING_ASIDES, step_num + 1),
             "fallback_text": fallback_text,
             "subtitle": fallback_text,
             "target_window_end_sec": round(end_sec, 3),
@@ -1263,18 +1767,34 @@ def build_fallback_primary_narration(
 ) -> str:
     """Build a concise but less naive voice line that stays close to the screen action."""
     lowered = description.lower()
-    overpass_line = overpass_fallback_line(description, step_num, total_steps)
-    if overpass_line:
-        return overpass_line
-    screener_line = screener_fallback_line(description, step_num, total_steps)
-    if screener_line:
-        return screener_line
-    zoho_line = zoho_fallback_line(description, step_num, total_steps)
-    if zoho_line:
-        return zoho_line
-    tinkercad_line = tinkercad_fallback_line(description, step_num, total_steps)
-    if tinkercad_line:
-        return tinkercad_line
+    if is_overpass_step(description, url):
+        overpass_line = overpass_fallback_line(description, step_num, total_steps)
+        if overpass_line:
+            return overpass_line
+    if is_screener_step(description, url):
+        screener_line = screener_fallback_line(description, step_num, total_steps)
+        if screener_line:
+            return screener_line
+    if is_zoho_invoice_step(description, url):
+        zoho_line = zoho_fallback_line(description, step_num, total_steps)
+        if zoho_line:
+            return zoho_line
+    if is_mondula_step(description, url):
+        mondula_line = mondula_fallback_line(description, step_num, total_steps)
+        if mondula_line:
+            return mondula_line
+    if is_indian_visa_step(description, url):
+        indian_visa_line = indian_visa_fallback_line(description, step_num, total_steps)
+        if indian_visa_line:
+            return indian_visa_line
+    if is_ebay_step(description, url):
+        ebay_line = ebay_fallback_line(description, step_num, total_steps)
+        if ebay_line:
+            return ebay_line
+    if is_tinkercad_step(description, url):
+        tinkercad_line = tinkercad_fallback_line(description, step_num, total_steps)
+        if tinkercad_line:
+            return tinkercad_line
 
     if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
         return "That completes the flow."
@@ -1341,6 +1861,9 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
     overpass_primary = overpass_story_line(description) if is_overpass_step(description, url) else None
     screener_primary = screener_story_line(description) if is_screener_step(description, url) else None
     zoho_primary = zoho_story_line(description) if is_zoho_invoice_step(description, url) else None
+    mondula_primary = mondula_story_line(description) if is_mondula_step(description, url) else None
+    indian_visa_primary = indian_visa_story_line(description) if is_indian_visa_step(description, url) else None
+    ebay_primary = ebay_story_line(description) if is_ebay_step(description, url) else None
     tinkercad_primary = tinkercad_story_line(description) if is_tinkercad_step(description, url) else None
     commentary = narration_commentary(description, step_num, url)
     if len(spoken_action.split()) >= 6 and measured_duration_sec < 7.0:
@@ -1357,6 +1880,12 @@ def build_story_beat(step: dict, total_steps: int) -> dict:
         narration = screener_primary
     elif zoho_primary:
         narration = zoho_primary
+    elif mondula_primary:
+        narration = mondula_primary
+    elif indian_visa_primary:
+        narration = indian_visa_primary
+    elif ebay_primary:
+        narration = ebay_primary
     elif tinkercad_primary:
         narration = tinkercad_primary
     elif "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
@@ -1478,6 +2007,143 @@ def generate_narration_script(steps_json_path: str) -> str:
     return generate_narration_package(steps_json_path)["script"]
 
 
+def generate_audio_elevenlabs_sdk(text: str, output_prefix: str, api_key: str | None = None):
+    """Generate narration with the ElevenLabs SDK when it is installed."""
+    try:
+        from elevenlabs.client import ElevenLabs
+    except ImportError:
+        return None
+
+    api_key = api_key or elevenlabs_api_key_from_env()
+    if not api_key:
+        return None
+
+    voice_id = elevenlabs_voice_id_from_env()
+    model_id = elevenlabs_model_id_from_env()
+    output_format = elevenlabs_output_format_from_env()
+    client = ElevenLabs(api_key=api_key)
+
+    try:
+        audio_stream = client.text_to_speech.convert(
+            text=text,
+            voice_id=voice_id,
+            model_id=model_id,
+            output_format=output_format,
+        )
+        audio_bytes = bytearray()
+        if isinstance(audio_stream, (bytes, bytearray)):
+            audio_bytes.extend(audio_stream)
+        else:
+            for chunk in audio_stream:
+                if chunk:
+                    audio_bytes.extend(chunk)
+
+        if not audio_bytes:
+            print("  WARNING: ElevenLabs returned no audio payload.")
+            return None
+
+        output_path = f"{output_prefix}{extension_for_output_format(output_format)}"
+        with open(output_path, "wb") as audio_file:
+            audio_file.write(bytes(audio_bytes))
+        print(f"  Audio narration saved: {output_path}")
+        return output_path
+    except Exception as error:
+        global ELEVENLABS_VOICE_UNAVAILABLE
+        if is_elevenlabs_voice_unavailable(str(error)):
+            ELEVENLABS_VOICE_UNAVAILABLE = True
+            print("  WARNING: ElevenLabs rejected this voice on the current plan, switching remaining segments to fallback audio.")
+            return None
+        print(f"  WARNING: ElevenLabs SDK generation failed: {error}")
+        return None
+
+
+def generate_audio_elevenlabs_http(text: str, output_prefix: str, api_key: str | None = None):
+    """Generate narration directly against the ElevenLabs HTTP API."""
+    api_key = api_key or elevenlabs_api_key_from_env()
+    if not api_key:
+        return None
+
+    voice_id = elevenlabs_voice_id_from_env()
+    model_id = elevenlabs_model_id_from_env()
+    output_format = elevenlabs_output_format_from_env()
+    output_path = f"{output_prefix}{extension_for_output_format(output_format)}"
+    endpoint = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
+    payload = {
+        "text": text,
+        "model_id": model_id,
+        "output_format": output_format,
+    }
+
+    for attempt in range(3):
+        request = urllib.request.Request(
+            endpoint,
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+                "Accept": "audio/mpeg",
+                "Content-Type": "application/json",
+                "xi-api-key": api_key,
+            },
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=90) as response:
+                audio_bytes = response.read()
+
+            if not audio_bytes:
+                print("  WARNING: ElevenLabs returned no audio payload.")
+                return None
+
+            with open(output_path, "wb") as audio_file:
+                audio_file.write(audio_bytes)
+            print(f"  Audio narration saved: {output_path}")
+            return output_path
+        except urllib.error.HTTPError as error:
+            body = error.read().decode("utf-8", errors="ignore")
+            global ELEVENLABS_VOICE_UNAVAILABLE
+            if is_elevenlabs_voice_unavailable(body):
+                ELEVENLABS_VOICE_UNAVAILABLE = True
+                print("  WARNING: ElevenLabs rejected this voice on the current plan, switching remaining segments to fallback audio.")
+                return None
+            is_retryable = error.code in {408, 409, 425, 429, 500, 502, 503, 504}
+            if is_retryable and attempt < 2:
+                delay_seconds = 4.0 + (attempt * 2.0)
+                print(f"  WARNING: ElevenLabs rate-limited or unavailable. Retrying in {delay_seconds:.1f}s...")
+                time.sleep(delay_seconds)
+                continue
+
+            print(f"  WARNING: ElevenLabs HTTP generation failed ({error.code}): {body or error.reason}")
+            return None
+        except Exception as error:
+            if attempt < 2:
+                delay_seconds = 4.0 + (attempt * 2.0)
+                print(f"  WARNING: ElevenLabs request failed. Retrying in {delay_seconds:.1f}s...")
+                time.sleep(delay_seconds)
+                continue
+
+            print(f"  WARNING: ElevenLabs HTTP generation failed: {error}")
+            return None
+
+    return None
+
+
+def generate_audio_elevenlabs(text: str, output_prefix: str, api_key: str | None = None):
+    """Generate narration using ElevenLabs, preferring the SDK when available."""
+    global ELEVENLABS_VOICE_UNAVAILABLE
+    if ELEVENLABS_VOICE_UNAVAILABLE:
+        return None
+
+    api_key = api_key or elevenlabs_api_key_from_env()
+    if not api_key:
+        print("ERROR: No ElevenLabs API key found.")
+        print("Set it in the project .env file as ELEVENLABS_API_KEY=your_key_here")
+        return None
+
+    sdk_output = generate_audio_elevenlabs_sdk(text, output_prefix, api_key=api_key)
+    if sdk_output:
+        return sdk_output
+    return generate_audio_elevenlabs_http(text, output_prefix, api_key=api_key)
+
+
 def generate_audio_gemini(text: str, output_prefix: str, api_key: str = None):
     """
     Generate audio narration using Google Gemini.
@@ -1593,15 +2259,41 @@ def generate_audio_gtts_fallback(text: str, output_prefix: str):
         return None
 
 
+def generate_audio_with_fallbacks(text: str, fallback_text: str, output_prefix: str):
+    """Try configured narration providers in order until one succeeds."""
+    providers = narration_provider_order()
+    primary_text = sanitize_tts_text(text) or text
+    fallback_spoken_text = sanitize_tts_text(fallback_text) or fallback_text or primary_text
+
+    for provider in providers:
+        if provider == "elevenlabs":
+            if not elevenlabs_api_key_from_env():
+                continue
+            audio_path = generate_audio_elevenlabs(primary_text, output_prefix)
+        elif provider == "gemini":
+            if not os.environ.get("GEMINI_API_KEY"):
+                continue
+            audio_path = generate_audio_gemini(primary_text, output_prefix)
+        elif provider == "gtts":
+            audio_path = generate_audio_gtts_fallback(fallback_spoken_text, output_prefix)
+        else:
+            continue
+
+        if audio_path:
+            return audio_path, provider
+
+    return None, ""
+
+
 def synthesize_segment_audio(segment: dict, temp_dir: str):
     """Generate one narration clip and force it into a concat-friendly WAV shape."""
     base_prefix = os.path.join(temp_dir, segment["segment_id"])
-    raw_path = generate_audio_gemini(segment["text"], base_prefix)
-    used_fallback = False
-    if not raw_path:
-        fallback_text = segment.get("fallback_text") or segment["text"]
-        raw_path = generate_audio_gtts_fallback(fallback_text, base_prefix)
-        used_fallback = raw_path is not None
+    fallback_text = segment.get("fallback_text") or segment["text"]
+    raw_path, provider_name = generate_audio_with_fallbacks(
+        segment["text"],
+        fallback_text,
+        base_prefix,
+    )
     if not raw_path:
         return None
 
@@ -1611,7 +2303,15 @@ def synthesize_segment_audio(segment: dict, temp_dir: str):
         return None
 
     paced_path = f"{base_prefix}_paced.wav"
-    pace_factor = FALLBACK_AUDIO_PACE if used_fallback else DEFAULT_AUDIO_PACE
+    if provider_name == "gtts":
+        pace_factor = FALLBACK_AUDIO_PACE
+        max_speedup = MAX_AUDIO_SPEEDUP
+    elif provider_name == "elevenlabs":
+        pace_factor = ELEVENLABS_AUDIO_PACE
+        max_speedup = ELEVENLABS_MAX_AUDIO_SPEEDUP
+    else:
+        pace_factor = DEFAULT_AUDIO_PACE
+        max_speedup = MAX_AUDIO_SPEEDUP
     paced, _ = apply_audio_pace(normalized, pace_factor, paced_path)
 
     fitted_path = f"{base_prefix}_fitted.wav"
@@ -1619,6 +2319,7 @@ def synthesize_segment_audio(segment: dict, temp_dir: str):
         paced,
         float(segment.get("budget_sec", 0.0) or 0.0),
         fitted_path,
+        max_speedup=max_speedup,
     )
     segment["clip_duration_sec"] = round(fitted_duration, 3)
     segment["clip_path"] = fitted

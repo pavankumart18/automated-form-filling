@@ -47,7 +47,7 @@
       "timestamp": "2026-03-26T09:20:18.819772",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_01.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_01.png",
-      "narration": "Opening shot. Overpass Turbo gives us a map, an editor, and a city-sized question.",
+      "narration": "Welcome to the cockpit, data hunters. Overpass Turbo is live. Calm canvas now, storm next.",
       "pause_ms": 920
     },
     {
@@ -58,7 +58,7 @@
       "timestamp": "2026-03-26T09:20:22.764275",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_02.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_02.png",
-      "narration": "This framing helps immediately. Logic on one side, evidence on the other.",
+      "narration": "Split view. Query wand on the left, map battlefield on the right.",
       "pause_ms": 1200
     },
     {
@@ -69,7 +69,7 @@
       "timestamp": "2026-03-26T09:20:34.330635",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_03.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_03.png",
-      "narration": "Our first question is simple. Show us hospitals across Hyderabad, and keep the search area explicit.",
+      "narration": "Hospitals in Hyderabad. Fixed city box, full Overpass QL, nodes, ways, relations. Feed the machine.",
       "pause_ms": 1050
     },
     {
@@ -80,7 +80,7 @@
       "timestamp": "2026-03-26T09:20:45.892408",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_04.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_04.png",
-      "narration": "Now we run it. This is the part where the city answers back.",
+      "narration": "Run it. The API is sprinting across the planet to fetch every hospital marker it can find.",
       "pause_ms": 1120
     },
     {
@@ -91,7 +91,7 @@
       "timestamp": "2026-03-26T09:20:50.564584",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_05.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_05.png",
-      "narration": "Instead of hunting around the map, we jump straight to where the results live.",
+      "narration": "Blue circles everywhere. Zoom to data and teleport onto Hyderabad.",
       "pause_ms": 1200
     },
     {
@@ -102,7 +102,7 @@
       "timestamp": "2026-03-26T09:20:56.705229",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_06.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_06.png",
-      "narration": "A marker turns the dots into actual places, with names, tags, and context.",
+      "narration": "Click a marker and read the tags. Name, address, amenity type. Pure urban DNA.",
       "pause_ms": 1200
     },
     {
@@ -113,7 +113,7 @@
       "timestamp": "2026-03-26T09:21:01.102414",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_07.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_07.png",
-      "narration": "Data view is the reality check. The map looks nice, but the table tells the truth.",
+      "narration": "Hit the Data tab. Raw OSM attributes. Nerd heaven.",
       "pause_ms": 1200
     },
     {
@@ -124,7 +124,7 @@
       "timestamp": "2026-03-26T09:21:05.538805",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_08.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_08.png",
-      "narration": "Then we go back to the map, because spatial patterns are easier to feel than to read.",
+      "narration": "Back to Map view so we can compare actual coverage.",
       "pause_ms": 1200
     },
     {
@@ -135,7 +135,7 @@
       "timestamp": "2026-03-26T09:21:17.775650",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_09.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_09.png",
-      "narration": "Same workflow, new question. This time we ask about charging stations instead of hospitals.",
+      "narration": "Pivot time. Swap hospitals for EV chargers. Same city, totally different future.",
       "pause_ms": 920
     },
     {
@@ -146,7 +146,7 @@
       "timestamp": "2026-03-26T09:21:29.321757",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_10.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_10.png",
-      "narration": "Now the comparison gets interesting. Different services, same city, one visual frame.",
+      "narration": "Rendering complete. See those gaps? That is urban planning screaming for attention.",
       "pause_ms": 1200
     },
     {
@@ -157,7 +157,7 @@
       "timestamp": "2026-03-26T09:21:41.622178",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_11.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_11.png",
-      "narration": "Next layer: schools. The story gets better when we ask the city more than one question.",
+      "narration": "Now add schools. Education layer, same boundary. Watch the city grow in fast-forward.",
       "pause_ms": 1120
     },
     {
@@ -168,7 +168,7 @@
       "timestamp": "2026-03-26T09:22:04.563654",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_12.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_12.png",
-      "narration": "Now pharmacies join in, and the map starts feeling less like a query result and more like a city portrait.",
+      "narration": "One more. Add pharmacies and build a four-layer dataset cake. City hall wishes it had this.",
       "pause_ms": 1050
     },
     {
@@ -179,7 +179,7 @@
       "timestamp": "2026-03-26T09:22:15.304425",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_13.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_13.png",
-      "narration": "This is the quiet win. One editor lets us iterate across datasets without changing tools or losing context.",
+      "narration": "Single editor workflow. That is the superpower: iterate faster, analyze deeper, conquer the urban jungle.",
       "pause_ms": 1050
     },
     {
@@ -190,7 +190,7 @@
       "timestamp": "2026-03-26T09:22:20.378698",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_14.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_14.png",
-      "narration": "Once the map makes sense, export matters. A good demo should hand off cleanly to the next workflow.",
+      "narration": "Open Export. We are done playing; now we go pro.",
       "pause_ms": 1120
     },
     {
@@ -201,7 +201,7 @@
       "timestamp": "2026-03-26T09:22:25.247775",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_15.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_15.png",
-      "narration": "GeoJSON is the practical handoff here. Easy to carry into GIS tools, code, or a web map.",
+      "narration": "GeoJSON, KML, GPX, raw OSM. Pick your ammo and ship the data.",
       "pause_ms": 1120
     },
     {
@@ -212,7 +212,7 @@
       "timestamp": "2026-03-26T09:22:29.684434",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\overpass_turbo\\step_16.png",
       "published_screenshot": "output/screenshots/overpass_turbo/step_16.png",
-      "narration": "Final shot. We went from query editing to clean, exportable geo-data.",
+      "narration": "Tutorial complete. Blank screen to geo-intelligence. Go bend maps to your will.",
       "pause_ms": 1550
     }
   ]

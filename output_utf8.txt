@@ -1,0 +1,5 @@
+﻿Calling generate_audio_gemini for test...
+  WARNING: Gemini audio generation failed: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'This model only supports text output.', 'status': 'INVALID_ARGUMENT'}}
+  Falling back to alternate audio generation
+
+FAILED: Return was None (hit quota limits repeatedly).
