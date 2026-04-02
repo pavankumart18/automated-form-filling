@@ -134,6 +134,10 @@ ELEVENLABS_MAX_AUDIO_SPEEDUP = 2.0
 DEFAULT_AUDIO_PACE = 0.94
 ELEVENLABS_AUDIO_PACE = 1.02
 FALLBACK_AUDIO_PACE = 0.96
+BALANCED_AUDIO_PACE = 1.0
+BALANCED_MAX_AUDIO_SPEEDUP = 1.18
+BALANCED_PREFERRED_SPEEDUP = 1.08
+AUDIO_FIT_TOLERANCE_SEC = 0.12
 GEMINI_QUOTA_EXHAUSTED = False
 ELEVENLABS_VOICE_UNAVAILABLE = False
 LONG_STEP_FILLER_THRESHOLD_SEC = 11.5
@@ -143,6 +147,99 @@ ZOHO_FILLER_THRESHOLD_SEC = 8.9
 TINKERCAD_FILLER_THRESHOLD_SEC = 7.8
 INDIAN_VISA_FILLER_THRESHOLD_SEC = 7.5
 EBAY_FILLER_THRESHOLD_SEC = 7.6
+CUSTOM_SCREENER_TIMELINE_SEGMENTS = [
+    {
+        "start_step": 1,
+        "end_step": 2,
+        "target_start_sec": 0.0,
+        "target_end_sec": 7.0,
+        "text": (
+            "Most people pick stocks on gut. Let's change that. Open Screener. Search Reliance."
+        ),
+        "fallback_text": (
+            "Most people pick stocks on gut. Let's change that. Open Screener. Search Reliance."
+        ),
+        "subtitle": "Open Screener and type Reliance Industries.",
+    },
+    {
+        "start_step": 3,
+        "end_step": 3,
+        "target_start_sec": 7.0,
+        "target_end_sec": 14.0,
+        "text": (
+            "There it is. Click Reliance. Now the real checklist begins."
+        ),
+        "fallback_text": (
+            "There it is. Click Reliance. Now the real checklist begins."
+        ),
+        "subtitle": "Click Reliance and open the company page.",
+    },
+    {
+        "start_step": 4,
+        "end_step": 5,
+        "target_start_sec": 14.0,
+        "target_end_sec": 25.0,
+        "text": (
+            "First, check the big three at the top: Market Cap, P/E, and ROCE. Then open quarterly results and make sure profits are actually climbing."
+        ),
+        "fallback_text": (
+            "First, check the big three at the top: Market Cap, P/E, and ROCE. Then open quarterly results and make sure profits are actually climbing."
+        ),
+        "subtitle": "Check the top metrics, then open quarterly results.",
+    },
+    {
+        "start_step": 6,
+        "end_step": 7,
+        "target_start_sec": 25.0,
+        "target_end_sec": 36.0,
+        "text": (
+            "Next, sweep through Profit and Loss and the Balance Sheet. Revenues should rise, earnings should look clean, and debt should stay under control."
+        ),
+        "fallback_text": (
+            "Next, sweep through Profit and Loss and the Balance Sheet. Revenues should rise, earnings should look clean, and debt should stay under control."
+        ),
+        "subtitle": "Check Profit and Loss, then the Balance Sheet.",
+    },
+    {
+        "start_step": 8,
+        "end_step": 8,
+        "target_start_sec": 36.0,
+        "target_end_sec": 43.0,
+        "text": (
+            "No stock idea yet? Hit Screens. That is your cheat code."
+        ),
+        "fallback_text": (
+            "No stock idea yet? Hit Screens. That is your cheat code."
+        ),
+        "subtitle": "No stock idea yet? Click Screens.",
+    },
+    {
+        "start_step": 9,
+        "end_step": 11,
+        "target_start_sec": 43.0,
+        "target_end_sec": 56.0,
+        "text": (
+            "Now click Show all screens and find this exact filter: High Growth, High RoE, Low PE. Fast growers, efficient businesses, sane valuation. Open it."
+        ),
+        "fallback_text": (
+            "Now click Show all screens and find this exact filter: High Growth, High RoE, Low PE. Fast growers, efficient businesses, sane valuation. Open it."
+        ),
+        "subtitle": "Find and open the High Growth, High RoE, Low PE screen.",
+    },
+    {
+        "start_step": 12,
+        "end_step": 13,
+        "target_start_sec": 56.0,
+        "target_end_sec": 67.0,
+        "text": (
+            "The filter has done the hunting. Ganesh Infra makes the shortlist, so open it and run the same four-point check. That is how you go from guessing to investing with a plan."
+        ),
+        "fallback_text": (
+            "The filter has done the hunting. Ganesh Infra makes the shortlist, so open it and run the same four-point check. That is how you go from guessing to investing with a plan."
+        ),
+        "subtitle": "Open Ganesh Infra and run the same four-point check.",
+    },
+]
 GERUND_OVERRIDES = {
     "open": "opening",
     "navigate": "navigating",
@@ -418,7 +515,11 @@ def narration_provider_order() -> list[str]:
 def is_elevenlabs_voice_unavailable(error_text: str) -> bool:
     """Detect account or plan errors that will fail every future ElevenLabs segment."""
     lowered = (error_text or "").lower()
-    return "paid_plan_required" in lowered or "free users cannot use library voices" in lowered
+    return (
+        "paid_plan_required" in lowered
+        or "free users cannot use library voices" in lowered
+        or "quota_exceeded" in lowered
+    )
 
 
 def remove_existing_audio_outputs(output_prefix: str):
@@ -1154,31 +1255,37 @@ def screener_fallback_line(description: str, step_num: int, total_steps: int) ->
     """Return a fallback story beat for Screener."""
     lowered = normalize_text(description).lower()
 
-    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
-        return "And that's the Screener speedrun."
     if "open screener.in" in lowered:
-        return "Open Screener and start the research."
-    if "navigate directly to reliance industries" in lowered:
-        return "Open Reliance and head to the company page."
+        return "Most people pick stocks on gut feel. Today we use a real checklist on Screener."
+    if "open reliance industries directly" in lowered or "search reliance industries" in lowered:
+        return "Search Reliance Industries — India's biggest company, a perfect learning subject."
+    if "type reliance industries" in lowered:
+        return "Search Reliance Industries — India's biggest company, a perfect learning subject."
+    if "click reliance industries" in lowered:
+        return "It appears right away. Click it. We are now inside Reliance's full financial profile."
     if "view key metrics" in lowered:
-        return "Check the dashboard metrics."
+        return "Checkpoint one: Market Cap, P/E, and ROCE. Size, price, and capital efficiency — in three numbers."
     if "review quarterly financial trends" in lowered:
-        return "Review the quarterly trend."
+        return "Check quarterly results. Profits should go up every quarter — that line tells the whole story."
     if "inspect profit and loss" in lowered:
-        return "Open profit and loss for the long view."
+        return "Profit and Loss: revenue up, expenses controlled. That gap is the margin that matters."
     if "check balance sheet strength" in lowered:
-        return "Check assets versus liabilities."
-    if "open the public screens page" in lowered:
-        return "Open Screens for ready-made filters."
-    if "open a public screen" in lowered:
-        return "Open the growth screen."
-    if "browse filtered companies" in lowered:
-        return "Compare growth and ROE in the results."
-    if "from the screen for deeper analysis" in lowered or "open any company from the screen results" in lowered:
-        return "Open Ganesh Infra for the deep dive."
+        return "Balance Sheet: watch the debt. Too much means you're funding their past, not their future."
+    if "click screens in the top menu" in lowered or "open the public screens page" in lowered:
+        return "No stock idea yet? Click Screens — that's where the platform hunts for you."
+    if "show all screens" in lowered:
+        return "Click Show all screens — a full library of pre-built investor filters, all free."
+    if "find the exact high growth" in lowered:
+        return "Find High Growth, High RoE, Low PE — fast, efficient, and cheap. That combination is rare."
+    if "click the highlighted high growth" in lowered or "open a public screen" in lowered:
+        return "Click it. Screener scans the whole market. Your shortlist appears — no formulas needed."
+    if "scan the filtered results table" in lowered or "browse filtered companies" in lowered:
+        return "Every name here passed the filter. Ganesh Infra stands out — growth strong, valuation sane."
+    if "land on the company page" in lowered or "from the results" in lowered:
+        return "Open it. Run the four-point check. It passes — it goes on the shortlist. That is the system."
 
     if step_num == total_steps:
-        return "And that's the Screener speedrun."
+        return "Search, filter, verify — that is the whole system."
     return None
 
 
@@ -1186,28 +1293,34 @@ def screener_story_line(description: str) -> str | None:
     """Return a completely narrative, documentary-style story for Screener."""
     lowered = normalize_text(description).lower()
 
-    if "tutorial complete" in lowered or lowered.startswith("tutorial complete"):
-        return "And that's it. Go research, go compare, and go get those gains."
     if "open screener.in" in lowered:
-        return "Alright, stop gambling and start investing. Screener is basically Google for Indian stocks, minus the ads."
-    if "navigate directly to reliance industries" in lowered:
-        return "Type in Reliance. Boom. Straight to the mothership. Clean layout, serious numbers."
+        return "Most people pick stocks on hot tips and gut feel. Today I'll show you how to do it right — with a repeatable checklist on Screener dot in."
+    if "open reliance industries directly" in lowered or "search reliance industries" in lowered:
+        return "Your first move: search for a company. Reliance Industries is our example — India's largest, and perfect for learning what healthy financials actually look like."
+    if "type reliance industries" in lowered:
+        return "Your first move: search for a company. Reliance Industries is our example — India's largest, and perfect for learning what healthy financials actually look like."
+    if "click reliance industries" in lowered:
+        return "It appears instantly in the dropdown. Click it. We are now inside Reliance's complete financial profile — and the checklist begins."
     if "view key metrics" in lowered:
-        return "Dashboard time. Market Cap, P/E, ROCE. The whole report card, right in your face."
+        return "Top of the page — your first checkpoint. Market Cap tells you the size. P/E tells you if you're overpaying. ROCE tells you if management is actually good at using money."
     if "review quarterly financial trends" in lowered:
-        return "Quarterly Results. We want up and to the right. If it looks ugly, keep scrolling."
+        return "Scroll down to quarterly results. This is where the story either holds up or falls apart. You want that profit line going up and to the right — every single quarter."
     if "inspect profit and loss" in lowered:
-        return "Profit and Loss. Ten years of history in one click. Maximum transparency."
+        return "Next: Profit and Loss. Revenue rising is table stakes. What you really want is expenses growing slower than revenue — that's where the margin lives."
     if "check balance sheet strength" in lowered:
-        return "Balance Sheet. We want what they own to beat what they owe. Simple math, big impact."
-    if "open the public screens page" in lowered:
-        return "Do not want to do the math? Hit Screens. It's a best-of playlist for stock filters."
-    if "open a public screen" in lowered:
-        return "We open the high-growth, low-PE style screen. Ganesh Infra jumps right out of the list."
-    if "browse filtered companies" in lowered:
-        return "Compare sales growth and ROE. If the numbers look wild, verify before you celebrate."
-    if "from the screen for deeper analysis" in lowered or "open any company from the screen results" in lowered:
-        return "One click on Ganesh Infra and we do the deep dive. Trust, but verify."
+        return "Balance Sheet: how much debt is this company carrying? Too much and you are financing their past, not investing in their future."
+    if "click screens in the top menu" in lowered or "open the public screens page" in lowered:
+        return "Here's where it gets interesting. You don't need to already have a stock in mind. Click Screens — this is Screener's real superpower."
+    if "show all screens" in lowered:
+        return "Click Show all screens — a full library of pre-built filters, built by experienced investors, all completely free."
+    if "find the exact high growth" in lowered:
+        return "Find this filter: High Growth, High RoE, Low PE. Fast-growing, capital-efficient, and not yet overpriced. That combination is rare — and exactly what we are hunting for."
+    if "click the highlighted high growth" in lowered or "open the high growth" in lowered or "open a public screen" in lowered:
+        return "Click it. Screener scans the entire market and hands you a shortlist in seconds. You did not write a single formula."
+    if "scan the filtered results table" in lowered or "browse filtered companies" in lowered:
+        return "Every company in this table passed the filter. Scan for clean numbers. Ganesh Infra stands out — strong growth, solid returns, valuation still sane."
+    if "land on the company page" in lowered or "from the screen for deeper analysis" in lowered or "open any company from the screen results" in lowered:
+        return "Click in and run the same four-point check: P/E, ROCE, quarterly trend, Balance Sheet. It passes — it goes on your shortlist. That is the system."
     return None
 
 
@@ -1984,16 +2097,78 @@ def build_narration_timeline(beats: list[dict]) -> list[dict]:
     return timeline
 
 
+def demo_name_from_steps_path(steps_json_path: str) -> str:
+    """Infer the demo name from a steps JSON path."""
+    file_name = os.path.basename(steps_json_path)
+    if file_name.endswith("_steps.json"):
+        return file_name[:-11]
+    return os.path.splitext(file_name)[0]
+
+
+def build_custom_screener_timeline(steps: list[dict]) -> list[dict] | None:
+    """Use the user-approved screener narration script across grouped step windows."""
+    expected_steps = max((int(segment.get("end_step", 0) or 0) for segment in CUSTOM_SCREENER_TIMELINE_SEGMENTS), default=0)
+    if len(steps) < expected_steps:
+        return None
+
+    timeline = []
+    for index, segment in enumerate(CUSTOM_SCREENER_TIMELINE_SEGMENTS, start=1):
+        start_step = segment["start_step"]
+        end_step = segment["end_step"]
+        if start_step < 1 or end_step > len(steps) or start_step > end_step:
+            return None
+
+        start_step_payload = steps[start_step - 1]
+        end_step_payload = steps[end_step - 1]
+        measured_start_sec = step_start_sec(start_step_payload, 0.0)
+        measured_end_sec = step_end_sec(end_step_payload, measured_start_sec)
+        offset_sec = round(float(segment["target_start_sec"]), 3)
+        target_window_end_sec = round(float(segment["target_end_sec"]), 3)
+        budget_sec = round(max(target_window_end_sec - offset_sec, 2.8), 3)
+
+        timeline.append(
+            {
+                "segment_id": f"screener_story_{index:02d}",
+                "step": start_step,
+                "type": "primary",
+                "offset_sec": offset_sec,
+                "budget_sec": budget_sec,
+                "text": segment["text"],
+                "fallback_text": segment.get("fallback_text") or segment["text"],
+                "subtitle": segment.get("subtitle") or segment["text"],
+                "target_window_end_sec": target_window_end_sec,
+                "source_start_step": start_step,
+                "source_end_step": end_step,
+                "source_start_sec": round(measured_start_sec, 3),
+                "source_end_sec": round(measured_end_sec, 3),
+            }
+        )
+
+    return timeline
+
+
+def custom_narration_timeline(demo_name: str, steps: list[dict]) -> list[dict] | None:
+    """Return a demo-specific narration timeline override when one is defined."""
+    if demo_name == "screener":
+        return build_custom_screener_timeline(steps)
+    return None
+
+
 def generate_narration_package(steps_json_path: str) -> dict:
     """Build structured narration beats plus the final script text."""
     with open(steps_json_path, encoding="utf-8") as file:
         steps = json.load(file)
 
     total_steps = len(steps)
+    demo_name = demo_name_from_steps_path(steps_json_path)
     beats = [build_story_beat(step, total_steps) for step in steps]
-    timeline = build_narration_timeline(beats)
+    custom_timeline = custom_narration_timeline(demo_name, steps)
+    timeline = custom_timeline or build_narration_timeline(beats)
     script = "\n\n".join(segment["text"] for segment in timeline)
-    total_duration = max((float(beat.get("end_elapsed_sec", 0.0) or 0.0) for beat in beats), default=0.0)
+    if custom_timeline:
+        total_duration = max((float(segment.get("target_window_end_sec", 0.0) or 0.0) for segment in timeline), default=0.0)
+    else:
+        total_duration = max((float(beat.get("end_elapsed_sec", 0.0) or 0.0) for beat in beats), default=0.0)
     return {
         "beats": beats,
         "timeline": timeline,
@@ -2285,45 +2460,111 @@ def generate_audio_with_fallbacks(text: str, fallback_text: str, output_prefix: 
     return None, ""
 
 
-def synthesize_segment_audio(segment: dict, temp_dir: str):
-    """Generate one narration clip and force it into a concat-friendly WAV shape."""
-    base_prefix = os.path.join(temp_dir, segment["segment_id"])
-    fallback_text = segment.get("fallback_text") or segment["text"]
-    raw_path, provider_name = generate_audio_with_fallbacks(
-        segment["text"],
-        fallback_text,
-        base_prefix,
-    )
+def segment_compact_voice_text(segment: dict) -> str:
+    """Build a shorter rescue line when a segment cannot fit at a balanced pace."""
+    fallback_text = normalize_text(segment.get("fallback_text") or "")
+    if not fallback_text:
+        return ""
+    max_words = 4 if segment.get("type") == "filler" else 6
+    compact = trim_words(fallback_text, max_words)
+    return compact if compact and compact != fallback_text else fallback_text
+
+
+def synthesize_segment_variant(text: str, output_prefix: str, budget_sec: float):
+    """Generate one narration variant and normalize it into a timing-aware WAV clip."""
+    raw_path, provider_name = generate_audio_with_fallbacks(text, text, output_prefix)
     if not raw_path:
         return None
 
-    normalized_path = f"{base_prefix}_normalized.wav"
+    normalized_path = f"{output_prefix}_normalized.wav"
     normalized = normalize_audio_to_wav(raw_path, normalized_path)
     if not normalized:
         return None
 
-    paced_path = f"{base_prefix}_paced.wav"
-    if provider_name == "gtts":
-        pace_factor = FALLBACK_AUDIO_PACE
-        max_speedup = MAX_AUDIO_SPEEDUP
-    elif provider_name == "elevenlabs":
-        pace_factor = ELEVENLABS_AUDIO_PACE
-        max_speedup = ELEVENLABS_MAX_AUDIO_SPEEDUP
-    else:
-        pace_factor = DEFAULT_AUDIO_PACE
-        max_speedup = MAX_AUDIO_SPEEDUP
-    paced, _ = apply_audio_pace(normalized, pace_factor, paced_path)
+    paced_path = f"{output_prefix}_paced.wav"
+    paced, paced_duration = apply_audio_pace(normalized, BALANCED_AUDIO_PACE, paced_path)
 
-    fitted_path = f"{base_prefix}_fitted.wav"
+    fitted_path = f"{output_prefix}_fitted.wav"
     fitted, fitted_duration = fit_audio_clip_to_duration(
         paced,
-        float(segment.get("budget_sec", 0.0) or 0.0),
+        budget_sec,
         fitted_path,
-        max_speedup=max_speedup,
+        max_speedup=BALANCED_MAX_AUDIO_SPEEDUP,
     )
-    segment["clip_duration_sec"] = round(fitted_duration, 3)
-    segment["clip_path"] = fitted
-    return fitted
+    return {
+        "clip_path": fitted,
+        "provider_name": provider_name,
+        "paced_duration_sec": round(paced_duration, 3),
+        "clip_duration_sec": round(fitted_duration, 3),
+        "required_speedup": round((paced_duration / budget_sec), 3) if budget_sec > 0 else 1.0,
+    }
+
+
+def segment_is_balanced(rendered: dict, budget_sec: float) -> bool:
+    """Check whether a rendered clip stays near the target without sounding rushed."""
+    if not rendered:
+        return False
+    if budget_sec <= 0:
+        return True
+    overflow_sec = max(float(rendered.get("clip_duration_sec", 0.0) or 0.0) - budget_sec, 0.0)
+    required_speedup = float(rendered.get("required_speedup", 1.0) or 1.0)
+    return overflow_sec <= AUDIO_FIT_TOLERANCE_SEC and required_speedup <= BALANCED_PREFERRED_SPEEDUP
+
+
+def synthesize_segment_audio(segment: dict, temp_dir: str):
+    """Generate one narration clip while keeping speech pace balanced from segment to segment."""
+    base_prefix = os.path.join(temp_dir, segment["segment_id"])
+    budget_sec = float(segment.get("budget_sec", 0.0) or 0.0)
+    primary_text = segment["text"]
+    fallback_text = segment.get("fallback_text") or primary_text
+    compact_text = segment_compact_voice_text(segment)
+
+    candidates = [("primary", primary_text)]
+    if fallback_text and fallback_text != primary_text:
+        candidates.append(("fallback", fallback_text))
+    if compact_text and compact_text not in {primary_text, fallback_text}:
+        candidates.append(("compact", compact_text))
+
+    best_rendered = None
+    best_score = None
+    chosen_text = primary_text
+
+    for variant_name, candidate_text in candidates:
+        rendered = synthesize_segment_variant(
+            candidate_text,
+            f"{base_prefix}_{variant_name}",
+            budget_sec,
+        )
+        if not rendered:
+            continue
+
+        overflow_sec = max(float(rendered["clip_duration_sec"]) - budget_sec, 0.0) if budget_sec > 0 else 0.0
+        score = (
+            0 if overflow_sec <= AUDIO_FIT_TOLERANCE_SEC else 1,
+            max(float(rendered["required_speedup"]) - BALANCED_PREFERRED_SPEEDUP, 0.0),
+            overflow_sec,
+            len(candidate_text.split()),
+        )
+        if best_score is None or score < best_score:
+            best_rendered = rendered
+            best_score = score
+            chosen_text = candidate_text
+
+        if segment_is_balanced(rendered, budget_sec):
+            best_rendered = rendered
+            chosen_text = candidate_text
+            break
+
+    if not best_rendered:
+        return None
+
+    if segment.get("type") == "filler":
+        segment["subtitle"] = chosen_text
+    segment["spoken_text"] = chosen_text
+    segment["clip_duration_sec"] = round(float(best_rendered["clip_duration_sec"] or 0.0), 3)
+    segment["clip_path"] = best_rendered["clip_path"]
+    segment["required_speedup"] = float(best_rendered.get("required_speedup", 1.0) or 1.0)
+    return best_rendered["clip_path"]
 
 
 def build_timed_audio_track(timeline: list[dict], total_duration_sec: float, output_path: str):
@@ -2370,6 +2611,20 @@ def build_timed_audio_track(timeline: list[dict], total_duration_sec: float, out
             return None
 
         return concat_audio_clips(clip_sequence, output_path)
+
+
+def final_script_from_timeline(timeline: list[dict]) -> str:
+    """Render the final spoken narration script from the chosen timeline lines."""
+    lines = []
+    for segment in timeline:
+        line = (
+            (segment.get("spoken_text") or "").strip()
+            or (segment.get("text") or "").strip()
+            or (segment.get("subtitle") or "").strip()
+        )
+        if line:
+            lines.append(line)
+    return "\n\n".join(lines)
 
 
 def generate_narration(demo_name: str):
@@ -2429,6 +2684,9 @@ def generate_narration(demo_name: str):
         if os.path.abspath(audio_path) != os.path.abspath(final_audio_path):
             os.replace(audio_path, final_audio_path)
         audio_path = final_audio_path
+        final_script = final_script_from_timeline(timeline)
+        with open(script_path, "w", encoding="utf-8") as f:
+            f.write(final_script)
         with open(timeline_path, "w", encoding="utf-8") as f:
             json.dump(
                 {

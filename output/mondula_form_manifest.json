@@ -11,6 +11,9 @@
   "video": "output/mondula_form_final.webm",
   "poster": "output/screenshots/mondula_form/step_01.png",
   "transcript": "output/mondula_form_transcript.md",
+  "narration_script": "output/mondula_form_narration.txt",
+  "narration_timeline": "output/mondula_form_narration_timeline.json",
+  "narration_script_text": "Ladies and gentlemen, fasten your seatbelts. We are about to make a web form feel exciting. Mondula is sleek, green, and suspiciously clean.\n\nAccept those cookies, om nom nom, and blow past the intro. Hit Next Step and let's get to work.\n\nSection one. Watch the fingers fly. Pavan Demo goes in, and the textarea becomes a tiny manifesto for automation.\n\nPage two, and now we wait. Quick breather. Why do we mash dead remote batteries harder? Nobody knows.\n\nBoom, we're back. Automation field, check. Second value, check. March thirteenth on the calendar. A fine day for destiny.\n\nNext step, please. Loading takes its sweet time, like a cat deciding whether it actually wants to go outside.\n\nAnd we're live. Radio buttons, checkboxes, dropdowns. A digital buffet, and we're sampling like professionals.\n\nNow the conditional section opens, and the plot thickens. We choose pizza, because we are not monsters.\n\nThin crust, obviously. Olives and corn, bold choice. Pesto Rosso sauce, because we're fancy today.\n\nOne last wait. If you're still here, you're a champion. Data immortality is seconds away.\n\nFinal lap. Pavan Kumar goes in, birthday locked, phone, email, and production details all lined up. Big leagues only.\n\nGrand finale. Review the summary. Everything looks perfect. We came, we automated. Mondula zero, Pavan one.",
   "steps_json": "screenshots/mondula_form_steps.json",
   "narration_beats": "output/mondula_form_narration_beats.json",
   "manifest": "output/mondula_form_manifest.json",
@@ -47,8 +50,8 @@
       "timestamp": "2026-03-26T10:17:52.394450",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\mondula_form\\step_01.png",
       "published_screenshot": "output/screenshots/mondula_form/step_01.png",
-      "narration": "Ladies and gentlemen, fasten your seatbelts. We are about to make a web form feel exciting. Mondula is sleek, green, and suspiciously clean.",
-      "pause_ms": 920
+      "narration": "Step 1: Open the Mondula multi-step form demo page",
+      "pause_ms": 3613
     },
     {
       "step": 2,
@@ -58,8 +61,8 @@
       "timestamp": "2026-03-26T10:17:59.051612",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\mondula_form\\step_02.png",
       "published_screenshot": "output/screenshots/mondula_form/step_02.png",
-      "narration": "Accept those cookies, om nom nom, and blow past the intro. Hit Next Step and let's get to work.",
-      "pause_ms": 920
+      "narration": "Step 2: Move from the intro page to the first form step",
+      "pause_ms": 846
     },
     {
       "step": 3,
@@ -69,8 +72,8 @@
       "timestamp": "2026-03-26T10:18:09.145789",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\mondula_form\\step_03.png",
       "published_screenshot": "output/screenshots/mondula_form/step_03.png",
-      "narration": "Section one. Watch the fingers fly. Pavan Demo goes in, and the textarea becomes a tiny manifesto for automation.",
-      "pause_ms": 1050
+      "narration": "Step 3: Fill first page text and textarea fields",
+      "pause_ms": 2412
     },
     {
       "step": 4,
@@ -80,8 +83,8 @@
       "timestamp": "2026-03-26T10:18:15.797219",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\mondula_form\\step_04.png",
       "published_screenshot": "output/screenshots/mondula_form/step_04.png",
-      "narration": "Page two, and now we wait. Quick breather. Why do we mash dead remote batteries harder? Nobody knows.",
-      "pause_ms": 1050
+      "narration": "Step 4: Go to the next page with additional input fields",
+      "pause_ms": 946
     },
     {
       "step": 5,
@@ -91,8 +94,8 @@
       "timestamp": "2026-03-26T10:18:29.375003",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\mondula_form\\step_05.png",
       "published_screenshot": "output/screenshots/mondula_form/step_05.png",
-      "narration": "Boom, we're back. Automation field, check. Second value, check. March thirteenth on the calendar. A fine day for destiny.",
-      "pause_ms": 1050
+      "narration": "Step 5: Fill text, custom textarea, and date fields on page two",
+      "pause_ms": 6021
     },
     {
       "step": 6,
@@ -102,8 +105,8 @@
       "timestamp": "2026-03-26T10:18:37.884809",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\mondula_form\\step_06.png",
       "published_screenshot": "output/screenshots/mondula_form/step_06.png",
-      "narration": "Next step, please. Loading takes its sweet time, like a cat deciding whether it actually wants to go outside.",
-      "pause_ms": 1200
+      "narration": "Step 6: Proceed to radio, checkbox, and dropdown inputs",
+      "pause_ms": 1741
     },
     {
       "step": 7,
@@ -113,8 +116,8 @@
       "timestamp": "2026-03-26T10:18:43.567992",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\mondula_form\\step_07.png",
       "published_screenshot": "output/screenshots/mondula_form/step_07.png",
-      "narration": "And we're live. Radio buttons, checkboxes, dropdowns. A digital buffet, and we're sampling like professionals.",
-      "pause_ms": 1200
+      "narration": "Step 7: Select a radio option, multiple checkboxes, and a dropdown value",
+      "pause_ms": 788
     },
     {
       "step": 8,
@@ -124,8 +127,8 @@
       "timestamp": "2026-03-26T10:18:50.201470",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\mondula_form\\step_08.png",
       "published_screenshot": "output/screenshots/mondula_form/step_08.png",
-      "narration": "Now the conditional section opens, and the plot thickens. We choose pizza, because we are not monsters.",
-      "pause_ms": 920
+      "narration": "Step 8: Open the conditional input section",
+      "pause_ms": 785
     },
     {
       "step": 9,
@@ -135,8 +138,8 @@
       "timestamp": "2026-03-26T10:18:56.364813",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\mondula_form\\step_09.png",
       "published_screenshot": "output/screenshots/mondula_form/step_09.png",
-      "narration": "Thin crust, obviously. Olives and corn, bold choice. Pesto Rosso sauce, because we're fancy today.",
-      "pause_ms": 1050
+      "narration": "Step 9: Fill conditional fields based on the selected dish",
+      "pause_ms": 789
     },
     {
       "step": 10,
@@ -146,8 +149,8 @@
       "timestamp": "2026-03-26T10:19:03.000263",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\mondula_form\\step_10.png",
       "published_screenshot": "output/screenshots/mondula_form/step_10.png",
-      "narration": "One last wait. If you're still here, you're a champion. Data immortality is seconds away.",
-      "pause_ms": 920
+      "narration": "Step 10: Move to the final contact-details page",
+      "pause_ms": 825
     },
     {
       "step": 11,
@@ -157,8 +160,8 @@
       "timestamp": "2026-03-26T10:19:19.283576",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\mondula_form\\step_11.png",
       "published_screenshot": "output/screenshots/mondula_form/step_11.png",
-      "narration": "Final lap. Pavan Kumar goes in, birthday locked, phone, email, and production details all lined up. Big leagues only.",
-      "pause_ms": 1050
+      "narration": "Step 11: Fill final contact page with six required input fields",
+      "pause_ms": 8109
     },
     {
       "step": 12,
@@ -168,8 +171,8 @@
       "timestamp": "2026-03-26T10:19:25.562039",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\mondula_form\\step_12.png",
       "published_screenshot": "output/screenshots/mondula_form/step_12.png",
-      "narration": "Grand finale. Review the summary. Everything looks perfect. We came, we automated. Mondula zero, Pavan one.",
-      "pause_ms": 1550
+      "narration": "Step 12: Review summary and reach submit-ready final state",
+      "pause_ms": 0
     }
   ]
 }

@@ -8,6 +8,7 @@ import os
 import shutil
 import subprocess
 import sys
+import tempfile
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 VIDEO_DIR = os.path.join(BASE_DIR, "videos")
@@ -56,6 +57,95 @@ def load_narration_segments(narration_timeline_path: str | None) -> list[dict]:
         return []
 
 
+def retime_video_to_timeline(
+    input_path: str,
+    narration_timeline_path: str | None,
+    output_path: str,
+) -> bool:
+    """Speed-match grouped source windows to explicit narration timing targets."""
+    segments = load_narration_segments(narration_timeline_path)
+    if not segments:
+        return False
+
+    required_fields = {"source_start_sec", "source_end_sec", "offset_sec", "target_window_end_sec"}
+    if any(not required_fields.issubset(segment.keys()) for segment in segments):
+        return False
+
+    with tempfile.TemporaryDirectory(prefix="video_retime_", dir=OUTPUT_DIR) as temp_dir:
+        segment_paths = []
+
+        for index, segment in enumerate(segments, start=1):
+            source_start = float(segment.get("source_start_sec", 0.0) or 0.0)
+            source_end = float(segment.get("source_end_sec", source_start) or source_start)
+            target_start = float(segment.get("offset_sec", 0.0) or 0.0)
+            target_end = float(segment.get("target_window_end_sec", target_start) or target_start)
+            source_duration = max(source_end - source_start, 0.05)
+            target_duration = max(target_end - target_start, 0.05)
+            setpts_factor = target_duration / source_duration
+
+            segment_path = os.path.join(temp_dir, f"segment_{index:02d}.webm")
+            cmd = [
+                "ffmpeg",
+                "-y",
+                "-ss",
+                f"{source_start:.3f}",
+                "-to",
+                f"{source_end:.3f}",
+                "-i",
+                input_path,
+                "-vf",
+                f"setpts={setpts_factor:.6f}*PTS",
+                "-an",
+                "-c:v",
+                "libvpx-vp9",
+                "-crf",
+                "45",
+                "-b:v",
+                "0",
+                segment_path,
+            ]
+            if not run_media_command(cmd, f"Retiming segment {index} for {os.path.basename(input_path)}"):
+                return False
+            segment_paths.append(segment_path)
+
+        if not segment_paths:
+            return False
+
+        concat_path = os.path.join(temp_dir, "segments.txt")
+        with open(concat_path, "w", encoding="utf-8") as concat_file:
+            for path in segment_paths:
+                normalized_path = path.replace("\\", "/")
+                concat_file.write(f"file '{normalized_path}'\n")
+
+        cmd = [
+            "ffmpeg",
+            "-y",
+            "-f",
+            "concat",
+            "-safe",
+            "0",
+            "-i",
+            concat_path,
+            "-an",
+            "-c:v",
+            "libvpx-vp9",
+            "-crf",
+            "45",
+            "-b:v",
+            "0",
+            output_path,
+        ]
+        if not run_media_command(cmd, f"Timeline retime concat for {os.path.basename(input_path)}"):
+            return False
+
+    if not os.path.exists(output_path):
+        print(f"  ERROR: Retimed video missing: {output_path}")
+        return False
+
+    print(f"  Retimed video to narration timeline: {output_path}")
+    return True
+
+
 def generate_caption_file(
     steps_json_path: str,
     video_duration: float,
@@ -84,7 +174,12 @@ def generate_caption_file(
                 end_sec = float(segment.get("end_sec", start_sec + fallback_duration) or (start_sec + fallback_duration))
                 start_sec = min(start_sec, video_duration)
                 end_sec = min(max(end_sec, start_sec + 0.2), video_duration)
-                subtitle = (segment.get("subtitle") or segment.get("text") or "").strip()
+                subtitle = (
+                    segment.get("spoken_text")
+                    or segment.get("subtitle")
+                    or segment.get("text")
+                    or ""
+                ).strip()
                 if not subtitle:
                     continue
 
@@ -293,6 +388,42 @@ def extend_video_to_duration(input_path: str, output_path: str, target_duration:
     return True
 
 
+def trim_video_to_duration(input_path: str, output_path: str, target_duration: float):
+    """Trim a video down to the narration length when retiming drifts slightly long."""
+    current_duration = get_media_duration(input_path)
+    if current_duration <= target_duration + 0.05:
+        shutil.copyfile(input_path, output_path)
+        return True
+
+    cmd = [
+        "ffmpeg",
+        "-y",
+        "-i",
+        input_path,
+        "-t",
+        f"{target_duration:.3f}",
+        "-c:v",
+        "libvpx-vp9",
+        "-crf",
+        "45",
+        "-b:v",
+        "0",
+        "-an",
+        output_path,
+    ]
+
+    print(f"  Trimming video to narration length...")
+    if not run_media_command(cmd, f"Video trim for {os.path.basename(input_path)}"):
+        return False
+
+    if not os.path.exists(output_path):
+        print(f"  ERROR: Trimmed video missing: {output_path}")
+        return False
+
+    print(f"  Done: {output_path}")
+    return True
+
+
 def merge_audio(video_path: str, audio_path: str, output_path: str):
     """Merge narration audio with video."""
     target_duration = get_media_duration(video_path)
@@ -371,27 +502,39 @@ def process_demo(demo_name: str, fps: int = 5, crf: int = 55):
     if not compress_video(raw_path, compressed_path, fps=fps, crf=crf):
         return None
 
-    # Step 2: Align base video duration with narration if available
-    audio_path = find_narration_audio(demo_name)
+    # Step 2: Optionally retime video to an explicit narration timeline
+    narration_timeline_path = os.path.join(OUTPUT_DIR, f"{demo_name}_narration_timeline.json")
     caption_source_path = compressed_path
     target_duration = get_media_duration(compressed_path)
+
+    retimed_video_path = os.path.join(OUTPUT_DIR, f"{demo_name}_retimed.webm")
+    if retime_video_to_timeline(compressed_path, narration_timeline_path, retimed_video_path):
+        caption_source_path = retimed_video_path
+        target_duration = get_media_duration(caption_source_path)
+
+    # Step 3: Align base video duration with narration if audio still runs longer
+    audio_path = find_narration_audio(demo_name)
 
     if audio_path:
         audio_duration = get_media_duration(audio_path)
         if audio_duration > target_duration + 0.05:
             timed_video_path = os.path.join(OUTPUT_DIR, f"{demo_name}_timed.webm")
-            if extend_video_to_duration(compressed_path, timed_video_path, audio_duration):
+            if extend_video_to_duration(caption_source_path, timed_video_path, audio_duration):
+                caption_source_path = timed_video_path
+                target_duration = get_media_duration(caption_source_path)
+        elif audio_duration < target_duration - 0.05:
+            timed_video_path = os.path.join(OUTPUT_DIR, f"{demo_name}_timed.webm")
+            if trim_video_to_duration(caption_source_path, timed_video_path, audio_duration):
                 caption_source_path = timed_video_path
                 target_duration = get_media_duration(caption_source_path)
 
-    # Step 3: Generate captions from steps JSON
+    # Step 4: Generate captions from steps JSON
     steps_path = os.path.join(SCREENSHOT_DIR, f"{demo_name}_steps.json")
     srt_path = os.path.join(OUTPUT_DIR, f"{demo_name}_captions.srt")
     captioned_path = caption_source_path
 
     if os.path.exists(steps_path):
         narration_beats_path = os.path.join(OUTPUT_DIR, f"{demo_name}_narration_beats.json")
-        narration_timeline_path = os.path.join(OUTPUT_DIR, f"{demo_name}_narration_timeline.json")
         generate_caption_file(
             steps_path,
             target_duration,
@@ -400,7 +543,7 @@ def process_demo(demo_name: str, fps: int = 5, crf: int = 55):
             narration_timeline_path=narration_timeline_path,
         )
 
-        # Step 4: Burn captions
+        # Step 5: Burn captions
         candidate_captioned_path = os.path.join(OUTPUT_DIR, f"{demo_name}_captioned.webm")
         if burn_captions(caption_source_path, srt_path, candidate_captioned_path):
             captioned_path = candidate_captioned_path
@@ -409,7 +552,7 @@ def process_demo(demo_name: str, fps: int = 5, crf: int = 55):
     else:
         print(f"  WARNING: No steps JSON found, skipping captions")
 
-    # Step 5: Merge audio if available
+    # Step 6: Merge audio if available
     final_output = os.path.join(OUTPUT_DIR, f"{demo_name}_final.webm")
 
     if audio_path:

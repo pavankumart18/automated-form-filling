@@ -9,7 +9,7 @@ import shutil
 import time
 from datetime import datetime
 
-from playwright.sync_api import Page
+from playwright.sync_api import Locator, Page
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 VIDEO_DIR = os.path.join(BASE_DIR, "videos")
@@ -36,6 +36,7 @@ MIN_STEP_SETTLE_SEC = 1.8
 CAPTION_HOLD_SEC = 1.05
 POST_STEP_BREATH_SEC = 0.95
 FAST_ERROR_STEP_SEC = 0.15
+ENABLE_IN_PAGE_STEP_CAPTIONS = False
 
 
 CLICK_INDICATOR_JS = """
@@ -72,12 +73,12 @@ CLICK_INDICATOR_JS = """
       }
       .click-indicator {
         position: fixed;
-        width: 64px;
-        height: 64px;
+        width: 78px;
+        height: 78px;
         border-radius: 50%;
         background: radial-gradient(circle, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.1) 48%, rgba(255, 255, 255, 0) 74%);
         border: 4px solid rgba(255, 255, 255, 0.92);
-        box-shadow: 0 0 0 10px rgba(123, 219, 255, 0.2), 0 12px 28px rgba(10, 24, 40, 0.2);
+        box-shadow: 0 0 0 12px rgba(123, 219, 255, 0.24), 0 14px 34px rgba(10, 24, 40, 0.22);
         pointer-events: none;
         z-index: 999999;
         transform: translate(-50%, -50%) scale(0.28);
@@ -86,7 +87,7 @@ CLICK_INDICATOR_JS = """
       .click-indicator::after {
         content: '';
         position: absolute;
-        inset: 20px;
+        inset: 24px;
         border-radius: 50%;
         background: rgba(108, 207, 255, 0.18);
         border: 2px solid rgba(255, 255, 255, 0.88);
@@ -94,12 +95,12 @@ CLICK_INDICATOR_JS = """
       }
       .click-dot {
         position: fixed;
-        width: 16px;
-        height: 16px;
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.58);
-        border: 3px solid rgba(33, 48, 66, 0.52);
-        box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.08), 0 8px 18px rgba(10, 24, 40, 0.18);
+        background: rgba(255, 255, 255, 0.72);
+        border: 3px solid rgba(22, 35, 52, 0.62);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.12), 0 10px 22px rgba(10, 24, 40, 0.22);
         pointer-events: none;
         z-index: 999999;
         transition: opacity 0.3s ease-out;
@@ -311,6 +312,8 @@ class StepLogger:
 
     def show_caption(self, page: Page, text: str):
         """Safely show top caption without crashing the tutorial if overlay isn't ready."""
+        if not ENABLE_IN_PAGE_STEP_CAPTIONS:
+            return
         try:
             page.evaluate(CAPTION_SAFE_EVAL_JS, text)
         except Exception as error:
@@ -328,9 +331,11 @@ class StepLogger:
         """Log a step: take screenshot, record metadata, show caption."""
         step_start_elapsed = self.last_elapsed_sec
         is_fast_step = wait_sec <= 0.05
-        settle_before_capture = wait_sec if is_fast_step else max(wait_sec, MIN_STEP_SETTLE_SEC)
-        caption_hold = 0.35 if is_fast_step else CAPTION_HOLD_SEC
-        post_step_breath = FAST_ERROR_STEP_SEC if is_fast_step else POST_STEP_BREATH_SEC
+        uses_overlay_caption = show_caption and ENABLE_IN_PAGE_STEP_CAPTIONS
+        minimum_settle = MIN_STEP_SETTLE_SEC if uses_overlay_caption else 0.9
+        settle_before_capture = wait_sec if is_fast_step else max(wait_sec, minimum_settle)
+        caption_hold = 0.0 if not ENABLE_IN_PAGE_STEP_CAPTIONS else (0.35 if is_fast_step else CAPTION_HOLD_SEC)
+        post_step_breath = FAST_ERROR_STEP_SEC if is_fast_step else (POST_STEP_BREATH_SEC if uses_overlay_caption else 0.45)
 
         time.sleep(settle_before_capture)
 
@@ -338,9 +343,10 @@ class StepLogger:
         step_label = f"Step {step_num}: {description}"
         screenshot_path = os.path.join(self.screenshot_dir, f"step_{step_num:02d}.png")
 
-        if show_caption:
+        if show_caption and ENABLE_IN_PAGE_STEP_CAPTIONS:
             self.show_caption(page, step_label)
-            time.sleep(caption_hold)
+            if caption_hold > 0:
+                time.sleep(caption_hold)
 
         page.screenshot(path=screenshot_path)
         time.sleep(post_step_breath)
@@ -429,7 +435,8 @@ def create_browser_context(playwright, demo_name: str, headless: bool = False) -
     )
     page.add_init_script(CLICK_INDICATOR_JS)
     page.add_init_script(KEYSTROKE_OVERLAY_JS)
-    page.add_init_script(CAPTION_OVERLAY_JS)
+    if ENABLE_IN_PAGE_STEP_CAPTIONS:
+        page.add_init_script(CAPTION_OVERLAY_JS)
 
     return browser, context, page
 
@@ -444,6 +451,107 @@ def safe_click(page: Page, selector: str, timeout: int = 10000):
         time.sleep(0.28)
     except Exception as error:
         print(f"  WARNING: Could not click '{selector}': {error}")
+
+
+def point_at_locator(page: Page, locator: Locator, settle_sec: float = 0.55, steps: int = 18) -> bool:
+    """Move the visible cursor over a target so screenshots clearly reference it."""
+    try:
+        locator.scroll_into_view_if_needed(timeout=5000)
+        time.sleep(0.18)
+        box = locator.bounding_box()
+        if not box or box["width"] < 4 or box["height"] < 4:
+            return False
+
+        viewport = page.viewport_size or {"width": 1280, "height": 720}
+        target_x = min(max(box["x"] + (box["width"] / 2), 16), viewport["width"] - 16)
+        target_y = min(max(box["y"] + (box["height"] / 2), 16), viewport["height"] - 16)
+        page.mouse.move(target_x, target_y, steps=steps)
+        if settle_sec > 0:
+            time.sleep(settle_sec)
+        return True
+    except Exception as error:
+        print(f"  WARNING: Could not point at locator: {error}")
+        return False
+
+
+def highlight_locator(
+    page: Page,
+    locator: Locator,
+    settle_sec: float = 0.85,
+    padding: int = 10,
+    border_radius: int = 18,
+) -> bool:
+    """Draw a soft spotlight glow around a locator without using a bordered box."""
+    try:
+        locator.scroll_into_view_if_needed(timeout=5000)
+        time.sleep(0.18)
+        box = locator.bounding_box()
+        if not box or box["width"] < 4 or box["height"] < 4:
+            return False
+
+        page.evaluate(
+            """
+            (payload) => {
+              const existing = document.getElementById('__tutorialTargetHighlight');
+              if (existing) existing.remove();
+
+              const highlight = document.createElement('div');
+              highlight.id = '__tutorialTargetHighlight';
+              highlight.style.position = 'fixed';
+              highlight.style.left = `${payload.centerX}px`;
+              highlight.style.top = `${payload.centerY}px`;
+              highlight.style.width = `${payload.glowWidth}px`;
+              highlight.style.height = `${payload.glowHeight}px`;
+              highlight.style.transform = 'translate(-50%, -50%)';
+              highlight.style.border = 'none';
+              highlight.style.borderRadius = `${Math.max(payload.borderRadius * 2, 999)}px`;
+              highlight.style.background = 'radial-gradient(circle at center, rgba(128, 219, 255, 0.42) 0%, rgba(128, 219, 255, 0.2) 34%, rgba(128, 219, 255, 0.08) 56%, rgba(128, 219, 255, 0) 76%)';
+              highlight.style.boxShadow = '0 0 28px rgba(128, 219, 255, 0.22), 0 10px 24px rgba(18, 29, 44, 0.14)';
+              highlight.style.filter = 'blur(0.5px)';
+              highlight.style.zIndex = '999998';
+              highlight.style.pointerEvents = 'none';
+              highlight.style.animation = 'none';
+              highlight.style.opacity = '0.96';
+
+              document.body.appendChild(highlight);
+              window.setTimeout(() => {
+                const current = document.getElementById('__tutorialTargetHighlight');
+                if (current) current.remove();
+              }, payload.durationMs);
+            }
+            """,
+            {
+                "x": box["x"],
+                "y": box["y"],
+                "width": box["width"],
+                "height": box["height"],
+                "padding": padding,
+                "borderRadius": border_radius,
+                "centerX": box["x"] + (box["width"] / 2),
+                "centerY": box["y"] + (box["height"] / 2),
+                "glowWidth": max(box["width"] + (padding * 4), 110),
+                "glowHeight": max(box["height"] + (padding * 4), 54),
+                "durationMs": max(int(settle_sec * 1000) + 400, 900),
+            },
+        )
+        if settle_sec > 0:
+            time.sleep(settle_sec)
+        return True
+    except Exception as error:
+        print(f"  WARNING: Could not highlight locator: {error}")
+        return False
+
+
+def point_and_highlight_locator(
+    page: Page,
+    locator: Locator,
+    settle_sec: float = 0.95,
+    steps: int = 18,
+) -> bool:
+    """Move the visible cursor and add a highlight box to emphasize a target."""
+    pointed = point_at_locator(page, locator, settle_sec=0.18, steps=steps)
+    highlighted = highlight_locator(page, locator, settle_sec=max(settle_sec - 0.18, 0.35))
+    return pointed or highlighted
 
 
 def safe_fill(page: Page, selector: str, text: str, timeout: int = 10000):

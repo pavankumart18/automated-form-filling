@@ -11,6 +11,9 @@
   "video": "output/zoho_invoice_final.webm",
   "poster": "output/screenshots/zoho_invoice/step_01.png",
   "transcript": "output/zoho_invoice_transcript.md",
+  "narration_script": "output/zoho_invoice_narration.txt",
+  "narration_timeline": "output/zoho_invoice_narration_timeline.json",
+  "narration_script_text": "Alright hustlers and founders, stop crying over broken spreadsheets! Today, we are generating a pristine, professional GST invoice using Zoho Invoice.\n\nThe best part? It's free and needs zero logins. No passwords to forget today. Fire up the free generator page and let's get this bread.\n\nBoom, we're in. First up, who's getting paid? We are. Type in your company name, TechStar Solutions, your name, and address.\n\nAnd now we take a deep breath. The internet is doing its magic. Hydrate. Stare intensely at the screen... and we're good!\n\nTime to bill the big fish. Enter the client details: Acme Corp International. Drop in their address and lock in the billing state, because the taxman is always watching.\n\nSet that invoice number to INV-2026-001. The first invoice is always the sweetest.\n\nNow for the fun part. Line item one: Web Development Services. Forty units at twenty-five hundred a pop. Don't forget the 9 percent GST.\n\nLine item two: UI/UX Design, twenty units at three thousand.\n\nNow we let Zoho do the heavy lifting. We are not here for mental math.\n\nOne more for the road! Line item three: Annual Server Hosting. Eighteen thousand flat.\n\nQuick pause while the totals update. Like a slot machine spin, except you actually win every time.\n\nAlmost home. Drop your payment terms in the notes: payment due within 30 days. Add your bank details so the money actually finds its way to you.\n\nFinal sanity check. Subtotal, GST, grand total looking absolutely crispy.\n\nHit that Download button, grab your PDF, and boom!\n\nFlawless GST invoice in under two minutes. Now go get your money!",
   "steps_json": "screenshots/zoho_invoice_steps.json",
   "narration_beats": "output/zoho_invoice_narration_beats.json",
   "manifest": "output/zoho_invoice_manifest.json",
@@ -47,8 +50,8 @@
       "timestamp": "2026-03-26T09:54:42.175632",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_01.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_01.png",
-      "narration": "Alright hustlers and founders, stop crying over broken spreadsheets! Today, we are generating a pristine, professional GST invoice using Zoho Invoice.",
-      "pause_ms": 920
+      "narration": "Step 1: Open Zoho Invoice - free online invoicing tool for businesses",
+      "pause_ms": 1009
     },
     {
       "step": 2,
@@ -58,8 +61,8 @@
       "timestamp": "2026-03-26T09:54:49.187195",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_02.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_02.png",
-      "narration": "The best part? It's free and needs zero logins. No passwords to forget today. Fire up the free generator page and let's get this bread.",
-      "pause_ms": 920
+      "narration": "Step 2: Open the free invoice generator page - no login required",
+      "pause_ms": 842
     },
     {
       "step": 3,
@@ -69,8 +72,8 @@
       "timestamp": "2026-03-26T09:55:02.684302",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_03.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_03.png",
-      "narration": "Boom, we're in. First up, who's getting paid? We are. Type in your company name, TechStar Solutions, your name, and address.",
-      "pause_ms": 1050
+      "narration": "Step 3: Enter business details: company name, contact, and address And now we take a deep breath. The internet is doing its magic. Hydrate. Stare intensely at the screen... and we're good!",
+      "pause_ms": 0
     },
     {
       "step": 4,
@@ -80,8 +83,8 @@
       "timestamp": "2026-03-26T09:55:14.772197",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_04.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_04.png",
-      "narration": "Time to bill the big fish. Enter the client details: Acme Corp International. Drop in their address and lock in the billing state, because the taxman is always watching.",
-      "pause_ms": 1050
+      "narration": "Step 4: Enter Bill To details for Acme Corp International",
+      "pause_ms": 1632
     },
     {
       "step": 5,
@@ -91,8 +94,8 @@
       "timestamp": "2026-03-26T09:55:21.433102",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_05.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_05.png",
-      "narration": "Set that invoice number to INV-2026-001. The first invoice is always the sweetest.",
-      "pause_ms": 1050
+      "narration": "Step 5: Set invoice number to INV-2026-001",
+      "pause_ms": 843
     },
     {
       "step": 6,
@@ -102,8 +105,8 @@
       "timestamp": "2026-03-26T09:55:31.488749",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_06.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_06.png",
-      "narration": "Now for the fun part. Line item one: Web Development Services. Forty units at twenty-five hundred a pop. Don't forget the 9 percent GST.",
-      "pause_ms": 1050
+      "narration": "Step 6: Add line item 1 with quantity, rate, and GST",
+      "pause_ms": 991
     },
     {
       "step": 7,
@@ -113,8 +116,8 @@
       "timestamp": "2026-03-26T09:55:40.491829",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_07.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_07.png",
-      "narration": "Line item two: UI/UX Design, twenty units at three thousand.",
-      "pause_ms": 1050
+      "narration": "Step 7: Add line item 2: UI/UX Design services Now we let Zoho do the heavy lifting. We are not here for mental math.",
+      "pause_ms": 873
     },
     {
       "step": 8,
@@ -124,8 +127,8 @@
       "timestamp": "2026-03-26T09:55:50.400862",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_08.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_08.png",
-      "narration": "One more for the road! Line item three: Annual Server Hosting. Eighteen thousand flat.",
-      "pause_ms": 1050
+      "narration": "Step 8: Add line item 3: annual server hosting Quick pause while the totals update. Like a slot machine spin, except you actually win every time.",
+      "pause_ms": 280
     },
     {
       "step": 9,
@@ -135,8 +138,8 @@
       "timestamp": "2026-03-26T09:56:01.264780",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_09.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_09.png",
-      "narration": "Almost home. Drop your payment terms in the notes: payment due within 30 days. Add your bank details so the money actually finds its way to you.",
-      "pause_ms": 1050
+      "narration": "Step 9: Add payment notes and terms for the client",
+      "pause_ms": 1426
     },
     {
       "step": 10,
@@ -146,8 +149,8 @@
       "timestamp": "2026-03-26T09:56:06.263902",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_10.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_10.png",
-      "narration": "Final sanity check. Subtotal, GST, grand total looking absolutely crispy.",
-      "pause_ms": 1200
+      "narration": "Step 10: Review subtotal, GST breakdown, and grand total",
+      "pause_ms": 836
     },
     {
       "step": 11,
@@ -157,8 +160,8 @@
       "timestamp": "2026-03-26T09:56:11.564847",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_11.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_11.png",
-      "narration": "Hit that Download button, grab your PDF, and boom!",
-      "pause_ms": 1120
+      "narration": "Step 11: Use Download/Print to export the invoice as PDF",
+      "pause_ms": 2107
     },
     {
       "step": 12,
@@ -168,8 +171,8 @@
       "timestamp": "2026-03-26T09:56:16.111405",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_12.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_12.png",
-      "narration": "Flawless GST invoice in under two minutes. Now go get your money!",
-      "pause_ms": 1550
+      "narration": "Step 12: Tutorial complete - create professional GST invoices in minutes",
+      "pause_ms": 0
     }
   ]
 }

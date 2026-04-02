@@ -11,6 +11,9 @@
   "video": "output/indian_visa_final.webm",
   "poster": "output/screenshots/indian_visa/step_01.png",
   "transcript": "output/indian_visa_transcript.md",
+  "narration_script": "output/indian_visa_narration.txt",
+  "narration_timeline": "output/indian_visa_narration_timeline.json",
+  "narration_script_text": "Welcome, traveler. Open the Indian eVisa portal. All those colors feel like a bureaucratic rangoli. The quest begins now.\n\nHit Apply like it's a win-a-million-dollars link. Boom, the form appears, blue, white, and ready for your life story.\n\nTell them who you are. United States. Ordinary Passport. Diplomatic passport holders can skip this tutorial.\n\nChoose your Port of Arrival. Today we're catching sea breeze at Agatti Seaport. Fancy. And now the portal enters its meditation break.\n\nAnd now we wait. This blank screen is digital dharma. Check your sunscreen, respect the spice, maybe hydrate. Government loading bars move only after enlightenment.\n\nStill nothing? Not a glitch. A spiritual test. Namaste, loading screen, please have mercy on us. Stay with me.\n\nWe're back. Add the birth date and your email. Use one you actually check, not batman123 at gmail.\n\nChoose the service: 30-Day e-Tourist Visa. The taster menu of visas. Tourism, recreation, all the hits.\n\nSet the arrival date and tick the instructions box. We are almost at the good part.\n\nFinal boss: captcha. We stop here for safety, but India is right around the corner.",
   "steps_json": "screenshots/indian_visa_steps.json",
   "narration_beats": "output/indian_visa_narration_beats.json",
   "manifest": "output/indian_visa_manifest.json",
@@ -47,8 +50,8 @@
       "timestamp": "2026-03-26T10:32:49.332520",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_01.png",
       "published_screenshot": "output/screenshots/indian_visa/step_01.png",
-      "narration": "Welcome, traveler. Open the Indian eVisa portal. All those colors feel like a bureaucratic rangoli. The quest begins now.",
-      "pause_ms": 920
+      "narration": "Step 1: Open the Indian eVisa portal home page",
+      "pause_ms": 1705
     },
     {
       "step": 2,
@@ -58,8 +61,8 @@
       "timestamp": "2026-03-26T10:32:55.420669",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_02.png",
       "published_screenshot": "output/screenshots/indian_visa/step_02.png",
-      "narration": "Hit Apply like it's a win-a-million-dollars link. Boom, the form appears, blue, white, and ready for your life story.",
-      "pause_ms": 920
+      "narration": "Step 2: Open the eVisa application form start page",
+      "pause_ms": 426
     },
     {
       "step": 3,
@@ -69,8 +72,8 @@
       "timestamp": "2026-03-26T10:33:01.257447",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_03.png",
       "published_screenshot": "output/screenshots/indian_visa/step_03.png",
-      "narration": "Tell them who you are. United States. Ordinary Passport. Diplomatic passport holders can skip this tutorial.",
-      "pause_ms": 1050
+      "narration": "Step 3: Select nationality and passport type for the applicant",
+      "pause_ms": 399
     },
     {
       "step": 4,
@@ -80,8 +83,8 @@
       "timestamp": "2026-03-26T10:33:36.489628",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_04.png",
       "published_screenshot": "output/screenshots/indian_visa/step_04.png",
-      "narration": "Choose your Port of Arrival. Today we're catching sea breeze at Agatti Seaport. Fancy. And now the portal enters its meditation break.",
-      "pause_ms": 1050
+      "narration": "Step 4: Choose the port of arrival for the application And now we wait. This blank screen is digital dharma. Check your sunscreen, respect the spice, maybe hydrate. Government loading bars move only after enlightenment. Still waiting, stay with me.",
+      "pause_ms": 1778
     },
     {
       "step": 5,
@@ -91,8 +94,8 @@
       "timestamp": "2026-03-26T10:33:41.895391",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_05.png",
       "published_screenshot": "output/screenshots/indian_visa/step_05.png",
-      "narration": "We're back. Add the birth date and your email. Use one you actually check, not batman123 at gmail.",
-      "pause_ms": 1050
+      "narration": "Step 5: Fill date of birth and email confirmation",
+      "pause_ms": 369
     },
     {
       "step": 6,
@@ -102,8 +105,8 @@
       "timestamp": "2026-03-26T10:33:47.009967",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_06.png",
       "published_screenshot": "output/screenshots/indian_visa/step_06.png",
-      "narration": "Choose the service: 30-Day e-Tourist Visa. The taster menu of visas. Tourism, recreation, all the hits.",
-      "pause_ms": 1050
+      "narration": "Step 6: Choose visa service: eTourist Visa (30 Days)",
+      "pause_ms": 354
     },
     {
       "step": 7,
@@ -113,8 +116,8 @@
       "timestamp": "2026-03-26T10:33:52.051273",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_07.png",
       "published_screenshot": "output/screenshots/indian_visa/step_07.png",
-      "narration": "Set the arrival date and tick the instructions box. We are almost at the good part.",
-      "pause_ms": 1050
+      "narration": "Step 7: Set expected date of arrival and acknowledge instructions",
+      "pause_ms": 343
     },
     {
       "step": 8,
@@ -124,8 +127,8 @@
       "timestamp": "2026-03-26T10:33:56.400058",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_08.png",
       "published_screenshot": "output/screenshots/indian_visa/step_08.png",
-      "narration": "Final boss: captcha. We stop here for safety, but India is right around the corner.",
-      "pause_ms": 1550
+      "narration": "Step 8: Stop at captcha step for safe, non-submitting demo",
+      "pause_ms": 0
     }
   ]
 }

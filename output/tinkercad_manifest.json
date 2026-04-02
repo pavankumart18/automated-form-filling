@@ -11,6 +11,9 @@
   "video": "output/tinkercad_final.webm",
   "poster": "output/screenshots/tinkercad/step_01.png",
   "transcript": "output/tinkercad_transcript.md",
+  "narration_script": "output/tinkercad_narration.txt",
+  "narration_timeline": "output/tinkercad_narration_timeline.json",
+  "narration_script_text": "Welcome, future architects. TinkerCAD is open, and free is still the best price in software.\n\nLook at that plane. My what-if is a rocket in pajamas. Tiny render break, then we're back.\n\nStep two. Learning Center. The VIP lounge for knowledge with none of the create-an-account drama.\n\nThe lesson grid is loading. Like a souffle, you do not rush the pixels.\n\nSearch 3D design basics. Every keystroke is one more brick in the empire.\n\nTinkerCAD is thinking. Castle, donut, ego monument, whatever you build, creativity gets a second.\n\nBack to CAD-focused practice. Professional games only. Focus, precision, geometry.\n\nOpen a tutorial card. Treasure chest vibes, except the prize is Z-axis wisdom.\n\nScroll through the visuals. Space stations, moon talk, enough inspiration to make NASA curious.\n\nGallery time. Nine million designs, all born while somebody was supposed to be doing taxes.\n\nShort render break. Mushroom or car? The suspense is crushing my ergonomic chair.\n\nBrowse the hits. Mushroom, Retro Diner, drawer caddy. Practicality and chaos in perfect harmony.\n\nAlmost there. I can feel my brain getting more creative by the second.\n\nOpen Mushroom by Demirarh. Purple, spotted, Staff Picked. Honestly, life goals.\n\nTutorial complete. You skipped the login, found the spark, and now Euclid expects greatness.",
   "steps_json": "screenshots/tinkercad_steps.json",
   "narration_beats": "output/tinkercad_narration_beats.json",
   "manifest": "output/tinkercad_manifest.json",
@@ -47,8 +50,8 @@
       "timestamp": "2026-03-26T10:05:45.634370",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_01.png",
       "published_screenshot": "output/screenshots/tinkercad/step_01.png",
-      "narration": "Welcome, future architects. TinkerCAD is open, and free is still the best price in software.",
-      "pause_ms": 920
+      "narration": "Welcome, future architects. TinkerCAD is open, and free is still the best price in software. The home page is rendering now.",
+      "pause_ms": 1506
     },
     {
       "step": 2,
@@ -58,8 +61,8 @@
       "timestamp": "2026-03-26T10:05:54.962419",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_02.png",
       "published_screenshot": "output/screenshots/tinkercad/step_02.png",
-      "narration": "Step two. Learning Center. The VIP lounge for knowledge with none of the create-an-account drama.",
-      "pause_ms": 1050
+      "narration": "Open the Learning Center. The lesson grid is loading.",
+      "pause_ms": 2513
     },
     {
       "step": 3,
@@ -69,8 +72,8 @@
       "timestamp": "2026-03-26T10:06:02.806472",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_03.png",
       "published_screenshot": "output/screenshots/tinkercad/step_03.png",
-      "narration": "Search 3D design basics. Every keystroke is one more brick in the empire.",
-      "pause_ms": 920
+      "narration": "Search 3D design basics. Every keystroke is one more brick in the empire. Search results are loading now.",
+      "pause_ms": 1180
     },
     {
       "step": 4,
@@ -80,8 +83,8 @@
       "timestamp": "2026-03-26T10:06:07.982539",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_04.png",
       "published_screenshot": "output/screenshots/tinkercad/step_04.png",
-      "narration": "Back to CAD-focused practice. Professional games only. Focus, precision, geometry.",
-      "pause_ms": 920
+      "narration": "Return to the CAD-focused tutorials.",
+      "pause_ms": 2761
     },
     {
       "step": 5,
@@ -91,8 +94,8 @@
       "timestamp": "2026-03-26T10:06:13.621175",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_05.png",
       "published_screenshot": "output/screenshots/tinkercad/step_05.png",
-      "narration": "Open a tutorial card. Treasure chest vibes, except the prize is Z-axis wisdom.",
-      "pause_ms": 1200
+      "narration": "Open a tutorial card.",
+      "pause_ms": 4292
     },
     {
       "step": 6,
@@ -103,7 +106,7 @@
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_06.png",
       "published_screenshot": "output/screenshots/tinkercad/step_06.png",
       "narration": "Scroll through the visuals. Space stations, moon talk, enough inspiration to make NASA curious.",
-      "pause_ms": 1200
+      "pause_ms": 1760
     },
     {
       "step": 7,
@@ -113,8 +116,8 @@
       "timestamp": "2026-03-26T10:06:31.497954",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_07.png",
       "published_screenshot": "output/screenshots/tinkercad/step_07.png",
-      "narration": "Gallery time. Nine million designs, all born while somebody was supposed to be doing taxes.",
-      "pause_ms": 920
+      "narration": "Gallery time. Nine million designs, all born while somebody was supposed to be doing taxes. The gallery page is rendering.",
+      "pause_ms": 2617
     },
     {
       "step": 8,
@@ -124,8 +127,8 @@
       "timestamp": "2026-03-26T10:06:42.625250",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_08.png",
       "published_screenshot": "output/screenshots/tinkercad/step_08.png",
-      "narration": "Browse the hits. Mushroom, Retro Diner, drawer caddy. Practicality and chaos in perfect harmony.",
-      "pause_ms": 1200
+      "narration": "Browse featured designs for inspiration. Featured designs are still loading.",
+      "pause_ms": 2434
     },
     {
       "step": 9,
@@ -135,8 +138,8 @@
       "timestamp": "2026-03-26T10:06:47.917087",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_09.png",
       "published_screenshot": "output/screenshots/tinkercad/step_09.png",
-      "narration": "Open Mushroom by Demirarh. Purple, spotted, Staff Picked. Honestly, life goals.",
-      "pause_ms": 1200
+      "narration": "Open the featured Mushroom design.",
+      "pause_ms": 3156
     },
     {
       "step": 10,
@@ -146,8 +149,8 @@
       "timestamp": "2026-03-26T10:06:52.469789",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_10.png",
       "published_screenshot": "output/screenshots/tinkercad/step_10.png",
-      "narration": "Tutorial complete. You skipped the login, found the spark, and now Euclid expects greatness.",
-      "pause_ms": 1550
+      "narration": "That wraps the TinkerCAD speedrun.",
+      "pause_ms": 0
     }
   ]
 }

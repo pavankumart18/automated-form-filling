@@ -47,6 +47,59 @@ def read_json_file(path: str, default):
         return json.load(file)
 
 
+def spoken_narration_by_step(timeline_segments: list[dict]) -> dict[int, dict]:
+    """Group final spoken narration from timeline segments into one line per step."""
+    grouped: dict[int, dict] = {}
+    ordered_steps: list[int] = []
+
+    for segment in timeline_segments:
+        step_num = segment.get("step")
+        if not isinstance(step_num, int):
+            continue
+
+        spoken_line = (
+            (segment.get("spoken_text") or "").strip()
+            or (segment.get("subtitle") or "").strip()
+            or (segment.get("text") or "").strip()
+        )
+        if not spoken_line:
+            continue
+
+        start_sec = float(segment.get("start_sec", segment.get("offset_sec", 0.0)) or 0.0)
+        fallback_duration = float(segment.get("clip_duration_sec", 0.0) or 0.0)
+        end_sec = float(segment.get("end_sec", start_sec + fallback_duration) or (start_sec + fallback_duration))
+
+        if step_num not in grouped:
+            grouped[step_num] = {
+                "texts": [],
+                "start_sec": start_sec,
+                "end_sec": end_sec,
+            }
+            ordered_steps.append(step_num)
+
+        texts = grouped[step_num]["texts"]
+        if not texts or texts[-1] != spoken_line:
+            texts.append(spoken_line)
+        grouped[step_num]["start_sec"] = min(float(grouped[step_num]["start_sec"]), start_sec)
+        grouped[step_num]["end_sec"] = max(float(grouped[step_num]["end_sec"]), end_sec)
+
+    lookup: dict[int, dict] = {}
+    for index, step_num in enumerate(ordered_steps):
+        current = grouped[step_num]
+        next_start_sec = float(current["end_sec"])
+        if index + 1 < len(ordered_steps):
+            next_step = grouped[ordered_steps[index + 1]]
+            next_start_sec = float(next_step["start_sec"])
+
+        pause_ms = max(int(round((next_start_sec - float(current["end_sec"])) * 1000)), 0)
+        lookup[step_num] = {
+            "narration": " ".join(current["texts"]).strip(),
+            "pause_ms": pause_ms,
+        }
+
+    return lookup
+
+
 def file_version(path: str) -> str:
     """Return a cache-busting version for a file path."""
     if not os.path.exists(path):
@@ -189,30 +242,40 @@ def build_demo_manifest(demo: dict) -> dict:
     """Assemble the source-of-truth metadata for one demo."""
     name = demo["name"]
     transcript_path = os.path.join(OUTPUT_DIR, f"{name}_transcript.md")
+    narration_script_path = os.path.join(OUTPUT_DIR, f"{name}_narration.txt")
     beats_path = os.path.join(OUTPUT_DIR, f"{name}_narration_beats.json")
+    timeline_path = os.path.join(OUTPUT_DIR, f"{name}_narration_timeline.json")
     video_file = f"{name}_final.webm"
     video_path = os.path.join(OUTPUT_DIR, video_file)
     steps = read_json_file(os.path.join(SCREENSHOT_DIR, f"{name}_steps.json"), [])
     narration_beats = read_json_file(beats_path, [])
+    narration_timeline = read_json_file(timeline_path, {})
+    final_narration_lookup = spoken_narration_by_step(narration_timeline.get("segments", []))
     source_shots = source_screenshot_paths(name)
     published_shots = copy_publishable_screenshots(name, steps) if steps else []
     transcript_count_value = transcript_step_count(transcript_path)
+    narration_script_text = ""
+    if os.path.exists(narration_script_path):
+        with open(narration_script_path, encoding="utf-8") as file:
+            narration_script_text = file.read().strip()
 
     step_entries = []
     for index, step in enumerate(steps):
         published_shot = published_shots[index] if index < len(published_shots) else ""
         beat = narration_beats[index] if index < len(narration_beats) else {}
+        step_num = step.get("step", index + 1)
+        final_narration = final_narration_lookup.get(step_num, {})
         step_entries.append(
             {
-                "step": step.get("step", index + 1),
-                "caption": step.get("caption") or f"Step {step.get('step', index + 1)}: {step.get('description', '')}",
+                "step": step_num,
+                "caption": step.get("caption") or f"Step {step_num}: {step.get('description', '')}",
                 "description": step.get("description", ""),
                 "url": step.get("url", ""),
                 "timestamp": step.get("timestamp", ""),
                 "source_screenshot": step.get("screenshot", ""),
                 "published_screenshot": published_shot,
-                "narration": beat.get("narration", ""),
-                "pause_ms": beat.get("pause_ms", 0),
+                "narration": final_narration.get("narration") or beat.get("narration", ""),
+                "pause_ms": final_narration.get("pause_ms", beat.get("pause_ms", 0)),
             }
         )
 
@@ -238,6 +301,9 @@ def build_demo_manifest(demo: dict) -> dict:
         "video": f"output/{video_file}",
         "poster": step_entries[0]["published_screenshot"] if step_entries else "",
         "transcript": f"output/{name}_transcript.md",
+        "narration_script": f"output/{name}_narration.txt",
+        "narration_timeline": f"output/{name}_narration_timeline.json",
+        "narration_script_text": narration_script_text,
         "steps_json": f"screenshots/{name}_steps.json",
         "narration_beats": f"output/{name}_narration_beats.json",
         "manifest": f"output/{name}_manifest.json",
@@ -984,13 +1050,11 @@ def render_beat_cards(manifest: dict) -> str:
         if not narration:
             continue
 
-        pause_seconds = step.get("pause_ms", 0) / 1000.0
         cards.append(
             f"""
             <article class="beat-card">
                 <div class="beat-head">
                     <span class="beat-step">Step {step["step"]}</span>
-                    <span class="pause-pill">Pause {pause_seconds:.2f}s</span>
                 </div>
                 <p class="beat-text">{html.escape(narration)}</p>
             </article>
@@ -998,6 +1062,30 @@ def render_beat_cards(manifest: dict) -> str:
         )
 
     return "\n".join(cards) if cards else '<div class="detail-panel">Narration beats will appear after narration is generated.</div>'
+
+
+def render_final_narration_script(manifest: dict) -> str:
+    """Render one continuous final narration transcript when available."""
+    script_text = (manifest.get("narration_script_text") or "").strip()
+    if not script_text:
+        return render_beat_cards(manifest)
+
+    paragraphs = []
+    for block in script_text.split("\n\n"):
+        line = block.strip()
+        if line:
+            paragraphs.append(f'<p class="beat-text">{html.escape(line)}</p>')
+
+    if not paragraphs:
+        return render_beat_cards(manifest)
+
+    return f"""
+        <div class="beat-grid">
+            <article class="beat-card">
+                {' '.join(paragraphs)}
+            </article>
+        </div>
+    """
 
 
 def render_warning_box(manifest: dict) -> str:
@@ -1159,8 +1247,9 @@ def render_detail_page(manifest: dict) -> str:
     artifact_items = [
         manifest["video"],
         manifest["transcript"],
+        manifest["narration_script"],
+        manifest["narration_timeline"],
         manifest["steps_json"],
-        manifest["narration_beats"],
         manifest["manifest"],
         manifest["detail_page"],
     ]
@@ -1276,12 +1365,10 @@ def render_detail_page(manifest: dict) -> str:
 
         <section class="section">
             <div class="section-heading">
-                <h2>Story-First Narration</h2>
-                <p class="section-subtext">Shorter, human-sounding narration beats with explicit pause suggestions.</p>
+                <h2>Final Narration</h2>
+                <p class="section-subtext">The exact narration used in the finished audio.</p>
             </div>
-            <div class="beat-grid">
-                {render_beat_cards(manifest)}
-            </div>
+            {render_final_narration_script(manifest) if manifest["name"] == "screener" else f'<div class="beat-grid">{render_beat_cards(manifest)}</div>'}
         </section>
 
         {render_warning_box(manifest)}
