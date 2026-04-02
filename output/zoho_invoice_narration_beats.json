@@ -8,8 +8,8 @@
     "pause_ms": 920,
     "url": "https://www.zoho.com/in/invoice/",
     "start_elapsed_sec": 0.0,
-    "end_elapsed_sec": 10.232,
-    "duration_sec": 10.232
+    "end_elapsed_sec": 8.785,
+    "duration_sec": 8.785
   },
   {
     "step": 2,
@@ -19,9 +19,9 @@
     "fallback_narration": "Jump into the free generator. No login needed.",
     "pause_ms": 920,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-    "start_elapsed_sec": 10.232,
-    "end_elapsed_sec": 17.243,
-    "duration_sec": 7.011
+    "start_elapsed_sec": 8.785,
+    "end_elapsed_sec": 14.737,
+    "duration_sec": 5.952
   },
   {
     "step": 3,
@@ -31,9 +31,9 @@
     "fallback_narration": "Add your company details first.",
     "pause_ms": 1050,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-    "start_elapsed_sec": 17.243,
-    "end_elapsed_sec": 30.74,
-    "duration_sec": 13.497
+    "start_elapsed_sec": 14.737,
+    "end_elapsed_sec": 27.598,
+    "duration_sec": 12.861
   },
   {
     "step": 4,
@@ -43,9 +43,9 @@
     "fallback_narration": "Now fill in the client details.",
     "pause_ms": 1050,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-    "start_elapsed_sec": 30.74,
-    "end_elapsed_sec": 42.828,
-    "duration_sec": 12.088
+    "start_elapsed_sec": 27.598,
+    "end_elapsed_sec": 38.982,
+    "duration_sec": 11.384
   },
   {
     "step": 5,
@@ -55,9 +55,9 @@
     "fallback_narration": "Set the invoice number.",
     "pause_ms": 1050,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-    "start_elapsed_sec": 42.828,
-    "end_elapsed_sec": 49.489,
-    "duration_sec": 6.661
+    "start_elapsed_sec": 38.982,
+    "end_elapsed_sec": 44.396,
+    "duration_sec": 5.414
   },
   {
     "step": 6,
@@ -67,9 +67,9 @@
     "fallback_narration": "Add the first billable item.",
     "pause_ms": 1050,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-    "start_elapsed_sec": 49.489,
-    "end_elapsed_sec": 59.545,
-    "duration_sec": 10.056
+    "start_elapsed_sec": 44.396,
+    "end_elapsed_sec": 53.736,
+    "duration_sec": 9.34
   },
   {
     "step": 7,
@@ -79,9 +79,9 @@
     "fallback_narration": "Add the second line item.",
     "pause_ms": 1050,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-    "start_elapsed_sec": 59.545,
-    "end_elapsed_sec": 68.548,
-    "duration_sec": 9.003
+    "start_elapsed_sec": 53.736,
+    "end_elapsed_sec": 62.013,
+    "duration_sec": 8.277
   },
   {
     "step": 8,
@@ -91,9 +91,9 @@
     "fallback_narration": "Add the hosting line item.",
     "pause_ms": 1050,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-    "start_elapsed_sec": 68.548,
-    "end_elapsed_sec": 78.457,
-    "duration_sec": 9.909
+    "start_elapsed_sec": 62.013,
+    "end_elapsed_sec": 71.157,
+    "duration_sec": 9.144
   },
   {
     "step": 9,
@@ -103,9 +103,9 @@
     "fallback_narration": "Add the payment terms and bank details.",
     "pause_ms": 1050,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-    "start_elapsed_sec": 78.457,
-    "end_elapsed_sec": 89.321,
-    "duration_sec": 10.864
+    "start_elapsed_sec": 71.157,
+    "end_elapsed_sec": 81.15,
+    "duration_sec": 9.993
   },
   {
     "step": 10,
@@ -115,9 +115,9 @@
     "fallback_narration": "Check the totals and GST.",
     "pause_ms": 1200,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-    "start_elapsed_sec": 89.321,
-    "end_elapsed_sec": 94.32,
-    "duration_sec": 4.999
+    "start_elapsed_sec": 81.15,
+    "end_elapsed_sec": 84.796,
+    "duration_sec": 3.646
   },
   {
     "step": 11,
@@ -127,20 +127,20 @@
     "fallback_narration": "Download the invoice as a PDF.",
     "pause_ms": 1120,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-    "start_elapsed_sec": 94.32,
-    "end_elapsed_sec": 99.621,
-    "duration_sec": 5.301
+    "start_elapsed_sec": 84.796,
+    "end_elapsed_sec": 88.778,
+    "duration_sec": 3.982
   },
   {
     "step": 12,
     "caption": "Step 12: Tutorial complete - create professional GST invoices in minutes",
     "description": "Tutorial complete - create professional GST invoices in minutes",
     "narration": "Flawless GST invoice in under two minutes. Now go get your money!",
-    "fallback_narration": "And that's a wrap for Overpass.",
+    "fallback_narration": "And that's a clean Zoho invoice, done.",
     "pause_ms": 1550,
     "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-    "start_elapsed_sec": 99.621,
-    "end_elapsed_sec": 104.167,
-    "duration_sec": 4.546
+    "start_elapsed_sec": 88.778,
+    "end_elapsed_sec": 91.931,
+    "duration_sec": 3.153
   }
 ]

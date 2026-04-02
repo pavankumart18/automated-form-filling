@@ -13,7 +13,7 @@
   "transcript": "output/zoho_invoice_transcript.md",
   "narration_script": "output/zoho_invoice_narration.txt",
   "narration_timeline": "output/zoho_invoice_narration_timeline.json",
-  "narration_script_text": "Alright hustlers and founders, stop crying over broken spreadsheets! Today, we are generating a pristine, professional GST invoice using Zoho Invoice.\n\nThe best part? It's free and needs zero logins. No passwords to forget today. Fire up the free generator page and let's get this bread.\n\nBoom, we're in. First up, who's getting paid? We are. Type in your company name, TechStar Solutions, your name, and address.\n\nAnd now we take a deep breath. The internet is doing its magic. Hydrate. Stare intensely at the screen... and we're good!\n\nTime to bill the big fish. Enter the client details: Acme Corp International. Drop in their address and lock in the billing state, because the taxman is always watching.\n\nSet that invoice number to INV-2026-001. The first invoice is always the sweetest.\n\nNow for the fun part. Line item one: Web Development Services. Forty units at twenty-five hundred a pop. Don't forget the 9 percent GST.\n\nLine item two: UI/UX Design, twenty units at three thousand.\n\nNow we let Zoho do the heavy lifting. We are not here for mental math.\n\nOne more for the road! Line item three: Annual Server Hosting. Eighteen thousand flat.\n\nQuick pause while the totals update. Like a slot machine spin, except you actually win every time.\n\nAlmost home. Drop your payment terms in the notes: payment due within 30 days. Add your bank details so the money actually finds its way to you.\n\nFinal sanity check. Subtotal, GST, grand total looking absolutely crispy.\n\nHit that Download button, grab your PDF, and boom!\n\nFlawless GST invoice in under two minutes. Now go get your money!",
+  "narration_script_text": "Listen up, freelancers and small biz heroes! Tired of sending invoices that look like they were made in MS Paint? Today, I'm showing you how to go from broke to professional in under two minutes using Zoho's free invoice generator. No login, no soul-crushing forms, just pure efficiency. Let's ride!\n\nLook at that clean UI. Fresh breath of mountain air for your finances. Boom, we're in the cockpit. Time to tell the world who you are. Type in your company name, your name, and your address. Deep breath. The internet is doing its magic. We're officially a business entity, people! Who's paying us? Enter Acme Corp International. Give them a professional address in Mumbai. We aren't just sending a bill; we're sending a statement. Give this masterpiece a number. INV-2026-001, the first of many!\n\nNow let's add our first line item: Web Development Services. Forty hours of your genius, don't lowball yourself! Set that GST rate and watch the numbers dance.\n\nLet's stack those services. UI/UX Design? Check. Annual Server Hosting? Check. Now we let Zoho do the heavy lifting. We are not here for mental math. I didn't come here to calculate 9% of 160,000 in my head; I have a life to live!\n\nStep nine: drop in the fine print. Payment due within 30 days. Add the bank details. Quick pause while the totals update. It's like a slot machine spin, except you actually win.\n\nStep ten: review the subtotal and grand total. That's the sound of success.\n\nEverything looks crisp and legal. Hit Download/Print, export the PDF, and send it off. Tutorial complete. Your coffee is still cooling. Go get that bread!",
   "steps_json": "screenshots/zoho_invoice_steps.json",
   "narration_beats": "output/zoho_invoice_narration_beats.json",
   "manifest": "output/zoho_invoice_manifest.json",
@@ -47,32 +47,32 @@
       "caption": "Step 1: Open Zoho Invoice - free online invoicing tool for businesses",
       "description": "Open Zoho Invoice - free online invoicing tool for businesses",
       "url": "https://www.zoho.com/in/invoice/",
-      "timestamp": "2026-03-26T09:54:42.175632",
+      "timestamp": "2026-04-02T09:18:26.716385",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_01.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_01.png",
-      "narration": "Step 1: Open Zoho Invoice - free online invoicing tool for businesses",
-      "pause_ms": 1009
+      "narration": "Listen up, freelancers and small biz heroes! Tired of sending invoices that look like they were made in MS Paint? Today, I'm showing you how to go from broke to professional in under two minutes using Zoho's free invoice generator. No login, no soul-crushing forms, just pure efficiency. Let's ride!",
+      "pause_ms": 0
     },
     {
       "step": 2,
       "caption": "Step 2: Open the free invoice generator page - no login required",
       "description": "Open the free invoice generator page - no login required",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-26T09:54:49.187195",
+      "timestamp": "2026-04-02T09:18:32.668223",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_02.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_02.png",
-      "narration": "Step 2: Open the free invoice generator page - no login required",
-      "pause_ms": 842
+      "narration": "The best part? It's free and needs zero logins. No passwords to forget today. Fire up the free generator page and let's get this bread.",
+      "pause_ms": 920
     },
     {
       "step": 3,
       "caption": "Step 3: Enter business details: company name, contact, and address",
       "description": "Enter business details: company name, contact, and address",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-26T09:55:02.684302",
+      "timestamp": "2026-04-02T09:18:45.528905",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_03.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_03.png",
-      "narration": "Step 3: Enter business details: company name, contact, and address And now we take a deep breath. The internet is doing its magic. Hydrate. Stare intensely at the screen... and we're good!",
+      "narration": "Look at that clean UI. Fresh breath of mountain air for your finances. Boom, we're in the cockpit. Time to tell the world who you are. Type in your company name, your name, and your address. Deep breath. The internet is doing its magic. We're officially a business entity, people! Who's paying us? Enter Acme Corp International. Give them a professional address in Mumbai. We aren't just sending a bill; we're sending a statement. Give this masterpiece a number. INV-2026-001, the first of many!",
       "pause_ms": 0
     },
     {
@@ -80,99 +80,99 @@
       "caption": "Step 4: Enter Bill To details for Acme Corp International",
       "description": "Enter Bill To details for Acme Corp International",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-26T09:55:14.772197",
+      "timestamp": "2026-04-02T09:18:56.913306",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_04.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_04.png",
-      "narration": "Step 4: Enter Bill To details for Acme Corp International",
-      "pause_ms": 1632
+      "narration": "Time to bill the big fish. Enter the client details: Acme Corp International. Drop in their address and lock in the billing state, because the taxman is always watching.",
+      "pause_ms": 1050
     },
     {
       "step": 5,
       "caption": "Step 5: Set invoice number to INV-2026-001",
       "description": "Set invoice number to INV-2026-001",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-26T09:55:21.433102",
+      "timestamp": "2026-04-02T09:19:02.327027",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_05.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_05.png",
-      "narration": "Step 5: Set invoice number to INV-2026-001",
-      "pause_ms": 843
+      "narration": "Set that invoice number to INV-2026-001. The first invoice is always the sweetest.",
+      "pause_ms": 1050
     },
     {
       "step": 6,
       "caption": "Step 6: Add line item 1 with quantity, rate, and GST",
       "description": "Add line item 1 with quantity, rate, and GST",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-26T09:55:31.488749",
+      "timestamp": "2026-04-02T09:19:11.667497",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_06.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_06.png",
-      "narration": "Step 6: Add line item 1 with quantity, rate, and GST",
-      "pause_ms": 991
+      "narration": "Now let's add our first line item: Web Development Services. Forty hours of your genius, don't lowball yourself! Set that GST rate and watch the numbers dance.",
+      "pause_ms": 0
     },
     {
       "step": 7,
       "caption": "Step 7: Add line item 2: UI/UX Design services",
       "description": "Add line item 2: UI/UX Design services",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-26T09:55:40.491829",
+      "timestamp": "2026-04-02T09:19:19.944459",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_07.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_07.png",
-      "narration": "Step 7: Add line item 2: UI/UX Design services Now we let Zoho do the heavy lifting. We are not here for mental math.",
-      "pause_ms": 873
+      "narration": "Let's stack those services. UI/UX Design? Check. Annual Server Hosting? Check. Now we let Zoho do the heavy lifting. We are not here for mental math. I didn't come here to calculate 9% of 160,000 in my head; I have a life to live!",
+      "pause_ms": 1459
     },
     {
       "step": 8,
       "caption": "Step 8: Add line item 3: annual server hosting",
       "description": "Add line item 3: annual server hosting",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-26T09:55:50.400862",
+      "timestamp": "2026-04-02T09:19:29.088509",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_08.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_08.png",
-      "narration": "Step 8: Add line item 3: annual server hosting Quick pause while the totals update. Like a slot machine spin, except you actually win every time.",
-      "pause_ms": 280
+      "narration": "One more for the road! Line item three: Annual Server Hosting. Eighteen thousand flat.",
+      "pause_ms": 1050
     },
     {
       "step": 9,
       "caption": "Step 9: Add payment notes and terms for the client",
       "description": "Add payment notes and terms for the client",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-26T09:56:01.264780",
+      "timestamp": "2026-04-02T09:19:39.081514",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_09.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_09.png",
-      "narration": "Step 9: Add payment notes and terms for the client",
-      "pause_ms": 1426
+      "narration": "Step nine: drop in the fine print. Payment due within 30 days. Add the bank details. Quick pause while the totals update. It's like a slot machine spin, except you actually win.",
+      "pause_ms": 0
     },
     {
       "step": 10,
       "caption": "Step 10: Review subtotal, GST breakdown, and grand total",
       "description": "Review subtotal, GST breakdown, and grand total",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-26T09:56:06.263902",
+      "timestamp": "2026-04-02T09:19:42.727318",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_10.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_10.png",
-      "narration": "Step 10: Review subtotal, GST breakdown, and grand total",
-      "pause_ms": 836
+      "narration": "Step ten: review the subtotal and grand total. That's the sound of success.",
+      "pause_ms": 0
     },
     {
       "step": 11,
       "caption": "Step 11: Use Download/Print to export the invoice as PDF",
       "description": "Use Download/Print to export the invoice as PDF",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-26T09:56:11.564847",
+      "timestamp": "2026-04-02T09:19:46.709402",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_11.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_11.png",
-      "narration": "Step 11: Use Download/Print to export the invoice as PDF",
-      "pause_ms": 2107
+      "narration": "Everything looks crisp and legal. Hit Download/Print, export the PDF, and send it off. Tutorial complete. Your coffee is still cooling. Go get that bread!",
+      "pause_ms": 0
     },
     {
       "step": 12,
       "caption": "Step 12: Tutorial complete - create professional GST invoices in minutes",
       "description": "Tutorial complete - create professional GST invoices in minutes",
       "url": "https://www.zoho.com/in/invoice/free-invoice-generator.html",
-      "timestamp": "2026-03-26T09:56:16.111405",
+      "timestamp": "2026-04-02T09:19:49.861979",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\zoho_invoice\\step_12.png",
       "published_screenshot": "output/screenshots/zoho_invoice/step_12.png",
-      "narration": "Step 12: Tutorial complete - create professional GST invoices in minutes",
-      "pause_ms": 0
+      "narration": "Flawless GST invoice in under two minutes. Now go get your money!",
+      "pause_ms": 1550
     }
   ]
 }

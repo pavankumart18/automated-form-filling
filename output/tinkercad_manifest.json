@@ -13,7 +13,7 @@
   "transcript": "output/tinkercad_transcript.md",
   "narration_script": "output/tinkercad_narration.txt",
   "narration_timeline": "output/tinkercad_narration_timeline.json",
-  "narration_script_text": "Welcome, future architects. TinkerCAD is open, and free is still the best price in software.\n\nLook at that plane. My what-if is a rocket in pajamas. Tiny render break, then we're back.\n\nStep two. Learning Center. The VIP lounge for knowledge with none of the create-an-account drama.\n\nThe lesson grid is loading. Like a souffle, you do not rush the pixels.\n\nSearch 3D design basics. Every keystroke is one more brick in the empire.\n\nTinkerCAD is thinking. Castle, donut, ego monument, whatever you build, creativity gets a second.\n\nBack to CAD-focused practice. Professional games only. Focus, precision, geometry.\n\nOpen a tutorial card. Treasure chest vibes, except the prize is Z-axis wisdom.\n\nScroll through the visuals. Space stations, moon talk, enough inspiration to make NASA curious.\n\nGallery time. Nine million designs, all born while somebody was supposed to be doing taxes.\n\nShort render break. Mushroom or car? The suspense is crushing my ergonomic chair.\n\nBrowse the hits. Mushroom, Retro Diner, drawer caddy. Practicality and chaos in perfect harmony.\n\nAlmost there. I can feel my brain getting more creative by the second.\n\nOpen Mushroom by Demirarh. Purple, spotted, Staff Picked. Honestly, life goals.\n\nTutorial complete. You skipped the login, found the spark, and now Euclid expects greatness.",
+  "narration_script_text": "Open Tinkercad, head into the Learning Center, and start with the beginner lessons. No login, no maze, just the fast lane into 3D design, which is exactly how tutorials should behave.\n\nSearch 3D design basics, then jump back into the 3D Design track so the CAD lessons stay front and center.\n\nOpen a lesson card and scroll through it. This is the quality check. We want clear visuals, actual steps, and enough detail to keep a beginner moving.\n\nNow jump to the gallery. Community projects are where you steal shapes, collect ideas, spot clever shortcuts, and find the spark that gets you building instead of overthinking.\n\nBrowse the gallery for a practical idea, something like a phone stand. Inspiration beats staring at a blank canvas and pretending that counts as design research.\n\nOpen one design. Borrow momentum.\n\nLearn. Browse. Build.",
   "steps_json": "screenshots/tinkercad_steps.json",
   "narration_beats": "output/tinkercad_narration_beats.json",
   "manifest": "output/tinkercad_manifest.json",
@@ -47,109 +47,109 @@
       "caption": "Step 1: Open TinkerCAD - Autodesk's free platform for 3D learning and design",
       "description": "Open TinkerCAD - Autodesk's free platform for 3D learning and design",
       "url": "https://www.tinkercad.com/",
-      "timestamp": "2026-03-26T10:05:45.634370",
+      "timestamp": "2026-04-02T10:16:41.619424",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_01.png",
       "published_screenshot": "output/screenshots/tinkercad/step_01.png",
-      "narration": "Welcome, future architects. TinkerCAD is open, and free is still the best price in software. The home page is rendering now.",
-      "pause_ms": 1506
+      "narration": "Open Tinkercad, head into the Learning Center, and start with the beginner lessons. No login, no maze, just the fast lane into 3D design, which is exactly how tutorials should behave.",
+      "pause_ms": 661
     },
     {
       "step": 2,
       "caption": "Step 2: Open the Learning Center where beginner tutorials are available without login",
       "description": "Open the Learning Center where beginner tutorials are available without login",
       "url": "https://www.tinkercad.com/learn/designs",
-      "timestamp": "2026-03-26T10:05:54.962419",
+      "timestamp": "2026-04-02T10:16:47.829986",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_02.png",
       "published_screenshot": "output/screenshots/tinkercad/step_02.png",
-      "narration": "Open the Learning Center. The lesson grid is loading.",
-      "pause_ms": 2513
+      "narration": "Step two. Learning Center. The VIP lounge for knowledge with none of the create-an-account drama.",
+      "pause_ms": 1050
     },
     {
       "step": 3,
       "caption": "Step 3: Search for beginner 3D design tutorials using the search bar",
       "description": "Search for beginner 3D design tutorials using the search bar",
       "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
-      "timestamp": "2026-03-26T10:06:02.806472",
+      "timestamp": "2026-04-02T10:16:54.148590",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_03.png",
       "published_screenshot": "output/screenshots/tinkercad/step_03.png",
-      "narration": "Search 3D design basics. Every keystroke is one more brick in the empire. Search results are loading now.",
-      "pause_ms": 1180
+      "narration": "Search 3D design basics, then jump back into the 3D Design track so the CAD lessons stay front and center.",
+      "pause_ms": 3011
     },
     {
       "step": 4,
       "caption": "Step 4: Return to 3D Design tutorials for CAD-focused practice",
       "description": "Return to 3D Design tutorials for CAD-focused practice",
       "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
-      "timestamp": "2026-03-26T10:06:07.982539",
+      "timestamp": "2026-04-02T10:16:57.891299",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_04.png",
       "published_screenshot": "output/screenshots/tinkercad/step_04.png",
-      "narration": "Return to the CAD-focused tutorials.",
-      "pause_ms": 2761
+      "narration": "Back to CAD-focused practice. Professional games only. Focus, precision, geometry.",
+      "pause_ms": 920
     },
     {
       "step": 5,
       "caption": "Step 5: Open a tutorial card to view guided learning content",
       "description": "Open a tutorial card to view guided learning content",
       "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
-      "timestamp": "2026-03-26T10:06:13.621175",
+      "timestamp": "2026-04-02T10:17:02.064836",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_05.png",
       "published_screenshot": "output/screenshots/tinkercad/step_05.png",
-      "narration": "Open a tutorial card.",
-      "pause_ms": 4292
+      "narration": "Open a lesson card and scroll through it. This is the quality check. We want clear visuals, actual steps, and enough detail to keep a beginner moving.",
+      "pause_ms": 1191
     },
     {
       "step": 6,
       "caption": "Step 6: Scroll through the tutorial page to view lesson details and visuals",
       "description": "Scroll through the tutorial page to view lesson details and visuals",
       "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
-      "timestamp": "2026-03-26T10:06:21.009741",
+      "timestamp": "2026-04-02T10:17:07.973874",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_06.png",
       "published_screenshot": "output/screenshots/tinkercad/step_06.png",
       "narration": "Scroll through the visuals. Space stations, moon talk, enough inspiration to make NASA curious.",
-      "pause_ms": 1760
+      "pause_ms": 1200
     },
     {
       "step": 7,
       "caption": "Step 7: Open the TinkerCAD gallery to explore community designs",
       "description": "Open the TinkerCAD gallery to explore community designs",
       "url": "https://www.tinkercad.com/things",
-      "timestamp": "2026-03-26T10:06:31.497954",
+      "timestamp": "2026-04-02T10:17:20.869796",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_07.png",
       "published_screenshot": "output/screenshots/tinkercad/step_07.png",
-      "narration": "Gallery time. Nine million designs, all born while somebody was supposed to be doing taxes. The gallery page is rendering.",
-      "pause_ms": 2617
+      "narration": "Now jump to the gallery. Community projects are where you steal shapes, collect ideas, spot clever shortcuts, and find the spark that gets you building instead of overthinking.",
+      "pause_ms": 1565
     },
     {
       "step": 8,
       "caption": "Step 8: Browse featured gallery designs for project inspiration",
       "description": "Browse featured gallery designs for project inspiration",
       "url": "https://www.tinkercad.com/things",
-      "timestamp": "2026-03-26T10:06:42.625250",
+      "timestamp": "2026-04-02T10:17:30.509225",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_08.png",
       "published_screenshot": "output/screenshots/tinkercad/step_08.png",
-      "narration": "Browse featured designs for inspiration. Featured designs are still loading.",
-      "pause_ms": 2434
+      "narration": "Browse the gallery for a practical idea, something like a phone stand. Inspiration beats staring at a blank canvas and pretending that counts as design research.",
+      "pause_ms": 269
     },
     {
       "step": 9,
       "caption": "Step 9: Open a gallery design page to review details and references",
       "description": "Open a gallery design page to review details and references",
-      "url": "https://www.tinkercad.com/things/1IXJmC1WnYn-mushroom",
-      "timestamp": "2026-03-26T10:06:47.917087",
+      "url": "https://www.tinkercad.com/things/ddtuLraw1Zf-my-take-on-a-greek-spartan-helmet-march-2026",
+      "timestamp": "2026-04-02T10:17:34.242239",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_09.png",
       "published_screenshot": "output/screenshots/tinkercad/step_09.png",
-      "narration": "Open the featured Mushroom design.",
-      "pause_ms": 3156
+      "narration": "Open one design. Borrow momentum.",
+      "pause_ms": 122
     },
     {
       "step": 10,
       "caption": "Step 10: Tutorial complete - start learning TinkerCAD with no-login resources",
       "description": "Tutorial complete - start learning TinkerCAD with no-login resources",
-      "url": "https://www.tinkercad.com/things/1IXJmC1WnYn-mushroom",
-      "timestamp": "2026-03-26T10:06:52.469789",
+      "url": "https://www.tinkercad.com/things/ddtuLraw1Zf-my-take-on-a-greek-spartan-helmet-march-2026",
+      "timestamp": "2026-04-02T10:17:37.394827",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_10.png",
       "published_screenshot": "output/screenshots/tinkercad/step_10.png",
-      "narration": "That wraps the TinkerCAD speedrun.",
+      "narration": "Learn. Browse. Build.",
       "pause_ms": 0
     }
   ]

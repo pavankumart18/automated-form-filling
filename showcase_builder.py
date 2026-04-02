@@ -1368,7 +1368,7 @@ def render_detail_page(manifest: dict) -> str:
                 <h2>Final Narration</h2>
                 <p class="section-subtext">The exact narration used in the finished audio.</p>
             </div>
-            {render_final_narration_script(manifest) if manifest["name"] == "screener" else f'<div class="beat-grid">{render_beat_cards(manifest)}</div>'}
+            {render_final_narration_script(manifest) if manifest["name"] in {"screener", "zoho_invoice", "tinkercad"} else f'<div class="beat-grid">{render_beat_cards(manifest)}</div>'}
         </section>
 
         {render_warning_box(manifest)}

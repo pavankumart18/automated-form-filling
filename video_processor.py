@@ -5,6 +5,7 @@ Handles: compression, caption overlay, FPS reduction, audio merge.
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -55,6 +56,86 @@ def load_narration_segments(narration_timeline_path: str | None) -> list[dict]:
         return segments if isinstance(segments, list) else []
     except Exception:
         return []
+
+
+def normalize_caption_text(text: str) -> str:
+    """Collapse subtitle whitespace before chunking it for display."""
+    return re.sub(r"\s+", " ", text or "").strip()
+
+
+def wrap_caption_chunk(text: str) -> str:
+    """Insert one balanced line break when a caption chunk gets visually wide."""
+    words = text.split()
+    if len(words) < 7:
+        return text
+
+    best_split = None
+    best_score = None
+    for index in range(2, len(words) - 1):
+        left = " ".join(words[:index])
+        right = " ".join(words[index:])
+        score = (max(len(left), len(right)), abs(len(left) - len(right)))
+        if best_score is None or score < best_score:
+            best_score = score
+            best_split = (left, right)
+
+    if not best_split:
+        return text
+    return f"{best_split[0]}\n{best_split[1]}"
+
+
+def split_timeline_caption_text(text: str, max_words: int = 7) -> list[str]:
+    """Break long narration lines into shorter subtitle beats."""
+    normalized = normalize_caption_text(text)
+    if not normalized:
+        return []
+
+    chunks = []
+    sentences = re.split(r"(?<=[.!?])\s+", normalized)
+    for sentence in sentences:
+        line = sentence.strip()
+        if not line:
+            continue
+
+        words = line.split()
+        while len(words) > max_words:
+            chunk_words = words[:max_words]
+            chunks.append(wrap_caption_chunk(" ".join(chunk_words)))
+            words = words[max_words:]
+
+        if words:
+            chunks.append(wrap_caption_chunk(" ".join(words)))
+
+    return chunks or [wrap_caption_chunk(normalized)]
+
+
+def caption_chunk_windows(start_sec: float, end_sec: float, chunks: list[str]) -> list[tuple[float, float, str]]:
+    """Distribute subtitle chunks across the spoken segment by word weight."""
+    if not chunks:
+        return []
+
+    if len(chunks) == 1:
+        return [(start_sec, end_sec, chunks[0])]
+
+    duration_sec = max(end_sec - start_sec, 0.2)
+    chunk_weights = [max(len(chunk.replace("\n", " ").split()), 1) for chunk in chunks]
+    total_weight = sum(chunk_weights)
+    minimum_chunk_sec = 0.55
+    windows = []
+    cursor = start_sec
+
+    for index, chunk in enumerate(chunks):
+        if index == len(chunks) - 1:
+            chunk_end = end_sec
+        else:
+            proportional_sec = duration_sec * (chunk_weights[index] / total_weight)
+            remaining_min_sec = minimum_chunk_sec * (len(chunks) - index - 1)
+            chunk_end = min(cursor + max(proportional_sec, minimum_chunk_sec), end_sec - remaining_min_sec)
+
+        windows.append((cursor, chunk_end, chunk))
+        cursor = chunk_end
+
+    return windows
 
 
 def retime_video_to_timeline(
@@ -168,7 +249,8 @@ def generate_caption_file(
     narration_segments = load_narration_segments(narration_timeline_path)
     if narration_segments:
         with open(output_path, "w", encoding="utf-8") as f:
-            for index, segment in enumerate(narration_segments, start=1):
+            caption_index = 1
+            for segment in narration_segments:
                 start_sec = max(0.0, float(segment.get("start_sec", segment.get("offset_sec", 0.0)) or 0.0))
                 fallback_duration = max(float(segment.get("clip_duration_sec", 0.0) or 0.0), 1.1)
                 end_sec = float(segment.get("end_sec", start_sec + fallback_duration) or (start_sec + fallback_duration))
@@ -183,9 +265,12 @@ def generate_caption_file(
                 if not subtitle:
                     continue
 
-                f.write(f"{index}\n")
-                f.write(f"{format_srt_time(start_sec)} --> {format_srt_time(end_sec)}\n")
-                f.write(f"{subtitle}\n\n")
+                caption_chunks = split_timeline_caption_text(subtitle)
+                for chunk_start, chunk_end, chunk_text in caption_chunk_windows(start_sec, end_sec, caption_chunks):
+                    f.write(f"{caption_index}\n")
+                    f.write(f"{format_srt_time(chunk_start)} --> {format_srt_time(chunk_end)}\n")
+                    f.write(f"{chunk_text}\n\n")
+                    caption_index += 1
 
         print(f"  Captions generated from narration timeline: {output_path}")
         return
@@ -333,10 +418,10 @@ def burn_captions(input_path: str, srt_path: str, output_path: str):
         "-i", input_path,
         "-vf", (
             f"subtitles='{escaped_srt}':"
-            "force_style='FontSize=18,FontName=Trebuchet MS,"
-            "PrimaryColour=&H00FFFFFF,OutlineColour=&H28000000,"
-            "BackColour=&H78000000,BorderStyle=3,Outline=1,Shadow=0,"
-            "MarginV=26,Alignment=2,Spacing=0.3'"
+            "force_style='FontSize=14,FontName=Trebuchet MS,"
+            "PrimaryColour=&H00FFFFFF,OutlineColour=&H46000000,"
+            "BackColour=&H00000000,BorderStyle=1,Outline=1,Shadow=0,"
+            "MarginV=18,MarginL=34,MarginR=34,Alignment=2,Spacing=0.1'"
         ),
         "-c:v", "libvpx-vp9",
         "-crf", "45",

@@ -240,6 +240,192 @@ CUSTOM_SCREENER_TIMELINE_SEGMENTS = [
         "subtitle": "Open Ganesh Infra and run the same four-point check.",
     },
 ]
+CUSTOM_ZOHO_TIMELINE_SEGMENTS = [
+    {
+        "start_step": 1,
+        "end_step": 2,
+        "target_start_sec": 0.0,
+        "target_end_sec": 17.2,
+        "text": (
+            "Listen up, freelancers and small biz heroes! Tired of sending invoices that look like they were made in MS Paint? Today, I'm showing you how to go from broke to professional in under two minutes using Zoho's free invoice generator. No login, no soul-crushing forms, just pure efficiency. Let's ride!"
+        ),
+        "fallback_text": (
+            "Listen up, freelancers and small biz heroes! Tired of sending invoices that look like they were made in MS Paint? Today, I'm showing you how to go from broke to professional in under two minutes using Zoho's free invoice generator. No login, no soul-crushing forms, just pure efficiency. Let's ride!"
+        ),
+        "subtitle": "Open Zoho Invoice and jump into the free invoice generator.",
+    },
+    {
+        "start_step": 3,
+        "end_step": 5,
+        "target_start_sec": 17.2,
+        "target_end_sec": 49.5,
+        "text": (
+            "Look at that clean UI. Fresh breath of mountain air for your finances. Boom, we're in the cockpit. Time to tell the world who you are. Type in your company name, your name, and your address. Deep breath. The internet is doing its magic. We're officially a business entity, people! Who's paying us? Enter Acme Corp International. Give them a professional address in Mumbai. We aren't just sending a bill; we're sending a statement. Give this masterpiece a number. INV-2026-001, the first of many!"
+        ),
+        "fallback_text": (
+            "Look at that clean UI. Fresh breath of mountain air for your finances. Boom, we're in the cockpit. Time to tell the world who you are. Type in your company name, your name, and your address. Deep breath. The internet is doing its magic. We're officially a business entity, people! Who's paying us? Enter Acme Corp International. Give them a professional address in Mumbai. We aren't just sending a bill; we're sending a statement. Give this masterpiece a number. INV-2026-001, the first of many!"
+        ),
+        "subtitle": "Enter your business details, client details, and invoice number.",
+    },
+    {
+        "start_step": 6,
+        "end_step": 6,
+        "target_start_sec": 49.5,
+        "target_end_sec": 59.6,
+        "text": (
+            "Now let's add our first line item: Web Development Services. Forty hours of your genius, don't lowball yourself! Set that GST rate and watch the numbers dance."
+        ),
+        "fallback_text": (
+            "Now let's add our first line item: Web Development Services. Forty hours of your genius, don't lowball yourself! Set that GST rate and watch the numbers dance."
+        ),
+        "subtitle": "Add the first line item and set the GST.",
+    },
+    {
+        "start_step": 7,
+        "end_step": 8,
+        "target_start_sec": 59.6,
+        "target_end_sec": 78.5,
+        "text": (
+            "Let's stack those services. UI/UX Design? Check. Annual Server Hosting? Check. Now we let Zoho do the heavy lifting. We are not here for mental math. I didn't come here to calculate 9% of 160,000 in my head; I have a life to live!"
+        ),
+        "fallback_text": (
+            "Let's stack those services. UI/UX Design? Check. Annual Server Hosting? Check. Now we let Zoho do the heavy lifting. We are not here for mental math. I didn't come here to calculate 9% of 160,000 in my head; I have a life to live!"
+        ),
+        "subtitle": "Add the remaining services and let Zoho handle the math.",
+    },
+    {
+        "start_step": 9,
+        "end_step": 9,
+        "target_start_sec": 78.5,
+        "target_end_sec": 89.3,
+        "text": (
+            "Step nine: drop in the fine print. Payment due within 30 days. Add the bank details. Quick pause while the totals update. It's like a slot machine spin, except you actually win."
+        ),
+        "fallback_text": (
+            "Step nine: drop in the fine print. Payment due within 30 days. Add the bank details. Quick pause while the totals update. It's like a slot machine spin, except you actually win."
+        ),
+        "subtitle": "Add the payment terms and bank details.",
+    },
+    {
+        "start_step": 10,
+        "end_step": 10,
+        "target_start_sec": 89.3,
+        "target_end_sec": 94.3,
+        "text": (
+            "Step ten: review the subtotal and grand total. That's the sound of success."
+        ),
+        "fallback_text": (
+            "Step ten: review the subtotal and grand total. That's the sound of success."
+        ),
+        "subtitle": "Review the subtotal and grand total.",
+    },
+    {
+        "start_step": 11,
+        "end_step": 12,
+        "target_start_sec": 94.3,
+        "target_end_sec": 104.2,
+        "text": (
+            "Everything looks crisp and legal. Hit Download/Print, export the PDF, and send it off. Tutorial complete. Your coffee is still cooling. Go get that bread!"
+        ),
+        "fallback_text": (
+            "Everything looks crisp and legal. Hit Download/Print, export the PDF, and send it off. Tutorial complete. Your coffee is still cooling. Go get that bread!"
+        ),
+        "subtitle": "Export the PDF and finish the invoice.",
+    },
+]
+CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
+    {
+        "start_step": 1,
+        "end_step": 2,
+        "target_start_sec": 0.0,
+        "target_end_sec": 18.2,
+        "text": (
+            "Open Tinkercad, head into the Learning Center, and start with the beginner lessons. No login, no maze, just the fast lane into 3D design, which is exactly how tutorials should behave."
+        ),
+        "fallback_text": (
+            "Open Tinkercad, head into the Learning Center, and start with the beginner lessons. No login, no maze, just the fast lane into 3D design, which is exactly how tutorials should behave."
+        ),
+        "subtitle": "Open Tinkercad, then go to the Learning Center.",
+    },
+    {
+        "start_step": 3,
+        "end_step": 4,
+        "target_start_sec": 18.2,
+        "target_end_sec": 31.2,
+        "text": (
+            "Search 3D design basics, then jump back into the 3D Design track so the CAD lessons stay front and center. We are not wandering the menu today; we are building a clean on-ramp."
+        ),
+        "fallback_text": (
+            "Search 3D design basics, then jump back into the 3D Design track so the CAD lessons stay front and center."
+        ),
+        "subtitle": "Search beginner basics, then return to the 3D Design track.",
+    },
+    {
+        "start_step": 5,
+        "end_step": 6,
+        "target_start_sec": 31.2,
+        "target_end_sec": 44.3,
+        "text": (
+            "Open a lesson card and scroll through it. This is the quality check. We want clear visuals, actual steps, and enough detail to keep a beginner moving."
+        ),
+        "fallback_text": (
+            "Open a lesson card and scroll through it. We want clear visuals, actual steps, and enough detail to keep a beginner moving."
+        ),
+        "subtitle": "Open a lesson card and review the tutorial details.",
+    },
+    {
+        "start_step": 7,
+        "end_step": 7,
+        "target_start_sec": 44.3,
+        "target_end_sec": 54.8,
+        "text": (
+            "Now jump to the gallery. Community projects are where you steal shapes, collect ideas, spot clever shortcuts, and find the spark that gets you building instead of overthinking."
+        ),
+        "fallback_text": (
+            "Now jump to the gallery. Community projects are where you steal shapes, collect ideas, spot clever shortcuts, and find the spark that gets you building instead of overthinking."
+        ),
+        "subtitle": "Open the gallery for project inspiration.",
+    },
+    {
+        "start_step": 8,
+        "end_step": 8,
+        "target_start_sec": 54.8,
+        "target_end_sec": 65.9,
+        "text": (
+            "Browse the gallery for a practical idea, something like a phone stand. Inspiration beats staring at a blank canvas and pretending that counts as design research."
+        ),
+        "fallback_text": (
+            "Browse the gallery for a practical idea, something like a phone stand. Inspiration beats staring at a blank canvas."
+        ),
+        "subtitle": "Browse the gallery for a practical idea.",
+    },
+    {
+        "start_step": 9,
+        "end_step": 9,
+        "target_start_sec": 65.9,
+        "target_end_sec": 71.2,
+        "text": (
+            "Open one design. Borrow momentum."
+        ),
+        "fallback_text": (
+            "Open one design. Borrow momentum."
+        ),
+        "subtitle": "Open a design page for inspiration.",
+    },
+    {
+        "start_step": 10,
+        "end_step": 10,
+        "target_start_sec": 71.2,
+        "target_end_sec": 75.7,
+        "text": (
+            "Learn. Browse. Build."
+        ),
+        "fallback_text": (
+            "Learn. Browse. Build."
+        ),
+        "subtitle": "Finish the Tinkercad speedrun.",
+    },
+]
 GERUND_OVERRIDES = {
     "open": "opening",
     "navigate": "navigating",
@@ -2147,10 +2333,99 @@ def build_custom_screener_timeline(steps: list[dict]) -> list[dict] | None:
     return timeline
 
 
+def build_custom_zoho_timeline(steps: list[dict]) -> list[dict] | None:
+    """Use the user-approved Zoho narration script across grouped step windows."""
+    expected_steps = max((int(segment.get("end_step", 0) or 0) for segment in CUSTOM_ZOHO_TIMELINE_SEGMENTS), default=0)
+    if len(steps) < expected_steps:
+        return None
+
+    timeline = []
+    for index, segment in enumerate(CUSTOM_ZOHO_TIMELINE_SEGMENTS, start=1):
+        start_step = segment["start_step"]
+        end_step = segment["end_step"]
+        if start_step < 1 or end_step > len(steps) or start_step > end_step:
+            return None
+
+        start_step_payload = steps[start_step - 1]
+        end_step_payload = steps[end_step - 1]
+        measured_start_sec = step_start_sec(start_step_payload, 0.0)
+        measured_end_sec = step_end_sec(end_step_payload, measured_start_sec)
+        offset_sec = round(float(segment["target_start_sec"]), 3)
+        target_window_end_sec = round(float(segment["target_end_sec"]), 3)
+        budget_sec = round(max(target_window_end_sec - offset_sec, 2.8), 3)
+
+        timeline.append(
+            {
+                "segment_id": f"zoho_story_{index:02d}",
+                "step": start_step,
+                "type": "primary",
+                "offset_sec": offset_sec,
+                "budget_sec": budget_sec,
+                "text": segment["text"],
+                "fallback_text": segment.get("fallback_text") or segment["text"],
+                "subtitle": segment.get("subtitle") or segment["text"],
+                "target_window_end_sec": target_window_end_sec,
+                "disable_compact": True,
+                "source_start_step": start_step,
+                "source_end_step": end_step,
+                "source_start_sec": round(measured_start_sec, 3),
+                "source_end_sec": round(measured_end_sec, 3),
+            }
+        )
+
+    return timeline
+
+
+def build_custom_tinkercad_timeline(steps: list[dict]) -> list[dict] | None:
+    """Use a grouped story-first script for the Tinkercad speedrun."""
+    expected_steps = max((int(segment.get("end_step", 0) or 0) for segment in CUSTOM_TINKERCAD_TIMELINE_SEGMENTS), default=0)
+    if len(steps) < expected_steps:
+        return None
+
+    timeline = []
+    for index, segment in enumerate(CUSTOM_TINKERCAD_TIMELINE_SEGMENTS, start=1):
+        start_step = segment["start_step"]
+        end_step = segment["end_step"]
+        if start_step < 1 or end_step > len(steps) or start_step > end_step:
+            return None
+
+        start_step_payload = steps[start_step - 1]
+        end_step_payload = steps[end_step - 1]
+        measured_start_sec = step_start_sec(start_step_payload, 0.0)
+        measured_end_sec = step_end_sec(end_step_payload, measured_start_sec)
+        offset_sec = round(measured_start_sec, 3)
+        target_window_end_sec = round(measured_end_sec, 3)
+        budget_sec = round(max(target_window_end_sec - offset_sec, 2.8), 3)
+
+        timeline.append(
+            {
+                "segment_id": f"tinkercad_story_{index:02d}",
+                "step": start_step,
+                "type": "primary",
+                "offset_sec": offset_sec,
+                "budget_sec": budget_sec,
+                "text": segment["text"],
+                "fallback_text": segment.get("fallback_text") or segment["text"],
+                "subtitle": segment.get("subtitle") or segment["text"],
+                "target_window_end_sec": target_window_end_sec,
+                "source_start_step": start_step,
+                "source_end_step": end_step,
+                "source_start_sec": round(measured_start_sec, 3),
+                "source_end_sec": round(measured_end_sec, 3),
+            }
+        )
+
+    return timeline
+
+
 def custom_narration_timeline(demo_name: str, steps: list[dict]) -> list[dict] | None:
     """Return a demo-specific narration timeline override when one is defined."""
     if demo_name == "screener":
         return build_custom_screener_timeline(steps)
+    if demo_name == "zoho_invoice":
+        return build_custom_zoho_timeline(steps)
+    if demo_name == "tinkercad":
+        return build_custom_tinkercad_timeline(steps)
     return None
 
 
@@ -2462,6 +2737,8 @@ def generate_audio_with_fallbacks(text: str, fallback_text: str, output_prefix: 
 
 def segment_compact_voice_text(segment: dict) -> str:
     """Build a shorter rescue line when a segment cannot fit at a balanced pace."""
+    if segment.get("disable_compact"):
+        return ""
     fallback_text = normalize_text(segment.get("fallback_text") or "")
     if not fallback_text:
         return ""
