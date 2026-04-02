@@ -336,92 +336,157 @@ CUSTOM_ZOHO_TIMELINE_SEGMENTS = [
 CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
     {
         "start_step": 1,
-        "end_step": 2,
+        "end_step": 1,
         "target_start_sec": 0.0,
-        "target_end_sec": 18.2,
+        "target_end_sec": 6.0,
         "text": (
-            "Open Tinkercad, head into the Learning Center, and start with the beginner lessons. No login, no maze, just the fast lane into 3D design, which is exactly how tutorials should behave."
+            "Future Da Vincis, stop doom-scrolling. We're turning what if into heck yeah."
         ),
         "fallback_text": (
-            "Open Tinkercad, head into the Learning Center, and start with the beginner lessons. No login, no maze, just the fast lane into 3D design, which is exactly how tutorials should behave."
+            "Future Da Vincis, stop doom-scrolling. We're turning what if into heck yeah."
         ),
-        "subtitle": "Open Tinkercad, then go to the Learning Center.",
+        "subtitle": "Open the Tinkercad landing page.",
+    },
+    {
+        "start_step": 2,
+        "end_step": 2,
+        "target_start_sec": 6.0,
+        "target_end_sec": 10.0,
+        "text": (
+            "Welcome to Tinkercad. No login maze. Hit Learn."
+        ),
+        "fallback_text": (
+            "Welcome to Tinkercad. No login maze. Hit Learn."
+        ),
+        "subtitle": "Open the Learning Center.",
     },
     {
         "start_step": 3,
-        "end_step": 4,
-        "target_start_sec": 18.2,
-        "target_end_sec": 31.2,
+        "end_step": 3,
+        "target_start_sec": 10.0,
+        "target_end_sec": 16.5,
         "text": (
-            "Search 3D design basics, then jump back into the 3D Design track so the CAD lessons stay front and center. We are not wandering the menu today; we are building a clean on-ramp."
+            "Type in 3D design basics. We're here for CAD, not fluff."
         ),
         "fallback_text": (
-            "Search 3D design basics, then jump back into the 3D Design track so the CAD lessons stay front and center."
+            "Type in 3D design basics. We're here for CAD, not fluff."
         ),
-        "subtitle": "Search beginner basics, then return to the 3D Design track.",
+        "subtitle": "Search for 3D design basics.",
+    },
+    {
+        "start_step": 4,
+        "end_step": 4,
+        "target_start_sec": 16.5,
+        "target_end_sec": 20.5,
+        "text": (
+            "Nice. Stay on 3D. That's the lane."
+        ),
+        "fallback_text": (
+            "Nice. Stay on 3D. That's the lane."
+        ),
+        "subtitle": "Stay on the 3D track while the results load.",
     },
     {
         "start_step": 5,
-        "end_step": 6,
-        "target_start_sec": 31.2,
-        "target_end_sec": 44.3,
+        "end_step": 5,
+        "target_start_sec": 20.5,
+        "target_end_sec": 25.0,
         "text": (
-            "Open a lesson card and scroll through it. This is the quality check. We want clear visuals, actual steps, and enough detail to keep a beginner moving."
+            "Quality check. Click a lesson. Clean visuals, real steps, no clutter."
         ),
         "fallback_text": (
-            "Open a lesson card and scroll through it. We want clear visuals, actual steps, and enough detail to keep a beginner moving."
+            "Quality check. Click a lesson. Clean visuals, real steps, no clutter."
         ),
-        "subtitle": "Open a lesson card and review the tutorial details.",
+        "subtitle": "Scroll through the lesson cards and do a quick quality check.",
+    },
+    {
+        "start_step": 6,
+        "end_step": 6,
+        "target_start_sec": 25.0,
+        "target_end_sec": 29.0,
+        "text": (
+            "Look at those Airbus moon lessons."
+        ),
+        "fallback_text": (
+            "Look at those Airbus moon lessons."
+        ),
+        "subtitle": "Open an Airbus moon lesson.",
     },
     {
         "start_step": 7,
         "end_step": 7,
-        "target_start_sec": 44.3,
-        "target_end_sec": 54.8,
+        "target_start_sec": 29.0,
+        "target_end_sec": 35.0,
         "text": (
-            "Now jump to the gallery. Community projects are where you steal shapes, collect ideas, spot clever shortcuts, and find the spark that gets you building instead of overthinking."
+            "From shaky circles to NASA vibes in one click."
         ),
         "fallback_text": (
-            "Now jump to the gallery. Community projects are where you steal shapes, collect ideas, spot clever shortcuts, and find the spark that gets you building instead of overthinking."
+            "From shaky circles to NASA vibes in one click."
         ),
-        "subtitle": "Open the gallery for project inspiration.",
+        "subtitle": "Review the moon lesson visuals.",
     },
     {
         "start_step": 8,
         "end_step": 8,
-        "target_start_sec": 54.8,
-        "target_end_sec": 65.9,
+        "target_start_sec": 35.0,
+        "target_end_sec": 39.0,
         "text": (
-            "Browse the gallery for a practical idea, something like a phone stand. Inspiration beats staring at a blank canvas and pretending that counts as design research."
+            "Now hit Gallery. This is where inspiration wakes up."
         ),
         "fallback_text": (
-            "Browse the gallery for a practical idea, something like a phone stand. Inspiration beats staring at a blank canvas."
+            "Now hit Gallery. This is where inspiration wakes up."
         ),
-        "subtitle": "Browse the gallery for a practical idea.",
+        "subtitle": "Transition into the Community Gallery.",
     },
     {
         "start_step": 9,
         "end_step": 9,
-        "target_start_sec": 65.9,
-        "target_end_sec": 71.2,
+        "target_start_sec": 39.0,
+        "target_end_sec": 43.0,
         "text": (
-            "Open one design. Borrow momentum."
+            "Boom. 9 million designs. Inspiration problem solved."
         ),
         "fallback_text": (
-            "Open one design. Borrow momentum."
+            "Boom. 9 million designs. Inspiration problem solved."
         ),
-        "subtitle": "Open a design page for inspiration.",
+        "subtitle": "Let the gallery load and take in the scale.",
     },
     {
         "start_step": 10,
         "end_step": 10,
-        "target_start_sec": 71.2,
-        "target_end_sec": 75.7,
+        "target_start_sec": 43.0,
+        "target_end_sec": 47.0,
         "text": (
-            "Learn. Browse. Build."
+            "Grab the March 2026 Spartan Helmet."
         ),
         "fallback_text": (
-            "Learn. Browse. Build."
+            "Grab the March 2026 Spartan Helmet."
+        ),
+        "subtitle": "Open the Greek Spartan Helmet design.",
+    },
+    {
+        "start_step": 11,
+        "end_step": 11,
+        "target_start_sec": 47.0,
+        "target_end_sec": 50.0,
+        "text": (
+            "Open it. Study the crest. That's research, not cheating."
+        ),
+        "fallback_text": (
+            "Open it. Study the crest. That's research, not cheating."
+        ),
+        "subtitle": "Inspect the Spartan Helmet model details.",
+    },
+    {
+        "start_step": 12,
+        "end_step": 12,
+        "target_start_sec": 50.0,
+        "target_end_sec": 53.0,
+        "text": (
+            "Learn it. Browse it. Build it. Make something cool."
+        ),
+        "fallback_text": (
+            "Learn it. Browse it. Build it. Make something cool."
         ),
         "subtitle": "Finish the Tinkercad speedrun.",
     },
@@ -2408,6 +2473,7 @@ def build_custom_tinkercad_timeline(steps: list[dict]) -> list[dict] | None:
                 "fallback_text": segment.get("fallback_text") or segment["text"],
                 "subtitle": segment.get("subtitle") or segment["text"],
                 "target_window_end_sec": target_window_end_sec,
+                "disable_compact": True,
                 "source_start_step": start_step,
                 "source_end_step": end_step,
                 "source_start_sec": round(measured_start_sec, 3),

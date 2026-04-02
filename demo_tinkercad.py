@@ -1,6 +1,7 @@
 """
 demo_tinkercad.py - TinkerCAD tutorial browsing demo (no login).
-Flow: open TinkerCAD -> learning center -> search/filter tutorials -> gallery.
+Flow: open Tinkercad -> learn basics -> review Airbus moon lessons -> browse
+community gallery -> open the Greek Spartan Helmet design.
 """
 
 import os
@@ -14,12 +15,12 @@ from common import create_browser_context, StepLogger, slow_scroll, finish_recor
 
 DEMO_NAME = "tinkercad"
 DEMO_DESCRIPTION = (
-    "Explore TinkerCAD's no-login learning resources by browsing tutorials, "
-    "switching categories, and checking gallery designs."
+    "Explore Tinkercad's no-login learning resources, review Airbus moon lessons, "
+    "and open a standout community gallery project for inspiration."
 )
 DEMO_PROMPT = (
-    "Open TinkerCAD learning center, search beginner tutorials, switch categories, "
-    "and browse gallery designs for inspiration."
+    "Open Tinkercad, search 3D design basics, review Airbus moon lessons, "
+    "then browse the gallery and open the Greek Spartan Helmet design."
 )
 STEP_PREVIEW_HOLD_SEC = 0.85
 PAGE_SETTLE_SEC = 1.8
@@ -78,7 +79,11 @@ def run():
 
             # Step 2
             announce("Open the Learning Center where beginner tutorials are available without login")
-            page.goto("https://www.tinkercad.com/learn/designs", wait_until="networkidle", timeout=30000)
+            opened_learn = click_visible(page, 'a:has-text("Learn"), nav a[href*="/learn"]', timeout=5000)
+            if opened_learn:
+                page.wait_for_load_state("networkidle")
+            else:
+                page.goto("https://www.tinkercad.com/learn/designs", wait_until="networkidle", timeout=30000)
             time.sleep(PAGE_SETTLE_SEC)
             logger.log(page, "Open the Learning Center where beginner tutorials are available without login", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
@@ -98,78 +103,88 @@ def run():
                 logger.log(page, "Browse the tutorials listed under Learn 3D Design", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 4
-            announce("Return to 3D Design tutorials for CAD-focused practice")
-            clicked_circuits = click_visible(page, 'button:has-text("Circuits"), a:has-text("Circuits"), text=Circuits')
-            if clicked_circuits:
-                time.sleep(SECTION_SETTLE_SEC)
-                click_visible(page, 'button:has-text("3D Design"), a:has-text("3D Design"), text=3D Design')
-                time.sleep(SHORT_STEP_EXTRA_SETTLE_SEC)
-            else:
-                time.sleep(SHORT_STEP_EXTRA_SETTLE_SEC)
-            logger.log(page, "Return to 3D Design tutorials for CAD-focused practice", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
-
-            # Step 5
-            announce("Open a tutorial card to view guided learning content")
-            opened_card = click_visible(
+            announce("Stick with the 3D Design tutorials and let the results settle")
+            clicked_designs = click_visible(
                 page,
-                'main a[href*="/learn/"], section a[href*="/learn/"], a:has-text("Learn 3D Design")',
+                'a[href*="/learn/search/designs"], button:has-text("3D Designs"), a:has-text("3D Designs")',
                 timeout=5000,
             )
-            if opened_card:
+            if clicked_designs:
                 page.wait_for_load_state("networkidle")
-                time.sleep(PAGE_SETTLE_SEC)
-                logger.log(page, "Open a tutorial card to view guided learning content", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+                time.sleep(SECTION_SETTLE_SEC)
             else:
-                logger.log(page, "Select any visible tutorial card to open guided instructions", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+                time.sleep(SHORT_STEP_EXTRA_SETTLE_SEC)
+            logger.log(page, "Stay on the 3D Design track while the search results load", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+
+            # Step 5
+            announce("Scroll through the lesson cards and do a quick quality check")
+            slow_scroll(page, 260, 3)
+            time.sleep(0.8)
+            logger.log(page, "Scroll through the lesson cards and scan for clear beginner-friendly tutorials", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 6
-            announce("Scroll through the tutorial page to view lesson details and visuals")
-            slow_scroll(page, 540, 5)
-            time.sleep(1.0)
-            logger.log(page, "Scroll through the tutorial page to view lesson details and visuals", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+            announce("Open an Airbus moon lesson from the search results")
+            opened_airbus = click_visible(
+                page,
+                'a[href*="airbus-habitat-on-the-moon"], a[href*="airbus-traveling-to-the-moon"], a[href*="airbus-living-on-the-moon"], a[href*="airbus-driving-on-the-moon"]',
+                timeout=5000,
+            )
+            if opened_airbus:
+                page.wait_for_load_state("networkidle")
+                time.sleep(PAGE_SETTLE_SEC)
+                logger.log(page, "Open an Airbus moon lesson to view the guided project details", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+            else:
+                logger.log(page, "Open any visible moon-focused Airbus lesson from the search results", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 7
-            announce("Open the TinkerCAD gallery to explore community designs")
-            page.goto("https://www.tinkercad.com/things", wait_until="networkidle", timeout=30000)
-            time.sleep(PAGE_SETTLE_SEC)
-            logger.log(page, "Open the TinkerCAD gallery to explore community designs", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+            announce("Scroll through the moon lesson visuals and project overview")
+            slow_scroll(page, 520, 5)
+            time.sleep(1.0)
+            logger.log(page, "Scroll through the Airbus moon lesson to review the visuals and instructions", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 8
-            announce("Browse featured gallery designs for project inspiration")
-            search_gallery = type_visible(
-                page,
-                'input[placeholder*="Search"], input[type="search"]',
-                "phone stand",
-            )
-            if search_gallery:
-                time.sleep(1.0)
-                page.keyboard.press("Enter")
-                time.sleep(SECTION_SETTLE_SEC)
-                logger.log(page, "Search gallery designs for 'phone stand' inspiration", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+            announce("Open the Community Gallery to explore design inspiration")
+            opened_gallery = click_visible(page, 'a:has-text("Gallery"), nav a[href*="/things"]', timeout=5000)
+            if opened_gallery:
+                page.wait_for_load_state("networkidle")
             else:
-                slow_scroll(page, 320, 3)
-                time.sleep(0.8)
-                logger.log(page, "Browse featured gallery designs for project inspiration", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+                page.goto("https://www.tinkercad.com/things", wait_until="networkidle", timeout=30000)
+            time.sleep(PAGE_SETTLE_SEC)
+            logger.log(page, "Open the Community Gallery to explore standout Tinkercad designs", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Step 9
-            announce("Open a gallery design page to review details and references")
+            announce("Browse the gallery and spot the standout community projects")
+            time.sleep(1.0)
+            logger.log(page, "Browse the gallery and keep the top community designs in view", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+
+            # Step 10
+            announce("Open the Greek Spartan Helmet design from the gallery")
             opened_design = click_visible(
                 page,
-                'a[href*="/things/"], .gallery-item a, main a[href*="/things/"]',
+                'a[href*="my-take-on-a-greek-spartan-helmet-march-2026"]',
                 timeout=5000,
             )
             if opened_design:
                 page.wait_for_load_state("networkidle")
                 time.sleep(SECTION_SETTLE_SEC)
-                logger.log(page, "Open a gallery design page to review details and references", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+                logger.log(page, "Open the Greek Spartan Helmet - March 2026 design from the gallery", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
             else:
-                slow_scroll(page, 360, 4)
-                time.sleep(0.8)
-                logger.log(page, "Scroll through gallery results to inspect multiple design ideas", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+                page.goto(
+                    "https://www.tinkercad.com/things/ddtuLraw1Zf-my-take-on-a-greek-spartan-helmet-march-2026",
+                    wait_until="networkidle",
+                    timeout=30000,
+                )
+                time.sleep(SECTION_SETTLE_SEC)
+                logger.log(page, "Open the Greek Spartan Helmet - March 2026 design from the gallery", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+
+            # Step 11
+            announce("View the 3D model and inspect the design details")
+            time.sleep(PAGE_SETTLE_SEC)
+            logger.log(page, "View the 3D model and inspect how the Spartan Helmet design is built", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
             # Finish
-            logger.preview(page, "Tutorial complete - start learning TinkerCAD with no-login resources", hold_sec=FINAL_PREVIEW_HOLD_SEC)
-            logger.log(page, "Tutorial complete - start learning TinkerCAD with no-login resources", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
+            logger.preview(page, "Tutorial complete - learn it, browse it, build it", hold_sec=FINAL_PREVIEW_HOLD_SEC)
+            logger.log(page, "Tutorial complete - learn it, browse it, build it", wait_sec=SYNC_LOG_WAIT_SEC, show_caption=False)
 
         except Exception as error:
             print(f"\nERROR during recording: {error}")
