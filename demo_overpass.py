@@ -15,23 +15,45 @@ from common import StepLogger, create_browser_context, finish_recording
 
 DEMO_NAME = "overpass_turbo"
 DEMO_DESCRIPTION = (
-    "Use Overpass Turbo for real geo-analysis: run hospital, EV charging, school, and pharmacy coverage "
-    "queries in Hyderabad, inspect map + data views, and export/share results."
+    "Use Overpass Turbo for real geo-analysis: run hospital, EV charging, school, and park coverage "
+    "queries in Hyderabad, then compare the layers on the map."
 )
 DEMO_PROMPT = (
     "Go to overpass-turbo.eu, run multiple Hyderabad POI queries using Overpass QL, switch between "
-    "Map and Data views, then export the result."
+    "Map and Data views, then stop after comparing schools, parks, and EV coverage."
 )
 HYD_BBOX = "(17.20,78.20,17.60,78.70)"
+HYD_CORE_BBOX = "(17.28,78.32,17.50,78.62)"
+HYD_SCHOOL_BBOX = "(17.33,78.38,17.47,78.56)"
+HYD_PARK_BBOX = "(17.35,78.41,17.45,78.54)"
 STEP_PREVIEW_HOLD_SEC = 0.95
 ACTION_SETTLE_SEC = 1.45
-QUERY_TYPE_DELAY_MS = 30
-QUERY_TYPE_SETTLE_SEC = 1.35
+QUERY_TYPE_DELAY_MS = 42
+QUERY_TYPE_SETTLE_SEC = 0.7
 RUN_QUERY_WAIT_SEC = 9.25
 RUN_QUERY_SHORT_WAIT_SEC = 8.45
+QUOTA_RETRY_WAIT_SEC = 18.0
 MAP_CLICK_SETTLE_SEC = 1.25
 SHORT_STEP_EXTRA_SETTLE_SEC = 2.15
 EXPORT_STEP_EXTRA_SETTLE_SEC = 1.55
+OVERPASS_ERROR_PATTERNS = [
+    "api error",
+    "runtime error",
+    "parse error",
+    "query timed out",
+    "too many requests",
+    "bad gateway",
+    "gateway time-out",
+    "server returned",
+    "dispatcher",
+]
+OVERPASS_QUOTA_PATTERNS = [
+    "quota",
+    "too many requests",
+    "rate limit",
+    "multiple requests",
+    "ip address",
+]
 
 
 def first_visible(page: Page, selectors: list[str]):
@@ -83,6 +105,63 @@ def open_top_action(page: Page, action_name: str) -> bool:
         ],
         wait_after=1.0,
     )
+
+
+def query_has_api_error(page: Page) -> bool:
+    """Detect common Overpass runtime and API failure messages."""
+    try:
+        error_locators = [
+            "text=/api error/i",
+            "text=/runtime error/i",
+            "text=/parse error/i",
+            "text=/too many requests/i",
+            "text=/gateway time-out/i",
+            "text=/bad gateway/i",
+            ".alert-danger",
+            ".notification.is-danger",
+            ".error",
+        ]
+        for selector in error_locators:
+            locator = page.locator(selector).first
+            try:
+                if locator.is_visible(timeout=250):
+                    return True
+            except Exception:
+                continue
+
+        body_text = page.locator("body").inner_text(timeout=1200).lower()
+        return any(pattern in body_text for pattern in OVERPASS_ERROR_PATTERNS)
+    except Exception:
+        return False
+
+
+def query_has_quota_error(page: Page) -> bool:
+    """Detect quota / rate-limit failures that need a longer cooldown before retry."""
+    try:
+        body_text = page.locator("body").inner_text(timeout=1200).lower()
+        return any(pattern in body_text for pattern in OVERPASS_QUOTA_PATTERNS)
+    except Exception:
+        return False
+
+
+def dismiss_query_error(page: Page):
+    """Clear visible error popups so a retry can proceed."""
+    close_active_modal(page)
+    click_any(
+        page,
+        [
+            "button:has-text('Close')",
+            "button:has-text('OK')",
+            ".modal button",
+            ".notification button.delete",
+        ],
+        wait_after=0.4,
+    )
+    try:
+        page.keyboard.press("Escape")
+        time.sleep(0.3)
+    except Exception:
+        pass
 
 
 def set_hyderabad_view(page: Page):
@@ -175,31 +254,159 @@ def get_data_row_count(page: Page) -> int:
 
 
 def set_query_text(page: Page, query: str) -> bool:
-    """Set query text by focusing editor panel and typing."""
+    """Prefer visible typing in the editor, then fall back to injection if needed."""
+    def editor_has_query() -> bool:
+        try:
+            return bool(
+                page.evaluate(
+                    """
+                    (queryText) => {
+                      const normalized = (value) => (value || '').replace(/\\s+/g, ' ').trim();
+                      const expected = normalized(queryText).slice(0, 40);
+
+                      try {
+                        if (window.ide && window.ide.codeMirror && typeof window.ide.codeMirror.getValue === 'function') {
+                          return normalized(window.ide.codeMirror.getValue()).includes(expected);
+                        }
+                      } catch (e) {}
+
+                      try {
+                        const cmHost = document.querySelector('.CodeMirror');
+                        if (cmHost && cmHost.CodeMirror && typeof cmHost.CodeMirror.getValue === 'function') {
+                          return normalized(cmHost.CodeMirror.getValue()).includes(expected);
+                        }
+                      } catch (e) {}
+
+                      try {
+                        const aceHost = document.querySelector('.ace_editor');
+                        if (aceHost && window.ace && typeof window.ace.edit === 'function') {
+                          return normalized(window.ace.edit(aceHost).getValue()).includes(expected);
+                        }
+                      } catch (e) {}
+
+                      const textareas = Array.from(document.querySelectorAll('textarea'));
+                      const candidate = textareas.find((node) => node.offsetParent !== null) || textareas[0];
+                      return candidate ? normalized(candidate.value).includes(expected) : false;
+                    }
+                    """,
+                    query,
+                )
+            )
+        except Exception:
+            return False
+
     try:
-        # Click inside left editor pane (stable across CodeMirror versions).
+        editor_target = first_visible(page, [".CodeMirror", ".ace_editor", "textarea"])
+        if editor_target:
+            box = editor_target.bounding_box()
+            if box:
+                page.mouse.click(
+                    box["x"] + min(box["width"] * 0.35, 240),
+                    box["y"] + min(box["height"] * 0.2, 80),
+                )
+                time.sleep(0.25)
+                page.keyboard.press("Control+A")
+                time.sleep(0.15)
+                page.keyboard.press("Backspace")
+                time.sleep(0.25)
+                page.keyboard.type(query, delay=QUERY_TYPE_DELAY_MS)
+                time.sleep(QUERY_TYPE_SETTLE_SEC)
+                if editor_has_query():
+                    return True
+    except Exception:
+        pass
+
+    try:
+        injected = page.evaluate(
+            """
+            (queryText) => {
+              try {
+                if (window.ide && window.ide.codeMirror && typeof window.ide.codeMirror.setValue === 'function') {
+                  window.ide.codeMirror.setValue(queryText);
+                  if (typeof window.ide.codeMirror.refresh === 'function') window.ide.codeMirror.refresh();
+                  return true;
+                }
+              } catch (e) {}
+
+              try {
+                const cmHost = document.querySelector('.CodeMirror');
+                if (cmHost && cmHost.CodeMirror && typeof cmHost.CodeMirror.setValue === 'function') {
+                  cmHost.CodeMirror.setValue(queryText);
+                  if (typeof cmHost.CodeMirror.refresh === 'function') cmHost.CodeMirror.refresh();
+                  return true;
+                }
+              } catch (e) {}
+
+              try {
+                const aceHost = document.querySelector('.ace_editor');
+                if (aceHost && window.ace && typeof window.ace.edit === 'function') {
+                  const editor = window.ace.edit(aceHost);
+                  editor.setValue(queryText, -1);
+                  editor.clearSelection();
+                  return true;
+                }
+              } catch (e) {}
+
+              try {
+                const textareas = Array.from(document.querySelectorAll('textarea'));
+                const candidate = textareas.find((node) => node.offsetParent !== null) || textareas[0];
+                if (candidate) {
+                  candidate.focus();
+                  candidate.value = queryText;
+                  candidate.dispatchEvent(new Event('input', { bubbles: true }));
+                  candidate.dispatchEvent(new Event('change', { bubbles: true }));
+                  return true;
+                }
+              } catch (e) {}
+
+              return false;
+            }
+            """,
+            query,
+        )
+        if injected:
+            time.sleep(QUERY_TYPE_SETTLE_SEC)
+            return True
+    except Exception:
+        pass
+
+    try:
         page.mouse.click(220, 220)
         time.sleep(0.35)
         page.keyboard.press("Control+A")
+        time.sleep(0.15)
         page.keyboard.press("Backspace")
+        time.sleep(0.25)
         page.keyboard.type(query, delay=QUERY_TYPE_DELAY_MS)
         time.sleep(QUERY_TYPE_SETTLE_SEC)
-        return True
+        return editor_has_query()
     except Exception:
         return False
 
 
-def run_current_query(page: Page, wait_after: float = RUN_QUERY_WAIT_SEC) -> bool:
-    """Run the query currently in editor."""
-    clicked = open_top_action(page, "Run")
-    if not clicked:
-        clicked = click_any(
-            page,
-            ['button:has-text("Run")', 'a:has-text("Run")', '[title*="Run"]'],
-            wait_after=0.8,
-        )
-    time.sleep(wait_after)
-    return clicked
+def run_current_query(page: Page, wait_after: float = RUN_QUERY_WAIT_SEC, retries: int = 1) -> bool:
+    """Run the query currently in editor and retry once if Overpass shows an API error."""
+    clicked = False
+    for attempt in range(retries + 1):
+        clicked = open_top_action(page, "Run")
+        if not clicked:
+            clicked = click_any(
+                page,
+                ['button:has-text("Run")', 'a:has-text("Run")', '[title*="Run"]'],
+                wait_after=0.8,
+            )
+        if not clicked:
+            return False
+
+        time.sleep(wait_after if attempt == 0 else max(wait_after - 2.0, 4.5))
+        if not query_has_api_error(page):
+            return True
+
+        quota_hit = query_has_quota_error(page)
+        dismiss_query_error(page)
+        time.sleep(QUOTA_RETRY_WAIT_SEC if quota_hit else 1.0)
+
+    return not query_has_api_error(page)
 
 
 def run():
@@ -224,11 +431,7 @@ def run():
 
             hospital_query = """
 [out:json][timeout:25];
-(
-  node["amenity"="hospital"]__BBOX__;
-  way["amenity"="hospital"]__BBOX__;
-  relation["amenity"="hospital"]__BBOX__;
-);
+nwr["amenity"="hospital"]__BBOX__;
 out center;
             """.strip().replace("__BBOX__", HYD_BBOX)
             announce("Write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box")
@@ -270,11 +473,7 @@ out center;
 
             ev_query = """
 [out:json][timeout:25];
-(
-  node["amenity"="charging_station"]__BBOX__;
-  way["amenity"="charging_station"]__BBOX__;
-  relation["amenity"="charging_station"]__BBOX__;
-);
+nwr["amenity"="charging_station"]__BBOX__;
 out center;
             """.strip().replace("__BBOX__", HYD_BBOX)
             announce("Replace with EV charging station query to analyze clean-mobility readiness")
@@ -287,65 +486,52 @@ out center;
                     set_hyderabad_view(page)
 
             schools_query = """
-[out:json][timeout:25];
+[out:json][timeout:20];
 (
-  node["amenity"="school"]__BBOX__;
-  way["amenity"="school"]__BBOX__;
-  relation["amenity"="school"]__BBOX__;
+  nwr["amenity"="school"]__BBOX__;
 );
-out center;
-            """.strip().replace("__BBOX__", HYD_BBOX)
+out center 80;
+            """.strip().replace("__BBOX__", HYD_SCHOOL_BBOX)
+            schools_fallback_query = """
+[out:json][timeout:18];
+node["amenity"="school"]__BBOX__;
+out 60;
+            """.strip().replace("__BBOX__", HYD_SCHOOL_BBOX)
             announce("Run school query to map education infrastructure in the same city boundary")
             if set_query_text(page, schools_query):
                 logger.log(page, "Run school query to map education infrastructure in the same city boundary", wait_sec=0, show_caption=False)
-                run_current_query(page, wait_after=RUN_QUERY_WAIT_SEC)
+                school_ok = run_current_query(page, wait_after=RUN_QUERY_WAIT_SEC)
+                if not school_ok and set_query_text(page, schools_fallback_query):
+                    announce("School query hit turbulence, so we switch to a lighter school map and run again")
+                    run_current_query(page, wait_after=RUN_QUERY_SHORT_WAIT_SEC)
                 if not zoom_to_data(page):
                     set_hyderabad_view(page)
 
-            pharmacies_query = """
-[out:json][timeout:25];
-(
-  node["amenity"="pharmacy"]__BBOX__;
-  way["amenity"="pharmacy"]__BBOX__;
-  relation["amenity"="pharmacy"]__BBOX__;
-);
-out center;
-            """.strip().replace("__BBOX__", HYD_BBOX)
-            announce("Add pharmacy query as a fourth dataset to build a richer city-services comparison")
-            if set_query_text(page, pharmacies_query):
-                logger.log(page, "Add pharmacy query as a fourth dataset to build a richer city-services comparison", wait_sec=0, show_caption=False)
-                announce("Single editor workflow lets you iterate quickly across multiple urban datasets")
-                run_current_query(page, wait_after=RUN_QUERY_SHORT_WAIT_SEC)
-                logger.log(page, "Single editor workflow lets you iterate quickly across multiple urban datasets", wait_sec=0, show_caption=False)
+            parks_query = """
+[out:json][timeout:18];
+node["leisure"="park"]__BBOX__;
+out 40;
+            """.strip().replace("__BBOX__", HYD_PARK_BBOX)
+            parks_fallback_query = """
+[out:json][timeout:15];
+node["leisure"="garden"]__BBOX__;
+out 30;
+            """.strip().replace("__BBOX__", HYD_PARK_BBOX)
+            announce("Run park query to map green space and recreation across the same urban core")
+            if set_query_text(page, parks_query):
+                logger.log(page, "Run park query to map green space and recreation across the same urban core", wait_sec=0, show_caption=False)
+                announce("Park layer rendered; now compare green space against schools and mobility")
+                park_ok = run_current_query(page, wait_after=RUN_QUERY_SHORT_WAIT_SEC)
+                if not park_ok and set_query_text(page, parks_fallback_query):
+                    announce("Park query hit the rate limit, so we switch to a lighter green-space layer and try again")
+                    run_current_query(page, wait_after=RUN_QUERY_SHORT_WAIT_SEC)
+                logger.log(page, "Park layer rendered; now compare green space against schools and mobility", wait_sec=0, show_caption=False)
                 if not zoom_to_data(page):
                     set_hyderabad_view(page)
-
-            announce("Open Export options for downstream GIS and analytics workflows")
-            exported = open_top_action(page, "Export")
-            if exported:
-                time.sleep(EXPORT_STEP_EXTRA_SETTLE_SEC)
-                logger.log(page, "Open Export options for downstream GIS and analytics workflows", wait_sec=0, show_caption=False)
-                announce("Choose GeoJSON to move the result into QGIS, Python, or web map stacks")
-                geojson_clicked = click_any(
-                    page,
-                    [
-                        'a:has-text("GeoJSON")',
-                        'button:has-text("GeoJSON")',
-                        'a:has-text("geojson")',
-                    ],
-                    wait_after=0.8,
-                )
-                if geojson_clicked:
-                    time.sleep(EXPORT_STEP_EXTRA_SETTLE_SEC)
-                    logger.log(page, "Choose GeoJSON to move the result into QGIS, Python, or web map stacks", wait_sec=0, show_caption=False)
-                else:
-                    logger.log(page, "Export supports GeoJSON, KML, GPX, and raw OSM for different tools")
-            else:
-                logger.log(page, "Export panel provides shareable output formats for external analysis")
 
             page.keyboard.press("Escape")
             time.sleep(0.5)
-            logger.log(page, "Tutorial complete: from iterative query editing to exportable, reproducible geo-data")
+            logger.log(page, "Tutorial complete: compare hospitals, EV charging, schools, and parks in one reproducible map workflow")
 
         except Exception as error:
             print(f"\nERROR during recording: {error}")

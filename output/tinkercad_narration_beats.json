@@ -8,8 +8,8 @@
     "pause_ms": 920,
     "url": "https://www.tinkercad.com/",
     "start_elapsed_sec": 0.0,
-    "end_elapsed_sec": 5.647,
-    "duration_sec": 5.647
+    "end_elapsed_sec": 5.981,
+    "duration_sec": 5.981
   },
   {
     "step": 2,
@@ -19,9 +19,9 @@
     "fallback_narration": "Open the Learning Center.",
     "pause_ms": 1050,
     "url": "https://www.tinkercad.com/learn",
-    "start_elapsed_sec": 5.647,
-    "end_elapsed_sec": 9.878,
-    "duration_sec": 4.231
+    "start_elapsed_sec": 5.981,
+    "end_elapsed_sec": 10.35,
+    "duration_sec": 4.369
   },
   {
     "step": 3,
@@ -31,9 +31,9 @@
     "fallback_narration": "Search for 3D design basics.",
     "pause_ms": 920,
     "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
-    "start_elapsed_sec": 9.878,
-    "end_elapsed_sec": 16.145,
-    "duration_sec": 6.267
+    "start_elapsed_sec": 10.35,
+    "end_elapsed_sec": 16.823,
+    "duration_sec": 6.473
   },
   {
     "step": 4,
@@ -43,9 +43,9 @@
     "fallback_narration": "Stay on the 3D Design track while the search results load.",
     "pause_ms": 920,
     "url": "https://www.tinkercad.com/learn/search/designs?q=3D%20design%20basics",
-    "start_elapsed_sec": 16.145,
-    "end_elapsed_sec": 19.886,
-    "duration_sec": 3.741
+    "start_elapsed_sec": 16.823,
+    "end_elapsed_sec": 20.656,
+    "duration_sec": 3.833
   },
   {
     "step": 5,
@@ -55,9 +55,9 @@
     "fallback_narration": "Scroll through the lesson cards and scan for clear beginner-friendly tutorials.",
     "pause_ms": 920,
     "url": "https://www.tinkercad.com/learn/search/designs?q=3D%20design%20basics",
-    "start_elapsed_sec": 19.886,
-    "end_elapsed_sec": 24.533,
-    "duration_sec": 4.647
+    "start_elapsed_sec": 20.656,
+    "end_elapsed_sec": 25.382,
+    "duration_sec": 4.726
   },
   {
     "step": 6,
@@ -67,9 +67,9 @@
     "fallback_narration": "Next, we open an Airbus moon lesson to view the guided project details.",
     "pause_ms": 1200,
     "url": "https://www.tinkercad.com/learn/overview/airbus-traveling-to-the-moon",
-    "start_elapsed_sec": 24.533,
-    "end_elapsed_sec": 28.694,
-    "duration_sec": 4.161
+    "start_elapsed_sec": 25.382,
+    "end_elapsed_sec": 29.628,
+    "duration_sec": 4.246
   },
   {
     "step": 7,
@@ -79,9 +79,9 @@
     "fallback_narration": "Scroll through the Airbus moon lesson to review the visuals and.",
     "pause_ms": 1200,
     "url": "https://www.tinkercad.com/learn/overview/airbus-traveling-to-the-moon",
-    "start_elapsed_sec": 28.694,
-    "end_elapsed_sec": 34.558,
-    "duration_sec": 5.864
+    "start_elapsed_sec": 29.628,
+    "end_elapsed_sec": 35.544,
+    "duration_sec": 5.916
   },
   {
     "step": 8,
@@ -91,9 +91,9 @@
     "fallback_narration": "Next, we open the Community Gallery to explore standout Tinkercad designs.",
     "pause_ms": 920,
     "url": "https://www.tinkercad.com/things",
-    "start_elapsed_sec": 34.558,
-    "end_elapsed_sec": 38.752,
-    "duration_sec": 4.194
+    "start_elapsed_sec": 35.544,
+    "end_elapsed_sec": 39.852,
+    "duration_sec": 4.308
   },
   {
     "step": 9,
@@ -103,9 +103,9 @@
     "fallback_narration": "Next, we browse the gallery and keep the top community designs in view.",
     "pause_ms": 1200,
     "url": "https://www.tinkercad.com/things",
-    "start_elapsed_sec": 38.752,
-    "end_elapsed_sec": 42.05,
-    "duration_sec": 3.298
+    "start_elapsed_sec": 39.852,
+    "end_elapsed_sec": 43.172,
+    "duration_sec": 3.32
   },
   {
     "step": 10,
@@ -115,9 +115,9 @@
     "fallback_narration": "Next, we open the Greek Spartan Helmet. And we're up and running.",
     "pause_ms": 920,
     "url": "https://www.tinkercad.com/things/ddtuLraw1Zf-my-take-on-a-greek-spartan-helmet-march-2026",
-    "start_elapsed_sec": 42.05,
-    "end_elapsed_sec": 45.792,
-    "duration_sec": 3.742
+    "start_elapsed_sec": 43.172,
+    "end_elapsed_sec": 47.078,
+    "duration_sec": 3.906
   },
   {
     "step": 11,
@@ -127,9 +127,9 @@
     "fallback_narration": "Next, we view the 3D model and inspect how the Spartan Helmet design.",
     "pause_ms": 1200,
     "url": "https://www.tinkercad.com/things/ddtuLraw1Zf-my-take-on-a-greek-spartan-helmet-march-2026",
-    "start_elapsed_sec": 45.792,
-    "end_elapsed_sec": 49.882,
-    "duration_sec": 4.09
+    "start_elapsed_sec": 47.078,
+    "end_elapsed_sec": 51.235,
+    "duration_sec": 4.157
   },
   {
     "step": 12,
@@ -139,8 +139,8 @@
     "fallback_narration": "That wraps the TinkerCAD speedrun.",
     "pause_ms": 1550,
     "url": "https://www.tinkercad.com/things/ddtuLraw1Zf-my-take-on-a-greek-spartan-helmet-march-2026",
-    "start_elapsed_sec": 49.882,
-    "end_elapsed_sec": 53.024,
-    "duration_sec": 3.142
+    "start_elapsed_sec": 51.235,
+    "end_elapsed_sec": 54.425,
+    "duration_sec": 3.19
   }
 ]

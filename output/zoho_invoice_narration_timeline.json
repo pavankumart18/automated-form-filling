@@ -1,6 +1,6 @@
 {
   "demo_name": "zoho_invoice",
-  "total_duration_sec": 104.201,
+  "total_duration_sec": 104.2,
   "segments": [
     {
       "segment_id": "zoho_story_01",
@@ -16,13 +16,13 @@
       "source_start_step": 1,
       "source_end_step": 2,
       "source_start_sec": 0.0,
-      "source_end_sec": 14.737,
+      "source_end_sec": 16.457,
       "spoken_text": "Listen up, freelancers and small biz heroes! Tired of sending invoices that look like they were made in MS Paint? Today, I'm showing you how to go from broke to professional in under two minutes using Zoho's free invoice generator. No login, no soul-crushing forms, just pure efficiency. Let's ride!",
-      "clip_duration_sec": 17.208,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_li3aq63h\\zoho_story_01_primary_fitted.wav",
+      "clip_duration_sec": 17.211,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_7vgwfazl\\zoho_story_01_primary_fitted.wav",
       "required_speedup": 1.119,
       "start_sec": 0.0,
-      "end_sec": 17.208
+      "end_sec": 17.211
     },
     {
       "segment_id": "zoho_story_02",
@@ -37,14 +37,14 @@
       "disable_compact": true,
       "source_start_step": 3,
       "source_end_step": 5,
-      "source_start_sec": 14.737,
-      "source_end_sec": 44.396,
+      "source_start_sec": 16.457,
+      "source_end_sec": 44.684,
       "spoken_text": "Look at that clean UI. Fresh breath of mountain air for your finances. Boom, we're in the cockpit. Time to tell the world who you are. Type in your company name, your name, and your address. Deep breath. The internet is doing its magic. We're officially a business entity, people! Who's paying us? Enter Acme Corp International. Give them a professional address in Mumbai. We aren't just sending a bill; we're sending a statement. Give this masterpiece a number. INV-2026-001, the first of many!",
-      "clip_duration_sec": 32.691,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_li3aq63h\\zoho_story_02_primary_normalized.wav",
-      "required_speedup": 1.012,
-      "start_sec": 17.208,
-      "end_sec": 49.899
+      "clip_duration_sec": 32.371,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_7vgwfazl\\zoho_story_02_primary_normalized.wav",
+      "required_speedup": 1.002,
+      "start_sec": 17.211,
+      "end_sec": 49.582
     },
     {
       "segment_id": "zoho_story_03",
@@ -59,14 +59,14 @@
       "disable_compact": true,
       "source_start_step": 6,
       "source_end_step": 6,
-      "source_start_sec": 44.396,
-      "source_end_sec": 53.736,
+      "source_start_sec": 44.684,
+      "source_end_sec": 53.356,
       "spoken_text": "Now let's add our first line item: Web Development Services. Forty hours of your genius, don't lowball yourself! Set that GST rate and watch the numbers dance.",
-      "clip_duration_sec": 10.091,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_li3aq63h\\zoho_story_03_primary_fitted.wav",
-      "required_speedup": 1.102,
-      "start_sec": 49.899,
-      "end_sec": 59.99
+      "clip_duration_sec": 10.112,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_7vgwfazl\\zoho_story_03_primary_fitted.wav",
+      "required_speedup": 1.062,
+      "start_sec": 49.582,
+      "end_sec": 59.694
     },
     {
       "segment_id": "zoho_story_04",
@@ -81,14 +81,14 @@
       "disable_compact": true,
       "source_start_step": 7,
       "source_end_step": 8,
-      "source_start_sec": 53.736,
-      "source_end_sec": 71.157,
+      "source_start_sec": 53.356,
+      "source_end_sec": 69.537,
       "spoken_text": "Let's stack those services. UI/UX Design? Check. Annual Server Hosting? Check. Now we let Zoho do the heavy lifting. We are not here for mental math. I didn't come here to calculate 9% of 160,000 in my head; I have a life to live!",
-      "clip_duration_sec": 17.051,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_li3aq63h\\zoho_story_04_primary_normalized.wav",
-      "required_speedup": 0.902,
-      "start_sec": 59.99,
-      "end_sec": 77.041
+      "clip_duration_sec": 17.331,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_7vgwfazl\\zoho_story_04_primary_normalized.wav",
+      "required_speedup": 0.917,
+      "start_sec": 59.694,
+      "end_sec": 77.025
     },
     {
       "segment_id": "zoho_story_05",
@@ -103,14 +103,14 @@
       "disable_compact": true,
       "source_start_step": 9,
       "source_end_step": 9,
-      "source_start_sec": 71.157,
-      "source_end_sec": 81.15,
+      "source_start_sec": 69.537,
+      "source_end_sec": 79.033,
       "spoken_text": "Step nine: drop in the fine print. Payment due within 30 days. Add the bank details. Quick pause while the totals update. It's like a slot machine spin, except you actually win.",
-      "clip_duration_sec": 10.81,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_li3aq63h\\zoho_story_05_primary_fitted.wav",
-      "required_speedup": 1.164,
+      "clip_duration_sec": 10.806,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_7vgwfazl\\zoho_story_05_primary_fitted.wav",
+      "required_speedup": 1.112,
       "start_sec": 78.5,
-      "end_sec": 89.31
+      "end_sec": 89.306
     },
     {
       "segment_id": "zoho_story_06",
@@ -125,14 +125,14 @@
       "disable_compact": true,
       "source_start_step": 10,
       "source_end_step": 10,
-      "source_start_sec": 81.15,
-      "source_end_sec": 84.796,
+      "source_start_sec": 79.033,
+      "source_end_sec": 82.641,
       "spoken_text": "Step ten: review the subtotal and grand total. That's the sound of success.",
-      "clip_duration_sec": 5.011,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_li3aq63h\\zoho_story_06_primary_fitted.wav",
-      "required_speedup": 1.162,
-      "start_sec": 89.31,
-      "end_sec": 94.321
+      "clip_duration_sec": 4.992,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_7vgwfazl\\zoho_story_06_primary_fitted.wav",
+      "required_speedup": 1.106,
+      "start_sec": 89.306,
+      "end_sec": 94.298
     },
     {
       "segment_id": "zoho_story_07",
@@ -147,13 +147,13 @@
       "disable_compact": true,
       "source_start_step": 11,
       "source_end_step": 12,
-      "source_start_sec": 84.796,
-      "source_end_sec": 91.931,
+      "source_start_sec": 82.641,
+      "source_end_sec": 89.685,
       "spoken_text": "Everything looks crisp and legal. Hit Download/Print, export the PDF, and send it off. Tutorial complete. Your coffee is still cooling. Go get that bread!",
-      "clip_duration_sec": 9.88,
-      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_li3aq63h\\zoho_story_07_primary_fitted.wav",
-      "required_speedup": 1.153,
-      "start_sec": 94.321,
+      "clip_duration_sec": 9.901,
+      "clip_path": "C:\\Users\\admin\\Downloads\\video_tutorial\\output\\narration_timeline_7vgwfazl\\zoho_story_07_primary_fitted.wav",
+      "required_speedup": 1.149,
+      "start_sec": 94.3,
       "end_sec": 104.201
     }
   ]

@@ -33,26 +33,6 @@ def inject_visual_helpers(page):
                 if (window.__ebayVisualHelpersReady) return;
                 window.__ebayVisualHelpersReady = true;
 
-                const banner = document.createElement('div');
-                banner.id = 'ai-agent-banner';
-                banner.style.position = 'fixed';
-                banner.style.top = '24px';
-                banner.style.left = '50%';
-                banner.style.transform = 'translateX(-50%)';
-                banner.style.backgroundColor = 'rgba(16, 185, 129, 0.95)';
-                banner.style.color = 'white';
-                banner.style.padding = '14px 28px';
-                banner.style.borderRadius = '12px';
-                banner.style.fontFamily = 'Segoe UI, Roboto, Helvetica, sans-serif';
-                banner.style.fontSize = '18px';
-                banner.style.fontWeight = 'bold';
-                banner.style.zIndex = '999999';
-                banner.style.boxShadow = '0 10px 25px rgba(0,0,0,0.2)';
-                banner.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                banner.style.opacity = '0';
-                banner.style.pointerEvents = 'none';
-                document.body.appendChild(banner);
-
                 const cursor = document.createElement('div');
                 cursor.id = 'ai-cursor';
                 cursor.style.position = 'fixed';
@@ -104,31 +84,7 @@ def inject_visual_helpers(page):
 
 
 def show_banner(page, text):
-    try:
-        page.evaluate(
-            """
-            (msg) => {
-                const el = document.getElementById('ai-agent-banner');
-                if (!el) return;
-
-                el.innerText = msg;
-                el.style.opacity = '1';
-                el.style.transform = 'translateX(-50%) scale(1.05)';
-
-                setTimeout(() => {
-                    el.style.transform = 'translateX(-50%) scale(1)';
-                }, 150);
-
-                setTimeout(() => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateX(-50%) translateY(-10px)';
-                }, 2500);
-            }
-            """,
-            text,
-        )
-    except Exception:
-        pass
+    return
 
 
 def robust_fill(page, selectors, value):

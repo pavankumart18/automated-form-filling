@@ -13,7 +13,7 @@
   "transcript": "output/indian_visa_transcript.md",
   "narration_script": "output/indian_visa_narration.txt",
   "narration_timeline": "output/indian_visa_narration_timeline.json",
-  "narration_script_text": "Welcome, traveler. Open the Indian eVisa portal. All those colors feel like a bureaucratic rangoli. The quest begins now.\n\nHit Apply like it's a win-a-million-dollars link. Boom, the form appears, blue, white, and ready for your life story.\n\nTell them who you are. United States. Ordinary Passport. Diplomatic passport holders can skip this tutorial.\n\nChoose your Port of Arrival. Today we're catching sea breeze at Agatti Seaport. Fancy. And now the portal enters its meditation break.\n\nAnd now we wait. This blank screen is digital dharma. Check your sunscreen, respect the spice, maybe hydrate. Government loading bars move only after enlightenment.\n\nStill nothing? Not a glitch. A spiritual test. Namaste, loading screen, please have mercy on us. Stay with me.\n\nWe're back. Add the birth date and your email. Use one you actually check, not batman123 at gmail.\n\nChoose the service: 30-Day e-Tourist Visa. The taster menu of visas. Tourism, recreation, all the hits.\n\nSet the arrival date and tick the instructions box. We are almost at the good part.\n\nFinal boss: captcha. We stop here for safety, but India is right around the corner.",
+  "narration_script_text": "Welcome, traveler. Destination India. First boss: the eVisa portal. Open the official page.\n\nScroll down and click Apply here for e-visa. The speedrun starts now.\n\nBuild the character: nationality USA, passport ordinary. Unless you're a secret agent, this is the lane. Then choose your port of arrival.\n\nAnd now, Digital Dharma. While the servers search for inner peace, check your sunscreen, practice your namaste, maybe hydrate.\n\nStill loading? Of course it is. Government loading bars only move after enlightenment. Stay with me. The servers have spoken.\n\nDate of birth, then email. Use one you actually know the password for.\n\nChoose e-Tourist Visa, 30 Days, the classic mode. Set your arrival date, then check the instruction box like a very lawful menace.\n\nStop at the captcha. India is waiting.",
   "steps_json": "screenshots/indian_visa_steps.json",
   "narration_beats": "output/indian_visa_narration_beats.json",
   "manifest": "output/indian_visa_manifest.json",
@@ -47,87 +47,87 @@
       "caption": "Step 1: Open the Indian eVisa portal home page",
       "description": "Open the Indian eVisa portal home page",
       "url": "https://indianvisaonline.gov.in/evisa/tvoa.html",
-      "timestamp": "2026-03-26T10:32:49.332520",
+      "timestamp": "2026-04-06T01:56:20.728341",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_01.png",
       "published_screenshot": "output/screenshots/indian_visa/step_01.png",
-      "narration": "Step 1: Open the Indian eVisa portal home page",
-      "pause_ms": 1705
+      "narration": "Welcome, traveler. Destination India. First boss: the eVisa portal. Open the official page.",
+      "pause_ms": 19
     },
     {
       "step": 2,
       "caption": "Step 2: Open the eVisa application form start page",
       "description": "Open the eVisa application form start page",
       "url": "https://indianvisaonline.gov.in/evisa/Registration",
-      "timestamp": "2026-03-26T10:32:55.420669",
+      "timestamp": "2026-04-06T01:56:24.858661",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_02.png",
       "published_screenshot": "output/screenshots/indian_visa/step_02.png",
-      "narration": "Step 2: Open the eVisa application form start page",
-      "pause_ms": 426
+      "narration": "Scroll down and click Apply here for e-visa. The speedrun starts now.",
+      "pause_ms": 478
     },
     {
       "step": 3,
       "caption": "Step 3: Select nationality and passport type for the applicant",
       "description": "Select nationality and passport type for the applicant",
       "url": "https://indianvisaonline.gov.in/evisa/Registration",
-      "timestamp": "2026-03-26T10:33:01.257447",
+      "timestamp": "2026-04-06T01:56:29.309242",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_03.png",
       "published_screenshot": "output/screenshots/indian_visa/step_03.png",
-      "narration": "Step 3: Select nationality and passport type for the applicant",
-      "pause_ms": 399
+      "narration": "Build the character: nationality USA, passport ordinary. Unless you're a secret agent, this is the lane. Then choose your port of arrival.",
+      "pause_ms": 624
     },
     {
       "step": 4,
       "caption": "Step 4: Choose the port of arrival for the application",
       "description": "Choose the port of arrival for the application",
       "url": "https://indianvisaonline.gov.in/evisa/Registration",
-      "timestamp": "2026-03-26T10:33:36.489628",
+      "timestamp": "2026-04-06T01:57:03.071552",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_04.png",
       "published_screenshot": "output/screenshots/indian_visa/step_04.png",
-      "narration": "Step 4: Choose the port of arrival for the application And now we wait. This blank screen is digital dharma. Check your sunscreen, respect the spice, maybe hydrate. Government loading bars move only after enlightenment. Still waiting, stay with me.",
-      "pause_ms": 1778
+      "narration": "And now, Digital Dharma. While the servers search for inner peace, check your sunscreen, practice your namaste, maybe hydrate. Still loading? Of course it is. Government loading bars only move after enlightenment. Stay with me. The servers have spoken.",
+      "pause_ms": 5102
     },
     {
       "step": 5,
       "caption": "Step 5: Fill date of birth and email confirmation",
       "description": "Fill date of birth and email confirmation",
       "url": "https://indianvisaonline.gov.in/evisa/Registration",
-      "timestamp": "2026-03-26T10:33:41.895391",
+      "timestamp": "2026-04-06T01:57:07.005332",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_05.png",
       "published_screenshot": "output/screenshots/indian_visa/step_05.png",
-      "narration": "Step 5: Fill date of birth and email confirmation",
-      "pause_ms": 369
+      "narration": "Date of birth, then email. Use one you actually know the password for.",
+      "pause_ms": 835
     },
     {
       "step": 6,
       "caption": "Step 6: Choose visa service: eTourist Visa (30 Days)",
       "description": "Choose visa service: eTourist Visa (30 Days)",
       "url": "https://indianvisaonline.gov.in/evisa/Registration",
-      "timestamp": "2026-03-26T10:33:47.009967",
+      "timestamp": "2026-04-06T01:57:10.632530",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_06.png",
       "published_screenshot": "output/screenshots/indian_visa/step_06.png",
-      "narration": "Step 6: Choose visa service: eTourist Visa (30 Days)",
-      "pause_ms": 354
+      "narration": "Choose e-Tourist Visa, 30 Days, the classic mode. Set your arrival date, then check the instruction box like a very lawful menace.",
+      "pause_ms": 145
     },
     {
       "step": 7,
       "caption": "Step 7: Set expected date of arrival and acknowledge instructions",
       "description": "Set expected date of arrival and acknowledge instructions",
       "url": "https://indianvisaonline.gov.in/evisa/Registration",
-      "timestamp": "2026-03-26T10:33:52.051273",
+      "timestamp": "2026-04-06T01:57:14.231157",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_07.png",
       "published_screenshot": "output/screenshots/indian_visa/step_07.png",
-      "narration": "Step 7: Set expected date of arrival and acknowledge instructions",
-      "pause_ms": 343
+      "narration": "Set the arrival date and tick the instructions box. We are almost at the good part.",
+      "pause_ms": 1050
     },
     {
       "step": 8,
       "caption": "Step 8: Stop at captcha step for safe, non-submitting demo",
       "description": "Stop at captcha step for safe, non-submitting demo",
       "url": "https://indianvisaonline.gov.in/evisa/Registration",
-      "timestamp": "2026-03-26T10:33:56.400058",
+      "timestamp": "2026-04-06T01:57:17.168314",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\indian_visa\\step_08.png",
       "published_screenshot": "output/screenshots/indian_visa/step_08.png",
-      "narration": "Step 8: Stop at captcha step for safe, non-submitting demo",
+      "narration": "Stop at the captcha. India is waiting.",
       "pause_ms": 0
     }
   ]

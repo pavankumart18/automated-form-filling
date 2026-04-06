@@ -34,6 +34,75 @@ def wait_short(seconds: float = 0.6):
     time.sleep(seconds)
 
 
+def install_zoho_ui_suppressor(page):
+    """Persistently hide chat and promo overlays that can pop back in after load."""
+    try:
+        page.add_init_script(
+            """
+            (() => {
+              const HIDE_SELECTORS = [
+                '#zsiq_float',
+                '.zsiq_floatmain',
+                '.zsiq_cnt',
+                '.zsiq_theme1',
+                '[id*="zsiq"]',
+                '[class*="zsiq"]',
+                'iframe[id*="siqiframe"]',
+                'iframe[src*="salesiq"]',
+                '[aria-label*="chat" i]',
+                '[title*="chat" i]'
+              ];
+
+              const hideMatches = () => {
+                for (const selector of HIDE_SELECTORS) {
+                  document.querySelectorAll(selector).forEach((el) => {
+                    el.style.setProperty('display', 'none', 'important');
+                    el.style.setProperty('visibility', 'hidden', 'important');
+                    el.style.setProperty('opacity', '0', 'important');
+                    el.style.setProperty('pointer-events', 'none', 'important');
+                  });
+                }
+              };
+
+              const install = () => {
+                const style = document.createElement('style');
+                style.textContent = `
+                  #zsiq_float,
+                  .zsiq_floatmain,
+                  .zsiq_cnt,
+                  .zsiq_theme1,
+                  [id*="zsiq"],
+                  [class*="zsiq"],
+                  iframe[id*="siqiframe"],
+                  iframe[src*="salesiq"] {
+                    display: none !important;
+                    visibility: hidden !important;
+                    opacity: 0 !important;
+                    pointer-events: none !important;
+                  }
+                `;
+                document.documentElement.appendChild(style);
+                hideMatches();
+                new MutationObserver(hideMatches).observe(document.documentElement, {
+                  childList: true,
+                  subtree: true,
+                  attributes: true,
+                });
+                window.setInterval(hideMatches, 800);
+              };
+
+              if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', install, { once: true });
+              } else {
+                install();
+              }
+            })();
+            """
+        )
+    except Exception:
+        pass
+
+
 def dismiss_blockers(page):
     """Remove nav drawers/popups/chat that can intercept input clicks."""
     try:
@@ -50,8 +119,13 @@ def dismiss_blockers(page):
               document.querySelectorAll('.modal-backdrop, .overlay, .menu-overlay, .navbar-overlay')
                 .forEach(el => el.remove());
               document.body.classList.remove('menu-open', 'nav-open', 'overflow-hidden');
-              const chat = document.querySelector('#zsiq_float, .zsiq_floatmain, .zsiq_cnt');
-              if (chat) chat.style.display = 'none';
+              document.querySelectorAll('#zsiq_float, .zsiq_floatmain, .zsiq_cnt, .zsiq_theme1, [id*="zsiq"], [class*="zsiq"], iframe[id*="siqiframe"], iframe[src*="salesiq"]')
+                .forEach(el => {
+                  el.style.setProperty('display', 'none', 'important');
+                  el.style.setProperty('visibility', 'hidden', 'important');
+                  el.style.setProperty('opacity', '0', 'important');
+                  el.style.setProperty('pointer-events', 'none', 'important');
+                });
               const signupModal = document.querySelector('#signupModalTemp');
               if (signupModal) signupModal.style.display = 'none';
             }
@@ -128,6 +202,8 @@ def run():
         logger = StepLogger(DEMO_NAME)
 
         try:
+            install_zoho_ui_suppressor(page)
+
             def announce(description: str, hold_sec: float = STEP_PREVIEW_HOLD_SEC):
                 logger.preview(page, description, hold_sec=hold_sec)
 

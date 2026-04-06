@@ -8,8 +8,8 @@
     "pause_ms": 920,
     "url": "https://mondula.com/msf-demo/",
     "start_elapsed_sec": 0.0,
-    "end_elapsed_sec": 12.287,
-    "duration_sec": 12.287
+    "end_elapsed_sec": 9.854,
+    "duration_sec": 9.854
   },
   {
     "step": 2,
@@ -19,9 +19,9 @@
     "fallback_narration": "Accept the intro and move to the first real step.",
     "pause_ms": 920,
     "url": "https://mondula.com/msf-demo/",
-    "start_elapsed_sec": 12.287,
-    "end_elapsed_sec": 18.944,
-    "duration_sec": 6.657
+    "start_elapsed_sec": 9.854,
+    "end_elapsed_sec": 15.104,
+    "duration_sec": 5.25
   },
   {
     "step": 3,
@@ -31,9 +31,9 @@
     "fallback_narration": "Fill the first text fields and the textarea.",
     "pause_ms": 1050,
     "url": "https://mondula.com/msf-demo/",
-    "start_elapsed_sec": 18.944,
-    "end_elapsed_sec": 29.038,
-    "duration_sec": 10.094
+    "start_elapsed_sec": 15.104,
+    "end_elapsed_sec": 23.816,
+    "duration_sec": 8.712
   },
   {
     "step": 4,
@@ -43,9 +43,9 @@
     "fallback_narration": "Move to page two and wait for the next section.",
     "pause_ms": 1050,
     "url": "https://mondula.com/msf-demo/",
-    "start_elapsed_sec": 29.038,
-    "end_elapsed_sec": 35.69,
-    "duration_sec": 6.652
+    "start_elapsed_sec": 23.816,
+    "end_elapsed_sec": 29.063,
+    "duration_sec": 5.247
   },
   {
     "step": 5,
@@ -55,9 +55,9 @@
     "fallback_narration": "Fill page two and choose the date.",
     "pause_ms": 1050,
     "url": "https://mondula.com/msf-demo/",
-    "start_elapsed_sec": 35.69,
-    "end_elapsed_sec": 49.268,
-    "duration_sec": 13.578
+    "start_elapsed_sec": 29.063,
+    "end_elapsed_sec": 41.43,
+    "duration_sec": 12.367
   },
   {
     "step": 6,
@@ -67,9 +67,9 @@
     "fallback_narration": "Next page. Radio, checkboxes, and dropdowns are loading.",
     "pause_ms": 1200,
     "url": "https://mondula.com/msf-demo/",
-    "start_elapsed_sec": 49.268,
-    "end_elapsed_sec": 57.778,
-    "duration_sec": 8.51
+    "start_elapsed_sec": 41.43,
+    "end_elapsed_sec": 48.553,
+    "duration_sec": 7.123
   },
   {
     "step": 7,
@@ -79,9 +79,9 @@
     "fallback_narration": "Pick the radio, checkboxes, and dropdown.",
     "pause_ms": 1200,
     "url": "https://mondula.com/msf-demo/",
-    "start_elapsed_sec": 57.778,
-    "end_elapsed_sec": 63.461,
-    "duration_sec": 5.683
+    "start_elapsed_sec": 48.553,
+    "end_elapsed_sec": 52.828,
+    "duration_sec": 4.275
   },
   {
     "step": 8,
@@ -91,9 +91,9 @@
     "fallback_narration": "Open the conditional section.",
     "pause_ms": 920,
     "url": "https://mondula.com/msf-demo/",
-    "start_elapsed_sec": 63.461,
-    "end_elapsed_sec": 70.094,
-    "duration_sec": 6.633
+    "start_elapsed_sec": 52.828,
+    "end_elapsed_sec": 58.063,
+    "duration_sec": 5.235
   },
   {
     "step": 9,
@@ -103,9 +103,9 @@
     "fallback_narration": "Fill the pizza options.",
     "pause_ms": 1050,
     "url": "https://mondula.com/msf-demo/",
-    "start_elapsed_sec": 70.094,
-    "end_elapsed_sec": 76.258,
-    "duration_sec": 6.164
+    "start_elapsed_sec": 58.063,
+    "end_elapsed_sec": 62.797,
+    "duration_sec": 4.734
   },
   {
     "step": 10,
@@ -115,9 +115,9 @@
     "fallback_narration": "One last wait before the contact page.",
     "pause_ms": 920,
     "url": "https://mondula.com/msf-demo/",
-    "start_elapsed_sec": 76.258,
-    "end_elapsed_sec": 82.893,
-    "duration_sec": 6.635
+    "start_elapsed_sec": 62.797,
+    "end_elapsed_sec": 68.047,
+    "duration_sec": 5.25
   },
   {
     "step": 11,
@@ -127,20 +127,20 @@
     "fallback_narration": "Fill the final contact details.",
     "pause_ms": 1050,
     "url": "https://mondula.com/msf-demo/",
-    "start_elapsed_sec": 82.893,
-    "end_elapsed_sec": 99.176,
-    "duration_sec": 16.283
+    "start_elapsed_sec": 68.047,
+    "end_elapsed_sec": 82.994,
+    "duration_sec": 14.947
   },
   {
     "step": 12,
     "caption": "Step 12: Review summary and reach submit-ready final state",
     "description": "Review summary and reach submit-ready final state",
     "narration": "Grand finale. Review the summary. Everything looks perfect. We came, we automated. Mondula zero, Pavan one.",
-    "fallback_narration": "And that's a wrap for Overpass.",
+    "fallback_narration": "Summary looks clean and submit-ready.",
     "pause_ms": 1550,
     "url": "https://mondula.com/msf-demo/",
-    "start_elapsed_sec": 99.176,
-    "end_elapsed_sec": 105.455,
-    "duration_sec": 6.279
+    "start_elapsed_sec": 82.994,
+    "end_elapsed_sec": 87.877,
+    "duration_sec": 4.883
   }
 ]

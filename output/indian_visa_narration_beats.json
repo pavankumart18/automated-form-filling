@@ -8,8 +8,8 @@
     "pause_ms": 920,
     "url": "https://indianvisaonline.gov.in/evisa/tvoa.html",
     "start_elapsed_sec": 0.0,
-    "end_elapsed_sec": 7.756,
-    "duration_sec": 7.756
+    "end_elapsed_sec": 3.709,
+    "duration_sec": 3.709
   },
   {
     "step": 2,
@@ -19,9 +19,9 @@
     "fallback_narration": "Open the application form.",
     "pause_ms": 920,
     "url": "https://indianvisaonline.gov.in/evisa/Registration",
-    "start_elapsed_sec": 7.756,
-    "end_elapsed_sec": 13.845,
-    "duration_sec": 6.089
+    "start_elapsed_sec": 3.709,
+    "end_elapsed_sec": 7.839,
+    "duration_sec": 4.13
   },
   {
     "step": 3,
@@ -31,9 +31,9 @@
     "fallback_narration": "Choose nationality and passport type.",
     "pause_ms": 1050,
     "url": "https://indianvisaonline.gov.in/evisa/Registration",
-    "start_elapsed_sec": 13.845,
-    "end_elapsed_sec": 19.681,
-    "duration_sec": 5.836
+    "start_elapsed_sec": 7.839,
+    "end_elapsed_sec": 12.29,
+    "duration_sec": 4.451
   },
   {
     "step": 4,
@@ -43,9 +43,9 @@
     "fallback_narration": "Choose the port of arrival and wait for the portal.",
     "pause_ms": 1050,
     "url": "https://indianvisaonline.gov.in/evisa/Registration",
-    "start_elapsed_sec": 19.681,
-    "end_elapsed_sec": 54.913,
-    "duration_sec": 35.232
+    "start_elapsed_sec": 12.29,
+    "end_elapsed_sec": 46.052,
+    "duration_sec": 33.762
   },
   {
     "step": 5,
@@ -55,9 +55,9 @@
     "fallback_narration": "Fill the birth date and email.",
     "pause_ms": 1050,
     "url": "https://indianvisaonline.gov.in/evisa/Registration",
-    "start_elapsed_sec": 54.913,
-    "end_elapsed_sec": 60.319,
-    "duration_sec": 5.406
+    "start_elapsed_sec": 46.052,
+    "end_elapsed_sec": 49.986,
+    "duration_sec": 3.934
   },
   {
     "step": 6,
@@ -67,9 +67,9 @@
     "fallback_narration": "Choose the 30 day tourist visa.",
     "pause_ms": 1050,
     "url": "https://indianvisaonline.gov.in/evisa/Registration",
-    "start_elapsed_sec": 60.319,
-    "end_elapsed_sec": 65.434,
-    "duration_sec": 5.115
+    "start_elapsed_sec": 49.986,
+    "end_elapsed_sec": 53.613,
+    "duration_sec": 3.627
   },
   {
     "step": 7,
@@ -79,20 +79,20 @@
     "fallback_narration": "Set the arrival date and acknowledge the instructions.",
     "pause_ms": 1050,
     "url": "https://indianvisaonline.gov.in/evisa/Registration",
-    "start_elapsed_sec": 65.434,
-    "end_elapsed_sec": 70.475,
-    "duration_sec": 5.041
+    "start_elapsed_sec": 53.613,
+    "end_elapsed_sec": 57.212,
+    "duration_sec": 3.599
   },
   {
     "step": 8,
     "caption": "Step 8: Stop at captcha step for safe, non-submitting demo",
     "description": "Stop at captcha step for safe, non-submitting demo",
     "narration": "Final boss: captcha. We stop here for safety, but India is right around the corner.",
-    "fallback_narration": "And that's a wrap for Overpass.",
+    "fallback_narration": "Stop safely at the captcha step.",
     "pause_ms": 1550,
     "url": "https://indianvisaonline.gov.in/evisa/Registration",
-    "start_elapsed_sec": 70.475,
-    "end_elapsed_sec": 74.824,
-    "duration_sec": 4.349
+    "start_elapsed_sec": 57.212,
+    "end_elapsed_sec": 60.149,
+    "duration_sec": 2.937
   }
 ]

@@ -1,6 +1,6 @@
 """
 common.py - Shared utilities for the video tutorial generator.
-Handles: click indicators, keystroke overlays, step logging, browser setup.
+Handles: click indicators, optional keystroke overlays, step logging, browser setup.
 """
 
 import json
@@ -37,6 +37,7 @@ CAPTION_HOLD_SEC = 1.05
 POST_STEP_BREATH_SEC = 0.95
 FAST_ERROR_STEP_SEC = 0.15
 ENABLE_IN_PAGE_STEP_CAPTIONS = False
+ENABLE_KEYSTROKE_OVERLAY = False
 
 
 CLICK_INDICATOR_JS = """
@@ -434,7 +435,8 @@ def create_browser_context(playwright, demo_name: str, headless: bool = False) -
     """
     )
     page.add_init_script(CLICK_INDICATOR_JS)
-    page.add_init_script(KEYSTROKE_OVERLAY_JS)
+    if ENABLE_KEYSTROKE_OVERLAY:
+        page.add_init_script(KEYSTROKE_OVERLAY_JS)
     if ENABLE_IN_PAGE_STEP_CAPTIONS:
         page.add_init_script(CAPTION_OVERLAY_JS)
 

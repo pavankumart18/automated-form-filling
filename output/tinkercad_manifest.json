@@ -13,7 +13,7 @@
   "transcript": "output/tinkercad_transcript.md",
   "narration_script": "output/tinkercad_narration.txt",
   "narration_timeline": "output/tinkercad_narration_timeline.json",
-  "narration_script_text": "Future Da Vincis, stop doom-scrolling. We're turning what if into heck yeah.\n\nWelcome to Tinkercad. No login maze. Hit Learn.\n\nType in 3D design basics. We're here for CAD, not fluff.\n\nNice. Stay on 3D. That's the lane.\n\nQuality check. Click a lesson. Clean visuals, real steps, no clutter.\n\nLook at those Airbus moon lessons.\n\nFrom shaky circles to NASA vibes in one click.\n\nNow hit Gallery. This is where inspiration wakes up.\n\nBoom. 9 million designs. Inspiration problem solved.\n\nGrab the March 2026 Spartan Helmet.\n\nOpen it. Study the crest. That's research, not cheating.\n\nLearn it. Browse it. Build it. Make something cool.",
+  "narration_script_text": "Alright makers, drop the scrolling. We're turning curiosity into 3D obsession.\n\nLand on Tinkercad. Hit Learn like it owes you money.\n\nType in 3D design basics. We're taking the fast lane into CAD.\n\nLoading drama. Boom, we're in.\n\nStay on 3D Designs. Clean lane, zero chaos.\n\nAirbus moon lesson? Now we're cooking with rocket fuel.\n\nScroll through it. Beginner energy meets mission-control confidence.\n\nNow hit Gallery. This is where the magic lives.\n\nNine million designs. Creative block cancelled.\n\nGrab the Spartan Helmet. Study the crest.\n\nSecret sauce: steal the logic, not the file.\n\nBuild your own. The moon is waiting.",
   "steps_json": "screenshots/tinkercad_steps.json",
   "narration_beats": "output/tinkercad_narration_beats.json",
   "manifest": "output/tinkercad_manifest.json",
@@ -47,10 +47,10 @@
       "caption": "Step 1: Open TinkerCAD - Autodesk's free platform for 3D learning and design",
       "description": "Open TinkerCAD - Autodesk's free platform for 3D learning and design",
       "url": "https://www.tinkercad.com/",
-      "timestamp": "2026-04-02T11:43:24.360810",
+      "timestamp": "2026-04-03T14:27:46.588275",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_01.png",
       "published_screenshot": "output/screenshots/tinkercad/step_01.png",
-      "narration": "Future Da Vincis, stop doom-scrolling. We're turning what if into heck yeah.",
+      "narration": "Alright makers, drop the scrolling. We're turning curiosity into 3D obsession.",
       "pause_ms": 0
     },
     {
@@ -58,87 +58,87 @@
       "caption": "Step 2: Open the Learning Center where beginner tutorials are available without login",
       "description": "Open the Learning Center where beginner tutorials are available without login",
       "url": "https://www.tinkercad.com/learn",
-      "timestamp": "2026-04-02T11:43:28.592221",
+      "timestamp": "2026-04-03T14:27:50.957293",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_02.png",
       "published_screenshot": "output/screenshots/tinkercad/step_02.png",
-      "narration": "Welcome to Tinkercad. No login maze. Hit Learn.",
-      "pause_ms": 0
+      "narration": "Land on Tinkercad. Hit Learn like it owes you money.",
+      "pause_ms": 368
     },
     {
       "step": 3,
       "caption": "Step 3: Search for beginner 3D design tutorials using the search bar",
       "description": "Search for beginner 3D design tutorials using the search bar",
       "url": "https://www.tinkercad.com/learn/search?q=3D%20design%20basics",
-      "timestamp": "2026-04-02T11:43:34.858505",
+      "timestamp": "2026-04-03T14:27:57.430515",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_03.png",
       "published_screenshot": "output/screenshots/tinkercad/step_03.png",
-      "narration": "Type in 3D design basics. We're here for CAD, not fluff.",
-      "pause_ms": 1434
+      "narration": "Type in 3D design basics. We're taking the fast lane into CAD.",
+      "pause_ms": 1542
     },
     {
       "step": 4,
       "caption": "Step 4: Stay on the 3D Design track while the search results load",
       "description": "Stay on the 3D Design track while the search results load",
       "url": "https://www.tinkercad.com/learn/search/designs?q=3D%20design%20basics",
-      "timestamp": "2026-04-02T11:43:38.599584",
+      "timestamp": "2026-04-03T14:28:01.263031",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_04.png",
       "published_screenshot": "output/screenshots/tinkercad/step_04.png",
-      "narration": "Nice. Stay on 3D. That's the lane.",
-      "pause_ms": 530
+      "narration": "Loading drama. Boom, we're in.",
+      "pause_ms": 1702
     },
     {
       "step": 5,
       "caption": "Step 5: Scroll through the lesson cards and scan for clear beginner-friendly tutorials",
       "description": "Scroll through the lesson cards and scan for clear beginner-friendly tutorials",
       "url": "https://www.tinkercad.com/learn/search/designs?q=3D%20design%20basics",
-      "timestamp": "2026-04-02T11:43:43.246711",
+      "timestamp": "2026-04-03T14:28:05.989623",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_05.png",
       "published_screenshot": "output/screenshots/tinkercad/step_05.png",
-      "narration": "Quality check. Click a lesson. Clean visuals, real steps, no clutter.",
-      "pause_ms": 0
+      "narration": "Stay on 3D Designs. Clean lane, zero chaos.",
+      "pause_ms": 355
     },
     {
       "step": 6,
       "caption": "Step 6: Open an Airbus moon lesson to view the guided project details",
       "description": "Open an Airbus moon lesson to view the guided project details",
       "url": "https://www.tinkercad.com/learn/overview/airbus-traveling-to-the-moon",
-      "timestamp": "2026-04-02T11:43:47.408016",
+      "timestamp": "2026-04-03T14:28:10.235286",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_06.png",
       "published_screenshot": "output/screenshots/tinkercad/step_06.png",
-      "narration": "Look at those Airbus moon lessons.",
-      "pause_ms": 0
+      "narration": "Airbus moon lesson? Now we're cooking with rocket fuel.",
+      "pause_ms": 75
     },
     {
       "step": 7,
       "caption": "Step 7: Scroll through the Airbus moon lesson to review the visuals and instructions",
       "description": "Scroll through the Airbus moon lesson to review the visuals and instructions",
       "url": "https://www.tinkercad.com/learn/overview/airbus-traveling-to-the-moon",
-      "timestamp": "2026-04-02T11:43:53.272146",
+      "timestamp": "2026-04-03T14:28:16.151582",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_07.png",
       "published_screenshot": "output/screenshots/tinkercad/step_07.png",
-      "narration": "From shaky circles to NASA vibes in one click.",
-      "pause_ms": 1674
+      "narration": "Scroll through it. Beginner energy meets mission-control confidence.",
+      "pause_ms": 865
     },
     {
       "step": 8,
       "caption": "Step 8: Open the Community Gallery to explore standout Tinkercad designs",
       "description": "Open the Community Gallery to explore standout Tinkercad designs",
       "url": "https://www.tinkercad.com/things",
-      "timestamp": "2026-04-02T11:43:57.465983",
+      "timestamp": "2026-04-03T14:28:20.459783",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_08.png",
       "published_screenshot": "output/screenshots/tinkercad/step_08.png",
-      "narration": "Now hit Gallery. This is where inspiration wakes up.",
-      "pause_ms": 223
+      "narration": "Now hit Gallery. This is where the magic lives.",
+      "pause_ms": 337
     },
     {
       "step": 9,
       "caption": "Step 9: Browse the gallery and keep the top community designs in view",
       "description": "Browse the gallery and keep the top community designs in view",
       "url": "https://www.tinkercad.com/things",
-      "timestamp": "2026-04-02T11:44:00.763562",
+      "timestamp": "2026-04-03T14:28:23.779106",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_09.png",
       "published_screenshot": "output/screenshots/tinkercad/step_09.png",
-      "narration": "Boom. 9 million designs. Inspiration problem solved.",
+      "narration": "Nine million designs. Creative block cancelled.",
       "pause_ms": 0
     },
     {
@@ -146,32 +146,32 @@
       "caption": "Step 10: Open the Greek Spartan Helmet - March 2026 design from the gallery",
       "description": "Open the Greek Spartan Helmet - March 2026 design from the gallery",
       "url": "https://www.tinkercad.com/things/ddtuLraw1Zf-my-take-on-a-greek-spartan-helmet-march-2026",
-      "timestamp": "2026-04-02T11:44:04.505584",
+      "timestamp": "2026-04-03T14:28:27.685467",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_10.png",
       "published_screenshot": "output/screenshots/tinkercad/step_10.png",
-      "narration": "Grab the March 2026 Spartan Helmet.",
-      "pause_ms": 34
+      "narration": "Grab the Spartan Helmet. Study the crest.",
+      "pause_ms": 430
     },
     {
       "step": 11,
       "caption": "Step 11: View the 3D model and inspect how the Spartan Helmet design is built",
       "description": "View the 3D model and inspect how the Spartan Helmet design is built",
       "url": "https://www.tinkercad.com/things/ddtuLraw1Zf-my-take-on-a-greek-spartan-helmet-march-2026",
-      "timestamp": "2026-04-02T11:44:08.595501",
+      "timestamp": "2026-04-03T14:28:31.842089",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_11.png",
       "published_screenshot": "output/screenshots/tinkercad/step_11.png",
-      "narration": "Open it. Study the crest. That's research, not cheating.",
-      "pause_ms": 15
+      "narration": "Secret sauce: steal the logic, not the file.",
+      "pause_ms": 466
     },
     {
       "step": 12,
       "caption": "Step 12: Tutorial complete - learn it, browse it, build it",
       "description": "Tutorial complete - learn it, browse it, build it",
       "url": "https://www.tinkercad.com/things/ddtuLraw1Zf-my-take-on-a-greek-spartan-helmet-march-2026",
-      "timestamp": "2026-04-02T11:44:11.738152",
+      "timestamp": "2026-04-03T14:28:35.032295",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\tinkercad\\step_12.png",
       "published_screenshot": "output/screenshots/tinkercad/step_12.png",
-      "narration": "Learn it. Browse it. Build it. Make something cool.",
+      "narration": "Build your own. The moon is waiting.",
       "pause_ms": 0
     }
   ]

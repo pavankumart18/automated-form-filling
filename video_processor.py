@@ -66,7 +66,7 @@ def normalize_caption_text(text: str) -> str:
 def wrap_caption_chunk(text: str) -> str:
     """Insert one balanced line break when a caption chunk gets visually wide."""
     words = text.split()
-    if len(words) < 7:
+    if len(words) < 9:
         return text
 
     best_split = None
@@ -84,7 +84,7 @@ def wrap_caption_chunk(text: str) -> str:
     return f"{best_split[0]}\n{best_split[1]}"
 
 
-def split_timeline_caption_text(text: str, max_words: int = 7) -> list[str]:
+def split_timeline_caption_text(text: str, max_words: int = 11) -> list[str]:
     """Break long narration lines into shorter subtitle beats."""
     normalized = normalize_caption_text(text)
     if not normalized:
@@ -253,13 +253,20 @@ def generate_caption_file(
             for segment in narration_segments:
                 start_sec = max(0.0, float(segment.get("start_sec", segment.get("offset_sec", 0.0)) or 0.0))
                 fallback_duration = max(float(segment.get("clip_duration_sec", 0.0) or 0.0), 1.1)
-                end_sec = float(segment.get("end_sec", start_sec + fallback_duration) or (start_sec + fallback_duration))
+                end_sec = float(
+                    segment.get(
+                        "end_sec",
+                        segment.get("target_window_end_sec", start_sec + fallback_duration),
+                    )
+                    or segment.get("target_window_end_sec", start_sec + fallback_duration)
+                    or (start_sec + fallback_duration)
+                )
                 start_sec = min(start_sec, video_duration)
                 end_sec = min(max(end_sec, start_sec + 0.2), video_duration)
                 subtitle = (
                     segment.get("spoken_text")
-                    or segment.get("subtitle")
                     or segment.get("text")
+                    or segment.get("subtitle")
                     or ""
                 ).strip()
                 if not subtitle:
@@ -418,10 +425,10 @@ def burn_captions(input_path: str, srt_path: str, output_path: str):
         "-i", input_path,
         "-vf", (
             f"subtitles='{escaped_srt}':"
-            "force_style='FontSize=14,FontName=Trebuchet MS,"
-            "PrimaryColour=&H00FFFFFF,OutlineColour=&H46000000,"
+            "force_style='FontSize=15,FontName=Trebuchet MS,Bold=0,"
+            "PrimaryColour=&H00FFFFFF,OutlineColour=&H70000000,"
             "BackColour=&H00000000,BorderStyle=1,Outline=1,Shadow=0,"
-            "MarginV=18,MarginL=34,MarginR=34,Alignment=2,Spacing=0.1'"
+            "MarginV=14,MarginL=34,MarginR=34,Alignment=2,Spacing=0.1'"
         ),
         "-c:v", "libvpx-vp9",
         "-crf", "45",

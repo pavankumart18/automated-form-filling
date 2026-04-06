@@ -8,8 +8,8 @@
     "pause_ms": 920,
     "url": "https://www.ebay.com/sch/ebayadvsearch",
     "start_elapsed_sec": 0.0,
-    "end_elapsed_sec": 8.702,
-    "duration_sec": 8.702
+    "end_elapsed_sec": 5.118,
+    "duration_sec": 5.118
   },
   {
     "step": 2,
@@ -19,9 +19,9 @@
     "fallback_narration": "Enter the Sony WH-1000XM5 keywords.",
     "pause_ms": 1050,
     "url": "https://www.ebay.com/sch/ebayadvsearch",
-    "start_elapsed_sec": 8.702,
-    "end_elapsed_sec": 13.151,
-    "duration_sec": 4.449
+    "start_elapsed_sec": 5.118,
+    "end_elapsed_sec": 7.111,
+    "duration_sec": 1.993
   },
   {
     "step": 3,
@@ -31,9 +31,9 @@
     "fallback_narration": "Set the keyword match to exact order.",
     "pause_ms": 920,
     "url": "https://www.ebay.com/sch/ebayadvsearch",
-    "start_elapsed_sec": 13.151,
-    "end_elapsed_sec": 17.713,
-    "duration_sec": 4.562
+    "start_elapsed_sec": 7.111,
+    "end_elapsed_sec": 9.277,
+    "duration_sec": 2.166
   },
   {
     "step": 4,
@@ -43,9 +43,9 @@
     "fallback_narration": "Exclude broken parts from the results.",
     "pause_ms": 1050,
     "url": "https://www.ebay.com/sch/ebayadvsearch",
-    "start_elapsed_sec": 17.713,
-    "end_elapsed_sec": 22.113,
-    "duration_sec": 4.4
+    "start_elapsed_sec": 9.277,
+    "end_elapsed_sec": 11.249,
+    "duration_sec": 1.972
   },
   {
     "step": 5,
@@ -55,9 +55,9 @@
     "fallback_narration": "Search title and description too.",
     "pause_ms": 920,
     "url": "https://www.ebay.com/sch/ebayadvsearch",
-    "start_elapsed_sec": 22.113,
-    "end_elapsed_sec": 26.516,
-    "duration_sec": 4.403
+    "start_elapsed_sec": 11.249,
+    "end_elapsed_sec": 13.234,
+    "duration_sec": 1.985
   },
   {
     "step": 6,
@@ -67,9 +67,9 @@
     "fallback_narration": "Set the price range from 150 to 400.",
     "pause_ms": 1050,
     "url": "https://www.ebay.com/sch/ebayadvsearch",
-    "start_elapsed_sec": 26.516,
-    "end_elapsed_sec": 31.445,
-    "duration_sec": 4.929
+    "start_elapsed_sec": 13.234,
+    "end_elapsed_sec": 15.707,
+    "duration_sec": 2.473
   },
   {
     "step": 7,
@@ -79,9 +79,9 @@
     "fallback_narration": "Filter for new items only.",
     "pause_ms": 920,
     "url": "https://www.ebay.com/sch/ebayadvsearch",
-    "start_elapsed_sec": 31.445,
-    "end_elapsed_sec": 35.832,
-    "duration_sec": 4.387
+    "start_elapsed_sec": 15.707,
+    "end_elapsed_sec": 17.679,
+    "duration_sec": 1.972
   },
   {
     "step": 8,
@@ -91,8 +91,8 @@
     "fallback_narration": "Run the search and open the filtered results.",
     "pause_ms": 1550,
     "url": "https://www.ebay.com/sch/i.html?_nkw=Sony+WH-1000XM5&_in_kw=3&_ex_kw=broken+parts+only&LH_TitleDesc=1&_udlo=150&_udhi=400&LH_ItemCondition=1000",
-    "start_elapsed_sec": 35.832,
-    "end_elapsed_sec": 46.525,
-    "duration_sec": 10.693
+    "start_elapsed_sec": 17.679,
+    "end_elapsed_sec": 25.99,
+    "duration_sec": 8.311
   }
 ]

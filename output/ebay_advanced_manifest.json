@@ -13,7 +13,7 @@
   "transcript": "output/ebay_advanced_transcript.md",
   "narration_script": "output/ebay_advanced_narration.txt",
   "narration_timeline": "output/ebay_advanced_narration_timeline.json",
-  "narration_script_text": "Alright team, this is not shopping. Advanced Search is where the real hunt starts.\n\nMainframe is loading. The amateurs already got lost at the basic search bar.\n\nTarget acquired: Sony WH-1000XM5. Type it clean and keep it precise.\n\nExact words, exact order. No batteries, no posters, no nonsense.\n\nExclude broken parts. We want headphones, not a glue-gun recovery project.\n\nExpand to title and description. Hidden deals love hiding in the fine print.\n\nPrice window locked: 150 to 400. Steal? Yes. Suspicious envelope listing? No.\n\nFilter for New. Fresh-box energy only.\n\nHit Search. Boom. Filtered results, pure audio gold, zero junk.\n\nThere it is. Clean results, no broken plastic, just the serious listings.",
+  "narration_script_text": "Listen up. Basic eBay search is fishing with a stick.\n\nOpen Advanced Search. This is where the grown-ups hunt.\n\nTarget locked: Sony WH-1000XM5.\n\nExact words, exact order.\n\nNo cable spaghetti.\n\nExclude broken and parts.\n\nRepair bills are not a hobby.\n\nCheck Title and description. Hidden gems hide there.\n\nPrice: 100 to 400.\n\nGoldilocks zone.\n\nFilter for New. No used ear pads.\n\nHit search. Let the wizardry cook.\n\nClean results. Zero junk. That's the beauty.\n\nYou're not shopping now. You're sniping.",
   "steps_json": "screenshots/ebay_advanced_steps.json",
   "narration_beats": "output/ebay_advanced_narration_beats.json",
   "manifest": "output/ebay_advanced_manifest.json",
@@ -47,87 +47,87 @@
       "caption": "Step 1: Open eBay Advanced Search",
       "description": "Open eBay Advanced Search",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-25T23:52:13.259901",
+      "timestamp": "2026-04-06T02:06:33.715062",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_01.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_01.png",
-      "narration": "Step 1: Open eBay Advanced Search Mainframe is loading. The amateurs already got lost at the basic search bar.",
-      "pause_ms": 445
+      "narration": "Listen up. Basic eBay search is fishing with a stick. Open Advanced Search. This is where the grown-ups hunt.",
+      "pause_ms": 554
     },
     {
       "step": 2,
       "caption": "Step 2: Enter main search keywords",
       "description": "Enter main search keywords",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-25T23:52:17.708375",
+      "timestamp": "2026-04-06T02:06:35.708409",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_02.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_02.png",
-      "narration": "Step 2: Enter main search keywords",
-      "pause_ms": 755
+      "narration": "Target locked: Sony WH-1000XM5.",
+      "pause_ms": 0
     },
     {
       "step": 3,
       "caption": "Step 3: Change the keyword match dropdown to exact order",
       "description": "Change the keyword match dropdown to exact order",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-25T23:52:22.270962",
+      "timestamp": "2026-04-06T02:06:37.874039",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_03.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_03.png",
-      "narration": "Step 3: Change the keyword match dropdown to exact order",
-      "pause_ms": 741
+      "narration": "Exact words, exact order. No cable spaghetti.",
+      "pause_ms": 140
     },
     {
       "step": 4,
       "caption": "Step 4: Enter words to exclude from results",
       "description": "Enter words to exclude from results",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-25T23:52:26.670516",
+      "timestamp": "2026-04-06T02:06:39.846895",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_04.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_04.png",
-      "narration": "Step 4: Enter words to exclude from results",
-      "pause_ms": 742
+      "narration": "Exclude broken and parts. Repair bills are not a hobby.",
+      "pause_ms": 0
     },
     {
       "step": 5,
       "caption": "Step 5: Include title and description in the search scope",
       "description": "Include title and description in the search scope",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-25T23:52:31.073585",
+      "timestamp": "2026-04-06T02:06:41.831472",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_05.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_05.png",
-      "narration": "Step 5: Include title and description in the search scope",
-      "pause_ms": 737
+      "narration": "Check Title and description. Hidden gems hide there.",
+      "pause_ms": 0
     },
     {
       "step": 6,
       "caption": "Step 6: Set minimum and maximum price filters",
       "description": "Set minimum and maximum price filters",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-25T23:52:36.002582",
+      "timestamp": "2026-04-06T02:06:44.303972",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_06.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_06.png",
-      "narration": "Step 6: Set minimum and maximum price filters",
-      "pause_ms": 745
+      "narration": "Price: 100 to 400. Goldilocks zone.",
+      "pause_ms": 654
     },
     {
       "step": 7,
       "caption": "Step 7: Filter for new-condition items",
       "description": "Filter for new-condition items",
       "url": "https://www.ebay.com/sch/ebayadvsearch",
-      "timestamp": "2026-03-25T23:52:40.389384",
+      "timestamp": "2026-04-06T02:06:46.276941",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_07.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_07.png",
-      "narration": "Step 7: Filter for new-condition items",
-      "pause_ms": 1590
+      "narration": "Filter for New. No used ear pads.",
+      "pause_ms": 1336
     },
     {
       "step": 8,
       "caption": "Step 8: Run the search and open the filtered results page",
       "description": "Run the search and open the filtered results page",
       "url": "https://www.ebay.com/sch/i.html?_nkw=Sony+WH-1000XM5&_in_kw=3&_ex_kw=broken+parts+only&LH_TitleDesc=1&_udlo=150&_udhi=400&LH_ItemCondition=1000",
-      "timestamp": "2026-03-25T23:52:51.083127",
+      "timestamp": "2026-04-06T02:06:54.587359",
       "source_screenshot": "C:\\Users\\admin\\Downloads\\video_tutorial\\screenshots\\ebay_advanced\\step_08.png",
       "published_screenshot": "output/screenshots/ebay_advanced/step_08.png",
-      "narration": "Step 8: Run the search and open the filtered results page There it is. Clean results, no broken plastic, just the serious listings.",
+      "narration": "Hit search. Let the wizardry cook. Clean results. Zero junk. That's the beauty. You're not shopping now. You're sniping.",
       "pause_ms": 0
     }
   ]

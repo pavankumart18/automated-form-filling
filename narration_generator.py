@@ -150,81 +150,107 @@ EBAY_FILLER_THRESHOLD_SEC = 7.6
 CUSTOM_SCREENER_TIMELINE_SEGMENTS = [
     {
         "start_step": 1,
-        "end_step": 2,
+        "end_step": 1,
         "target_start_sec": 0.0,
-        "target_end_sec": 7.0,
+        "target_end_sec": 6.0,
         "text": (
-            "Most people pick stocks on gut. Let's change that. Open Screener. Search Reliance."
+            "Most people pick stocks on gut. Your gut is for samosas, not retirement. Welcome to the big leagues."
         ),
         "fallback_text": (
-            "Most people pick stocks on gut. Let's change that. Open Screener. Search Reliance."
+            "Most people pick stocks on gut. Your gut is for samosas, not retirement. Welcome to the big leagues."
         ),
-        "subtitle": "Open Screener and type Reliance Industries.",
+        "subtitle": "Open Screener and get ready to search.",
     },
     {
-        "start_step": 3,
+        "start_step": 2,
         "end_step": 3,
-        "target_start_sec": 7.0,
-        "target_end_sec": 14.0,
+        "target_start_sec": 6.0,
+        "target_end_sec": 12.0,
         "text": (
-            "There it is. Click Reliance. Now the real checklist begins."
+            "Open Screener. Type Reliance. Click. Boom."
         ),
         "fallback_text": (
-            "There it is. Click Reliance. Now the real checklist begins."
+            "Open Screener. Type Reliance. Click. Boom."
         ),
         "subtitle": "Click Reliance and open the company page.",
     },
     {
         "start_step": 4,
-        "end_step": 5,
-        "target_start_sec": 14.0,
-        "target_end_sec": 25.0,
+        "end_step": 4,
+        "target_start_sec": 12.0,
+        "target_end_sec": 20.0,
         "text": (
-            "First, check the big three at the top: Market Cap, P/E, and ROCE. Then open quarterly results and make sure profits are actually climbing."
+            "Real checklist: Market Cap, P and E, and ROCE. Weak ROCE? Hobby."
         ),
         "fallback_text": (
-            "First, check the big three at the top: Market Cap, P/E, and ROCE. Then open quarterly results and make sure profits are actually climbing."
+            "Real checklist: Market Cap, P and E, and ROCE. Weak ROCE? Hobby."
         ),
-        "subtitle": "Check the top metrics, then open quarterly results.",
+        "subtitle": "Check the top metrics on Reliance.",
+    },
+    {
+        "start_step": 5,
+        "end_step": 5,
+        "target_start_sec": 20.0,
+        "target_end_sec": 26.0,
+        "text": (
+            "Open quarters. We want a mountain climb, not a ski slope."
+        ),
+        "fallback_text": (
+            "Open quarters. We want a mountain climb, not a ski slope."
+        ),
+        "subtitle": "Review the quarterly results.",
     },
     {
         "start_step": 6,
         "end_step": 7,
-        "target_start_sec": 25.0,
-        "target_end_sec": 36.0,
+        "target_start_sec": 26.0,
+        "target_end_sec": 33.0,
         "text": (
-            "Next, sweep through Profit and Loss and the Balance Sheet. Revenues should rise, earnings should look clean, and debt should stay under control."
+            "Now Profit and Loss, then Balance Sheet. Revenue up. Debt down. Clean and lean, baby."
         ),
         "fallback_text": (
-            "Next, sweep through Profit and Loss and the Balance Sheet. Revenues should rise, earnings should look clean, and debt should stay under control."
+            "Now Profit and Loss, then Balance Sheet. Revenue up. Debt down. Clean and lean, baby."
         ),
         "subtitle": "Check Profit and Loss, then the Balance Sheet.",
     },
     {
         "start_step": 8,
         "end_step": 8,
-        "target_start_sec": 36.0,
-        "target_end_sec": 43.0,
+        "target_start_sec": 33.0,
+        "target_end_sec": 38.0,
         "text": (
-            "No stock idea yet? Hit Screens. That is your cheat code."
+            "Still staring like it's a math exam? Shortcut incoming."
         ),
         "fallback_text": (
-            "No stock idea yet? Hit Screens. That is your cheat code."
+            "Still staring like it's a math exam? Shortcut incoming."
         ),
-        "subtitle": "No stock idea yet? Click Screens.",
+        "subtitle": "Pause before the stock-screen shortcut.",
     },
     {
         "start_step": 9,
-        "end_step": 11,
-        "target_start_sec": 43.0,
-        "target_end_sec": 56.0,
+        "end_step": 10,
+        "target_start_sec": 38.0,
+        "target_end_sec": 46.0,
         "text": (
-            "Now click Show all screens and find this exact filter: High Growth, High RoE, Low PE. Fast growers, efficient businesses, sane valuation. Open it."
+            "No stock idea? Hit Screens, then Show all screens. That's your cheat code. Floodlights on."
         ),
         "fallback_text": (
-            "Now click Show all screens and find this exact filter: High Growth, High RoE, Low PE. Fast growers, efficient businesses, sane valuation. Open it."
+            "No stock idea? Hit Screens, then Show all screens. That's your cheat code. Floodlights on."
         ),
-        "subtitle": "Find and open the High Growth, High RoE, Low PE screen.",
+        "subtitle": "Open the Screens library.",
+    },
+    {
+        "start_step": 11,
+        "end_step": 11,
+        "target_start_sec": 46.0,
+        "target_end_sec": 56.0,
+        "text": (
+            "Find High Growth, High RoE, Low PE. Fast growers. Sane valuations. Goldilocks zone."
+        ),
+        "fallback_text": (
+            "Find High Growth, High RoE, Low PE. Fast growers. Sane valuations. Goldilocks zone."
+        ),
+        "subtitle": "Open the High Growth, High RoE, Low PE screen.",
     },
     {
         "start_step": 12,
@@ -232,12 +258,12 @@ CUSTOM_SCREENER_TIMELINE_SEGMENTS = [
         "target_start_sec": 56.0,
         "target_end_sec": 67.0,
         "text": (
-            "The filter has done the hunting. Ganesh Infra makes the shortlist, so open it and run the same four-point check. That is how you go from guessing to investing with a plan."
+            "Ganesh Infra made the shortlist. Run the same four-point check. That's how you stop guessing and start investing with a plan. Go conquer the markets."
         ),
         "fallback_text": (
-            "The filter has done the hunting. Ganesh Infra makes the shortlist, so open it and run the same four-point check. That is how you go from guessing to investing with a plan."
+            "Ganesh Infra made the shortlist. Run the same four-point check. That's how you stop guessing and start investing with a plan. Go conquer the markets."
         ),
-        "subtitle": "Open Ganesh Infra and run the same four-point check.",
+        "subtitle": "Open Ganesh Infra and repeat the stock check.",
     },
 ]
 CUSTOM_ZOHO_TIMELINE_SEGMENTS = [
@@ -340,10 +366,10 @@ CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
         "target_start_sec": 0.0,
         "target_end_sec": 6.0,
         "text": (
-            "Future Da Vincis, stop doom-scrolling. We're turning what if into heck yeah."
+            "Alright makers, drop the scrolling. We're turning curiosity into 3D obsession."
         ),
         "fallback_text": (
-            "Future Da Vincis, stop doom-scrolling. We're turning what if into heck yeah."
+            "Alright makers, drop the scrolling. We're turning curiosity into 3D obsession."
         ),
         "subtitle": "Open the Tinkercad landing page.",
     },
@@ -353,10 +379,10 @@ CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
         "target_start_sec": 6.0,
         "target_end_sec": 10.0,
         "text": (
-            "Welcome to Tinkercad. No login maze. Hit Learn."
+            "Land on Tinkercad. Hit Learn like it owes you money."
         ),
         "fallback_text": (
-            "Welcome to Tinkercad. No login maze. Hit Learn."
+            "Land on Tinkercad. Hit Learn like it owes you money."
         ),
         "subtitle": "Open the Learning Center.",
     },
@@ -366,10 +392,10 @@ CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
         "target_start_sec": 10.0,
         "target_end_sec": 16.5,
         "text": (
-            "Type in 3D design basics. We're here for CAD, not fluff."
+            "Type in 3D design basics. We're taking the fast lane into CAD."
         ),
         "fallback_text": (
-            "Type in 3D design basics. We're here for CAD, not fluff."
+            "Type in 3D design basics. We're taking the fast lane into CAD."
         ),
         "subtitle": "Search for 3D design basics.",
     },
@@ -379,10 +405,10 @@ CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
         "target_start_sec": 16.5,
         "target_end_sec": 20.5,
         "text": (
-            "Nice. Stay on 3D. That's the lane."
+            "Loading drama. Boom, we're in."
         ),
         "fallback_text": (
-            "Nice. Stay on 3D. That's the lane."
+            "Loading drama. Boom, we're in."
         ),
         "subtitle": "Stay on the 3D track while the results load.",
     },
@@ -392,10 +418,10 @@ CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
         "target_start_sec": 20.5,
         "target_end_sec": 25.0,
         "text": (
-            "Quality check. Click a lesson. Clean visuals, real steps, no clutter."
+            "Stay on 3D Designs. Clean lane, zero chaos."
         ),
         "fallback_text": (
-            "Quality check. Click a lesson. Clean visuals, real steps, no clutter."
+            "Stay on 3D Designs. Clean lane, zero chaos."
         ),
         "subtitle": "Scroll through the lesson cards and do a quick quality check.",
     },
@@ -405,10 +431,10 @@ CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
         "target_start_sec": 25.0,
         "target_end_sec": 29.0,
         "text": (
-            "Look at those Airbus moon lessons."
+            "Airbus moon lesson? Now we're cooking with rocket fuel."
         ),
         "fallback_text": (
-            "Look at those Airbus moon lessons."
+            "Airbus moon lesson? Now we're cooking with rocket fuel."
         ),
         "subtitle": "Open an Airbus moon lesson.",
     },
@@ -418,10 +444,10 @@ CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
         "target_start_sec": 29.0,
         "target_end_sec": 35.0,
         "text": (
-            "From shaky circles to NASA vibes in one click."
+            "Scroll through it. Beginner energy meets mission-control confidence."
         ),
         "fallback_text": (
-            "From shaky circles to NASA vibes in one click."
+            "Scroll through it. Beginner energy meets mission-control confidence."
         ),
         "subtitle": "Review the moon lesson visuals.",
     },
@@ -431,10 +457,10 @@ CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
         "target_start_sec": 35.0,
         "target_end_sec": 39.0,
         "text": (
-            "Now hit Gallery. This is where inspiration wakes up."
+            "Now hit Gallery. This is where the magic lives."
         ),
         "fallback_text": (
-            "Now hit Gallery. This is where inspiration wakes up."
+            "Now hit Gallery. This is where the magic lives."
         ),
         "subtitle": "Transition into the Community Gallery.",
     },
@@ -444,10 +470,10 @@ CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
         "target_start_sec": 39.0,
         "target_end_sec": 43.0,
         "text": (
-            "Boom. 9 million designs. Inspiration problem solved."
+            "Nine million designs. Creative block cancelled."
         ),
         "fallback_text": (
-            "Boom. 9 million designs. Inspiration problem solved."
+            "Nine million designs. Creative block cancelled."
         ),
         "subtitle": "Let the gallery load and take in the scale.",
     },
@@ -457,10 +483,10 @@ CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
         "target_start_sec": 43.0,
         "target_end_sec": 47.0,
         "text": (
-            "Grab the March 2026 Spartan Helmet."
+            "Grab the Spartan Helmet. Study the crest."
         ),
         "fallback_text": (
-            "Grab the March 2026 Spartan Helmet."
+            "Grab the Spartan Helmet. Study the crest."
         ),
         "subtitle": "Open the Greek Spartan Helmet design.",
     },
@@ -470,10 +496,10 @@ CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
         "target_start_sec": 47.0,
         "target_end_sec": 50.0,
         "text": (
-            "Open it. Study the crest. That's research, not cheating."
+            "Secret sauce: steal the logic, not the file."
         ),
         "fallback_text": (
-            "Open it. Study the crest. That's research, not cheating."
+            "Secret sauce: steal the logic, not the file."
         ),
         "subtitle": "Inspect the Spartan Helmet model details.",
     },
@@ -483,12 +509,554 @@ CUSTOM_TINKERCAD_TIMELINE_SEGMENTS = [
         "target_start_sec": 50.0,
         "target_end_sec": 53.0,
         "text": (
-            "Learn it. Browse it. Build it. Make something cool."
+            "Build your own. The moon is waiting."
         ),
         "fallback_text": (
-            "Learn it. Browse it. Build it. Make something cool."
+            "Build your own. The moon is waiting."
         ),
         "subtitle": "Finish the Tinkercad speedrun.",
+    },
+]
+CUSTOM_OVERPASS_TIMELINE_SEGMENTS = [
+    {
+        "start_step": 1,
+        "end_step": 2,
+        "target_start_sec": 0.0,
+        "target_end_sec": 14.232,
+        "text": (
+            "Alright, urban explorers and data nerds, welcome to the big leagues. "
+            "We're not just looking at a map, we're interrogating it. Fire up Overpass Turbo. "
+            "Editor left, map right. Logic meets geography."
+        ),
+        "fallback_text": (
+            "Alright, urban explorers and data nerds, welcome to the big leagues. "
+            "We're not just looking at a map, we're interrogating it. Fire up Overpass Turbo. "
+            "Editor left, map right. Logic meets geography."
+        ),
+        "subtitle": "Open Overpass Turbo and orient to the split query-plus-map workspace.",
+    },
+    {
+        "start_step": 3,
+        "end_step": 3,
+        "target_start_sec": 14.232,
+        "target_end_sec": 25.798,
+        "text": (
+            "Mission one: hospitals in Hyderabad. Write the Overpass QL with a fixed box: "
+            "nodes, ways, relations. If you feel like a hacker in a 90s movie right now, good."
+        ),
+        "fallback_text": (
+            "Mission one: hospitals in Hyderabad. Write the Overpass QL with a fixed box: "
+            "nodes, ways, relations. If you feel like a hacker in a 90s movie right now, good."
+        ),
+        "subtitle": "Write the Hyderabad hospitals query in Overpass QL.",
+    },
+    {
+        "start_step": 4,
+        "end_step": 4,
+        "target_start_sec": 25.798,
+        "target_end_sec": 37.36,
+        "text": (
+            "Hit Run and watch those markers fly. While the API does the heavy lifting, "
+            "fast fiber beats virtue every time. Boom. Look at that density."
+        ),
+        "fallback_text": (
+            "Hit Run and watch those markers fly. While the API does the heavy lifting, "
+            "fast fiber beats virtue every time. Boom. Look at that density."
+        ),
+        "subtitle": "Run the hospitals query and let the map fill in.",
+    },
+    {
+        "start_step": 5,
+        "end_step": 8,
+        "target_start_sec": 37.36,
+        "target_end_sec": 57.006,
+        "text": (
+            "Zoom to data and jump straight into Hyderabad. Those blue circles are a live healthcare footprint. "
+            "Click a marker for names, addresses, and amenity tags. Then open the Data tab, flip back to Map view, "
+            "and start asking the real question: where are the gaps?"
+        ),
+        "fallback_text": (
+            "Zoom to data and jump straight into Hyderabad. Those blue circles are a live healthcare footprint. "
+            "Click a marker for names, addresses, and amenity tags. Then open the Data tab, flip back to Map view, "
+            "and start asking the real question: where are the gaps?"
+        ),
+        "subtitle": "Inspect the hospital results on both the map and the data table.",
+    },
+    {
+        "start_step": 9,
+        "end_step": 10,
+        "target_start_sec": 57.006,
+        "target_end_sec": 80.789,
+        "text": (
+            "Now swap hospitals for EV charging stations. Same city, different future. "
+            "Let the query run and watch clean-mobility readiness appear on the map. "
+            "That spread tells you exactly where the future still needs building. "
+            "If your city looks empty here, it might be time to buy a bike."
+        ),
+        "fallback_text": (
+            "Now swap hospitals for EV charging stations. Same city, different future. "
+            "Let the query run and watch clean-mobility readiness appear on the map. "
+            "That spread tells you exactly where the future still needs building. "
+            "If your city looks empty here, it might be time to buy a bike."
+        ),
+        "subtitle": "Replace the hospitals query with EV charging stations and compare the spread.",
+    },
+    {
+        "start_step": 11,
+        "end_step": 11,
+        "target_start_sec": 73.821,
+        "target_end_sec": 83.243,
+        "text": (
+            "Next up: schools. Because if you're mapping a city and skip education, you're basically reading the plot and ignoring the main character."
+        ),
+        "fallback_text": (
+            "Next up: schools. Education matters."
+        ),
+        "subtitle": "Run the school query to add education coverage.",
+    },
+    {
+        "start_step": 12,
+        "end_step": 12,
+        "target_start_sec": 83.243,
+        "target_end_sec": 102.182,
+        "text": (
+            "Now for parks. Green space, baby. If a city has hospitals and chargers but nowhere to touch grass, that's not planning, that's a stress test. Run it."
+        ),
+        "fallback_text": (
+            "Now for parks. If there's nowhere to touch grass, the city needs help. Run it."
+        ),
+        "subtitle": "Run the park query to add green-space coverage.",
+    },
+    {
+        "start_step": 13,
+        "end_step": 13,
+        "target_start_sec": 102.182,
+        "target_end_sec": 113.09,
+        "text": (
+            "And there it is. Schools, parks, mobility, healthcare. Suddenly this isn't just a map, it's a city report card."
+        ),
+        "fallback_text": (
+            "Schools, parks, mobility, and healthcare. Now the city starts making sense."
+        ),
+        "subtitle": "Compare schools, parks, mobility, and healthcare together.",
+    },
+    {
+        "start_step": 14,
+        "end_step": 14,
+        "target_start_sec": 113.09,
+        "target_end_sec": 116.579,
+        "text": (
+            "Same editor. Smarter city questions. Done."
+        ),
+        "fallback_text": (
+            "Same editor. Smarter city questions. Done."
+        ),
+        "subtitle": "Finish after the park comparison workflow.",
+    },
+]
+CUSTOM_MONDULA_TIMELINE_SEGMENTS = [
+    {
+        "start_step": 1,
+        "end_step": 2,
+        "text": (
+            "Alright legends, listen up. You've got a long form to fill and a life to live. "
+            "We're about to conquer the Mondula multi-step demo like productivity gods. "
+            "First, smash the cookie speedbump, then hit Next Step and get into the good stuff."
+        ),
+        "fallback_text": (
+            "Alright legends, listen up. You've got a long form to fill and a life to live. "
+            "We're about to conquer the Mondula multi-step demo like productivity gods. "
+            "First, accept the cookies, then hit Next Step and get into the good stuff."
+        ),
+        "subtitle": "Accept the cookie banner and move past the intro page.",
+    },
+    {
+        "start_step": 3,
+        "end_step": 3,
+        "text": (
+            "Section one. Type Pavan Demo, then note that we're testing a multi-page automation workflow. "
+            "Keystrokes in motion. Quick breath. Back to work."
+        ),
+        "fallback_text": (
+            "Section one. Type Pavan Demo, then note that we're testing a multi-page automation workflow. "
+            "Quick breath. Back to work."
+        ),
+        "subtitle": "Fill the first-page name and textarea fields.",
+    },
+    {
+        "start_step": 4,
+        "end_step": 5,
+        "text": (
+            "Page two. This is where the amateurs quit, but not us. Drop in Automation Field Value, add the second values, "
+            "then pop open that calendar and jump to March 2026. The future is now. Boom. Next step."
+        ),
+        "fallback_text": (
+            "Page two. This is where the amateurs quit, but not us. Drop in Automation Field Value, add the second values, "
+            "then open the calendar and jump to March 2026. The future is now. Boom. Next step."
+        ),
+        "subtitle": "Fill page two and choose the March 2026 date.",
+    },
+    {
+        "start_step": 6,
+        "end_step": 7,
+        "text": (
+            "Welcome to the buffet of options. Radio buttons? Give me Option E. "
+            "Checkboxes? I'll take the whole menu. Selection is an art form, and today we're Picasso."
+        ),
+        "fallback_text": (
+            "Welcome to the buffet of options. Radio buttons? Give me Option E. "
+            "Checkboxes? I'll take the whole menu. Selection is an art form, and today we're Picasso."
+        ),
+        "subtitle": "Choose the radio option, checkboxes, and dropdown value.",
+    },
+    {
+        "start_step": 8,
+        "end_step": 9,
+        "text": (
+            "Now for the magic trick. Pick Pizza and abracadabra, the toppings appear. "
+            "Thick crust, olives, onions, corn. Corn on pizza? Bold move, Pavan. Respect."
+        ),
+        "fallback_text": (
+            "Now for the magic trick. Pick Pizza and abracadabra, the toppings appear. "
+            "Thick crust, olives, onions, corn. Corn on pizza? Bold move, Pavan. Respect."
+        ),
+        "subtitle": "Open the conditional section and reveal the pizza toppings.",
+    },
+    {
+        "start_step": 10,
+        "end_step": 10,
+        "text": (
+            "Home stretch. Page ten. Final boss: contact details. No panic now. "
+            "We're one clean page away from glory."
+        ),
+        "fallback_text": (
+            "Home stretch. Page ten. Final boss: contact details. No panic now. "
+            "We're one clean page away from glory."
+        ),
+        "subtitle": "Open the final contact-details page.",
+    },
+    {
+        "start_step": 11,
+        "end_step": 11,
+        "text": (
+            "Put Pavan Kumar in lights, drop the digits, land the email, then close with one clean note: "
+            "please share plugin details. Short, sweet, and straight to business."
+        ),
+        "fallback_text": (
+            "Put Pavan Kumar in lights, drop the digits, land the email, then close with one clean note: "
+            "please share plugin details. Short, sweet, and straight to business."
+        ),
+        "subtitle": "Fill the contact page and add the final message.",
+    },
+    {
+        "start_step": 12,
+        "end_step": 12,
+        "text": (
+            "Last look. Everything is green, everything is clean. Form conquered. Take the victory lap."
+        ),
+        "fallback_text": (
+            "Last look. Everything is green, everything is clean. Form conquered. Take the victory lap."
+        ),
+        "subtitle": "Review the summary and finish the Mondula run.",
+    },
+]
+CUSTOM_INDIAN_VISA_TIMELINE_SEGMENTS = [
+    {
+        "start_step": 1,
+        "end_step": 1,
+        "target_start_sec": 0.0,
+        "target_end_sec": 7.756,
+        "text": (
+            "Welcome, traveler. Destination India. First boss: the eVisa portal. "
+            "Open the official page and ignore the government graphics."
+        ),
+        "fallback_text": (
+            "Welcome, traveler. Destination India. First boss: the eVisa portal. "
+            "Open the official page."
+        ),
+        "subtitle": "Open the official Indian eVisa home page.",
+    },
+    {
+        "start_step": 2,
+        "end_step": 2,
+        "target_start_sec": 7.756,
+        "target_end_sec": 13.845,
+        "text": (
+            "Scroll past the fine print and punch Apply here for e-visa. "
+            "The bureaucracy speedrun starts now."
+        ),
+        "fallback_text": (
+            "Scroll down and click Apply here for e-visa. "
+            "The speedrun starts now."
+        ),
+        "subtitle": "Open the eVisa application form.",
+    },
+    {
+        "start_step": 3,
+        "end_step": 4,
+        "target_start_sec": 13.845,
+        "target_end_sec": 24.8,
+        "text": (
+            "Build the character: nationality USA, passport ordinary. "
+            "Unless you're a secret agent, this is the lane. Then choose your port of arrival."
+        ),
+        "fallback_text": (
+            "Choose USA, ordinary passport, then set the port of arrival."
+        ),
+        "subtitle": "Pick nationality, passport type, and port of arrival.",
+    },
+    {
+        "start_step": 4,
+        "end_step": 4,
+        "target_start_sec": 24.8,
+        "target_end_sec": 39.8,
+        "text": (
+            "And now, Digital Dharma. While the servers search for inner peace, "
+            "check your sunscreen, practice your namaste, maybe hydrate."
+        ),
+        "fallback_text": (
+            "And now, Digital Dharma. While the servers think, check your sunscreen and hydrate."
+        ),
+        "subtitle": "Wait for the visa form to finish loading.",
+    },
+    {
+        "start_step": 4,
+        "end_step": 4,
+        "target_start_sec": 39.8,
+        "target_end_sec": 54.913,
+        "text": (
+            "Still loading? Of course it is. Government loading bars only move after enlightenment. "
+            "Stay with me. The servers have spoken."
+        ),
+        "fallback_text": (
+            "Still loading? Government pages move at enlightenment speed. "
+            "Stay with me. The servers have spoken."
+        ),
+        "subtitle": "Stay on the loading state until the form is ready.",
+    },
+    {
+        "start_step": 5,
+        "end_step": 5,
+        "target_start_sec": 54.913,
+        "target_end_sec": 60.319,
+        "text": (
+            "Date of birth, then email. Use one you actually know the password for."
+        ),
+        "fallback_text": (
+            "Enter the date of birth and email."
+        ),
+        "subtitle": "Fill date of birth and email confirmation.",
+    },
+    {
+        "start_step": 6,
+        "end_step": 7,
+        "target_start_sec": 60.319,
+        "target_end_sec": 70.475,
+        "text": (
+            "Choose e-Tourist Visa, 30 Days, the classic mode. "
+            "Set your arrival date, then check the instruction box like a very lawful menace."
+        ),
+        "fallback_text": (
+            "Choose the 30 day tourist visa, set the arrival date, and acknowledge the instructions."
+        ),
+        "subtitle": "Choose the visa type, then set arrival and acknowledge instructions.",
+    },
+    {
+        "start_step": 8,
+        "end_step": 8,
+        "target_start_sec": 70.475,
+        "target_end_sec": 74.824,
+        "text": (
+            "Final boss: captcha. Prove you're human. India is waiting."
+        ),
+        "fallback_text": (
+            "Stop at the captcha. India is waiting."
+        ),
+        "subtitle": "Stop safely at the captcha step.",
+    },
+]
+CUSTOM_EBAY_TIMELINE_SEGMENTS = [
+    {
+        "start_step": 1,
+        "end_step": 1,
+        "target_start_sec": 0.0,
+        "target_end_sec": 4.2,
+        "text": (
+            "Listen up. Basic eBay search is fishing with a stick."
+        ),
+        "fallback_text": (
+            "Listen up. Basic eBay search is fishing with a stick."
+        ),
+        "subtitle": "Open eBay Advanced Search.",
+    },
+    {
+        "start_step": 1,
+        "end_step": 1,
+        "target_start_sec": 4.2,
+        "target_end_sec": 8.702,
+        "text": (
+            "Open Advanced Search. This is where the grown-ups hunt."
+        ),
+        "fallback_text": (
+            "Open Advanced Search. This is where the grown-ups hunt."
+        ),
+        "subtitle": "Stay on Advanced Search while the page settles.",
+    },
+    {
+        "start_step": 2,
+        "end_step": 2,
+        "target_start_sec": 8.702,
+        "target_end_sec": 13.151,
+        "text": (
+            "Target locked: Sony WH-1000XM5. No blinking."
+        ),
+        "fallback_text": (
+            "Target locked: Sony WH-1000XM5."
+        ),
+        "subtitle": "Enter the main search keywords.",
+    },
+    {
+        "start_step": 3,
+        "end_step": 3,
+        "target_start_sec": 13.151,
+        "target_end_sec": 15.5,
+        "text": (
+            "Exact words, exact order."
+        ),
+        "fallback_text": (
+            "Exact words, exact order."
+        ),
+        "subtitle": "Change the keyword match dropdown.",
+    },
+    {
+        "start_step": 3,
+        "end_step": 3,
+        "target_start_sec": 15.5,
+        "target_end_sec": 17.713,
+        "text": (
+            "No cable spaghetti."
+        ),
+        "fallback_text": (
+            "No cable spaghetti."
+        ),
+        "subtitle": "Keep the exact-match filter focused.",
+    },
+    {
+        "start_step": 4,
+        "end_step": 4,
+        "target_start_sec": 17.713,
+        "target_end_sec": 20.1,
+        "text": (
+            "Exclude broken and parts."
+        ),
+        "fallback_text": (
+            "Exclude broken and parts."
+        ),
+        "subtitle": "Add excluded words.",
+    },
+    {
+        "start_step": 4,
+        "end_step": 4,
+        "target_start_sec": 20.1,
+        "target_end_sec": 22.113,
+        "text": (
+            "Repair bills are not a hobby."
+        ),
+        "fallback_text": (
+            "Repair bills are not a hobby."
+        ),
+        "subtitle": "Keep damaged listings out.",
+    },
+    {
+        "start_step": 5,
+        "end_step": 5,
+        "target_start_sec": 22.113,
+        "target_end_sec": 26.516,
+        "text": (
+            "Check Title and description. Hidden gems hide there."
+        ),
+        "fallback_text": (
+            "Check Title and description. Hidden gems hide there."
+        ),
+        "subtitle": "Expand the search scope.",
+    },
+    {
+        "start_step": 6,
+        "end_step": 6,
+        "target_start_sec": 26.516,
+        "target_end_sec": 29.3,
+        "text": (
+            "Price: 100 to 400."
+        ),
+        "fallback_text": (
+            "Price: 100 to 400."
+        ),
+        "subtitle": "Set the minimum and maximum price.",
+    },
+    {
+        "start_step": 6,
+        "end_step": 6,
+        "target_start_sec": 29.3,
+        "target_end_sec": 31.445,
+        "text": (
+            "Goldilocks zone."
+        ),
+        "fallback_text": (
+            "Goldilocks zone."
+        ),
+        "subtitle": "Stay inside the best price band.",
+    },
+    {
+        "start_step": 7,
+        "end_step": 7,
+        "target_start_sec": 31.445,
+        "target_end_sec": 35.832,
+        "text": (
+            "Filter for New. No used ear pads. We have standards."
+        ),
+        "fallback_text": (
+            "Filter for New. No used ear pads."
+        ),
+        "subtitle": "Keep only new-condition listings.",
+    },
+    {
+        "start_step": 8,
+        "end_step": 8,
+        "target_start_sec": 35.832,
+        "target_end_sec": 39.0,
+        "text": (
+            "Hit search. Let the wizardry cook."
+        ),
+        "fallback_text": (
+            "Hit search. Let the wizardry cook."
+        ),
+        "subtitle": "Run the search and review the filtered results.",
+    },
+    {
+        "start_step": 8,
+        "end_step": 8,
+        "target_start_sec": 39.0,
+        "target_end_sec": 42.8,
+        "text": (
+            "Clean results. Zero junk. That's the beauty."
+        ),
+        "fallback_text": (
+            "Clean results. Zero junk. That's the beauty."
+        ),
+        "subtitle": "Review the filtered results page.",
+    },
+    {
+        "start_step": 8,
+        "end_step": 8,
+        "target_start_sec": 42.8,
+        "target_end_sec": 46.525,
+        "text": (
+            "You're not shopping now. You're sniping."
+        ),
+        "fallback_text": (
+            "You're not shopping now. You're sniping."
+        ),
+        "subtitle": "Finish on the filtered results.",
     },
 ]
 GERUND_OVERRIDES = {
@@ -2388,6 +2956,7 @@ def build_custom_screener_timeline(steps: list[dict]) -> list[dict] | None:
                 "fallback_text": segment.get("fallback_text") or segment["text"],
                 "subtitle": segment.get("subtitle") or segment["text"],
                 "target_window_end_sec": target_window_end_sec,
+                "disable_compact": True,
                 "source_start_step": start_step,
                 "source_end_step": end_step,
                 "source_start_sec": round(measured_start_sec, 3),
@@ -2484,6 +3053,178 @@ def build_custom_tinkercad_timeline(steps: list[dict]) -> list[dict] | None:
     return timeline
 
 
+def build_custom_overpass_timeline(steps: list[dict]) -> list[dict] | None:
+    """Use a grouped story-first script for the Overpass Turbo Hyderabad analysis."""
+    expected_steps = max((int(segment.get("end_step", 0) or 0) for segment in CUSTOM_OVERPASS_TIMELINE_SEGMENTS), default=0)
+    if len(steps) < expected_steps:
+        return None
+
+    timeline = []
+    for index, segment in enumerate(CUSTOM_OVERPASS_TIMELINE_SEGMENTS, start=1):
+        start_step = segment["start_step"]
+        end_step = segment["end_step"]
+        if start_step < 1 or end_step > len(steps) or start_step > end_step:
+            return None
+
+        start_step_payload = steps[start_step - 1]
+        end_step_payload = steps[end_step - 1]
+        measured_start_sec = step_start_sec(start_step_payload, 0.0)
+        measured_end_sec = step_end_sec(end_step_payload, measured_start_sec)
+        offset_sec = round(float(segment.get("target_start_sec", measured_start_sec)), 3)
+        target_window_end_sec = round(float(segment.get("target_end_sec", measured_end_sec)), 3)
+        budget_sec = round(max(target_window_end_sec - offset_sec, 2.8), 3)
+
+        timeline.append(
+            {
+                "segment_id": f"overpass_story_{index:02d}",
+                "step": start_step,
+                "type": "primary",
+                "offset_sec": offset_sec,
+                "budget_sec": budget_sec,
+                "text": segment["text"],
+                "fallback_text": segment.get("fallback_text") or segment["text"],
+                "subtitle": segment.get("subtitle") or segment["text"],
+                "target_window_end_sec": target_window_end_sec,
+                "disable_compact": True,
+                "source_start_step": start_step,
+                "source_end_step": end_step,
+                "source_start_sec": round(measured_start_sec, 3),
+                "source_end_sec": round(measured_end_sec, 3),
+            }
+        )
+
+    return timeline
+
+
+def build_custom_mondula_timeline(steps: list[dict]) -> list[dict] | None:
+    """Use a grouped story-first script for the Mondula multi-step form demo."""
+    expected_steps = max((int(segment.get("end_step", 0) or 0) for segment in CUSTOM_MONDULA_TIMELINE_SEGMENTS), default=0)
+    if len(steps) < expected_steps:
+        return None
+
+    timeline = []
+    for index, segment in enumerate(CUSTOM_MONDULA_TIMELINE_SEGMENTS, start=1):
+        start_step = segment["start_step"]
+        end_step = segment["end_step"]
+        if start_step < 1 or end_step > len(steps) or start_step > end_step:
+            return None
+
+        start_step_payload = steps[start_step - 1]
+        end_step_payload = steps[end_step - 1]
+        measured_start_sec = step_start_sec(start_step_payload, 0.0)
+        measured_end_sec = step_end_sec(end_step_payload, measured_start_sec)
+        offset_sec = round(measured_start_sec, 3)
+        target_window_end_sec = round(measured_end_sec, 3)
+        budget_sec = round(max(target_window_end_sec - offset_sec, 2.8), 3)
+
+        timeline.append(
+            {
+                "segment_id": f"mondula_story_{index:02d}",
+                "step": start_step,
+                "type": "primary",
+                "offset_sec": offset_sec,
+                "budget_sec": budget_sec,
+                "text": segment["text"],
+                "fallback_text": segment.get("fallback_text") or segment["text"],
+                "subtitle": segment.get("subtitle") or segment["text"],
+                "target_window_end_sec": target_window_end_sec,
+                "disable_compact": True,
+                "source_start_step": start_step,
+                "source_end_step": end_step,
+                "source_start_sec": round(measured_start_sec, 3),
+                "source_end_sec": round(measured_end_sec, 3),
+            }
+        )
+
+    return timeline
+
+
+def build_custom_indian_visa_timeline(steps: list[dict]) -> list[dict] | None:
+    """Use a grouped story-first script for the Indian eVisa speedrun."""
+    expected_steps = max((int(segment.get("end_step", 0) or 0) for segment in CUSTOM_INDIAN_VISA_TIMELINE_SEGMENTS), default=0)
+    if len(steps) < expected_steps:
+        return None
+
+    timeline = []
+    for index, segment in enumerate(CUSTOM_INDIAN_VISA_TIMELINE_SEGMENTS, start=1):
+        start_step = segment["start_step"]
+        end_step = segment["end_step"]
+        if start_step < 1 or end_step > len(steps) or start_step > end_step:
+            return None
+
+        start_step_payload = steps[start_step - 1]
+        end_step_payload = steps[end_step - 1]
+        measured_start_sec = step_start_sec(start_step_payload, 0.0)
+        measured_end_sec = step_end_sec(end_step_payload, measured_start_sec)
+        offset_sec = round(float(segment["target_start_sec"]), 3)
+        target_window_end_sec = round(float(segment["target_end_sec"]), 3)
+        budget_sec = round(max(target_window_end_sec - offset_sec, 2.8), 3)
+
+        timeline.append(
+            {
+                "segment_id": f"indian_visa_story_{index:02d}",
+                "step": start_step,
+                "type": "primary",
+                "offset_sec": offset_sec,
+                "budget_sec": budget_sec,
+                "text": segment["text"],
+                "fallback_text": segment.get("fallback_text") or segment["text"],
+                "subtitle": segment.get("subtitle") or segment["text"],
+                "target_window_end_sec": target_window_end_sec,
+                "disable_compact": True,
+                "source_start_step": start_step,
+                "source_end_step": end_step,
+                "source_start_sec": round(measured_start_sec, 3),
+                "source_end_sec": round(measured_end_sec, 3),
+            }
+        )
+
+    return timeline
+
+
+def build_custom_ebay_timeline(steps: list[dict]) -> list[dict] | None:
+    """Use a grouped story-first script for the eBay advanced search demo."""
+    expected_steps = max((int(segment.get("end_step", 0) or 0) for segment in CUSTOM_EBAY_TIMELINE_SEGMENTS), default=0)
+    if len(steps) < expected_steps:
+        return None
+
+    timeline = []
+    for index, segment in enumerate(CUSTOM_EBAY_TIMELINE_SEGMENTS, start=1):
+        start_step = segment["start_step"]
+        end_step = segment["end_step"]
+        if start_step < 1 or end_step > len(steps) or start_step > end_step:
+            return None
+
+        start_step_payload = steps[start_step - 1]
+        end_step_payload = steps[end_step - 1]
+        measured_start_sec = step_start_sec(start_step_payload, 0.0)
+        measured_end_sec = step_end_sec(end_step_payload, measured_start_sec)
+        offset_sec = round(float(segment["target_start_sec"]), 3)
+        target_window_end_sec = round(float(segment["target_end_sec"]), 3)
+        budget_sec = round(max(target_window_end_sec - offset_sec, 2.8), 3)
+
+        timeline.append(
+            {
+                "segment_id": f"ebay_story_{index:02d}",
+                "step": start_step,
+                "type": "primary",
+                "offset_sec": offset_sec,
+                "budget_sec": budget_sec,
+                "text": segment["text"],
+                "fallback_text": segment.get("fallback_text") or segment["text"],
+                "subtitle": segment.get("subtitle") or segment["text"],
+                "target_window_end_sec": target_window_end_sec,
+                "disable_compact": True,
+                "source_start_step": start_step,
+                "source_end_step": end_step,
+                "source_start_sec": round(measured_start_sec, 3),
+                "source_end_sec": round(measured_end_sec, 3),
+            }
+        )
+
+    return timeline
+
+
 def custom_narration_timeline(demo_name: str, steps: list[dict]) -> list[dict] | None:
     """Return a demo-specific narration timeline override when one is defined."""
     if demo_name == "screener":
@@ -2492,6 +3233,14 @@ def custom_narration_timeline(demo_name: str, steps: list[dict]) -> list[dict] |
         return build_custom_zoho_timeline(steps)
     if demo_name == "tinkercad":
         return build_custom_tinkercad_timeline(steps)
+    if demo_name == "overpass_turbo":
+        return build_custom_overpass_timeline(steps)
+    if demo_name == "mondula_form":
+        return build_custom_mondula_timeline(steps)
+    if demo_name == "indian_visa":
+        return build_custom_indian_visa_timeline(steps)
+    if demo_name == "ebay_advanced":
+        return build_custom_ebay_timeline(steps)
     return None
 
 
