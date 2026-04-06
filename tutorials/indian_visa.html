@@ -332,6 +332,13 @@
             gap: 16px;
         }
 
+        .section-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -543,6 +550,78 @@
             color: var(--ink);
         }
 
+        .guide-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(27, 36, 48, 0.64);
+            z-index: 1000;
+        }
+
+        .guide-modal.is-open {
+            display: flex;
+        }
+
+        .guide-modal-dialog {
+            width: min(980px, 100%);
+            max-height: 88vh;
+            overflow: hidden;
+            border-radius: 28px;
+            border: 1px solid var(--line);
+            background: rgba(252, 248, 241, 0.98);
+            box-shadow: 0 24px 64px rgba(27, 36, 48, 0.24);
+        }
+
+        .guide-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            padding: 22px 24px 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .guide-modal-header p {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .guide-close {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .guide-close:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .guide-modal-body {
+            max-height: calc(88vh - 94px);
+            overflow: auto;
+            padding: 0 24px 24px;
+        }
+
+        .guide-markdown {
+            margin: 0;
+            padding: 18px 0 0;
+            white-space: pre-wrap;
+            line-height: 1.72;
+            color: var(--ink);
+            font-size: 0.94rem;
+            background: transparent;
+            border: 0;
+        }
+
         .footer-note {
             margin-top: 28px;
             color: var(--muted);
@@ -583,7 +662,8 @@
 
             .card-topline,
             .beat-head,
-            .section-heading {
+            .section-heading,
+            .guide-modal-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -634,7 +714,7 @@
                     This page pairs the final video with publishable screenshots and the exact rerun recipe.
                 </p>
                 <div class="video-frame">
-                    <video controls preload="metadata" poster="../output/screenshots/indian_visa/step_01.png?v=1775453522">
+                    <video controls preload="metadata" poster="../output/screenshots/indian_visa/step_01.png?v=1775454678">
                         <source src="../output/indian_visa_final.webm?v=1775420966" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
@@ -647,6 +727,113 @@
                         <h2>Prompt</h2>
                     </div>
                     <code>Open indianvisaonline.gov.in eVisa form, enter fake applicant details, and stop safely at captcha.</code>
+                    
+        <div class="section-actions">
+            <button class="button" type="button" data-guide-open="indian_visa">View guide.md</button>
+            <a class="button-ghost" href="../tutorials/indian_visa/guide.md" target="_blank" rel="noreferrer">Open raw guide</a>
+        </div>
+        <div class="guide-modal" data-guide-modal="indian_visa" aria-hidden="true">
+            <div class="guide-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-title-indian_visa">
+                <div class="guide-modal-header">
+                    <div>
+                        <h2 id="guide-title-indian_visa">guide.md</h2>
+                        <p>Step-by-step companion instructions for this tutorial.</p>
+                    </div>
+                    <button class="guide-close" type="button" data-guide-close="indian_visa">Close</button>
+                </div>
+                <div class="guide-modal-body">
+                    <pre class="guide-markdown"># Indian eVisa - Fill the Start Form and Stop Before Submission
+## Overview
+- This guide shows how to complete the first page of the Indian eVisa application with dummy data and stop safely before captcha submission.
+- Target URL: `https://indianvisaonline.gov.in/evisa/tvoa.html`
+- Prerequisites: No account required for the start page. Use dummy data only for testing, and do not submit a real application with sample values.
+
+## Steps
+
+### Step 1: Open the Indian eVisa home page
+- **Action:** navigate
+- **Target element:** `https://indianvisaonline.gov.in/evisa/tvoa.html`
+- **Value:** None
+- **Expected result:** The eVisa landing page loads.
+
+### Step 2: Open the application form
+- **Action:** click
+- **Target element:** Button or link labeled `Apply here for e-visa`
+- **Value:** None
+- **Expected result:** The registration page opens at `https://indianvisaonline.gov.in/evisa/Registration`.
+
+### Step 3: Select the applicant nationality
+- **Action:** select
+- **Target element:** Nationality dropdown `#nationality_id`
+- **Value:** `UNITED STATES OF AMERICA`
+- **Expected result:** The nationality field updates to the selected country.
+
+### Step 4: Select the passport type
+- **Action:** select
+- **Target element:** Passport type dropdown `#ppt_type_id`
+- **Value:** `ORDINARY PASSPORT`
+- **Expected result:** The passport type field updates.
+
+### Step 5: Select the port of arrival
+- **Action:** select
+- **Target element:** Port of arrival dropdown `#missioncode_id`
+- **Value:** `Delhi` or `NEW DELHI`
+- **Expected result:** The port field updates to the selected arrival location.
+
+### Step 6: Enter the date of birth
+- **Action:** type
+- **Target element:** Date of birth field `#dob_id`
+- **Value:** `15/03/1990`
+- **Expected result:** The date of birth field is filled.
+
+### Step 7: Enter the email address
+- **Action:** type
+- **Target element:** Email field `#email_id`
+- **Value:** `john.smith.demo@example.com`
+- **Expected result:** The primary email field is filled.
+
+### Step 8: Confirm the email address
+- **Action:** type
+- **Target element:** Email confirmation field `#email_re_id`
+- **Value:** `john.smith.demo@example.com`
+- **Expected result:** The confirmation email field matches the main email field.
+
+### Step 9: Choose the visa service
+- **Action:** select
+- **Target element:** Radio input `input[name=&quot;evisa_service&quot;][value=&quot;31&quot;]`
+- **Value:** Check this option for `e-Tourist Visa (30 Days)`
+- **Expected result:** The 30-day e-Tourist service is selected.
+
+### Step 10: Set the expected date of arrival
+- **Action:** type
+- **Target element:** Expected arrival field `#jouryney_id`
+- **Value:** `15/05/2026`
+- **Expected result:** The arrival date field contains the sample date.
+
+### Step 11: Acknowledge the instructions
+- **Action:** select
+- **Target element:** Checkbox `#read_instructions_check`
+- **Value:** Check the box
+- **Expected result:** The required acknowledgement is enabled.
+
+### Step 12: Stop at the captcha step
+- **Action:** wait
+- **Target element:** Captcha field `#captcha`
+- **Value:** Do not enter a value during the standard guide flow
+- **Expected result:** The form is fully prepared up to captcha and no submission is made.
+
+## Output
+- Final deliverable: A filled first-page eVisa application stopped safely before captcha and submission.
+- Verification: Success is confirmed when all fields above are filled and the only remaining manual step is captcha entry.
+
+## Notes
+- The government site can load slowly or show modal overlays. Close them before interacting with the form.
+- The nationality and arrival-port dropdowns may trigger runtime dialogs. If a dialog appears, close it and continue.
+- Do not automate captcha solving in this guide. The intended stopping point is before submission.</pre>
+                </div>
+            </div>
+        </div>
+    
                 </div>
 
                 <div class="code-box">
@@ -683,6 +870,7 @@ python run_all.py --page-only</pre>
 <li><code>output/indian_visa_narration_timeline.json</code></li>
 <li><code>screenshots/indian_visa_steps.json</code></li>
 <li><code>output/indian_visa_manifest.json</code></li>
+<li><code>tutorials/indian_visa/guide.md</code></li>
 <li><code>tutorials/indian_visa.html</code></li>
                     </ul>
                 </div>
@@ -707,7 +895,7 @@ python run_all.py --page-only</pre>
                 <div class="storyboard-track" data-storyboard-track="indian_visa">
                     
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_01.png?v=1775453522" alt="Step 1: Open the Indian eVisa portal home page" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_01.png?v=1775454678" alt="Step 1: Open the Indian eVisa portal home page" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 1</div>
@@ -719,7 +907,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_02.png?v=1775453522" alt="Step 2: Open the eVisa application form start page" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_02.png?v=1775454678" alt="Step 2: Open the eVisa application form start page" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 2</div>
@@ -731,7 +919,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_03.png?v=1775453522" alt="Step 3: Select nationality and passport type for the applicant" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_03.png?v=1775454678" alt="Step 3: Select nationality and passport type for the applicant" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 3</div>
@@ -743,7 +931,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_04.png?v=1775453522" alt="Step 4: Choose the port of arrival for the application" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_04.png?v=1775454678" alt="Step 4: Choose the port of arrival for the application" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 4</div>
@@ -755,7 +943,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_05.png?v=1775453522" alt="Step 5: Fill date of birth and email confirmation" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_05.png?v=1775454678" alt="Step 5: Fill date of birth and email confirmation" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 5</div>
@@ -767,7 +955,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_06.png?v=1775453522" alt="Step 6: Choose visa service: eTourist Visa (30 Days)" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_06.png?v=1775454678" alt="Step 6: Choose visa service: eTourist Visa (30 Days)" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 6</div>
@@ -779,7 +967,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_07.png?v=1775453522" alt="Step 7: Set expected date of arrival and acknowledge instructions" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_07.png?v=1775454678" alt="Step 7: Set expected date of arrival and acknowledge instructions" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 7</div>
@@ -791,7 +979,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_08.png?v=1775453522" alt="Step 8: Stop at captcha step for safe, non-submitting demo" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/indian_visa/step_08.png?v=1775454678" alt="Step 8: Stop at captcha step for safe, non-submitting demo" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 8</div>
@@ -941,6 +1129,49 @@ python run_all.py --page-only</pre>
         shell.addEventListener('click', () => shell.focus());
         track.addEventListener('scroll', () => window.requestAnimationFrame(updateCount));
         updateCount();
+      });
+    })();
+    </script>
+    
+    
+    <script>
+    (() => {
+      const openButtons = document.querySelectorAll('[data-guide-open]');
+      if (!openButtons.length) return;
+
+      const setModalState = (key, open) => {
+        const modal = document.querySelector(`[data-guide-modal="${key}"]`);
+        if (!modal) return;
+        modal.classList.toggle('is-open', open);
+        modal.setAttribute('aria-hidden', open ? 'false' : 'true');
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+
+      openButtons.forEach((button) => {
+        const key = button.getAttribute('data-guide-open');
+        button.addEventListener('click', () => setModalState(key, true));
+      });
+
+      document.querySelectorAll('[data-guide-close]').forEach((button) => {
+        const key = button.getAttribute('data-guide-close');
+        button.addEventListener('click', () => setModalState(key, false));
+      });
+
+      document.querySelectorAll('[data-guide-modal]').forEach((modal) => {
+        modal.addEventListener('click', (event) => {
+          if (event.target === modal) {
+            const key = modal.getAttribute('data-guide-modal');
+            setModalState(key, false);
+          }
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('.guide-modal.is-open').forEach((modal) => {
+          const key = modal.getAttribute('data-guide-modal');
+          setModalState(key, false);
+        });
       });
     })();
     </script>

@@ -332,6 +332,13 @@
             gap: 16px;
         }
 
+        .section-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -543,6 +550,78 @@
             color: var(--ink);
         }
 
+        .guide-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(27, 36, 48, 0.64);
+            z-index: 1000;
+        }
+
+        .guide-modal.is-open {
+            display: flex;
+        }
+
+        .guide-modal-dialog {
+            width: min(980px, 100%);
+            max-height: 88vh;
+            overflow: hidden;
+            border-radius: 28px;
+            border: 1px solid var(--line);
+            background: rgba(252, 248, 241, 0.98);
+            box-shadow: 0 24px 64px rgba(27, 36, 48, 0.24);
+        }
+
+        .guide-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            padding: 22px 24px 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .guide-modal-header p {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .guide-close {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .guide-close:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .guide-modal-body {
+            max-height: calc(88vh - 94px);
+            overflow: auto;
+            padding: 0 24px 24px;
+        }
+
+        .guide-markdown {
+            margin: 0;
+            padding: 18px 0 0;
+            white-space: pre-wrap;
+            line-height: 1.72;
+            color: var(--ink);
+            font-size: 0.94rem;
+            background: transparent;
+            border: 0;
+        }
+
         .footer-note {
             margin-top: 28px;
             color: var(--muted);
@@ -583,7 +662,8 @@
 
             .card-topline,
             .beat-head,
-            .section-heading {
+            .section-heading,
+            .guide-modal-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -634,7 +714,7 @@
                     This page pairs the final video with publishable screenshots and the exact rerun recipe.
                 </p>
                 <div class="video-frame">
-                    <video controls preload="metadata" poster="../output/screenshots/screener/step_01.png?v=1775453521">
+                    <video controls preload="metadata" poster="../output/screenshots/screener/step_01.png?v=1775454677">
                         <source src="../output/screener_final.webm?v=1775424490" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
@@ -647,6 +727,119 @@
                         <h2>Prompt</h2>
                     </div>
                     <code>Go to screener.in and show how to choose stocks step by step: open Reliance Industries as the example company, review the key metrics, quarterly results, profit and loss, and balance sheet, then click Screens, clearly point at the High Growth, High RoE, Low PE card, open it, compare the results, and drill into Ganesh Infra.</code>
+                    
+        <div class="section-actions">
+            <button class="button" type="button" data-guide-open="screener">View guide.md</button>
+            <a class="button-ghost" href="../tutorials/screener/guide.md" target="_blank" rel="noreferrer">Open raw guide</a>
+        </div>
+        <div class="guide-modal" data-guide-modal="screener" aria-hidden="true">
+            <div class="guide-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-title-screener">
+                <div class="guide-modal-header">
+                    <div>
+                        <h2 id="guide-title-screener">guide.md</h2>
+                        <p>Step-by-step companion instructions for this tutorial.</p>
+                    </div>
+                    <button class="guide-close" type="button" data-guide-close="screener">Close</button>
+                </div>
+                <div class="guide-modal-body">
+                    <pre class="guide-markdown"># Screener.in - Research a Stock and Shortlist Candidates
+## Overview
+- This guide shows how to research a stock on Screener.in and use a prebuilt screen to find candidate companies.
+- Target URL: `https://www.screener.in/`
+- Prerequisites: No account required. The site is public.
+
+## Steps
+
+### Step 1: Open Screener.in
+- **Action:** navigate
+- **Target element:** Home page `https://www.screener.in/`
+- **Value:** None
+- **Expected result:** The Screener home page loads and the main company search box is visible.
+
+### Step 2: Search for Reliance Industries
+- **Action:** type
+- **Target element:** Main search field, usually `input[placeholder*=&quot;Search for a company&quot;]`
+- **Value:** `Reliance Industries`
+- **Expected result:** A visible search suggestion for Reliance Industries appears below the search box.
+
+### Step 3: Open the Reliance company page
+- **Action:** click
+- **Target element:** Search result link labeled `Reliance Industries`
+- **Value:** None
+- **Expected result:** The browser opens the company page, typically `https://www.screener.in/company/RELIANCE/consolidated/`.
+
+### Step 4: Review the key metrics block
+- **Action:** inspect
+- **Target element:** Metric tiles near the top of the company page, especially `Market Cap`, `Stock P/E`, and `ROCE`
+- **Value:** None
+- **Expected result:** You can see the high-level company snapshot before scrolling further.
+
+### Step 5: Open the quarterly results section
+- **Action:** click
+- **Target element:** Link or tab labeled `Quarters` or `Quarterly`
+- **Value:** None
+- **Expected result:** The page moves to the quarterly results section and recent performance rows are visible.
+
+### Step 6: Open the Profit &amp; Loss section
+- **Action:** click
+- **Target element:** Link or tab labeled `Profit &amp; Loss`
+- **Value:** None
+- **Expected result:** The Profit &amp; Loss section is visible with revenue, expense, and margin information.
+
+### Step 7: Open the Balance Sheet section
+- **Action:** click
+- **Target element:** Link or tab labeled `Balance Sheet`
+- **Value:** None
+- **Expected result:** The Balance Sheet section is visible with assets, liabilities, and equity information.
+
+### Step 8: Open the Screens area
+- **Action:** click
+- **Target element:** Top navigation link labeled `Screens`
+- **Value:** None
+- **Expected result:** The browser opens Screener&#x27;s public screen library, usually `https://www.screener.in/explore/`.
+
+### Step 9: Show the full screen library
+- **Action:** click
+- **Target element:** Link labeled `Show all screens`
+- **Value:** None
+- **Expected result:** The browser opens the full list of public screens at `https://www.screener.in/screens/`.
+
+### Step 10: Find the target stock screen
+- **Action:** scroll
+- **Target element:** Screen card or link labeled `High Growth, High RoE, Low PE`
+- **Value:** None
+- **Expected result:** The target screen card is visible in the full screen list.
+
+### Step 11: Open the target stock screen
+- **Action:** click
+- **Target element:** Link labeled `High Growth, High RoE, Low PE`
+- **Value:** None
+- **Expected result:** The browser opens the screen results page, commonly `https://www.screener.in/screens/18/high-growth-high-roe-low-pe/`.
+
+### Step 12: Review the filtered company table
+- **Action:** inspect
+- **Target element:** Main results table on the screen page
+- **Value:** None
+- **Expected result:** The filtered list of companies is visible, including names such as `Ganesh Infra`.
+
+### Step 13: Open a shortlisted company
+- **Action:** click
+- **Target element:** Company link `Ganesh Infra`
+- **Value:** None
+- **Expected result:** The Ganesh Infra company page opens, typically `https://www.screener.in/company/GANESHIN/`.
+
+## Output
+- Final deliverable: A completed stock research flow that ends on the shortlisted company page after using a repeatable filter.
+- Verification: Success is confirmed when the Ganesh Infra company page loads after starting from the Screener home page.
+
+## Notes
+- If the Reliance search suggestion does not appear immediately, wait briefly after typing before pressing Enter or clicking the result.
+- If the top navigation route to `Screens` fails, navigate directly to `https://www.screener.in/explore/` or `https://www.screener.in/screens/`.
+- If the exact screen card is hard to find in the full list, search the page for `High Growth` or navigate directly to `https://www.screener.in/screens/18/high-growth-high-roe-low-pe/`.</pre>
+                </div>
+            </div>
+        </div>
+    
                 </div>
 
                 <div class="code-box">
@@ -683,6 +876,7 @@ python run_all.py --page-only</pre>
 <li><code>output/screener_narration_timeline.json</code></li>
 <li><code>screenshots/screener_steps.json</code></li>
 <li><code>output/screener_manifest.json</code></li>
+<li><code>tutorials/screener/guide.md</code></li>
 <li><code>tutorials/screener.html</code></li>
                     </ul>
                 </div>
@@ -707,7 +901,7 @@ python run_all.py --page-only</pre>
                 <div class="storyboard-track" data-storyboard-track="screener">
                     
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_01.png?v=1775453521" alt="Step 1: Open Screener.in and bring the stock search page into view" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_01.png?v=1775454677" alt="Step 1: Open Screener.in and bring the stock search page into view" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 1</div>
@@ -719,7 +913,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_02.png?v=1775453521" alt="Step 2: Type Reliance Industries into the search box and wait for the visible match" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_02.png?v=1775454677" alt="Step 2: Type Reliance Industries into the search box and wait for the visible match" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 2</div>
@@ -731,7 +925,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_03.png?v=1775453521" alt="Step 3: Click Reliance Industries from the visible search results" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_03.png?v=1775454677" alt="Step 3: Click Reliance Industries from the visible search results" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 3</div>
@@ -743,7 +937,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_04.png?v=1775453521" alt="Step 4: View key metrics - market cap, PE ratio, ROCE, and valuation snapshot" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_04.png?v=1775454677" alt="Step 4: View key metrics - market cap, PE ratio, ROCE, and valuation snapshot" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 4</div>
@@ -755,7 +949,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_05.png?v=1775453521" alt="Step 5: Review quarterly financial trends to understand recent performance" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_05.png?v=1775454677" alt="Step 5: Review quarterly financial trends to understand recent performance" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 5</div>
@@ -767,7 +961,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_06.png?v=1775453521" alt="Step 6: Inspect Profit and Loss details - revenue, expenses, and margins" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_06.png?v=1775454677" alt="Step 6: Inspect Profit and Loss details - revenue, expenses, and margins" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 6</div>
@@ -779,7 +973,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_07.png?v=1775453521" alt="Step 7: Check balance sheet strength - assets, liabilities, and equity" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_07.png?v=1775454677" alt="Step 7: Check balance sheet strength - assets, liabilities, and equity" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 7</div>
@@ -791,7 +985,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_08.png?v=1775453521" alt="Step 8: Click Screens in the top menu to explore ready-made stock filters" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_08.png?v=1775454677" alt="Step 8: Click Screens in the top menu to explore ready-made stock filters" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 8</div>
@@ -803,7 +997,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_09.png?v=1775453521" alt="Step 9: Click Show all screens to open the full screen library" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_09.png?v=1775454677" alt="Step 9: Click Show all screens to open the full screen library" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 9</div>
@@ -815,7 +1009,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_10.png?v=1775453521" alt="Step 10: Find the exact High Growth, High RoE, Low PE card in the full screen list" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_10.png?v=1775454677" alt="Step 10: Find the exact High Growth, High RoE, Low PE card in the full screen list" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 10</div>
@@ -827,7 +1021,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_11.png?v=1775453521" alt="Step 11: Click the highlighted High Growth, High RoE, Low PE card" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_11.png?v=1775454677" alt="Step 11: Click the highlighted High Growth, High RoE, Low PE card" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 11</div>
@@ -839,7 +1033,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_12.png?v=1775453521" alt="Step 12: Scan the filtered results table and spot promising names like Ganesh Infra" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_12.png?v=1775454677" alt="Step 12: Scan the filtered results table and spot promising names like Ganesh Infra" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 12</div>
@@ -851,7 +1045,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/screener/step_13.png?v=1775453521" alt="Step 13: Click Ganesh Infra. from the results and land on the company page" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/screener/step_13.png?v=1775454677" alt="Step 13: Click Ganesh Infra. from the results and land on the company page" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 13</div>
@@ -944,6 +1138,49 @@ python run_all.py --page-only</pre>
         shell.addEventListener('click', () => shell.focus());
         track.addEventListener('scroll', () => window.requestAnimationFrame(updateCount));
         updateCount();
+      });
+    })();
+    </script>
+    
+    
+    <script>
+    (() => {
+      const openButtons = document.querySelectorAll('[data-guide-open]');
+      if (!openButtons.length) return;
+
+      const setModalState = (key, open) => {
+        const modal = document.querySelector(`[data-guide-modal="${key}"]`);
+        if (!modal) return;
+        modal.classList.toggle('is-open', open);
+        modal.setAttribute('aria-hidden', open ? 'false' : 'true');
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+
+      openButtons.forEach((button) => {
+        const key = button.getAttribute('data-guide-open');
+        button.addEventListener('click', () => setModalState(key, true));
+      });
+
+      document.querySelectorAll('[data-guide-close]').forEach((button) => {
+        const key = button.getAttribute('data-guide-close');
+        button.addEventListener('click', () => setModalState(key, false));
+      });
+
+      document.querySelectorAll('[data-guide-modal]').forEach((modal) => {
+        modal.addEventListener('click', (event) => {
+          if (event.target === modal) {
+            const key = modal.getAttribute('data-guide-modal');
+            setModalState(key, false);
+          }
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('.guide-modal.is-open').forEach((modal) => {
+          const key = modal.getAttribute('data-guide-modal');
+          setModalState(key, false);
+        });
       });
     })();
     </script>

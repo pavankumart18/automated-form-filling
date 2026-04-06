@@ -39,12 +39,29 @@ def ensure_parent(path: str):
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
 
+def prepare_detail_directory(path: str):
+    """Keep guide folders intact while refreshing generated tutorial HTML files."""
+    os.makedirs(path, exist_ok=True)
+    for entry in os.listdir(path):
+        target = os.path.join(path, entry)
+        if os.path.isfile(target) and entry.lower().endswith(".html"):
+            os.remove(target)
+
+
 def read_json_file(path: str, default):
     """Read JSON if present, otherwise return a fallback value."""
     if not os.path.exists(path):
         return default
     with open(path, encoding="utf-8") as file:
         return json.load(file)
+
+
+def read_text_file(path: str, default: str = "") -> str:
+    """Read text if present, otherwise return a fallback value."""
+    if not os.path.exists(path):
+        return default
+    with open(path, encoding="utf-8") as file:
+        return file.read().strip()
 
 
 def spoken_narration_by_step(timeline_segments: list[dict]) -> dict[int, dict]:
@@ -245,6 +262,7 @@ def build_demo_manifest(demo: dict) -> dict:
     narration_script_path = os.path.join(OUTPUT_DIR, f"{name}_narration.txt")
     beats_path = os.path.join(OUTPUT_DIR, f"{name}_narration_beats.json")
     timeline_path = os.path.join(OUTPUT_DIR, f"{name}_narration_timeline.json")
+    guide_path = os.path.join(DETAIL_DIR, name, "guide.md")
     video_file = f"{name}_final.webm"
     video_path = os.path.join(OUTPUT_DIR, video_file)
     steps = read_json_file(os.path.join(SCREENSHOT_DIR, f"{name}_steps.json"), [])
@@ -258,6 +276,7 @@ def build_demo_manifest(demo: dict) -> dict:
     if os.path.exists(narration_script_path):
         with open(narration_script_path, encoding="utf-8") as file:
             narration_script_text = file.read().strip()
+    guide_text = read_text_file(guide_path)
 
     step_entries = []
     for index, step in enumerate(steps):
@@ -307,6 +326,8 @@ def build_demo_manifest(demo: dict) -> dict:
         "steps_json": f"screenshots/{name}_steps.json",
         "narration_beats": f"output/{name}_narration_beats.json",
         "manifest": f"output/{name}_manifest.json",
+        "guide_markdown": f"tutorials/{name}/guide.md",
+        "guide_text": guide_text,
         "toolchain": TOOLCHAIN,
         "commands": {
             "record": f"python run_all.py --demo {name} --record",
@@ -666,6 +687,13 @@ def shared_styles() -> str:
             gap: 16px;
         }
 
+        .section-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -877,6 +905,78 @@ def shared_styles() -> str:
             color: var(--ink);
         }
 
+        .guide-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(27, 36, 48, 0.64);
+            z-index: 1000;
+        }
+
+        .guide-modal.is-open {
+            display: flex;
+        }
+
+        .guide-modal-dialog {
+            width: min(980px, 100%);
+            max-height: 88vh;
+            overflow: hidden;
+            border-radius: 28px;
+            border: 1px solid var(--line);
+            background: rgba(252, 248, 241, 0.98);
+            box-shadow: 0 24px 64px rgba(27, 36, 48, 0.24);
+        }
+
+        .guide-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            padding: 22px 24px 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .guide-modal-header p {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .guide-close {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .guide-close:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .guide-modal-body {
+            max-height: calc(88vh - 94px);
+            overflow: auto;
+            padding: 0 24px 24px;
+        }
+
+        .guide-markdown {
+            margin: 0;
+            padding: 18px 0 0;
+            white-space: pre-wrap;
+            line-height: 1.72;
+            color: var(--ink);
+            font-size: 0.94rem;
+            background: transparent;
+            border: 0;
+        }
+
         .footer-note {
             margin-top: 28px;
             color: var(--muted);
@@ -917,7 +1017,8 @@ def shared_styles() -> str:
 
             .card-topline,
             .beat-head,
-            .section-heading {
+            .section-heading,
+            .guide-modal-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -1111,6 +1212,37 @@ def render_warning_box(manifest: dict) -> str:
     """
 
 
+def render_guide_modal(manifest: dict) -> str:
+    """Render a guide button with an inline markdown modal when available."""
+    guide_text = (manifest.get("guide_text") or "").strip()
+    if not guide_text:
+        return ""
+
+    demo_name = html.escape(manifest["name"], quote=True)
+    guide_href = html.escape(public_page_href(manifest["guide_markdown"], depth=1), quote=True)
+    guide_text_markup = html.escape(guide_text)
+    return f"""
+        <div class="section-actions">
+            <button class="button" type="button" data-guide-open="{demo_name}">View guide.md</button>
+            <a class="button-ghost" href="{guide_href}" target="_blank" rel="noreferrer">Open raw guide</a>
+        </div>
+        <div class="guide-modal" data-guide-modal="{demo_name}" aria-hidden="true">
+            <div class="guide-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-title-{demo_name}">
+                <div class="guide-modal-header">
+                    <div>
+                        <h2 id="guide-title-{demo_name}">guide.md</h2>
+                        <p>Step-by-step companion instructions for this tutorial.</p>
+                    </div>
+                    <button class="guide-close" type="button" data-guide-close="{demo_name}">Close</button>
+                </div>
+                <div class="guide-modal-body">
+                    <pre class="guide-markdown">{guide_text_markup}</pre>
+                </div>
+            </div>
+        </div>
+    """
+
+
 def render_storyboard_script() -> str:
     """Attach lightweight slideshow controls for detail pages."""
     return """
@@ -1168,6 +1300,53 @@ def render_storyboard_script() -> str:
         shell.addEventListener('click', () => shell.focus());
         track.addEventListener('scroll', () => window.requestAnimationFrame(updateCount));
         updateCount();
+      });
+    })();
+    </script>
+    """
+
+
+def render_guide_modal_script() -> str:
+    """Attach modal open and close behavior for guide markdown."""
+    return """
+    <script>
+    (() => {
+      const openButtons = document.querySelectorAll('[data-guide-open]');
+      if (!openButtons.length) return;
+
+      const setModalState = (key, open) => {
+        const modal = document.querySelector(`[data-guide-modal="${key}"]`);
+        if (!modal) return;
+        modal.classList.toggle('is-open', open);
+        modal.setAttribute('aria-hidden', open ? 'false' : 'true');
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+
+      openButtons.forEach((button) => {
+        const key = button.getAttribute('data-guide-open');
+        button.addEventListener('click', () => setModalState(key, true));
+      });
+
+      document.querySelectorAll('[data-guide-close]').forEach((button) => {
+        const key = button.getAttribute('data-guide-close');
+        button.addEventListener('click', () => setModalState(key, false));
+      });
+
+      document.querySelectorAll('[data-guide-modal]').forEach((modal) => {
+        modal.addEventListener('click', (event) => {
+          if (event.target === modal) {
+            const key = modal.getAttribute('data-guide-modal');
+            setModalState(key, false);
+          }
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('.guide-modal.is-open').forEach((modal) => {
+          const key = modal.getAttribute('data-guide-modal');
+          setModalState(key, false);
+        });
       });
     })();
     </script>
@@ -1251,6 +1430,7 @@ def render_detail_page(manifest: dict) -> str:
         manifest["narration_timeline"],
         manifest["steps_json"],
         manifest["manifest"],
+        manifest["guide_markdown"],
         manifest["detail_page"],
     ]
     artifact_markup = "\n".join(f"<li><code>{html.escape(path)}</code></li>" for path in artifact_items)
@@ -1326,6 +1506,7 @@ def render_detail_page(manifest: dict) -> str:
                         <h2>Prompt</h2>
                     </div>
                     <code>{html.escape(manifest["prompt"])}</code>
+                    {render_guide_modal(manifest)}
                 </div>
 
                 <div class="code-box">
@@ -1379,6 +1560,7 @@ def render_detail_page(manifest: dict) -> str:
         </p>
     </main>
     {render_storyboard_script()}
+    {render_guide_modal_script()}
 </body>
 </html>"""
 
@@ -1391,7 +1573,7 @@ def build_showcase(demos: list[dict]) -> str:
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     os.makedirs(PUBLISHED_SCREENSHOT_DIR, exist_ok=True)
-    ensure_clean_directory(DETAIL_DIR)
+    prepare_detail_directory(DETAIL_DIR)
 
     manifests = []
     for demo in demos:

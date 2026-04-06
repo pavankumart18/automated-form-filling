@@ -332,6 +332,13 @@
             gap: 16px;
         }
 
+        .section-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -543,6 +550,78 @@
             color: var(--ink);
         }
 
+        .guide-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(27, 36, 48, 0.64);
+            z-index: 1000;
+        }
+
+        .guide-modal.is-open {
+            display: flex;
+        }
+
+        .guide-modal-dialog {
+            width: min(980px, 100%);
+            max-height: 88vh;
+            overflow: hidden;
+            border-radius: 28px;
+            border: 1px solid var(--line);
+            background: rgba(252, 248, 241, 0.98);
+            box-shadow: 0 24px 64px rgba(27, 36, 48, 0.24);
+        }
+
+        .guide-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            padding: 22px 24px 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .guide-modal-header p {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .guide-close {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .guide-close:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .guide-modal-body {
+            max-height: calc(88vh - 94px);
+            overflow: auto;
+            padding: 0 24px 24px;
+        }
+
+        .guide-markdown {
+            margin: 0;
+            padding: 18px 0 0;
+            white-space: pre-wrap;
+            line-height: 1.72;
+            color: var(--ink);
+            font-size: 0.94rem;
+            background: transparent;
+            border: 0;
+        }
+
         .footer-note {
             margin-top: 28px;
             color: var(--muted);
@@ -583,7 +662,8 @@
 
             .card-topline,
             .beat-head,
-            .section-heading {
+            .section-heading,
+            .guide-modal-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -634,7 +714,7 @@
                     This page pairs the final video with publishable screenshots and the exact rerun recipe.
                 </p>
                 <div class="video-frame">
-                    <video controls preload="metadata" poster="../output/screenshots/overpass_turbo/step_01.png?v=1775453521">
+                    <video controls preload="metadata" poster="../output/screenshots/overpass_turbo/step_01.png?v=1775454677">
                         <source src="../output/overpass_turbo_final.webm?v=1775453521" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
@@ -647,6 +727,153 @@
                         <h2>Prompt</h2>
                     </div>
                     <code>Go to overpass-turbo.eu, find all hospitals in Hyderabad, view on map, query EV charging stations, export as GeoJSON</code>
+                    
+        <div class="section-actions">
+            <button class="button" type="button" data-guide-open="overpass_turbo">View guide.md</button>
+            <a class="button-ghost" href="../tutorials/overpass_turbo/guide.md" target="_blank" rel="noreferrer">Open raw guide</a>
+        </div>
+        <div class="guide-modal" data-guide-modal="overpass_turbo" aria-hidden="true">
+            <div class="guide-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-title-overpass_turbo">
+                <div class="guide-modal-header">
+                    <div>
+                        <h2 id="guide-title-overpass_turbo">guide.md</h2>
+                        <p>Step-by-step companion instructions for this tutorial.</p>
+                    </div>
+                    <button class="guide-close" type="button" data-guide-close="overpass_turbo">Close</button>
+                </div>
+                <div class="guide-modal-body">
+                    <pre class="guide-markdown"># Overpass Turbo - Compare Hyderabad Data Layers
+## Overview
+- This guide shows how to use Overpass Turbo to query and compare hospitals, EV charging stations, schools, and parks in Hyderabad.
+- Target URL: `https://overpass-turbo.eu/#map=12/17.3850/78.4867`
+- Prerequisites: No account required. Overpass Turbo depends on public Overpass API capacity, so occasional rate limits are possible.
+
+## Steps
+
+### Step 1: Open Overpass Turbo
+- **Action:** navigate
+- **Target element:** `https://overpass-turbo.eu/#map=12/17.3850/78.4867`
+- **Value:** None
+- **Expected result:** The Overpass Turbo workspace loads with the query editor on the left and the map on the right.
+
+### Step 2: Confirm the split workspace
+- **Action:** inspect
+- **Target element:** Left query editor and right map panel
+- **Value:** None
+- **Expected result:** You can see both the editor and the map controls before entering a query.
+
+### Step 3: Enter the hospitals query
+- **Action:** type
+- **Target element:** Query editor, usually `.CodeMirror`, `.ace_editor`, or the visible `textarea`
+- **Value:** 
+```overpass
+[out:json][timeout:25];
+nwr[&quot;amenity&quot;=&quot;hospital&quot;](17.20,78.20,17.60,78.70);
+out center;
+```
+- **Expected result:** The hospitals query is fully visible in the editor.
+
+### Step 4: Run the hospitals query
+- **Action:** click
+- **Target element:** Toolbar button or menu item labeled `Run`
+- **Value:** None
+- **Expected result:** Hospital markers are returned and rendered on the map.
+
+### Step 5: Zoom to the result set
+- **Action:** click
+- **Target element:** Map control labeled `zoom to data`
+- **Value:** None
+- **Expected result:** The map centers and fits the returned Hyderabad hospital features.
+
+### Step 6: Inspect a hospital marker
+- **Action:** click
+- **Target element:** Any visible map marker in the returned result set
+- **Value:** None
+- **Expected result:** A popup or detail view shows tags such as name, address, or amenity type.
+
+### Step 7: Open the Data tab
+- **Action:** click
+- **Target element:** Top action labeled `Data`
+- **Value:** None
+- **Expected result:** Tabular output for the current query is visible.
+
+### Step 8: Return to the Map view
+- **Action:** click
+- **Target element:** Top action labeled `Map`
+- **Value:** None
+- **Expected result:** The map view is visible again.
+
+### Step 9: Enter the EV charging query
+- **Action:** type
+- **Target element:** Query editor
+- **Value:** 
+```overpass
+[out:json][timeout:25];
+nwr[&quot;amenity&quot;=&quot;charging_station&quot;](17.20,78.20,17.60,78.70);
+out center;
+```
+- **Expected result:** The editor contains the EV charging station query.
+
+### Step 10: Run the EV charging query
+- **Action:** click
+- **Target element:** `Run`
+- **Value:** None
+- **Expected result:** EV charging points render on the map and can be compared against the hospital coverage.
+
+### Step 11: Enter the schools query
+- **Action:** type
+- **Target element:** Query editor
+- **Value:** 
+```overpass
+[out:json][timeout:20];
+(
+  nwr[&quot;amenity&quot;=&quot;school&quot;](17.33,78.38,17.47,78.56);
+);
+out center 80;
+```
+- **Expected result:** The editor contains the school query for a tighter Hyderabad area.
+
+### Step 12: Run the schools query
+- **Action:** click
+- **Target element:** `Run`
+- **Value:** None
+- **Expected result:** School features render on the map within the smaller Hyderabad bounding box.
+
+### Step 13: Enter the parks query
+- **Action:** type
+- **Target element:** Query editor
+- **Value:** 
+```overpass
+[out:json][timeout:18];
+node[&quot;leisure&quot;=&quot;park&quot;](17.35,78.41,17.45,78.54);
+out 40;
+```
+- **Expected result:** The editor contains the park query for the urban core.
+
+### Step 14: Run the parks query
+- **Action:** click
+- **Target element:** `Run`
+- **Value:** None
+- **Expected result:** Park points render on the map and can be compared against schools and EV coverage.
+
+### Step 15: Finish on the comparison view
+- **Action:** inspect
+- **Target element:** Final map state after the park query completes
+- **Value:** None
+- **Expected result:** The map shows the last loaded layer and the user has completed a repeatable workflow for comparing city infrastructure.
+
+## Output
+- Final deliverable: A repeatable Overpass Turbo workflow that queries and visualizes four Hyderabad datasets.
+- Verification: Success is confirmed when hospitals, EV charging stations, schools, and parks can each be queried and rendered in sequence.
+
+## Notes
+- Overpass Turbo can show API or quota errors. If a query fails, wait and retry rather than assuming the query text is wrong.
+- The schools step is the most likely to hit API pressure. If needed, retry after a pause or reduce the bounding box further.
+- If the `zoom to data` control is missing, manually pan or zoom the map back to Hyderabad using the map controls.</pre>
+                </div>
+            </div>
+        </div>
+    
                 </div>
 
                 <div class="code-box">
@@ -683,6 +910,7 @@ python run_all.py --page-only</pre>
 <li><code>output/overpass_turbo_narration_timeline.json</code></li>
 <li><code>screenshots/overpass_turbo_steps.json</code></li>
 <li><code>output/overpass_turbo_manifest.json</code></li>
+<li><code>tutorials/overpass_turbo/guide.md</code></li>
 <li><code>tutorials/overpass_turbo.html</code></li>
                     </ul>
                 </div>
@@ -707,7 +935,7 @@ python run_all.py --page-only</pre>
                 <div class="storyboard-track" data-storyboard-track="overpass_turbo">
                     
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_01.png?v=1775453521" alt="Step 1: Open Overpass Turbo and load the map + query editor workspace" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_01.png?v=1775454677" alt="Step 1: Open Overpass Turbo and load the map + query editor workspace" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 1</div>
@@ -719,7 +947,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_02.png?v=1775453521" alt="Step 2: Split view: query editor on left, map + controls on right" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_02.png?v=1775454677" alt="Step 2: Split view: query editor on left, map + controls on right" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 2</div>
@@ -731,7 +959,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_03.png?v=1775453521" alt="Step 3: Write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_03.png?v=1775454677" alt="Step 3: Write a Hyderabad hospitals query in Overpass QL using a fixed city bounding box" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 3</div>
@@ -743,7 +971,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_04.png?v=1775453521" alt="Step 4: Run query to load all mapped hospitals as explorable markers" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_04.png?v=1775454677" alt="Step 4: Run query to load all mapped hospitals as explorable markers" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 4</div>
@@ -755,7 +983,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_05.png?v=1775453521" alt="Step 5: Use &#x27;zoom to data&#x27; to jump map viewport directly onto Hyderabad results" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_05.png?v=1775454677" alt="Step 5: Use &#x27;zoom to data&#x27; to jump map viewport directly onto Hyderabad results" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 5</div>
@@ -767,7 +995,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_06.png?v=1775453521" alt="Step 6: Click map markers to inspect feature tags like name, address, and amenity type" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_06.png?v=1775454677" alt="Step 6: Click map markers to inspect feature tags like name, address, and amenity type" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 6</div>
@@ -779,7 +1007,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_07.png?v=1775453521" alt="Step 7: Open Data tab to inspect raw tabular output and OSM attributes" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_07.png?v=1775454677" alt="Step 7: Open Data tab to inspect raw tabular output and OSM attributes" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 7</div>
@@ -791,7 +1019,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_08.png?v=1775453521" alt="Step 8: Switch back to Map view to visually compare coverage across neighborhoods" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_08.png?v=1775454677" alt="Step 8: Switch back to Map view to visually compare coverage across neighborhoods" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 8</div>
@@ -803,7 +1031,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_09.png?v=1775453521" alt="Step 9: Replace with EV charging station query to analyze clean-mobility readiness" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_09.png?v=1775454678" alt="Step 9: Replace with EV charging station query to analyze clean-mobility readiness" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 9</div>
@@ -815,7 +1043,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_10.png?v=1775453521" alt="Step 10: EV charging points rendered; now compare spread versus healthcare locations" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_10.png?v=1775454678" alt="Step 10: EV charging points rendered; now compare spread versus healthcare locations" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 10</div>
@@ -827,7 +1055,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_11.png?v=1775453521" alt="Step 11: Run school query to map education infrastructure in the same city boundary" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_11.png?v=1775454678" alt="Step 11: Run school query to map education infrastructure in the same city boundary" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 11</div>
@@ -839,7 +1067,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_12.png?v=1775453521" alt="Step 12: Run park query to map green space and recreation across the same urban core" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_12.png?v=1775454678" alt="Step 12: Run park query to map green space and recreation across the same urban core" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 12</div>
@@ -851,7 +1079,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_13.png?v=1775453521" alt="Step 13: Park layer rendered; now compare green space against schools and mobility" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_13.png?v=1775454678" alt="Step 13: Park layer rendered; now compare green space against schools and mobility" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 13</div>
@@ -863,7 +1091,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_14.png?v=1775453522" alt="Step 14: Tutorial complete: compare hospitals, EV charging, schools, and parks in one reproducible map workflow" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/overpass_turbo/step_14.png?v=1775454678" alt="Step 14: Tutorial complete: compare hospitals, EV charging, schools, and parks in one reproducible map workflow" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 14</div>
@@ -1061,6 +1289,49 @@ python run_all.py --page-only</pre>
         shell.addEventListener('click', () => shell.focus());
         track.addEventListener('scroll', () => window.requestAnimationFrame(updateCount));
         updateCount();
+      });
+    })();
+    </script>
+    
+    
+    <script>
+    (() => {
+      const openButtons = document.querySelectorAll('[data-guide-open]');
+      if (!openButtons.length) return;
+
+      const setModalState = (key, open) => {
+        const modal = document.querySelector(`[data-guide-modal="${key}"]`);
+        if (!modal) return;
+        modal.classList.toggle('is-open', open);
+        modal.setAttribute('aria-hidden', open ? 'false' : 'true');
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+
+      openButtons.forEach((button) => {
+        const key = button.getAttribute('data-guide-open');
+        button.addEventListener('click', () => setModalState(key, true));
+      });
+
+      document.querySelectorAll('[data-guide-close]').forEach((button) => {
+        const key = button.getAttribute('data-guide-close');
+        button.addEventListener('click', () => setModalState(key, false));
+      });
+
+      document.querySelectorAll('[data-guide-modal]').forEach((modal) => {
+        modal.addEventListener('click', (event) => {
+          if (event.target === modal) {
+            const key = modal.getAttribute('data-guide-modal');
+            setModalState(key, false);
+          }
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('.guide-modal.is-open').forEach((modal) => {
+          const key = modal.getAttribute('data-guide-modal');
+          setModalState(key, false);
+        });
       });
     })();
     </script>

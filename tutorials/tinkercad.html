@@ -332,6 +332,13 @@
             gap: 16px;
         }
 
+        .section-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -543,6 +550,78 @@
             color: var(--ink);
         }
 
+        .guide-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(27, 36, 48, 0.64);
+            z-index: 1000;
+        }
+
+        .guide-modal.is-open {
+            display: flex;
+        }
+
+        .guide-modal-dialog {
+            width: min(980px, 100%);
+            max-height: 88vh;
+            overflow: hidden;
+            border-radius: 28px;
+            border: 1px solid var(--line);
+            background: rgba(252, 248, 241, 0.98);
+            box-shadow: 0 24px 64px rgba(27, 36, 48, 0.24);
+        }
+
+        .guide-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            padding: 22px 24px 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .guide-modal-header p {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .guide-close {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .guide-close:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .guide-modal-body {
+            max-height: calc(88vh - 94px);
+            overflow: auto;
+            padding: 0 24px 24px;
+        }
+
+        .guide-markdown {
+            margin: 0;
+            padding: 18px 0 0;
+            white-space: pre-wrap;
+            line-height: 1.72;
+            color: var(--ink);
+            font-size: 0.94rem;
+            background: transparent;
+            border: 0;
+        }
+
         .footer-note {
             margin-top: 28px;
             color: var(--muted);
@@ -583,7 +662,8 @@
 
             .card-topline,
             .beat-head,
-            .section-heading {
+            .section-heading,
+            .guide-modal-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -634,7 +714,7 @@
                     This page pairs the final video with publishable screenshots and the exact rerun recipe.
                 </p>
                 <div class="video-frame">
-                    <video controls preload="metadata" poster="../output/screenshots/tinkercad/step_01.png?v=1775453521">
+                    <video controls preload="metadata" poster="../output/screenshots/tinkercad/step_01.png?v=1775454677">
                         <source src="../output/tinkercad_final.webm?v=1775418504" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
@@ -647,6 +727,107 @@
                         <h2>Prompt</h2>
                     </div>
                     <code>Go to TinkerCAD, start a new design, create a simple phone stand using basic shapes, group them, and export as STL</code>
+                    
+        <div class="section-actions">
+            <button class="button" type="button" data-guide-open="tinkercad">View guide.md</button>
+            <a class="button-ghost" href="../tutorials/tinkercad/guide.md" target="_blank" rel="noreferrer">Open raw guide</a>
+        </div>
+        <div class="guide-modal" data-guide-modal="tinkercad" aria-hidden="true">
+            <div class="guide-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-title-tinkercad">
+                <div class="guide-modal-header">
+                    <div>
+                        <h2 id="guide-title-tinkercad">guide.md</h2>
+                        <p>Step-by-step companion instructions for this tutorial.</p>
+                    </div>
+                    <button class="guide-close" type="button" data-guide-close="tinkercad">Close</button>
+                </div>
+                <div class="guide-modal-body">
+                    <pre class="guide-markdown"># Tinkercad - Find Beginner Lessons and Design Inspiration
+## Overview
+- This guide shows how to use Tinkercad without logging in to find beginner lessons and inspect a community design for inspiration.
+- Target URL: `https://www.tinkercad.com/`
+- Prerequisites: No login required for the browsing flow shown here.
+
+## Steps
+
+### Step 1: Open Tinkercad
+- **Action:** navigate
+- **Target element:** `https://www.tinkercad.com/`
+- **Value:** None
+- **Expected result:** The Tinkercad home page loads.
+
+### Step 2: Open the Learning Center
+- **Action:** click
+- **Target element:** Top navigation link labeled `Learn`
+- **Value:** None
+- **Expected result:** The browser opens the learning area, usually under `https://www.tinkercad.com/learn`.
+
+### Step 3: Search for beginner tutorials
+- **Action:** type
+- **Target element:** Search field such as `input[placeholder*=&quot;Search tutorials&quot;]` or the visible search input
+- **Value:** `3D design basics`
+- **Expected result:** The search query is entered and the results page opens after pressing Enter.
+
+### Step 4: Stay on the 3D Design track
+- **Action:** click
+- **Target element:** Tab or link labeled `3D Designs`
+- **Value:** None
+- **Expected result:** The results are filtered to the 3D design learning track.
+
+### Step 5: Review the lesson cards
+- **Action:** scroll
+- **Target element:** Results list of lesson cards
+- **Value:** None
+- **Expected result:** Multiple beginner-friendly lesson cards are visible.
+
+### Step 6: Open an Airbus moon lesson
+- **Action:** click
+- **Target element:** A lesson card whose URL contains `airbus-traveling-to-the-moon`, `airbus-habitat-on-the-moon`, `airbus-living-on-the-moon`, or `airbus-driving-on-the-moon`
+- **Value:** None
+- **Expected result:** The browser opens the lesson overview page.
+
+### Step 7: Review the lesson details
+- **Action:** scroll
+- **Target element:** Lesson overview content and visuals
+- **Value:** None
+- **Expected result:** The lesson visuals and instructions are visible for review.
+
+### Step 8: Open the Community Gallery
+- **Action:** click
+- **Target element:** Top navigation link labeled `Gallery`
+- **Value:** None
+- **Expected result:** The browser opens `https://www.tinkercad.com/things`.
+
+### Step 9: Browse the gallery
+- **Action:** inspect
+- **Target element:** Main gallery grid of community projects
+- **Value:** None
+- **Expected result:** Top community designs are visible.
+
+### Step 10: Open the Spartan Helmet design
+- **Action:** click
+- **Target element:** Gallery link for `My take on a Greek Spartan Helmet - March 2026`
+- **Value:** None
+- **Expected result:** The browser opens the design page, typically `https://www.tinkercad.com/things/ddtuLraw1Zf-my-take-on-a-greek-spartan-helmet-march-2026`.
+
+### Step 11: Inspect the 3D model
+- **Action:** inspect
+- **Target element:** 3D model viewer and project detail area
+- **Value:** None
+- **Expected result:** The model page is loaded and the design can be examined.
+
+## Output
+- Final deliverable: One lesson page and one gallery design page opened as references for a beginner Tinkercad learning session.
+- Verification: Success is confirmed when the Airbus lesson page and the Greek Spartan Helmet project page both load correctly.
+
+## Notes
+- The `Learn` link can route to slightly different learning URLs depending on the site version.
+- If the search flow fails, you can navigate directly to `https://www.tinkercad.com/learn/search/designs?q=3D%20design%20basics`.
+- The exact Airbus moon lesson can vary. Use any visible Airbus moon lesson if the preferred card changes.</pre>
+                </div>
+            </div>
+        </div>
+    
                 </div>
 
                 <div class="code-box">
@@ -683,6 +864,7 @@ python run_all.py --page-only</pre>
 <li><code>output/tinkercad_narration_timeline.json</code></li>
 <li><code>screenshots/tinkercad_steps.json</code></li>
 <li><code>output/tinkercad_manifest.json</code></li>
+<li><code>tutorials/tinkercad/guide.md</code></li>
 <li><code>tutorials/tinkercad.html</code></li>
                     </ul>
                 </div>
@@ -707,7 +889,7 @@ python run_all.py --page-only</pre>
                 <div class="storyboard-track" data-storyboard-track="tinkercad">
                     
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_01.png?v=1775453521" alt="Step 1: Open TinkerCAD - Autodesk&#x27;s free platform for 3D learning and design" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_01.png?v=1775454677" alt="Step 1: Open TinkerCAD - Autodesk&#x27;s free platform for 3D learning and design" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 1</div>
@@ -719,7 +901,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_02.png?v=1775453521" alt="Step 2: Open the Learning Center where beginner tutorials are available without login" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_02.png?v=1775454677" alt="Step 2: Open the Learning Center where beginner tutorials are available without login" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 2</div>
@@ -731,7 +913,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_03.png?v=1775453521" alt="Step 3: Search for beginner 3D design tutorials using the search bar" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_03.png?v=1775454677" alt="Step 3: Search for beginner 3D design tutorials using the search bar" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 3</div>
@@ -743,7 +925,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_04.png?v=1775453521" alt="Step 4: Stay on the 3D Design track while the search results load" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_04.png?v=1775454677" alt="Step 4: Stay on the 3D Design track while the search results load" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 4</div>
@@ -755,7 +937,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_05.png?v=1775453521" alt="Step 5: Scroll through the lesson cards and scan for clear beginner-friendly tutorials" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_05.png?v=1775454677" alt="Step 5: Scroll through the lesson cards and scan for clear beginner-friendly tutorials" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 5</div>
@@ -767,7 +949,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_06.png?v=1775453521" alt="Step 6: Open an Airbus moon lesson to view the guided project details" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_06.png?v=1775454677" alt="Step 6: Open an Airbus moon lesson to view the guided project details" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 6</div>
@@ -779,7 +961,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_07.png?v=1775453521" alt="Step 7: Scroll through the Airbus moon lesson to review the visuals and instructions" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_07.png?v=1775454677" alt="Step 7: Scroll through the Airbus moon lesson to review the visuals and instructions" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 7</div>
@@ -791,7 +973,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_08.png?v=1775453521" alt="Step 8: Open the Community Gallery to explore standout Tinkercad designs" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_08.png?v=1775454677" alt="Step 8: Open the Community Gallery to explore standout Tinkercad designs" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 8</div>
@@ -803,7 +985,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_09.png?v=1775453521" alt="Step 9: Browse the gallery and keep the top community designs in view" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_09.png?v=1775454677" alt="Step 9: Browse the gallery and keep the top community designs in view" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 9</div>
@@ -815,7 +997,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_10.png?v=1775453521" alt="Step 10: Open the Greek Spartan Helmet - March 2026 design from the gallery" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_10.png?v=1775454677" alt="Step 10: Open the Greek Spartan Helmet - March 2026 design from the gallery" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 10</div>
@@ -827,7 +1009,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_11.png?v=1775453521" alt="Step 11: View the 3D model and inspect how the Spartan Helmet design is built" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_11.png?v=1775454677" alt="Step 11: View the 3D model and inspect how the Spartan Helmet design is built" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 11</div>
@@ -839,7 +1021,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_12.png?v=1775453521" alt="Step 12: Tutorial complete - learn it, browse it, build it" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/tinkercad/step_12.png?v=1775454677" alt="Step 12: Tutorial complete - learn it, browse it, build it" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 12</div>
@@ -932,6 +1114,49 @@ python run_all.py --page-only</pre>
         shell.addEventListener('click', () => shell.focus());
         track.addEventListener('scroll', () => window.requestAnimationFrame(updateCount));
         updateCount();
+      });
+    })();
+    </script>
+    
+    
+    <script>
+    (() => {
+      const openButtons = document.querySelectorAll('[data-guide-open]');
+      if (!openButtons.length) return;
+
+      const setModalState = (key, open) => {
+        const modal = document.querySelector(`[data-guide-modal="${key}"]`);
+        if (!modal) return;
+        modal.classList.toggle('is-open', open);
+        modal.setAttribute('aria-hidden', open ? 'false' : 'true');
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+
+      openButtons.forEach((button) => {
+        const key = button.getAttribute('data-guide-open');
+        button.addEventListener('click', () => setModalState(key, true));
+      });
+
+      document.querySelectorAll('[data-guide-close]').forEach((button) => {
+        const key = button.getAttribute('data-guide-close');
+        button.addEventListener('click', () => setModalState(key, false));
+      });
+
+      document.querySelectorAll('[data-guide-modal]').forEach((modal) => {
+        modal.addEventListener('click', (event) => {
+          if (event.target === modal) {
+            const key = modal.getAttribute('data-guide-modal');
+            setModalState(key, false);
+          }
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('.guide-modal.is-open').forEach((modal) => {
+          const key = modal.getAttribute('data-guide-modal');
+          setModalState(key, false);
+        });
       });
     })();
     </script>

@@ -332,6 +332,13 @@
             gap: 16px;
         }
 
+        .section-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -543,6 +550,78 @@
             color: var(--ink);
         }
 
+        .guide-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(27, 36, 48, 0.64);
+            z-index: 1000;
+        }
+
+        .guide-modal.is-open {
+            display: flex;
+        }
+
+        .guide-modal-dialog {
+            width: min(980px, 100%);
+            max-height: 88vh;
+            overflow: hidden;
+            border-radius: 28px;
+            border: 1px solid var(--line);
+            background: rgba(252, 248, 241, 0.98);
+            box-shadow: 0 24px 64px rgba(27, 36, 48, 0.24);
+        }
+
+        .guide-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            padding: 22px 24px 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .guide-modal-header p {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .guide-close {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .guide-close:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .guide-modal-body {
+            max-height: calc(88vh - 94px);
+            overflow: auto;
+            padding: 0 24px 24px;
+        }
+
+        .guide-markdown {
+            margin: 0;
+            padding: 18px 0 0;
+            white-space: pre-wrap;
+            line-height: 1.72;
+            color: var(--ink);
+            font-size: 0.94rem;
+            background: transparent;
+            border: 0;
+        }
+
         .footer-note {
             margin-top: 28px;
             color: var(--muted);
@@ -583,7 +662,8 @@
 
             .card-topline,
             .beat-head,
-            .section-heading {
+            .section-heading,
+            .guide-modal-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -634,7 +714,7 @@
                     This page pairs the final video with publishable screenshots and the exact rerun recipe.
                 </p>
                 <div class="video-frame">
-                    <video controls preload="metadata" poster="../output/screenshots/ebay_advanced/step_01.png?v=1775453522">
+                    <video controls preload="metadata" poster="../output/screenshots/ebay_advanced/step_01.png?v=1775454678">
                         <source src="../output/ebay_advanced_final.webm?v=1775422625" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
@@ -647,6 +727,95 @@
                         <h2>Prompt</h2>
                     </div>
                     <code>Go to eBay advanced search, fill multiple fields, set filters, and run the search.</code>
+                    
+        <div class="section-actions">
+            <button class="button" type="button" data-guide-open="ebay_advanced">View guide.md</button>
+            <a class="button-ghost" href="../tutorials/ebay_advanced/guide.md" target="_blank" rel="noreferrer">Open raw guide</a>
+        </div>
+        <div class="guide-modal" data-guide-modal="ebay_advanced" aria-hidden="true">
+            <div class="guide-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-title-ebay_advanced">
+                <div class="guide-modal-header">
+                    <div>
+                        <h2 id="guide-title-ebay_advanced">guide.md</h2>
+                        <p>Step-by-step companion instructions for this tutorial.</p>
+                    </div>
+                    <button class="guide-close" type="button" data-guide-close="ebay_advanced">Close</button>
+                </div>
+                <div class="guide-modal-body">
+                    <pre class="guide-markdown"># eBay Advanced Search - Find Filtered Listings
+## Overview
+- This guide shows how to use eBay Advanced Search to find new Sony WH-1000XM5 listings with exclusions and price filters.
+- Target URL: `https://www.ebay.com/sch/ebayadvsearch`
+- Prerequisites: No login required for search.
+
+## Steps
+
+### Step 1: Open eBay Advanced Search
+- **Action:** navigate
+- **Target element:** `https://www.ebay.com/sch/ebayadvsearch`
+- **Value:** None
+- **Expected result:** The advanced search form loads.
+
+### Step 2: Enter the main keywords
+- **Action:** type
+- **Target element:** Keyword field `#_nkw` or `input[name=&quot;_nkw&quot;]`
+- **Value:** `Sony WH-1000XM5`
+- **Expected result:** The main search term appears in the keyword field.
+
+### Step 3: Set exact keyword matching
+- **Action:** select
+- **Target element:** Keyword match dropdown `select[name=&quot;_in_kw&quot;]`
+- **Value:** `Exact words, exact order`
+- **Expected result:** Search matching is restricted to the exact phrase order.
+
+### Step 4: Exclude unwanted terms
+- **Action:** type
+- **Target element:** Exclusion field `#_ex_kw` or `input[name=&quot;_ex_kw&quot;]`
+- **Value:** `broken parts only`
+- **Expected result:** Listings containing those words are excluded from the search.
+
+### Step 5: Search title and description
+- **Action:** select
+- **Target element:** Checkbox or label `Title and description`
+- **Value:** Check the box
+- **Expected result:** The search includes both listing titles and descriptions.
+
+### Step 6: Set the minimum price
+- **Action:** type
+- **Target element:** Minimum price field `input[name=&quot;_udlo&quot;]`
+- **Value:** `150`
+- **Expected result:** The lower bound for price filtering is set.
+
+### Step 7: Set the maximum price
+- **Action:** type
+- **Target element:** Maximum price field `input[name=&quot;_udhi&quot;]`
+- **Value:** `400`
+- **Expected result:** The upper bound for price filtering is set.
+
+### Step 8: Filter to new items
+- **Action:** select
+- **Target element:** Condition option `New`
+- **Value:** Check or select `New`
+- **Expected result:** Only new-condition items remain eligible for the search.
+
+### Step 9: Run the advanced search
+- **Action:** click
+- **Target element:** Button labeled `Search`
+- **Value:** None
+- **Expected result:** The results page opens with the advanced filters applied.
+
+## Output
+- Final deliverable: A filtered eBay results page for Sony WH-1000XM5 listings.
+- Verification: Success is confirmed when the browser lands on a results URL similar to `https://www.ebay.com/sch/i.html?...` and the listings reflect the keyword, exclusion, price, and condition filters.
+
+## Notes
+- The results URL in the recorded demo included `_nkw=Sony+WH-1000XM5`, `_ex_kw=broken+parts+only`, `_udlo=150`, `_udhi=400`, and `LH_ItemCondition=1000`.
+- Some eBay layouts present the `New` filter as a checkbox and others as a selectable option inside the condition area. Use whichever visible control maps to `New`.
+- If the Search button is not visible, pressing Enter from a focused form field usually triggers the same action.</pre>
+                </div>
+            </div>
+        </div>
+    
                 </div>
 
                 <div class="code-box">
@@ -683,6 +852,7 @@ python run_all.py --page-only</pre>
 <li><code>output/ebay_advanced_narration_timeline.json</code></li>
 <li><code>screenshots/ebay_advanced_steps.json</code></li>
 <li><code>output/ebay_advanced_manifest.json</code></li>
+<li><code>tutorials/ebay_advanced/guide.md</code></li>
 <li><code>tutorials/ebay_advanced.html</code></li>
                     </ul>
                 </div>
@@ -707,7 +877,7 @@ python run_all.py --page-only</pre>
                 <div class="storyboard-track" data-storyboard-track="ebay_advanced">
                     
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_01.png?v=1775453522" alt="Step 1: Open eBay Advanced Search" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_01.png?v=1775454678" alt="Step 1: Open eBay Advanced Search" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 1</div>
@@ -719,7 +889,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_02.png?v=1775453522" alt="Step 2: Enter main search keywords" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_02.png?v=1775454678" alt="Step 2: Enter main search keywords" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 2</div>
@@ -731,7 +901,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_03.png?v=1775453522" alt="Step 3: Change the keyword match dropdown to exact order" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_03.png?v=1775454678" alt="Step 3: Change the keyword match dropdown to exact order" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 3</div>
@@ -743,7 +913,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_04.png?v=1775453522" alt="Step 4: Enter words to exclude from results" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_04.png?v=1775454678" alt="Step 4: Enter words to exclude from results" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 4</div>
@@ -755,7 +925,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_05.png?v=1775453522" alt="Step 5: Include title and description in the search scope" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_05.png?v=1775454678" alt="Step 5: Include title and description in the search scope" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 5</div>
@@ -767,7 +937,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_06.png?v=1775453522" alt="Step 6: Set minimum and maximum price filters" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_06.png?v=1775454678" alt="Step 6: Set minimum and maximum price filters" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 6</div>
@@ -779,7 +949,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_07.png?v=1775453522" alt="Step 7: Filter for new-condition items" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_07.png?v=1775454678" alt="Step 7: Filter for new-condition items" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 7</div>
@@ -791,7 +961,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_08.png?v=1775453522" alt="Step 8: Run the search and open the filtered results page" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/ebay_advanced/step_08.png?v=1775454678" alt="Step 8: Run the search and open the filtered results page" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 8</div>
@@ -941,6 +1111,49 @@ python run_all.py --page-only</pre>
         shell.addEventListener('click', () => shell.focus());
         track.addEventListener('scroll', () => window.requestAnimationFrame(updateCount));
         updateCount();
+      });
+    })();
+    </script>
+    
+    
+    <script>
+    (() => {
+      const openButtons = document.querySelectorAll('[data-guide-open]');
+      if (!openButtons.length) return;
+
+      const setModalState = (key, open) => {
+        const modal = document.querySelector(`[data-guide-modal="${key}"]`);
+        if (!modal) return;
+        modal.classList.toggle('is-open', open);
+        modal.setAttribute('aria-hidden', open ? 'false' : 'true');
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+
+      openButtons.forEach((button) => {
+        const key = button.getAttribute('data-guide-open');
+        button.addEventListener('click', () => setModalState(key, true));
+      });
+
+      document.querySelectorAll('[data-guide-close]').forEach((button) => {
+        const key = button.getAttribute('data-guide-close');
+        button.addEventListener('click', () => setModalState(key, false));
+      });
+
+      document.querySelectorAll('[data-guide-modal]').forEach((modal) => {
+        modal.addEventListener('click', (event) => {
+          if (event.target === modal) {
+            const key = modal.getAttribute('data-guide-modal');
+            setModalState(key, false);
+          }
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('.guide-modal.is-open').forEach((modal) => {
+          const key = modal.getAttribute('data-guide-modal');
+          setModalState(key, false);
+        });
       });
     })();
     </script>

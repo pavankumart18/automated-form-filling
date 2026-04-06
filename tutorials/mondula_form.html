@@ -332,6 +332,13 @@
             gap: 16px;
         }
 
+        .section-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -543,6 +550,78 @@
             color: var(--ink);
         }
 
+        .guide-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(27, 36, 48, 0.64);
+            z-index: 1000;
+        }
+
+        .guide-modal.is-open {
+            display: flex;
+        }
+
+        .guide-modal-dialog {
+            width: min(980px, 100%);
+            max-height: 88vh;
+            overflow: hidden;
+            border-radius: 28px;
+            border: 1px solid var(--line);
+            background: rgba(252, 248, 241, 0.98);
+            box-shadow: 0 24px 64px rgba(27, 36, 48, 0.24);
+        }
+
+        .guide-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            padding: 22px 24px 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .guide-modal-header p {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .guide-close {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .guide-close:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .guide-modal-body {
+            max-height: calc(88vh - 94px);
+            overflow: auto;
+            padding: 0 24px 24px;
+        }
+
+        .guide-markdown {
+            margin: 0;
+            padding: 18px 0 0;
+            white-space: pre-wrap;
+            line-height: 1.72;
+            color: var(--ink);
+            font-size: 0.94rem;
+            background: transparent;
+            border: 0;
+        }
+
         .footer-note {
             margin-top: 28px;
             color: var(--muted);
@@ -583,7 +662,8 @@
 
             .card-topline,
             .beat-head,
-            .section-heading {
+            .section-heading,
+            .guide-modal-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -634,7 +714,7 @@
                     This page pairs the final video with publishable screenshots and the exact rerun recipe.
                 </p>
                 <div class="video-frame">
-                    <video controls preload="metadata" poster="../output/screenshots/mondula_form/step_01.png?v=1775453522">
+                    <video controls preload="metadata" poster="../output/screenshots/mondula_form/step_01.png?v=1775454678">
                         <source src="../output/mondula_form_final.webm?v=1775420225" type="video/webm">
                         Your browser does not support the video tag.
                     </video>
@@ -647,6 +727,167 @@
                         <h2>Prompt</h2>
                     </div>
                     <code>Go to mondula.com/msf-demo, complete each page, fill at least 6 input fields, and reach the submit-ready final step.</code>
+                    
+        <div class="section-actions">
+            <button class="button" type="button" data-guide-open="mondula_form">View guide.md</button>
+            <a class="button-ghost" href="../tutorials/mondula_form/guide.md" target="_blank" rel="noreferrer">Open raw guide</a>
+        </div>
+        <div class="guide-modal" data-guide-modal="mondula_form" aria-hidden="true">
+            <div class="guide-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="guide-title-mondula_form">
+                <div class="guide-modal-header">
+                    <div>
+                        <h2 id="guide-title-mondula_form">guide.md</h2>
+                        <p>Step-by-step companion instructions for this tutorial.</p>
+                    </div>
+                    <button class="guide-close" type="button" data-guide-close="mondula_form">Close</button>
+                </div>
+                <div class="guide-modal-body">
+                    <pre class="guide-markdown"># Mondula - Complete the Multi-Step Demo Form
+## Overview
+- This guide shows how to complete the Mondula multi-step form demo using sample text, date, selection, and contact values.
+- Target URL: `https://mondula.com/msf-demo/`
+- Prerequisites: No account required. The site may show a cookie banner on first load.
+
+## Steps
+
+### Step 1: Open the demo form
+- **Action:** navigate
+- **Target element:** `https://mondula.com/msf-demo/`
+- **Value:** None
+- **Expected result:** The Mondula demo page loads.
+
+### Step 2: Accept the cookie banner if it appears
+- **Action:** click
+- **Target element:** A visible cookie button such as `Accept`, `Save preferences`, or `Allow all`
+- **Value:** None
+- **Expected result:** The cookie banner closes and the form remains visible.
+
+### Step 3: Move from the intro screen to the first form page
+- **Action:** click
+- **Target element:** Button labeled `NEXT STEP`
+- **Value:** None
+- **Expected result:** The first form page opens and the text field `#msf-text-example-textfield` becomes visible.
+
+### Step 4: Fill the first text field
+- **Action:** type
+- **Target element:** `#msf-text-example-textfield`
+- **Value:** `Pavan Demo`
+- **Expected result:** The text field contains the sample name.
+
+### Step 5: Fill the first textarea
+- **Action:** type
+- **Target element:** `#msf-textarea-example-textarea`
+- **Value:** `Testing a multi-page form automation workflow.`
+- **Expected result:** The textarea contains the sample description.
+
+### Step 6: Move to page two
+- **Action:** click
+- **Target element:** `NEXT STEP`
+- **Value:** None
+- **Expected result:** The next page loads and the date field `#msf-date-date-field-with-calender-popup` becomes visible.
+
+### Step 7: Fill the first simple text field on page two
+- **Action:** type
+- **Target element:** First visible match for `#msf-text-simple-text-field`
+- **Value:** `Automation Field Value`
+- **Expected result:** The first simple text field is filled.
+
+### Step 8: Fill the second simple text field on page two
+- **Action:** type
+- **Target element:** Second visible match for `#msf-text-simple-text-field`
+- **Value:** `Second Value`
+- **Expected result:** The second simple text field is filled.
+
+### Step 9: Fill the custom textarea on page two
+- **Action:** type
+- **Target element:** `#msf-textarea-custom-textarea`
+- **Value:** `This section demonstrates long-form answers.`
+- **Expected result:** The textarea contains the sample long answer.
+
+### Step 10: Fill the date field on page two
+- **Action:** type
+- **Target element:** `#msf-date-date-field-with-calender-popup`
+- **Value:** `03/13/2026`
+- **Expected result:** The date field contains the sample date.
+
+### Step 11: Move to the selection page
+- **Action:** click
+- **Target element:** `NEXT STEP`
+- **Value:** None
+- **Expected result:** The page with radio buttons, checkboxes, and a dropdown becomes visible.
+
+### Step 12: Select the radio option
+- **Action:** select
+- **Target element:** Radio input `#fw-12-3-0-0-2`
+- **Value:** Check this input
+- **Expected result:** One radio option is selected in the radio group.
+
+### Step 13: Select the checkbox options
+- **Action:** select
+- **Target element:** Checkbox inputs `#fw-12-3-1-0-2` and `#fw-12-3-1-0-5`
+- **Value:** Check both inputs
+- **Expected result:** Two checkbox options are selected.
+
+### Step 14: Select the dropdown value
+- **Action:** select
+- **Target element:** `#msf-select-please-choose-a-option-from-the-list`
+- **Value:** Select option at index `2`
+- **Expected result:** The dropdown shows the third available option.
+
+### Step 15: Move to the conditional section
+- **Action:** click
+- **Target element:** `NEXT STEP`
+- **Value:** None
+- **Expected result:** The dish selector `#msf-select-dish` becomes visible.
+
+### Step 16: Select the dish
+- **Action:** select
+- **Target element:** `#msf-select-dish`
+- **Value:** Select option at index `1` (`Pizza`)
+- **Expected result:** Conditional options appear for the chosen dish.
+
+### Step 17: Select the conditional options
+- **Action:** select
+- **Target element:** Checkbox inputs `#fw-12-4-0-1-2`, `#fw-12-4-0-2-2`, `#fw-12-4-0-2-4`, `#fw-12-4-0-3-2`, `#fw-12-4-0-4-2`
+- **Value:** Check all five inputs
+- **Expected result:** The conditional section is fully populated for the selected dish.
+
+### Step 18: Move to the contact page
+- **Action:** click
+- **Target element:** `NEXT STEP`
+- **Value:** None
+- **Expected result:** The final contact page loads and `#msf-text-first-name` is visible.
+
+### Step 19: Fill the final contact form
+- **Action:** type
+- **Target element:** `#msf-text-first-name`, `#msf-text-last-name`, `#msf-date-date-of-birth`, `#msf-text-telephone`, `#msf-mail-email`, `#msf-textarea-feel-free-to-write-a-short-message`
+- **Value:** `Pavan`, `Kumar`, `03/13/1992`, `9876543210`, `pavan@example.com`, `Please share plugin implementation details for production usage.`
+- **Expected result:** All required final contact fields are filled.
+
+### Step 20: Open the summary
+- **Action:** click
+- **Target element:** Button labeled `SHOW SUMMARY`
+- **Value:** None
+- **Expected result:** The summary view opens if available.
+
+### Step 21: Reach the submit-ready state
+- **Action:** wait
+- **Target element:** Final summary or submit area
+- **Value:** None
+- **Expected result:** A visible `Submit` control or equivalent final state is present without actually submitting the form.
+
+## Output
+- Final deliverable: A fully completed demo form that reaches the summary or submit-ready state.
+- Verification: Success is confirmed when all pages are completed and the final page exposes a `Submit` action or the summary view.
+
+## Notes
+- The `NEXT STEP` button may appear as a button, input, or link depending on the page state.
+- If `SHOW SUMMARY` hides the submit area, one more click on `NEXT STEP` may be needed to reveal the final submit state.
+- Some choices are identified here by element IDs instead of visible labels because the demo automation used exact inputs for repeatability.</pre>
+                </div>
+            </div>
+        </div>
+    
                 </div>
 
                 <div class="code-box">
@@ -683,6 +924,7 @@ python run_all.py --page-only</pre>
 <li><code>output/mondula_form_narration_timeline.json</code></li>
 <li><code>screenshots/mondula_form_steps.json</code></li>
 <li><code>output/mondula_form_manifest.json</code></li>
+<li><code>tutorials/mondula_form/guide.md</code></li>
 <li><code>tutorials/mondula_form.html</code></li>
                     </ul>
                 </div>
@@ -707,7 +949,7 @@ python run_all.py --page-only</pre>
                 <div class="storyboard-track" data-storyboard-track="mondula_form">
                     
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_01.png?v=1775453522" alt="Step 1: Open the Mondula multi-step form demo page" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_01.png?v=1775454678" alt="Step 1: Open the Mondula multi-step form demo page" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 1</div>
@@ -719,7 +961,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_02.png?v=1775453522" alt="Step 2: Move from the intro page to the first form step" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_02.png?v=1775454678" alt="Step 2: Move from the intro page to the first form step" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 2</div>
@@ -731,7 +973,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_03.png?v=1775453522" alt="Step 3: Fill first page text and textarea fields" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_03.png?v=1775454678" alt="Step 3: Fill first page text and textarea fields" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 3</div>
@@ -743,7 +985,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_04.png?v=1775453522" alt="Step 4: Go to the next page with additional input fields" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_04.png?v=1775454678" alt="Step 4: Go to the next page with additional input fields" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 4</div>
@@ -755,7 +997,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_05.png?v=1775453522" alt="Step 5: Fill text, custom textarea, and date fields on page two" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_05.png?v=1775454678" alt="Step 5: Fill text, custom textarea, and date fields on page two" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 5</div>
@@ -767,7 +1009,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_06.png?v=1775453522" alt="Step 6: Proceed to radio, checkbox, and dropdown inputs" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_06.png?v=1775454678" alt="Step 6: Proceed to radio, checkbox, and dropdown inputs" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 6</div>
@@ -779,7 +1021,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_07.png?v=1775453522" alt="Step 7: Select a radio option, multiple checkboxes, and a dropdown value" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_07.png?v=1775454678" alt="Step 7: Select a radio option, multiple checkboxes, and a dropdown value" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 7</div>
@@ -791,7 +1033,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_08.png?v=1775453522" alt="Step 8: Open the conditional input section" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_08.png?v=1775454678" alt="Step 8: Open the conditional input section" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 8</div>
@@ -803,7 +1045,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_09.png?v=1775453522" alt="Step 9: Fill conditional fields based on the selected dish" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_09.png?v=1775454678" alt="Step 9: Fill conditional fields based on the selected dish" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 9</div>
@@ -815,7 +1057,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_10.png?v=1775453522" alt="Step 10: Move to the final contact-details page" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_10.png?v=1775454678" alt="Step 10: Move to the final contact-details page" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 10</div>
@@ -827,7 +1069,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_11.png?v=1775453522" alt="Step 11: Fill final contact page with six required input fields" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_11.png?v=1775454678" alt="Step 11: Fill final contact page with six required input fields" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 11</div>
@@ -839,7 +1081,7 @@ python run_all.py --page-only</pre>
             </article>
             
             <article class="storyboard-slide">
-                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_12.png?v=1775453522" alt="Step 12: Review summary and reach submit-ready final state" loading="lazy">
+                <img class="storyboard-image" src="../output/screenshots/mondula_form/step_12.png?v=1775454678" alt="Step 12: Review summary and reach submit-ready final state" loading="lazy">
                 <div class="storyboard-caption">
                     <div class="storyboard-meta">
                         <div class="shot-step">Step 12</div>
@@ -1021,6 +1263,49 @@ python run_all.py --page-only</pre>
         shell.addEventListener('click', () => shell.focus());
         track.addEventListener('scroll', () => window.requestAnimationFrame(updateCount));
         updateCount();
+      });
+    })();
+    </script>
+    
+    
+    <script>
+    (() => {
+      const openButtons = document.querySelectorAll('[data-guide-open]');
+      if (!openButtons.length) return;
+
+      const setModalState = (key, open) => {
+        const modal = document.querySelector(`[data-guide-modal="${key}"]`);
+        if (!modal) return;
+        modal.classList.toggle('is-open', open);
+        modal.setAttribute('aria-hidden', open ? 'false' : 'true');
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+
+      openButtons.forEach((button) => {
+        const key = button.getAttribute('data-guide-open');
+        button.addEventListener('click', () => setModalState(key, true));
+      });
+
+      document.querySelectorAll('[data-guide-close]').forEach((button) => {
+        const key = button.getAttribute('data-guide-close');
+        button.addEventListener('click', () => setModalState(key, false));
+      });
+
+      document.querySelectorAll('[data-guide-modal]').forEach((modal) => {
+        modal.addEventListener('click', (event) => {
+          if (event.target === modal) {
+            const key = modal.getAttribute('data-guide-modal');
+            setModalState(key, false);
+          }
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('.guide-modal.is-open').forEach((modal) => {
+          const key = modal.getAttribute('data-guide-modal');
+          setModalState(key, false);
+        });
       });
     })();
     </script>

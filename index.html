@@ -332,6 +332,13 @@
             gap: 16px;
         }
 
+        .section-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -543,6 +550,78 @@
             color: var(--ink);
         }
 
+        .guide-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(27, 36, 48, 0.64);
+            z-index: 1000;
+        }
+
+        .guide-modal.is-open {
+            display: flex;
+        }
+
+        .guide-modal-dialog {
+            width: min(980px, 100%);
+            max-height: 88vh;
+            overflow: hidden;
+            border-radius: 28px;
+            border: 1px solid var(--line);
+            background: rgba(252, 248, 241, 0.98);
+            box-shadow: 0 24px 64px rgba(27, 36, 48, 0.24);
+        }
+
+        .guide-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            padding: 22px 24px 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .guide-modal-header p {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .guide-close {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--ink);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .guide-close:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .guide-modal-body {
+            max-height: calc(88vh - 94px);
+            overflow: auto;
+            padding: 0 24px 24px;
+        }
+
+        .guide-markdown {
+            margin: 0;
+            padding: 18px 0 0;
+            white-space: pre-wrap;
+            line-height: 1.72;
+            color: var(--ink);
+            font-size: 0.94rem;
+            background: transparent;
+            border: 0;
+        }
+
         .footer-note {
             margin-top: 28px;
             color: var(--muted);
@@ -583,7 +662,8 @@
 
             .card-topline,
             .beat-head,
-            .section-heading {
+            .section-heading,
+            .guide-modal-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -641,7 +721,7 @@
             <div class="card-grid">
                 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/screener/step_01.png?v=1775453521" alt="Stock Research on Screener.in screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/screener/step_01.png?v=1775454677" alt="Stock Research on Screener.in screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">Financial Literacy</span>
@@ -668,7 +748,7 @@
     
 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/zoho_invoice/step_01.png?v=1775453521" alt="Create a GST Invoice on Zoho screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/zoho_invoice/step_01.png?v=1775454677" alt="Create a GST Invoice on Zoho screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">Business Operations</span>
@@ -695,7 +775,7 @@
     
 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/tinkercad/step_01.png?v=1775453521" alt="3D Design in TinkerCAD screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/tinkercad/step_01.png?v=1775454677" alt="3D Design in TinkerCAD screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">Engineering &amp; Design</span>
@@ -722,7 +802,7 @@
     
 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/overpass_turbo/step_01.png?v=1775453521" alt="Query Geographic Data with Overpass Turbo screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/overpass_turbo/step_01.png?v=1775454677" alt="Query Geographic Data with Overpass Turbo screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">Data &amp; Research</span>
@@ -749,7 +829,7 @@
     
 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/mondula_form/step_01.png?v=1775453522" alt="Complete a Multi-Page Form on Mondula screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/mondula_form/step_01.png?v=1775454678" alt="Complete a Multi-Page Form on Mondula screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">Workflow Automation</span>
@@ -776,7 +856,7 @@
     
 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/indian_visa/step_01.png?v=1775453522" alt="Indian eVisa Form Walkthrough screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/indian_visa/step_01.png?v=1775454678" alt="Indian eVisa Form Walkthrough screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">Public Services</span>
@@ -803,7 +883,7 @@
     
 
         <article class="demo-card">
-            <img class="card-cover" src="output/screenshots/ebay_advanced/step_01.png?v=1775453522" alt="eBay Advanced Search Automation screenshot preview" loading="lazy">
+            <img class="card-cover" src="output/screenshots/ebay_advanced/step_01.png?v=1775454678" alt="eBay Advanced Search Automation screenshot preview" loading="lazy">
             <div class="card-body">
                 <div class="card-topline">
                     <span class="eyebrow">E-commerce</span>
